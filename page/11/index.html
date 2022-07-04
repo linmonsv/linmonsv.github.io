@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/11/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,149 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-2-ml-strategy-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/18/2-ml-strategy-2/" class="article-date">
+  <time class="dt-published" datetime="2019-04-18T08:08:16.000Z" itemprop="datePublished">2019-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/18/2-ml-strategy-2/">2 ML strategy (2)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Carrying-out-error-analysis"><a href="#Carrying-out-error-analysis" class="headerlink" title="Carrying out error analysis"></a>Carrying out error analysis</h2><p>If you’re trying to get a learning algorithm to do a task that humans can do. And if your learning algorithm is not yet at the performance of a human. Then manually examining mistakes that your algorithm is making, can give you insights into what to do next. This process is called <strong>error analysis</strong>. An error analysis procedure that can let you very quickly tell whether or not this could be worth your effort. In machine learning, sometimes we call this the <strong>ceiling on performance</strong> which just means, what’s in the best case? In machine learning, sometimes we speak disparagingly of <strong>hand engineering</strong> things, or using too much manual insight. But if you’re building applied systems, then this simple counting procedure, error analysis, can save you a lot of time. In terms of deciding what’s the most important, or what’s the most promising direction to focus on.</p>
+<p>Maybe this is a 5 to 10 minute effort. This will gives you an estimate of how worthwhile this direction is. And could help you make a much better decision, How to using error analysis to evaluate whether or not is worth working on. Sometimes you can also evaluate multiple ideas in parallel doing error analysis.</p>
+<p><strong>During error analysis, you’re just looking at dev set examples that your algorithm has misrecognized.</strong> Quick counting procedure, which you can often do in, at most, small numbers of hours can really help you make much better prioritization decisions, and understand how promising different approaches are to work on.</p>
+<ul>
+<li>To carry out error analysis,you should find a set of mislabeled examples, either in your dev set, or in your development set.</li>
+<li>And look at the mislabeled examples for false positives and false negatives. And just count up the number of errors that fall into various different categories.</li>
+</ul>
+<p><strong>During this process,</strong></p>
+<ul>
+<li>you might be inspired to generate new categories of errors,</li>
+<li>You can create new categories during that process.</li>
+<li>By counting up the fraction of examples that are mislabeled in different ways, often this will help you prioritize or give you inspiration for new directions to go in.</li>
+</ul>
+<h2 id="Cleaning-up-Incorrectly-labeled-data"><a href="#Cleaning-up-Incorrectly-labeled-data" class="headerlink" title="Cleaning up Incorrectly labeled data"></a>Cleaning up Incorrectly labeled data</h2><p>If you going through your data and you find that some of these output labels Y are incorrect, you have data which is incorrectly labeled? Is it worth your while to go in to fix up some of these labels?</p>
+<ul>
+<li>It turns out that deep learning algorithms are quite robust to random errors in the training set.</li>
+<li>If the errors are reasonably random, then it’s probably okay to just leave the errors as they are and not spend too much time fixing them.</li>
+<li>So long as the total data set size is big enough and the actual percentage of errors is maybe not too high.</li>
+<li><strong>There is one caveat to this which is that deep learning algorithms are robust to random errors. They are less robust to systematic errors.</strong></li>
+</ul>
+<p>If it makes a significant difference to your ability to evaluate algorithms on your dev set, then go ahead and spend the time to fix incorrect labels. But if it doesn’t make a significant difference to your ability to use the dev set to evaluate cost bias, then it might not be the best use of your time. <strong>Apply whatever process you apply to both your dev and test sets at the same time. It’s actually less important to correct the labels in your training set.</strong></p>
+<ul>
+<li>In building practical systems, often there’s also more manual error analysis and more human insight that goes into the systems than sometimes deep learning researchers like to acknowledge.</li>
+<li>Actually go in and look at the data myself and try to counter the fraction of errors. And I think that because these minutes or maybe a small number of hours of counting data can really help you prioritize where to go next.</li>
+</ul>
+<h2 id="Build-your-first-system-quickly-then-iterate"><a href="#Build-your-first-system-quickly-then-iterate" class="headerlink" title="Build your first system quickly, then iterate"></a>Build your first system quickly, then iterate</h2><p>And more generally, for almost any machine learning application, there could be 50 different directions you could go in and each of these directions is reasonable and would make your system better. But the challenge is, <strong>how do you pick which of these to focus on</strong>.</p>
+<ul>
+<li>If you’re starting on <strong>building a brand new machine learning application</strong>, is to build your first system quickly and then iterate.<ul>
+<li>First quickly set up a dev&#x2F;test set and metric. So this is really deciding where to place your target.</li>
+</ul>
+</li>
+</ul>
+<p><em>All the value of the initial system is having some learned system, having some trained system allows you to localize bias&#x2F;variance, to try to prioritize what to do next, allows you to do error analysis, look at some mistakes, to figure out all the different directions you can go in, which ones are actually the most worthwhile.</em></p>
+<ul>
+<li>If there’s a significant body of academic literature that you can draw on for <strong>pretty much the exact same problem you’re building</strong>. It might be okay to build a more complex system from the get-go by building on this large body of academic literature.<ul>
+<li>But if you are tackling a new problem for the first time, then I would encourage you to really not, there are more teams overthink and build something too complicated.</li>
+</ul>
+</li>
+</ul>
+<p>If you are applying to your machine learning algorithms to a new application, and if your main goal is to build something that works, as opposed to if your main goal is to invent a new machine learning algorithm which is a different goal, then your main goal is to get something that works really well.</p>
+<h2 id="Training-and-testing-on-different-distributions"><a href="#Training-and-testing-on-different-distributions" class="headerlink" title="Training and testing on different distributions"></a>Training and testing on different distributions</h2><p>How to deal with when your train and test distributions differ from each other.</p>
+<ul>
+<li>Put both of these data sets together</li>
+</ul>
+<p>But the disadvantage, is that if you look at your dev set, a lot of it rather than what you actually care about.</p>
+<ul>
+<li><strong>The training set is still the images, and then for dev and test sets would be all app images. Now you’re aiming the target where you want it to be.</strong></li>
+</ul>
+<h2 id="Bias-and-Variance-with-mismatched-data-distributions"><a href="#Bias-and-Variance-with-mismatched-data-distributions" class="headerlink" title="Bias and Variance with mismatched data distributions"></a>Bias and Variance with mismatched data distributions</h2><p>In order to tease out these two effects it will be useful to define a new piece of data which we’ll call the <strong>training-dev set</strong>.</p>
+<ul>
+<li><strong>What we’re going to do is randomly shuffle the training sets and then carve out just a piece of the training set to be the training-dev set.</strong> So just as the dev and test set have the same distribution, the training set and the training-dev set, also have the same distribution.</li>
+<li>But, the difference is that now you train your neural network, just on the training set proper. You won’t let the neural network, you won’t run backpropagation on the training-dev portion of this data.</li>
+</ul>
+<p><strong>Bias &#x2F; variance on mismatched training and dev &#x2F; test sets</strong></p>
+<ul>
+<li>When you went from training data to training dev data the error really went up a lot. And only the difference between the training data and the training-dev data is that your neural network got to sort the first part of this. It was trained explicitly on this, but it wasn’t trained explicitly on the training-dev data. So this tells you that you have a variance problem.</li>
+<li>But then it really jumps when you go to the dev set. So this is a data mismatch problem, where data mismatched. So somehow your algorithm has learned to do well on a different distribution than what you really care about, so we call that a data mismatch problem.</li>
+</ul>
+<h2 id="Addressing-data-mismatch"><a href="#Addressing-data-mismatch" class="headerlink" title="Addressing data mismatch"></a>Addressing data mismatch</h2><ul>
+<li>Carry out manual error analysis to try to understand the differences between the training set and the dev&#x2F;test sets.</li>
+<li>Make training data more similar,; or collect more data similar to dev&#x2F;test sets</li>
+</ul>
+<p><em>One of the ways we talked about is <strong>artificial data synthesis</strong>. And artificial data synthesis does work.</em> <em>But, if you’re using artificial data synthesis, just be cautious and bear in mind whether or not you might be accidentally simulating data only from a tiny subset of the space of all possible examples.</em></p>
+<h2 id="Transfer-learning"><a href="#Transfer-learning" class="headerlink" title="Transfer learning"></a>Transfer learning</h2><p>One of the most powerful ideas in deep learning is that sometimes you can take knowledge the neural network has learned from one task and apply that knowledge to a separate task. What you can do is take this last output layer of the neural network and just delete that and delete also the weights feeding into that last output layer and create a new set of randomly initialized weights just for the last layer and have that now output. <strong>A couple options of how you retrain neural network with radiology data :</strong></p>
+<ul>
+<li>If you have a small radiology dataset, you might want to just retrain the weights of the last layer.</li>
+<li>But if you have a lot of data, then maybe you can retrain all the parameters in the network.</li>
+</ul>
+<p><strong>When transfer learning makes sense :</strong></p>
+<ul>
+<li>Task A and B have the same input X</li>
+<li>You have a lot more data for Task A than Task B</li>
+<li>Low level features from A could be helpful for learning B</li>
+</ul>
+<h2 id="Multi-task-learning"><a href="#Multi-task-learning" class="headerlink" title="Multi-task learning"></a>Multi-task learning</h2><p>So whereas in transfer learning, you have a sequential process where you learn from task A and then transfer that to task B. <strong>In multi-task learning, you start off simultaneously, trying to have one neural network do several things at the same time. And then each of these task helps hopefully all of the other task.</strong> <strong>When multi-task learning makes sense</strong></p>
+<ul>
+<li>Training on a set of tasks that could benefit from having shared lower-level features.</li>
+<li>Usually: Amount of data you have for each task is quite similar.</li>
+<li>Can train a big enough neural network to do well on all the tasks.</li>
+</ul>
+<h2 id="What-is-end-to-end-deep-learning"><a href="#What-is-end-to-end-deep-learning" class="headerlink" title="What is end-to-end deep learning?"></a>What is end-to-end deep learning?</h2><p>Briefly, there have been some data processing systems, or learning systems that require multiple stages of processing. And what end-to-end deep learning does, is it can take all those multiple stages, and replace it usually with just a single neural network.</p>
+<ul>
+<li>It turns out that one of the challenges of end-to-end deep learning is that you might need a lot of data before it works well.</li>
+<li>If you’re training on smaller data to build a speech recognition system, then the traditional pipeline, the full traditional pipeline works really well.</li>
+</ul>
+<p><strong>So why is it that the two step approach works better?</strong></p>
+<ul>
+<li>One is that each of the two problems you’re solving is actually much simpler.</li>
+<li>But second, is that you have a lot of data for each of the two sub-tasks.</li>
+</ul>
+<p>Although if you had enough data for the end-to-end approach, maybe the end-to-end approach would work better.</p>
+<h2 id="Whether-to-use-end-to-end-learning"><a href="#Whether-to-use-end-to-end-learning" class="headerlink" title="Whether to use end-to-end learning?"></a>Whether to use end-to-end learning?</h2><p><strong>The benefits of applying end-to-end learning :</strong></p>
+<ul>
+<li>end-to-end learning really just lets the data speak.</li>
+<li>there’s less hand designing of components needed.</li>
+</ul>
+<p><strong>The disadvantages :</strong></p>
+<ul>
+<li>it may need a large amount of data.</li>
+<li>it excludes potentially useful hand designed components, but the hand-designed components could be very helpful if well designed.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/18/2-ml-strategy-2/" data-id="cl56jpsjt004baschbea46qll" data-title="2 ML strategy (2)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-1-ml-strategy-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -201,7 +344,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/18/1-ml-strategy-1/" data-id="cl56gcvt00016lgch8logb12v" data-title="1 ML strategy (1)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/18/1-ml-strategy-1/" data-id="cl56jpsfs0016aschcax05psk" data-title="1 ML strategy (1)" class="article-share-link">Share</a>
       
       
       
@@ -301,7 +444,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/18/3-hyperparameter-tuning/" data-id="cl56gcvur005nlgchdvcx50ju" data-title="3 Hyperparameter tuning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/18/3-hyperparameter-tuning/" data-id="cl56jpsle005kaschgzxig1rx" data-title="3 Hyperparameter tuning" class="article-share-link">Share</a>
       
       
       
@@ -368,7 +511,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/17/2-optimization-algorithms/" data-id="cl56gcvud004hlgch4ik5cfm0" data-title="2 Optimization algorithms" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/17/2-optimization-algorithms/" data-id="cl56jpsk7004gaschd74v0t8x" data-title="2 Optimization algorithms" class="article-share-link">Share</a>
       
       
       
@@ -486,7 +629,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/17/1-practical-aspects-of-deep-learning/" data-id="cl56gcvt30018lgch2w6waive" data-title="1 Practical aspects of Deep Learning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/17/1-practical-aspects-of-deep-learning/" data-id="cl56jpsfy0018asch4htff9pv" data-title="1 Practical aspects of Deep Learning" class="article-share-link">Share</a>
       
       
       
@@ -564,7 +707,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/17/4-deep-neural-networks/" data-id="cl56gcvut005tlgchb97ohap0" data-title="4 Deep Neural Networks" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/17/4-deep-neural-networks/" data-id="cl56jpsln005sasch4wijbqn6" data-title="4 Deep Neural Networks" class="article-share-link">Share</a>
       
       
       
@@ -652,7 +795,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/16/3-shallow-neural-networks/" data-id="cl56gcvus005rlgch8s9o2a99" data-title="3 Shallow Neural Networks" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/16/3-shallow-neural-networks/" data-id="cl56jpsll005qasch3u097hju" data-title="3 Shallow Neural Networks" class="article-share-link">Share</a>
       
       
       
@@ -694,7 +837,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/10/1899/" data-id="cl56gcvu80041lgchf0hr7j8t" data-title="Untitled Post - 32" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/10/1899/" data-id="cl56jpsjn0040aschazjd25en" data-title="Untitled Post - 32" class="article-share-link">Share</a>
       
       
       
@@ -738,7 +881,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/10/routes-stream-to-specified-buffer/" data-id="cl56gcvyq00gglgchd9sxdhio" data-title="Routes stream to specified buffer" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/10/routes-stream-to-specified-buffer/" data-id="cl56jpswq00gjaschg83pfufe" data-title="Routes stream to specified buffer" class="article-share-link">Share</a>
       
       
       
@@ -804,87 +947,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/10/ipc-performance-socket-on-arm/" data-id="cl56gcvwp00btlgchhbllg4ev" data-title="IPC Performance : Socket on ARM" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-2-basics-of-neural-network-programming" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/04/09/2-basics-of-neural-network-programming/" class="article-date">
-  <time class="dt-published" datetime="2019-04-09T09:45:11.000Z" itemprop="datePublished">2019-04-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/09/2-basics-of-neural-network-programming/">2 Basics of Neural Network programming</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>Logistic regression is an algorithm for binary classification.</p>
-<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>[latex]\hat{y} &#x3D; w^Tx + b[&#x2F;latex] : An algorithm that can output a prediction. More formally, you want [latex]\hat{y}[&#x2F;latex] to be the probability of the chance. And [latex]\hat{y}[&#x2F;latex] should really be between zero and one. <strong>sigmoid : [latex]\sigma (z) &#x3D; \frac {1}{1 + e^{-z}}[&#x2F;latex]</strong></p>
-<h2 id="Logistic-Regression-Cost-Function"><a href="#Logistic-Regression-Cost-Function" class="headerlink" title="Logistic Regression Cost Function"></a>Logistic Regression Cost Function</h2><p>To train the parameters W and B of the logistic regression model, we need to define a cost function. <strong>Sigmoid(z) :</strong> [latex]z^{(i)} &#x3D; w^Tx^{(i)} + b[&#x2F;latex] <strong>Loss function :</strong> [latex]L(\hat{y}, y)[&#x2F;latex] (measure how good our output [latex]\hat{y}[&#x2F;latex] is when the true label is [latex]y[&#x2F;latex]) <strong>Loss Function In Logistic Regression :</strong> [latex]L(\hat{y}, y) &#x3D; -ylog(\hat{y}) - (1-y)log(1 - \hat{y})[&#x2F;latex] (It measures how well you’re doing on a <strong>single</strong> training example) <strong>Cost Function :</strong> [latex]J(w,b) &#x3D; \frac {1}{m} \sum_{i&#x3D;1}^{m} L(\hat{y} ^{(i)}, y ^{(i)}) &#x3D;\frac {1}{m} \sum_{i&#x3D;1}^{m} (-y ^{(i)}log\hat{y} ^{(i)} - (1-y ^{(i)})log(1 - \hat{y} ^{(i)}))[&#x2F;latex] (It measures how well you’re doing an <strong>entire</strong> training set)</p>
-<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p><strong>Cost function J is a convex function</strong></p>
-<ol>
-<li>Random initialization</li>
-<li>takes a step in the steepest downhill direction repeatedly [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex]</li>
-<li>converge to this global optimum or get to something close to the global optimum</li>
-</ol>
-<h2 id="Derivatives"><a href="#Derivatives" class="headerlink" title="Derivatives"></a>Derivatives</h2><p>Really all you need is an intuitive understanding of this in order to build and successfully apply these algorithms. Watch the videos and then if you could do the homework and complete the programming homework successfully then you can <strong>apply</strong> deep learning.</p>
-<h2 id="More-Derivative-Examples"><a href="#More-Derivative-Examples" class="headerlink" title="More Derivative Examples"></a>More Derivative Examples</h2><ul>
-<li>the derivative of the function just means the slope of a function and the slope of a function can be different at different points on the function</li>
-<li>if you want to look up the derivative of a function you can flip open your calculus textbook or look at Wikipedia and often get a formula for the slope of these functions at different points</li>
-</ul>
-<h2 id="Computation-Graph"><a href="#Computation-Graph" class="headerlink" title="Computation Graph"></a>Computation Graph</h2><p>In order to compute derivatives Opa right to left pass like this kind of going in the opposite direction as the blue arrows that would be most natural for computing the derivatives so the recap the computation graph organizes a computation with this blue arrow left to right computation.</p>
-<h2 id="Derivatives-with-a-Computation-Graph"><a href="#Derivatives-with-a-Computation-Graph" class="headerlink" title="Derivatives with a Computation Graph"></a>Derivatives with a Computation Graph</h2><p>If you want to compute the derivative of this final output variable which uses variable you care most about, with respect to v, then we’re done sort of one step of backpropagation so the called one step backwards in this graph. By changing a you end up increasing v. Well, how much does v increase? It is increased by an amount that’s determined by dv&#x2F;da and then the change in v will cause the value of J to also increase. So, in Calculus this is actually called the chain rule. A computation graph and how there’s a forward or left to right calculation to compute the cost functions. Do you might want to optimize. And a backwards or a right to left calculation to compute derivatives.</p>
-<h2 id="Logistic-Regression-Gradient-Descent"><a href="#Logistic-Regression-Gradient-Descent" class="headerlink" title="Logistic Regression Gradient Descent"></a>Logistic Regression Gradient Descent</h2><p>How to compute derivatives for you to implement gradient descent for logistic regression. [latex]\frac{\mathrm{d} J}{\mathrm{d} u} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} v} \frac{\mathrm{d} v}{\mathrm{d} u} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} b} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} b} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} a} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} a} [&#x2F;latex]   Get you familiar with these ideas so that hopefully you’ll make a bit more sense when we talk about full fledged neural networks. <strong>Logistic Regression [latex]\left\{\begin{matrix} Lost \ Function : &amp; L(\hat y^{(i)}, y^{(i)}) &#x3D; -y^{(i)}log\hat y^{(i)} - (1-y^{(i)})log(1-\hat y^{(i)}) \\ Cost \ Function : &amp; J(w,b) &#x3D; \frac {1}{m} \sum _{i}^{m} L(\hat y^{(i)}, y^{(i)}) \end{matrix}\right.[&#x2F;latex]</strong> <strong>Gredient Descent :</strong> [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex] <strong>Calculus :</strong> [latex]\frac{\mathrm{d} L(a,y)}{\mathrm{d} a} &#x3D; -y&#x2F;a + (1-y)&#x2F;(1-a)[&#x2F;latex] [latex]\left\{\begin{matrix} \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} a} \frac {\mathrm{d} a}{\mathrm{d} z} \\ \frac {\mathrm{d} a}{\mathrm{d} z} &#x3D; a \cdot (1-a) \\ \frac{\mathrm{d} L}{\mathrm{d} a} &#x3D; -\frac{y}{a} + \frac{(1-y)}{(1-a)} \end{matrix}\right.[&#x2F;latex]   [latex]{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L}{\mathrm{d} z} &#x3D; (\frac {\mathrm{d} L}{\mathrm{d} a}) \cdot (\frac {\mathrm{d} a}{\mathrm{d} z} ) &#x3D; (-\frac{y}{a} + \frac{(1-y)}{(1-a)}) \cdot a(1-a) &#x3D; a - y[&#x2F;latex] [latex]\left\{\begin{matrix} {\mathrm{d} w_1} &#x3D; \frac {1}{m} \sum _i^m x_1^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} w_2} &#x3D; \frac {1}{m} \sum _i^m x_2^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} b} &#x3D; \frac {1}{m} \sum _i^m (a^{(i)} - y^{(i)}) \end{matrix}\right.[&#x2F;latex]</p>
-<h2 id="Gradient-Descent-on-m-Examples"><a href="#Gradient-Descent-on-m-Examples" class="headerlink" title="Gradient Descent on m Examples"></a>Gradient Descent on m Examples</h2><p>[latex]J(w,b) &#x3D; \frac {1}{m}\sum _{i&#x3D;1}^m L (a^{(i)}, y^{(i)})[&#x2F;latex]  </p>
-<p>J&#x3D;0;dw1&#x3D;0;dw2&#x3D;0;db&#x3D;0;<br>    for i &#x3D; 1 to m<br>        z(i) &#x3D; wx(i)+b;<br>        a(i) &#x3D; sigmoid(z(i));<br>        J +&#x3D; -[y(i)log(a(i))+(1-y(i)）log(1-a(i));<br>        dz(i) &#x3D; a(i)-y(i);<br>        dw1 +&#x3D; x1(i)dz(i);<br>        dw2 +&#x3D; x2(i)dz(i);<br>        db +&#x3D; dz(i);<br>J&#x2F;&#x3D; m;<br>dw1&#x2F;&#x3D; m;<br>dw2&#x2F;&#x3D; m;<br>db&#x2F;&#x3D; m;<br>w&#x3D;w-alpha*dw<br>b&#x3D;b-alpha*db</p>
-<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><p>Vectorization is basically the art of getting rid of explicit for loops in your code. non-vectorized implementation :</p>
-<p>z&#x3D;0<br>for i in range(n_x)<br>    z+&#x3D;w[i]*x[i]<br>z+&#x3D;b</p>
-<p>vectorized implementation :</p>
-<p>z&#x3D;np.dot(w,x)+b</p>
-<p><em>They’re sometimes called SIMD instructions. This stands for a single instruction multiple data.</em> <strong>The rule of thumb to remember is whenever possible, avoid using explicit four loops.</strong></p>
-<h2 id="More-Examples-of-Vectorization"><a href="#More-Examples-of-Vectorization" class="headerlink" title="More Examples of Vectorization"></a>More Examples of Vectorization</h2><p>It’s not always possible to never use a for-loop, but when you can use a built in function or find some other way to compute whatever you need, you’ll often go faster than if you have an explicit for-loop.</p>
-<h2 id="Vectorizing-Logistic-Regression"><a href="#Vectorizing-Logistic-Regression" class="headerlink" title="Vectorizing Logistic Regression"></a>Vectorizing Logistic Regression</h2><p>How you can vectorize the implementation of logistic regression [latex]\left\{\begin{matrix} z^{(1)} &#x3D; w^Tx^{(1)} + b \\ a^{(1)} &#x3D; \sigma (z^{(1)}) \\ \hat y \end{matrix}\right.[&#x2F;latex]  </p>
-<p>Z&#x3D;np.dot(w.T, X)+b</p>
-<p>It turns out, you can also use vectorization very efficiently to compute the backward propagation, to compute the gradients.</p>
-<h2 id="Vectorizing-Logistic-Regression’s-Gradient"><a href="#Vectorizing-Logistic-Regression’s-Gradient" class="headerlink" title="Vectorizing Logistic Regression’s Gradient"></a>Vectorizing Logistic Regression’s Gradient</h2><p>How you can use vectorization to also perform the gradient computations for all m training samples. [latex]\begin{matrix} Z &#x3D; w^TX + b &#x3D; np.dot(w.T, X) + b\\ A &#x3D; \sigma (Z)\\ {\mathrm{d} Z} &#x3D; A - Y\\ {\mathrm{d} w} &#x3D; \frac {1}{m} * X * {\mathrm{d} z} ^T\\ {\mathrm{d} b} &#x3D; \frac {1}{m} * np.sum({\mathrm{d} Z})\\ w :&#x3D; w - a * {\mathrm{d} w}\\ b :&#x3D; b - a * {\mathrm{d} b} \end{matrix} [&#x2F;latex]  </p>
-<h2 id="Broadcasting-in-Python"><a href="#Broadcasting-in-Python" class="headerlink" title="Broadcasting in Python"></a>Broadcasting in Python</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Broadcasting-in-Python.png"></p>
-<h2 id="A-note-on-python-or-numpy-vectors"><a href="#A-note-on-python-or-numpy-vectors" class="headerlink" title="A note on python or numpy vectors"></a>A note on python or numpy vectors</h2><ul>
-<li>Because with broadcasting and this great amount of flexibility, sometimes it’s possible you can introduce very subtle bugs very strange looking bugs.</li>
-<li>When you’re coding neural networks, that you just not use data structures where the shape is 5, or n, rank 1 array.</li>
-<li>Don’t hesitate to throw in assertion statements like this whenever you feel like it.</li>
-<li>Do not use these rank 1 arrays, you can reshape this.</li>
-</ul>
-<h2 id="Quick-tour-of-Jupyter-x2F-iPython-Notebooks"><a href="#Quick-tour-of-Jupyter-x2F-iPython-Notebooks" class="headerlink" title="Quick tour of Jupyter&#x2F;iPython Notebooks"></a>Quick tour of Jupyter&#x2F;iPython Notebooks</h2><p>It’s so simple that nothing need to say.</p>
-<h2 id="Explanation-of-logistic-regression-cost-function"><a href="#Explanation-of-logistic-regression-cost-function" class="headerlink" title="Explanation of logistic regression cost function"></a>Explanation of logistic regression cost function</h2><p>A quick justification for why we like to use that cost function for logistic regression. [latex]\begin{matrix} \hat y &#x3D; \sigma (w^Tx + b)\\ \sigma (z) &#x3D; \sigma (w^Tx + b) &#x3D; \frac {1}{1+e^{-z}}\\ \hat y &#x3D; p(y &#x3D; 1 x) \end{matrix}[&#x2F;latex]   [latex]\left.\begin{matrix} If \ y &#x3D; 1 \ : &amp; p(yx) &#x3D; \hat y\\ If \ y &#x3D; 0 \ : &amp; p(yx) &#x3D; 1 - \hat y \end{matrix}\right\} p(yx) &#x3D; \hat y(1 - \hat y)^{(1-y)}[&#x2F;latex]   [latex]ylog\hat y + (1-y)log(1-\hat y)[&#x2F;latex]   In statistics, there’s a principle called the <strong>principle of maximum likelihood estimation</strong>, which just means to choose the parameters that maximizes this thing. Or in other words, that maximizes this thing. [latex]P(labels\ in\ training\ set) &#x3D; \prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)})[&#x2F;latex]   [latex]logP(labels\ in\ training\ set) &#x3D; log\prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m}log P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m} -L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]   [latex]J(w,b) &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/09/2-basics-of-neural-network-programming/" data-id="cl56gcvu80043lgchawdh3pdb" data-title="2 Basics of Neural Network programming" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/10/ipc-performance-socket-on-arm/" data-id="cl56jpss400bwascheq0lcsxo" data-title="IPC Performance : Socket on ARM" class="article-share-link">Share</a>
       
       
       
@@ -939,6 +1002,10 @@
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -954,10 +1021,6 @@
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -971,7 +1034,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/12/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,86 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-2-basics-of-neural-network-programming" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/09/2-basics-of-neural-network-programming/" class="article-date">
+  <time class="dt-published" datetime="2019-04-09T09:45:11.000Z" itemprop="datePublished">2019-04-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/09/2-basics-of-neural-network-programming/">2 Basics of Neural Network programming</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>Logistic regression is an algorithm for binary classification.</p>
+<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>[latex]\hat{y} &#x3D; w^Tx + b[&#x2F;latex] : An algorithm that can output a prediction. More formally, you want [latex]\hat{y}[&#x2F;latex] to be the probability of the chance. And [latex]\hat{y}[&#x2F;latex] should really be between zero and one. <strong>sigmoid : [latex]\sigma (z) &#x3D; \frac {1}{1 + e^{-z}}[&#x2F;latex]</strong></p>
+<h2 id="Logistic-Regression-Cost-Function"><a href="#Logistic-Regression-Cost-Function" class="headerlink" title="Logistic Regression Cost Function"></a>Logistic Regression Cost Function</h2><p>To train the parameters W and B of the logistic regression model, we need to define a cost function. <strong>Sigmoid(z) :</strong> [latex]z^{(i)} &#x3D; w^Tx^{(i)} + b[&#x2F;latex] <strong>Loss function :</strong> [latex]L(\hat{y}, y)[&#x2F;latex] (measure how good our output [latex]\hat{y}[&#x2F;latex] is when the true label is [latex]y[&#x2F;latex]) <strong>Loss Function In Logistic Regression :</strong> [latex]L(\hat{y}, y) &#x3D; -ylog(\hat{y}) - (1-y)log(1 - \hat{y})[&#x2F;latex] (It measures how well you’re doing on a <strong>single</strong> training example) <strong>Cost Function :</strong> [latex]J(w,b) &#x3D; \frac {1}{m} \sum_{i&#x3D;1}^{m} L(\hat{y} ^{(i)}, y ^{(i)}) &#x3D;\frac {1}{m} \sum_{i&#x3D;1}^{m} (-y ^{(i)}log\hat{y} ^{(i)} - (1-y ^{(i)})log(1 - \hat{y} ^{(i)}))[&#x2F;latex] (It measures how well you’re doing an <strong>entire</strong> training set)</p>
+<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p><strong>Cost function J is a convex function</strong></p>
+<ol>
+<li>Random initialization</li>
+<li>takes a step in the steepest downhill direction repeatedly [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex]</li>
+<li>converge to this global optimum or get to something close to the global optimum</li>
+</ol>
+<h2 id="Derivatives"><a href="#Derivatives" class="headerlink" title="Derivatives"></a>Derivatives</h2><p>Really all you need is an intuitive understanding of this in order to build and successfully apply these algorithms. Watch the videos and then if you could do the homework and complete the programming homework successfully then you can <strong>apply</strong> deep learning.</p>
+<h2 id="More-Derivative-Examples"><a href="#More-Derivative-Examples" class="headerlink" title="More Derivative Examples"></a>More Derivative Examples</h2><ul>
+<li>the derivative of the function just means the slope of a function and the slope of a function can be different at different points on the function</li>
+<li>if you want to look up the derivative of a function you can flip open your calculus textbook or look at Wikipedia and often get a formula for the slope of these functions at different points</li>
+</ul>
+<h2 id="Computation-Graph"><a href="#Computation-Graph" class="headerlink" title="Computation Graph"></a>Computation Graph</h2><p>In order to compute derivatives Opa right to left pass like this kind of going in the opposite direction as the blue arrows that would be most natural for computing the derivatives so the recap the computation graph organizes a computation with this blue arrow left to right computation.</p>
+<h2 id="Derivatives-with-a-Computation-Graph"><a href="#Derivatives-with-a-Computation-Graph" class="headerlink" title="Derivatives with a Computation Graph"></a>Derivatives with a Computation Graph</h2><p>If you want to compute the derivative of this final output variable which uses variable you care most about, with respect to v, then we’re done sort of one step of backpropagation so the called one step backwards in this graph. By changing a you end up increasing v. Well, how much does v increase? It is increased by an amount that’s determined by dv&#x2F;da and then the change in v will cause the value of J to also increase. So, in Calculus this is actually called the chain rule. A computation graph and how there’s a forward or left to right calculation to compute the cost functions. Do you might want to optimize. And a backwards or a right to left calculation to compute derivatives.</p>
+<h2 id="Logistic-Regression-Gradient-Descent"><a href="#Logistic-Regression-Gradient-Descent" class="headerlink" title="Logistic Regression Gradient Descent"></a>Logistic Regression Gradient Descent</h2><p>How to compute derivatives for you to implement gradient descent for logistic regression. [latex]\frac{\mathrm{d} J}{\mathrm{d} u} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} v} \frac{\mathrm{d} v}{\mathrm{d} u} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} b} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} b} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} a} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} a} [&#x2F;latex]   Get you familiar with these ideas so that hopefully you’ll make a bit more sense when we talk about full fledged neural networks. <strong>Logistic Regression [latex]\left\{\begin{matrix} Lost \ Function : &amp; L(\hat y^{(i)}, y^{(i)}) &#x3D; -y^{(i)}log\hat y^{(i)} - (1-y^{(i)})log(1-\hat y^{(i)}) \\ Cost \ Function : &amp; J(w,b) &#x3D; \frac {1}{m} \sum _{i}^{m} L(\hat y^{(i)}, y^{(i)}) \end{matrix}\right.[&#x2F;latex]</strong> <strong>Gredient Descent :</strong> [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex] <strong>Calculus :</strong> [latex]\frac{\mathrm{d} L(a,y)}{\mathrm{d} a} &#x3D; -y&#x2F;a + (1-y)&#x2F;(1-a)[&#x2F;latex] [latex]\left\{\begin{matrix} \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} a} \frac {\mathrm{d} a}{\mathrm{d} z} \\ \frac {\mathrm{d} a}{\mathrm{d} z} &#x3D; a \cdot (1-a) \\ \frac{\mathrm{d} L}{\mathrm{d} a} &#x3D; -\frac{y}{a} + \frac{(1-y)}{(1-a)} \end{matrix}\right.[&#x2F;latex]   [latex]{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L}{\mathrm{d} z} &#x3D; (\frac {\mathrm{d} L}{\mathrm{d} a}) \cdot (\frac {\mathrm{d} a}{\mathrm{d} z} ) &#x3D; (-\frac{y}{a} + \frac{(1-y)}{(1-a)}) \cdot a(1-a) &#x3D; a - y[&#x2F;latex] [latex]\left\{\begin{matrix} {\mathrm{d} w_1} &#x3D; \frac {1}{m} \sum _i^m x_1^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} w_2} &#x3D; \frac {1}{m} \sum _i^m x_2^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} b} &#x3D; \frac {1}{m} \sum _i^m (a^{(i)} - y^{(i)}) \end{matrix}\right.[&#x2F;latex]</p>
+<h2 id="Gradient-Descent-on-m-Examples"><a href="#Gradient-Descent-on-m-Examples" class="headerlink" title="Gradient Descent on m Examples"></a>Gradient Descent on m Examples</h2><p>[latex]J(w,b) &#x3D; \frac {1}{m}\sum _{i&#x3D;1}^m L (a^{(i)}, y^{(i)})[&#x2F;latex]  </p>
+<p>J&#x3D;0;dw1&#x3D;0;dw2&#x3D;0;db&#x3D;0;<br>    for i &#x3D; 1 to m<br>        z(i) &#x3D; wx(i)+b;<br>        a(i) &#x3D; sigmoid(z(i));<br>        J +&#x3D; -[y(i)log(a(i))+(1-y(i)）log(1-a(i));<br>        dz(i) &#x3D; a(i)-y(i);<br>        dw1 +&#x3D; x1(i)dz(i);<br>        dw2 +&#x3D; x2(i)dz(i);<br>        db +&#x3D; dz(i);<br>J&#x2F;&#x3D; m;<br>dw1&#x2F;&#x3D; m;<br>dw2&#x2F;&#x3D; m;<br>db&#x2F;&#x3D; m;<br>w&#x3D;w-alpha*dw<br>b&#x3D;b-alpha*db</p>
+<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><p>Vectorization is basically the art of getting rid of explicit for loops in your code. non-vectorized implementation :</p>
+<p>z&#x3D;0<br>for i in range(n_x)<br>    z+&#x3D;w[i]*x[i]<br>z+&#x3D;b</p>
+<p>vectorized implementation :</p>
+<p>z&#x3D;np.dot(w,x)+b</p>
+<p><em>They’re sometimes called SIMD instructions. This stands for a single instruction multiple data.</em> <strong>The rule of thumb to remember is whenever possible, avoid using explicit four loops.</strong></p>
+<h2 id="More-Examples-of-Vectorization"><a href="#More-Examples-of-Vectorization" class="headerlink" title="More Examples of Vectorization"></a>More Examples of Vectorization</h2><p>It’s not always possible to never use a for-loop, but when you can use a built in function or find some other way to compute whatever you need, you’ll often go faster than if you have an explicit for-loop.</p>
+<h2 id="Vectorizing-Logistic-Regression"><a href="#Vectorizing-Logistic-Regression" class="headerlink" title="Vectorizing Logistic Regression"></a>Vectorizing Logistic Regression</h2><p>How you can vectorize the implementation of logistic regression [latex]\left\{\begin{matrix} z^{(1)} &#x3D; w^Tx^{(1)} + b \\ a^{(1)} &#x3D; \sigma (z^{(1)}) \\ \hat y \end{matrix}\right.[&#x2F;latex]  </p>
+<p>Z&#x3D;np.dot(w.T, X)+b</p>
+<p>It turns out, you can also use vectorization very efficiently to compute the backward propagation, to compute the gradients.</p>
+<h2 id="Vectorizing-Logistic-Regression’s-Gradient"><a href="#Vectorizing-Logistic-Regression’s-Gradient" class="headerlink" title="Vectorizing Logistic Regression’s Gradient"></a>Vectorizing Logistic Regression’s Gradient</h2><p>How you can use vectorization to also perform the gradient computations for all m training samples. [latex]\begin{matrix} Z &#x3D; w^TX + b &#x3D; np.dot(w.T, X) + b\\ A &#x3D; \sigma (Z)\\ {\mathrm{d} Z} &#x3D; A - Y\\ {\mathrm{d} w} &#x3D; \frac {1}{m} * X * {\mathrm{d} z} ^T\\ {\mathrm{d} b} &#x3D; \frac {1}{m} * np.sum({\mathrm{d} Z})\\ w :&#x3D; w - a * {\mathrm{d} w}\\ b :&#x3D; b - a * {\mathrm{d} b} \end{matrix} [&#x2F;latex]  </p>
+<h2 id="Broadcasting-in-Python"><a href="#Broadcasting-in-Python" class="headerlink" title="Broadcasting in Python"></a>Broadcasting in Python</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Broadcasting-in-Python.png"></p>
+<h2 id="A-note-on-python-or-numpy-vectors"><a href="#A-note-on-python-or-numpy-vectors" class="headerlink" title="A note on python or numpy vectors"></a>A note on python or numpy vectors</h2><ul>
+<li>Because with broadcasting and this great amount of flexibility, sometimes it’s possible you can introduce very subtle bugs very strange looking bugs.</li>
+<li>When you’re coding neural networks, that you just not use data structures where the shape is 5, or n, rank 1 array.</li>
+<li>Don’t hesitate to throw in assertion statements like this whenever you feel like it.</li>
+<li>Do not use these rank 1 arrays, you can reshape this.</li>
+</ul>
+<h2 id="Quick-tour-of-Jupyter-x2F-iPython-Notebooks"><a href="#Quick-tour-of-Jupyter-x2F-iPython-Notebooks" class="headerlink" title="Quick tour of Jupyter&#x2F;iPython Notebooks"></a>Quick tour of Jupyter&#x2F;iPython Notebooks</h2><p>It’s so simple that nothing need to say.</p>
+<h2 id="Explanation-of-logistic-regression-cost-function"><a href="#Explanation-of-logistic-regression-cost-function" class="headerlink" title="Explanation of logistic regression cost function"></a>Explanation of logistic regression cost function</h2><p>A quick justification for why we like to use that cost function for logistic regression. [latex]\begin{matrix} \hat y &#x3D; \sigma (w^Tx + b)\\ \sigma (z) &#x3D; \sigma (w^Tx + b) &#x3D; \frac {1}{1+e^{-z}}\\ \hat y &#x3D; p(y &#x3D; 1 x) \end{matrix}[&#x2F;latex]   [latex]\left.\begin{matrix} If \ y &#x3D; 1 \ : &amp; p(yx) &#x3D; \hat y\\ If \ y &#x3D; 0 \ : &amp; p(yx) &#x3D; 1 - \hat y \end{matrix}\right\} p(yx) &#x3D; \hat y(1 - \hat y)^{(1-y)}[&#x2F;latex]   [latex]ylog\hat y + (1-y)log(1-\hat y)[&#x2F;latex]   In statistics, there’s a principle called the <strong>principle of maximum likelihood estimation</strong>, which just means to choose the parameters that maximizes this thing. Or in other words, that maximizes this thing. [latex]P(labels\ in\ training\ set) &#x3D; \prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)})[&#x2F;latex]   [latex]logP(labels\ in\ training\ set) &#x3D; log\prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m}log P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m} -L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]   [latex]J(w,b) &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/09/2-basics-of-neural-network-programming/" data-id="cl56jpsjp0044aschcrhzgosd" data-title="2 Basics of Neural Network programming" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-1-introduction-to-deep-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -134,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/09/1-introduction-to-deep-learning/" data-id="cl56gcvsy0011lgch8rkadbtf" data-title="1 Introduction to Deep Learning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/09/1-introduction-to-deep-learning/" data-id="cl56jpsfb0011asch6boaalj5" data-title="1 Introduction to Deep Learning" class="article-share-link">Share</a>
       
       
       
@@ -176,7 +256,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/1762/" data-id="cl56gcvu5003vlgchaf53b0gm" data-title="Untitled Post - 31" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/08/1762/" data-id="cl56jpsjl003yasch55athyoq" data-title="Untitled Post - 31" class="article-share-link">Share</a>
       
       
       
@@ -236,7 +316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/18-application-example-photo-ocr/" data-id="cl56gcvu5003xlgchfru5h3nm" data-title="18 Application Example: Photo OCR" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/08/18-application-example-photo-ocr/" data-id="cl56jpsjk003wasch509v9e6x" data-title="18 Application Example: Photo OCR" class="article-share-link">Share</a>
       
       
       
@@ -296,7 +376,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/17-large-scale-machine-learning/" data-id="cl56gcvu3003tlgchcz56b7nf" data-title="17 Large Scale Machine Learning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/08/17-large-scale-machine-learning/" data-id="cl56jpsjc003tasch1yayeipg" data-title="17 Large Scale Machine Learning" class="article-share-link">Share</a>
       
       
       
@@ -351,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/16-recommender-systems/" data-id="cl56gcvu2003rlgch7cqqbpzp" data-title="16 Recommender Systems" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/08/16-recommender-systems/" data-id="cl56jpsj8003raschawlrbhlx" data-title="16 Recommender Systems" class="article-share-link">Share</a>
       
       
       
@@ -417,7 +497,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/15-anomaly-detection/" data-id="cl56gcvu1003olgch78yeeibo" data-title="15 Anomaly Detection" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/08/15-anomaly-detection/" data-id="cl56jpsj5003oaschbq36bqps" data-title="15 Anomaly Detection" class="article-share-link">Share</a>
       
       
       
@@ -460,7 +540,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/" data-id="cl56gcvvv0095lgchfgw4e22m" data-title="Gaussian Distribution vs Multivariate Gaussian Distribution" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/" data-id="cl56jpsq5009aasch4hhjdra7" data-title="Gaussian Distribution vs Multivariate Gaussian Distribution" class="article-share-link">Share</a>
       
       
       
@@ -503,7 +583,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/anomaly-detection-vs-supervised-learning-2/" data-id="cl56gcvv2006llgchd6194r8c" data-title="Anomaly Detection vs. Supervised Learning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/08/anomaly-detection-vs-supervised-learning-2/" data-id="cl56jpsna006tasch682m6xwx" data-title="Anomaly Detection vs. Supervised Learning" class="article-share-link">Share</a>
       
       
       
@@ -548,66 +628,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/04/upgrade-to-visual-studio-2019-build-problems/" data-id="cl56gcw1p00x6lgch7cyd1l1w" data-title="Upgrade to Visual Studio 2019 : Build Problems" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-14-dimensionality-reduction" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/04/03/14-dimensionality-reduction/" class="article-date">
-  <time class="dt-published" datetime="2019-04-03T08:33:22.000Z" itemprop="datePublished">2019-04-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/03/14-dimensionality-reduction/">14 Dimensionality Reduction</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Motivation-I-Data-Compression"><a href="#Motivation-I-Data-Compression" class="headerlink" title="Motivation I Data Compression"></a>Motivation I Data Compression</h2><ol>
-<li>compress the data, use up less computer memory or disk space</li>
-<li>speed up our learning algorithms.</li>
-</ol>
-<h2 id="Motivation-II-Visualization"><a href="#Motivation-II-Visualization" class="headerlink" title="Motivation II Visualization"></a>Motivation II Visualization</h2><p>If you have 50 features, it’s very difficult to plot 50-dimensional data. But if you reduce dimensions, the problems is what these new features means.</p>
-<h2 id="Principal-Component-Analysis-Problem-Formulation"><a href="#Principal-Component-Analysis-Problem-Formulation" class="headerlink" title="Principal Component Analysis Problem Formulation"></a>Principal Component Analysis Problem Formulation</h2><p>By far the most commonly used algorithm is something called principal components analysis or PCA. What PCA does is it tries to find the surface onto which to project the data so as to minimize that. Before applying PCA it’s standard practice to first perform mean normalization and feature scaling.</p>
-<h2 id="Principal-Component-Analysis-Algorithm"><a href="#Principal-Component-Analysis-Algorithm" class="headerlink" title="Principal Component Analysis Algorithm"></a>Principal Component Analysis Algorithm</h2><p><strong>Reduce the dimensions :</strong></p>
-<ol>
-<li>Mean normalization, maybe perform feature scaling as well</li>
-<li>Covariance matrix, [latex]\sum &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{n}(x^{(i)})(x^{(i)})^T[&#x2F;latex]</li>
-<li>Eigenvectors of the matrix sigma</li>
-</ol>
-<h2 id="Choosing-The-Number-Of-Principal-Components"><a href="#Choosing-The-Number-Of-Principal-Components" class="headerlink" title="Choosing The Number Of Principal Components"></a>Choosing The Number Of Principal Components</h2><p>The variation of the training sets : [latex]\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} \right \^2[&#x2F;latex] Try to choose k, a pretty common rule of thumb for choosing k is to choose the smaller values so that the ratio of  the average square projection error and the total variation in the data between these is less than 0.01. [latex]\frac {\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} - x^{(i)}_{approx} \right \^2}{\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} \right \ ^2} &#x3D; 1 - \frac {\sum_{i&#x3D;1}^{k}S_{ii}}{\sum_{i&#x3D;1}^{n}S_{ii}} \leq 1 \%[&#x2F;latex]   [latex]\frac {\sum_{i&#x3D;1}^{k}S_{ii}}{\sum_{i&#x3D;1}^{n}S_{ii}} \geq 99 \%[&#x2F;latex]   After compressed :  [latex]x^{(i)}_{approx} &#x3D; U_{reduce}Z^{(i)}[&#x2F;latex]</p>
-<h2 id="Advice-for-Applying-PCA"><a href="#Advice-for-Applying-PCA" class="headerlink" title="Advice for Applying PCA"></a>Advice for Applying PCA</h2><ul>
-<li>Don’t think of PCA as a way to prevent over-fitting. A much better way to address it, to use regularization. And the reason is that it throws away or reduces the dimension of your data without knowing what the values of y is so that it might throw away some valueable information.</li>
-<li>First consider doing it with your original raw data [latex]x^{(i)}[&#x2F;latex], and only if that doesn’t do what you want, then implement PCA before using [latex]Z^{(i)}[&#x2F;latex].</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/03/14-dimensionality-reduction/" data-id="cl56gcvtx003mlgchgdsc2cw2" data-title="14 Dimensionality Reduction" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/04/upgrade-to-visual-studio-2019-build-problems/" data-id="cl56jpsy100i2aschfgdnbsr8" data-title="Upgrade to Visual Studio 2019 : Build Problems" class="article-share-link">Share</a>
       
       
       
@@ -662,6 +683,10 @@
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -677,10 +702,6 @@
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -694,7 +715,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

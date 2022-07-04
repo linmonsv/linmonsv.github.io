@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/9/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,51 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-android-ndk-c17-support" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/09/19/android-ndk-c17-support/" class="article-date">
+  <time class="dt-published" datetime="2019-09-19T08:56:25.000Z" itemprop="datePublished">2019-09-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Android/">Android</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/09/19/android-ndk-c17-support/">Android NDK C++17 Support</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="build-gradle"><a href="#build-gradle" class="headerlink" title="build.gradle"></a>build.gradle</h2><p>apply plugin: ‘com.android.application’</p>
+<p>android {<br>    compileSdkVersion 29<br>    buildToolsVersion “29.0.2”<br>    defaultConfig {<br>        applicationId “com.example.myapplication”<br>        minSdkVersion 15<br>        targetSdkVersion 29<br>        versionCode 1<br>        versionName “1.0”<br>        testInstrumentationRunner “androidx.test.runner.AndroidJUnitRunner”<br>        externalNativeBuild {<br>            cmake {<br>                cppFlags “-std&#x3D;c++17”<br>            }<br>        }<br>    }<br>    buildTypes {<br>        release {<br>            minifyEnabled false<br>            proguardFiles getDefaultProguardFile(‘proguard-android-optimize.txt’), ‘proguard-rules.pro’<br>        }<br>    }<br>    externalNativeBuild {<br>        cmake {<br>            path “src&#x2F;main&#x2F;cpp&#x2F;CMakeLists.txt”<br>            version “3.10.2”<br>        }<br>    }<br>}</p>
+<p>dependencies {<br>    implementation fileTree(dir: ‘libs’, include: [‘*.jar’])<br>    implementation ‘androidx.appcompat:appcompat:1.0.2’<br>    implementation ‘androidx.constraintlayout:constraintlayout:1.1.3’<br>    testImplementation ‘junit:junit:4.12’<br>    androidTestImplementation ‘androidx.test:runner:1.1.1’<br>    androidTestImplementation ‘androidx.test.espresso:espresso-core:3.1.1’<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/09/19/android-ndk-c17-support/" data-id="cl56jpsmv006jasch3mhy1aiz" data-title="Android NDK C++17 Support" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-android-emulator-server-pc-client" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -104,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/09/19/android-emulator-server-pc-client/" data-id="cl56gcvv0006elgchbn0yh2bb" data-title="Android Emulator-Server / PC-Client" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/09/19/android-emulator-server-pc-client/" data-id="cl56jpsms006haschgmbc1sae" data-title="Android Emulator-Server / PC-Client" class="article-share-link">Share</a>
       
       
       
@@ -154,7 +199,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/08/16/calling-a-c-function-from-lua/" data-id="cl56gcvv60070lgchdrkbcb1u" data-title="Calling a C Function From Lua" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/08/16/calling-a-c-function-from-lua/" data-id="cl56jpsnh0078asch6yzi37ay" data-title="Calling a C Function From Lua" class="article-share-link">Share</a>
       
       
       
@@ -200,7 +245,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/08/16/how-to-connect-internal-and-external-networks-at-the-same-time-windows/" data-id="cl56gcvwb00anlgch0tdgfutp" data-title="How to Connect Internal and External Networks at the same time : Windows" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/08/16/how-to-connect-internal-and-external-networks-at-the-same-time-windows/" data-id="cl56jpsrb00aoasch7sucarzc" data-title="How to Connect Internal and External Networks at the same time : Windows" class="article-share-link">Share</a>
       
       
       
@@ -243,7 +288,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/07/11/profile-linux-png/" data-id="cl56gcvxq00e1lgch967masrb" data-title="Profile : Linux -&gt; PNG" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/07/11/profile-linux-png/" data-id="cl56jpsub00e4asch43hw7bs5" data-title="Profile : Linux -&gt; PNG" class="article-share-link">Share</a>
       
       
       
@@ -286,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/06/28/1link-fatal-error-lnk1104-cannot-open-file-libboost-date-time-vc142-mt-s-x32-1-70-lib/" data-id="cl56gcvu7003zlgch6szk6hic" data-title="1&gt;LINK : fatal error LNK1104: cannot open file &#39;libboost_date_time-vc142-mt-s-x32-1_70.lib&#39;" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/06/28/1link-fatal-error-lnk1104-cannot-open-file-libboost-date-time-vc142-mt-s-x32-1-70-lib/" data-id="cl56jpsjo0042asch8jsu728n" data-title="1&gt;LINK : fatal error LNK1104: cannot open file &#39;libboost_date_time-vc142-mt-s-x32-1_70.lib&#39;" class="article-share-link">Share</a>
       
       
       
@@ -329,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/06/20/mastering-qt-5-second-edition-notes/" data-id="cl56gcvwx00cilgchh96r0grc" data-title="Mastering Qt 5 Second Edition Notes" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/06/20/mastering-qt-5-second-edition-notes/" data-id="cl56jpssk00ceasch7q5lhmxo" data-title="Mastering Qt 5 Second Edition Notes" class="article-share-link">Share</a>
       
       
       
@@ -378,7 +423,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/05/21/speed-up-by-ignoring-stdcout/" data-id="cl56gcvyw00h2lgch8eyk3wls" data-title="Speed up by ignoring std::cout" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/05/21/speed-up-by-ignoring-stdcout/" data-id="cl56jpsx700h8aschbp8l0162" data-title="Speed up by ignoring std::cout" class="article-share-link">Share</a>
       
       
       
@@ -423,7 +468,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/05/17/profile-linux/" data-id="cl56gcvxq00e3lgch95rpcwwb" data-title="Profile : Linux" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/05/17/profile-linux/" data-id="cl56jpsug00e9asch1sfpelgu" data-title="Profile : Linux" class="article-share-link">Share</a>
       
       
       
@@ -466,49 +511,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/05/06/first-line-of-code-version-2-notes/" data-id="cl56gcvvu0092lgch3fpr2vc7" data-title="First Line of Code (Version 2) Notes" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-2107" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/05/06/2107/" class="article-date">
-  <time class="dt-published" datetime="2019-05-06T09:03:54.000Z" itemprop="datePublished">2019-05-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/05/06/2107/">Untitled Post - 35</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/05/06/2107/" data-id="cl56gcvug004mlgchc47e7vdt" data-title="Untitled Post - 35" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/05/06/first-line-of-code-version-2-notes/" data-id="cl56jpspw0095asch57pe3rr2" data-title="First Line of Code (Version 2) Notes" class="article-share-link">Share</a>
       
       
       
@@ -563,6 +566,10 @@
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -578,10 +585,6 @@
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -595,7 +598,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

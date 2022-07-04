@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/13/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,65 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-14-dimensionality-reduction" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/03/14-dimensionality-reduction/" class="article-date">
+  <time class="dt-published" datetime="2019-04-03T08:33:22.000Z" itemprop="datePublished">2019-04-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/03/14-dimensionality-reduction/">14 Dimensionality Reduction</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Motivation-I-Data-Compression"><a href="#Motivation-I-Data-Compression" class="headerlink" title="Motivation I Data Compression"></a>Motivation I Data Compression</h2><ol>
+<li>compress the data, use up less computer memory or disk space</li>
+<li>speed up our learning algorithms.</li>
+</ol>
+<h2 id="Motivation-II-Visualization"><a href="#Motivation-II-Visualization" class="headerlink" title="Motivation II Visualization"></a>Motivation II Visualization</h2><p>If you have 50 features, it’s very difficult to plot 50-dimensional data. But if you reduce dimensions, the problems is what these new features means.</p>
+<h2 id="Principal-Component-Analysis-Problem-Formulation"><a href="#Principal-Component-Analysis-Problem-Formulation" class="headerlink" title="Principal Component Analysis Problem Formulation"></a>Principal Component Analysis Problem Formulation</h2><p>By far the most commonly used algorithm is something called principal components analysis or PCA. What PCA does is it tries to find the surface onto which to project the data so as to minimize that. Before applying PCA it’s standard practice to first perform mean normalization and feature scaling.</p>
+<h2 id="Principal-Component-Analysis-Algorithm"><a href="#Principal-Component-Analysis-Algorithm" class="headerlink" title="Principal Component Analysis Algorithm"></a>Principal Component Analysis Algorithm</h2><p><strong>Reduce the dimensions :</strong></p>
+<ol>
+<li>Mean normalization, maybe perform feature scaling as well</li>
+<li>Covariance matrix, [latex]\sum &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{n}(x^{(i)})(x^{(i)})^T[&#x2F;latex]</li>
+<li>Eigenvectors of the matrix sigma</li>
+</ol>
+<h2 id="Choosing-The-Number-Of-Principal-Components"><a href="#Choosing-The-Number-Of-Principal-Components" class="headerlink" title="Choosing The Number Of Principal Components"></a>Choosing The Number Of Principal Components</h2><p>The variation of the training sets : [latex]\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} \right \^2[&#x2F;latex] Try to choose k, a pretty common rule of thumb for choosing k is to choose the smaller values so that the ratio of  the average square projection error and the total variation in the data between these is less than 0.01. [latex]\frac {\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} - x^{(i)}_{approx} \right \^2}{\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} \right \ ^2} &#x3D; 1 - \frac {\sum_{i&#x3D;1}^{k}S_{ii}}{\sum_{i&#x3D;1}^{n}S_{ii}} \leq 1 \%[&#x2F;latex]   [latex]\frac {\sum_{i&#x3D;1}^{k}S_{ii}}{\sum_{i&#x3D;1}^{n}S_{ii}} \geq 99 \%[&#x2F;latex]   After compressed :  [latex]x^{(i)}_{approx} &#x3D; U_{reduce}Z^{(i)}[&#x2F;latex]</p>
+<h2 id="Advice-for-Applying-PCA"><a href="#Advice-for-Applying-PCA" class="headerlink" title="Advice for Applying PCA"></a>Advice for Applying PCA</h2><ul>
+<li>Don’t think of PCA as a way to prevent over-fitting. A much better way to address it, to use regularization. And the reason is that it throws away or reduces the dimension of your data without knowing what the values of y is so that it might throw away some valueable information.</li>
+<li>First consider doing it with your original raw data [latex]x^{(i)}[&#x2F;latex], and only if that doesn’t do what you want, then implement PCA before using [latex]Z^{(i)}[&#x2F;latex].</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/03/14-dimensionality-reduction/" data-id="cl56jpsj4003maschhzj01jxh" data-title="14 Dimensionality Reduction" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -111,7 +170,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/03/how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet/" data-id="cl56gcvwc00aqlgchf6jj7cft" data-title="How to expose a local server behind a NAT or firewall to the internet" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/03/how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet/" data-id="cl56jpsri00avaschca448dxy" data-title="How to expose a local server behind a NAT or firewall to the internet" class="article-share-link">Share</a>
       
       
       
@@ -170,7 +229,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/02/13-clustering/" data-id="cl56gcvtv003hlgchhkf95vzh" data-title="13 Clustering" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/02/13-clustering/" data-id="cl56jpsj0003haschbw9q3hd9" data-title="13 Clustering" class="article-share-link">Share</a>
       
       
       
@@ -251,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/02/12-support-vector-machines/" data-id="cl56gcvtq0032lgche6ua7gdc" data-title="12 Support Vector Machines" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/02/12-support-vector-machines/" data-id="cl56jpsit0037asch9nyt16n4" data-title="12 Support Vector Machines" class="article-share-link">Share</a>
       
       
       
@@ -320,7 +379,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/01/11-machine-learning-system-design/" data-id="cl56gcvtp002zlgchbsa34i82" data-title="11 Machine Learning System Design" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/04/01/11-machine-learning-system-design/" data-id="cl56jpsi3002zasch28kbhtfw" data-title="11 Machine Learning System Design" class="article-share-link">Share</a>
       
       
       
@@ -363,7 +422,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/27/precision-recall/" data-id="cl56gcvxo00dylgch7dfugdgd" data-title="Precision &amp; Recall" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/27/precision-recall/" data-id="cl56jpsu700dzasch50x71s45" data-title="Precision &amp; Recall" class="article-share-link">Share</a>
       
       
       
@@ -420,7 +479,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/27/10-advice-for-applying-machine-learning/" data-id="cl56gcvt5001dlgch49b50vg2" data-title="10 Advice for Applying Machine Learning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/27/10-advice-for-applying-machine-learning/" data-id="cl56jpsg9001baschgeypf4jz" data-title="10 Advice for Applying Machine Learning" class="article-share-link">Share</a>
       
       
       
@@ -490,7 +549,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/27/9-neural-networks-learning/" data-id="cl56gcvuy0069lgchhz3v64v9" data-title="9 Neural Networks: Learning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/27/9-neural-networks-learning/" data-id="cl56jpsm5006aaschdapjdwzh" data-title="9 Neural Networks: Learning" class="article-share-link">Share</a>
       
       
       
@@ -537,7 +596,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/27/8-neural-networks-representation/" data-id="cl56gcvuy0067lgch6m8x4ces" data-title="8 Neural Networks: Representation" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/27/8-neural-networks-representation/" data-id="cl56jpsm20068aschft4968as" data-title="8 Neural Networks: Representation" class="article-share-link">Share</a>
       
       
       
@@ -596,62 +655,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/27/7-regularization/" data-id="cl56gcvux0063lgch53x4dcqp" data-title="7 Regularization" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-6-logistic-regression" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/03/26/6-logistic-regression/" class="article-date">
-  <time class="dt-published" datetime="2019-03-26T06:40:42.000Z" itemprop="datePublished">2019-03-26</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/26/6-logistic-regression/">6 Logistic Regression</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>Classification : [latex]y &#x3D; [&#x2F;latex] 0 or 1 [latex]h_\theta (x)[&#x2F;latex] can be &gt; 1 or &lt; 0</p>
-<p>Logistic Regression: [latex]0 \leq h_\theta (x) \leq 1 [&#x2F;latex] Logistic regression which has the property that the output, the predictions of logistic regression are always between zero and one. Logistic Regression is actually a classification algorithm.</p>
-<h2 id="Hypothesis-Representation"><a href="#Hypothesis-Representation" class="headerlink" title="Hypothesis Representation"></a>Hypothesis Representation</h2><p><strong>Sigmoid function</strong> : [latex]g(z) &#x3D; \frac {1}{1+e^{-z}}[&#x2F;latex]</p>
-<p>import numpy as np<br>def sigmoid(z):<br>    return 1 &#x2F; (1 + np.exp(-z))</p>
-<h2 id="Decision-Boundary"><a href="#Decision-Boundary" class="headerlink" title="Decision Boundary"></a>Decision Boundary</h2><p>Much higher order polynomials, then it’s possible to show that you can get even more complex decision boundaries and logistic regression can be used to find the zero boundaries.</p>
-<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>How to fit the parameters theta for logistic regression. In particular, I’d like to define the optimization objective or the cost function that we’ll use to fit the parameters. Here’s to supervised learning problem of fitting a logistic regression model.</p>
-<h4 id="Linear-regression-the-cost-function"><a href="#Linear-regression-the-cost-function" class="headerlink" title="Linear regression the cost function"></a>Linear regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} \frac {1}{2}(h_\theta(x^{(i)}) - y^{(i)})^{2} [&#x2F;latex]</p>
-<h4 id="Logistic-regression-the-cost-function"><a href="#Logistic-regression-the-cost-function" class="headerlink" title="Logistic regression the cost function"></a>Logistic regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} Cost(h_\theta(x^{(i)}), y^{(i)}) [&#x2F;latex]</p>
-<p>[latex] Cost(h_\theta (x), y) &#x3D; \begin{cases} -log(h_\theta(x)) &amp; \text{ if } y&#x3D;1 \\ -log(1 - h_\theta(x)) &amp; \text{ if } y&#x3D;0 \end{cases} [&#x2F;latex]</p>
-<h2 id="Simplified-Cost-Function-and-Gradient-Descent"><a href="#Simplified-Cost-Function-and-Gradient-Descent" class="headerlink" title="Simplified Cost Function and Gradient Descent"></a>Simplified Cost Function and Gradient Descent</h2><p>How to implement a fully working version of logistic regression. It’s too hard to notes here , if you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a> A vectorized implementation can update, you know, all of these N plus 1 parameters all in one fell swoop. Feature scaling can help gradient descents converge faster for linear regression. The idea of feature scaling also applies to gradient descent for logistic regression.</p>
-<h2 id="Advanced-Optimization"><a href="#Advanced-Optimization" class="headerlink" title="Advanced Optimization"></a>Advanced Optimization</h2><p>For gradient descent, I guess technically you don’t actually need code to compute the cost function [latex]J_\theta[&#x2F;latex]. You only need code to compute the derivative terms. Conjugate gradient BFGS and L-BFGS are examples of more sophisticated optimization algorithms. <strong>These algorithms have a number of advantages:</strong>*   do not need to manually pick the learning rate alpha.</p>
-<p><em>It is actually entirely possible to use these algorithms successfully and apply to lots of different learning problems without actually understanding the inter-loop of what these algorithms do.</em> For these algorithms also what I would recommend you do is just <strong>use a software library</strong>. Sophisticated optimization library, it makes the just a little bit more opaque and so just maybe a little bit harder to debug. But these algorithms <strong>often run much faster</strong> than gradient descent. If you have <strong>a large machine learning problem</strong>, you can use these algorithms instead of using gradient descent.</p>
-<h2 id="Multiclass-Classification-One-vs-all"><a href="#Multiclass-Classification-One-vs-all" class="headerlink" title="Multiclass Classification_ One-vs-all"></a>Multiclass Classification_ One-vs-all</h2><p>one-versus-all classification Do the same thing for the third class and fit a third classifier H superscript 3 of X and maybe this or give us a classifier that separates the positive and negative examples like that. Basically pick the classifier, pick whichever one of the three classifiers is most confident, or most enthusistically says that it thinks it has a right class. And with this little method you can now take the logistic regression classifier and make it work on multi-class classification problems as well.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/26/6-logistic-regression/" data-id="cl56gcvuw0061lgch6f121sqd" data-title="6 Logistic Regression" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/27/7-regularization/" data-id="cl56jpslz0064asch5rweboly" data-title="7 Regularization" class="article-share-link">Share</a>
       
       
       
@@ -706,6 +710,10 @@
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -721,10 +729,6 @@
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -738,7 +742,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

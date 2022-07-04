@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/26/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,55 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-ha-prepare" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/06/ha-prepare/" class="article-date">
+  <time class="dt-published" datetime="2017-12-06T06:04:33.000Z" itemprop="datePublished">2017-12-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/12/06/ha-prepare/">HA Prepare</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Basic-Environment"><a href="#Basic-Environment" class="headerlink" title="Basic Environment"></a>Basic Environment</h3><p>Intel Core i7 processor</p>
+<p>32GB memory</p>
+<p>512GB SSD + 2TB storage</p>
+<h4 id="For-example："><a href="#For-example：" class="headerlink" title="For example："></a>For example：</h4><p>Dell OptiPlex 7050 Intel® Core i7 7700 32GB (2x16GB) DDR4-2400 512GB Solid State Drive SATA hard drive 2TB SATA hard drive (7200RPM)</p>
+<h3 id="VMware-For-OpenStack-Requirement"><a href="#VMware-For-OpenStack-Requirement" class="headerlink" title="VMware For OpenStack Requirement"></a>VMware For OpenStack Requirement</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/VMware-Virtual-NetWork.png"></p>
+<h4 id="3-Controller"><a href="#3-Controller" class="headerlink" title="3 * Controller"></a>3 * Controller</h4><p>1 CPU (2 Core) 4GB RAM 100 GB Storage 4 NIC(NAT + NAT + HostOnly + HostOnly) Virtualize Intel VT-x&#x2F;EPT or AMD-V&#x2F;RVI <img src="http://www.qinuu.com/wp-content/uploads/2017/12/VMware-Controller.png"></p>
+<h4 id="2-Compute"><a href="#2-Compute" class="headerlink" title="2 * Compute"></a>2 * Compute</h4><p>1 CPU (2 Core) 4GB RAM 100 GB Storage 2 NIC(NAT + HostOnly) Virtualize Intel VT-x&#x2F;EPT or AMD-V&#x2F;RVI <img src="http://www.qinuu.com/wp-content/uploads/2017/12/VMware-Compute-1.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/06/ha-prepare/" data-id="cl56jpsqj009masch8yrke7oq" data-title="HA Prepare" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-controller-network" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -131,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/controller-network/" data-id="cl56gcvvh0084lgcheggpb7a7" data-title="Controller --- Network" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-network/" data-id="cl56jpsow0089asch7cgwhx5a" data-title="Controller --- Network" class="article-share-link">Share</a>
       
       
       
@@ -176,7 +225,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/controller-flavor/" data-id="cl56gcvve007ulgch97ng6d89" data-title="Controller --- Flavor" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-flavor/" data-id="cl56jpsof007xaschc6y50lat" data-title="Controller --- Flavor" class="article-share-link">Share</a>
       
       
       
@@ -223,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/compute-neutron/" data-id="cl56gcvvb007ilgch6kso30vz" data-title="Compute --- Neutron" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/compute-neutron/" data-id="cl56jpsnr007naschevdtbm5w" data-title="Compute --- Neutron" class="article-share-link">Share</a>
       
       
       
@@ -270,7 +319,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/compute-nova/" data-id="cl56gcvvc007mlgchb5qecye1" data-title="Compute --- Nova" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/compute-nova/" data-id="cl56jpsnn007iasch0gvw4en1" data-title="Compute --- Nova" class="article-share-link">Share</a>
       
       
       
@@ -316,7 +365,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/controller-dashboard/" data-id="cl56gcvvd007rlgch91ia385i" data-title="Controller --- Dashboard" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-dashboard/" data-id="cl56jpso2007uaschaewt324w" data-title="Controller --- Dashboard" class="article-share-link">Share</a>
       
       
       
@@ -376,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/controller-neutron/" data-id="cl56gcvvi0086lgch2u2y78ic" data-title="Controller --- Neutron" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-neutron/" data-id="cl56jpsou0087asch1h9batbh" data-title="Controller --- Neutron" class="article-share-link">Share</a>
       
       
       
@@ -440,7 +489,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/controller-nova/" data-id="cl56gcvvk0089lgch94hrdqqf" data-title="Controller --- Nova" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-nova/" data-id="cl56jpsox008caschf3bp4ki2" data-title="Controller --- Nova" class="article-share-link">Share</a>
       
       
       
@@ -496,7 +545,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/controller-glance/" data-id="cl56gcvvf007wlgch98apfcea" data-title="Controller --- Glance" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-glance/" data-id="cl56jpsol007zaschbwsabpg5" data-title="Controller --- Glance" class="article-share-link">Share</a>
       
       
       
@@ -554,59 +603,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/05/controller-keystone/" data-id="cl56gcvvg0081lgcha8owgg3t" data-title="Controller --- KeyStone" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-controller-rabbitmq" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2017/12/04/controller-rabbitmq/" class="article-date">
-  <time class="dt-published" datetime="2017-12-04T09:41:21.000Z" itemprop="datePublished">2017-12-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2017/12/04/controller-rabbitmq/">Controller --- RabbitMQ</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Install-RabbitMQ"><a href="#Install-RabbitMQ" class="headerlink" title="Install RabbitMQ"></a>Install RabbitMQ</h3><p>[root@controller ~]# yum install erlang -y<br>[root@controller ~]# yum install rabbitmq-server -y</p>
-<h3 id="Start-RabbitMQ-Service"><a href="#Start-RabbitMQ-Service" class="headerlink" title="Start RabbitMQ Service"></a>Start RabbitMQ Service</h3><p>[root@controller ~]# systemctl enable rabbitmq-server.service<br>[root@controller ~]# systemctl restart rabbitmq-server.service<br>[root@controller ~]# systemctl status rabbitmq-server.service</p>
-<h3 id="List-RabbitMQ-Service"><a href="#List-RabbitMQ-Service" class="headerlink" title="List RabbitMQ Service"></a>List RabbitMQ Service</h3><p>[root@controller ~]# systemctl list-unit-files grep rabbitmq-server.service<br><strong>rabbitmq-server.service enable</strong></p>
-<h3 id="Configure-RabbitMQ"><a href="#Configure-RabbitMQ" class="headerlink" title="Configure RabbitMQ"></a>Configure RabbitMQ</h3><p>[root@controller ~]# rabbitmqctl add_user openstack password<br>[root@controller ~]# rabbitmqctl set_permissions openstack “.*“ “.*“ “.*“<br>[root@controller ~]# rabbitmqctl set_user_tags openstack administrator<br>[root@controller ~]# rabbitmqctl list_users</p>
-<h3 id="Check-The-Status"><a href="#Check-The-Status" class="headerlink" title="Check The Status"></a>Check The Status</h3><p>[root@controller ~]# netstat -ntlp grep 5672<br>tcp 0 0 0.0.0.0:<strong>15672</strong> 0.0.0.0:* LISTEN 1025&#x2F;beam<br>tcp 0 0 0.0.0.0:25672 0.0.0.0:* LISTEN 1025&#x2F;beam<br>tcp6 0 0 :::5672 :::* LISTEN 1025&#x2F;beam</p>
-<h3 id="List-Plugin"><a href="#List-Plugin" class="headerlink" title="List Plugin"></a>List Plugin</h3><p>[root@controller ~]# &#x2F;usr&#x2F;lib&#x2F;rabbitmq&#x2F;bin&#x2F;rabbitmq-plugins list<br>[E] amqp_client 3.3.5<br>[ ] cowboy 0.5.0-rmq3.3.5-git4b93c2d<br>[ ] eldap 3.3.5-gite309de4<br>[E] mochiweb 2.7.0-rmq3.3.5-git680dba8<br>[ ] rabbitmq_amqp1_0 3.3.5<br>[ ] rabbitmq_auth_backend_ldap 3.3.5<br>[ ] rabbitmq_auth_mechanism_ssl 3.3.5<br>[ ] rabbitmq_consistent_hash_exchange 3.3.5<br>[ ] rabbitmq_federation 3.3.5<br>[ ] rabbitmq_federation_management 3.3.5<br>[E] rabbitmq_management 3.3.5<br>[E] rabbitmq_management_agent 3.3.5<br>[ ] rabbitmq_management_visualiser 3.3.5<br>[ ] rabbitmq_mqtt 3.3.5<br>[ ] rabbitmq_shovel 3.3.5<br>[ ] rabbitmq_shovel_management 3.3.5<br>[ ] rabbitmq_stomp 3.3.5<br>[ ] rabbitmq_test 3.3.5<br>[ ] rabbitmq_tracing 3.3.5<br>[E] rabbitmq_web_dispatch 3.3.5<br>[ ] rabbitmq_web_stomp 3.3.5<br>[ ] rabbitmq_web_stomp_examples 3.3.5<br>[ ] sockjs 0.3.4-rmq3.3.5-git3132eb9<br>[E] webmachine 1.10.3-rmq3.3.5-gite9359c7</p>
-<h3 id="Enable-Plugin"><a href="#Enable-Plugin" class="headerlink" title="Enable Plugin"></a>Enable Plugin</h3><p>[root@controller ~]# &#x2F;usr&#x2F;lib&#x2F;rabbitmq&#x2F;bin&#x2F;rabbitmq-plugins enable rabbitmq_management mochiweb webmachine rabbitmq_web_dispatch amqp_client rabbitmq_management_agent</p>
-<h3 id="Restart-RabbitMQ-Service"><a href="#Restart-RabbitMQ-Service" class="headerlink" title="Restart RabbitMQ Service"></a>Restart RabbitMQ Service</h3><p>[root@controller ~]# systemctl restart rabbitmq-server</p>
-<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p><a target="_blank" rel="noopener" href="http://9.1.1.61:15672/">http://9.1.1.61:15672</a> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/rabbitMQ_login.png"> </p>
-<h4 id="username-x2F-password"><a href="#username-x2F-password" class="headerlink" title="username&#x2F;password :"></a>username&#x2F;password :</h4><p>guest&#x2F;guest openstack&#x2F;password <img src="http://www.qinuu.com/wp-content/uploads/2017/12/rabbitMQ_overview.png"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/04/controller-rabbitmq/" data-id="cl56gcvvl008blgch8a5x706z" data-title="Controller --- RabbitMQ" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-keystone/" data-id="cl56jpson0082aschbu894j8d" data-title="Controller --- KeyStone" class="article-share-link">Share</a>
       
       
       
@@ -661,6 +658,10 @@
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -676,10 +677,6 @@
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -693,7 +690,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

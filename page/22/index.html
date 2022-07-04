@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/22/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,88 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-background-subtraction-vs-frame-differencing" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/05/03/background-subtraction-vs-frame-differencing/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T06:28:38.000Z" itemprop="datePublished">2018-05-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/05/03/background-subtraction-vs-frame-differencing/">Background Subtraction VS Frame Differencing</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Background-Subtraction"><a href="#Background-Subtraction" class="headerlink" title="Background Subtraction"></a>Background Subtraction</h3><pre><code>// Create MOG Background Subtractor object
+pMOG= cv::bgsegm::createBackgroundSubtractorMOG();//new BackgroundSubtractorMOG();
+
+// Create MOG2 Background Subtractor object
+pMOG2 = createBackgroundSubtractorMOG2(20, 16, true);//new BackgroundSubtractorMOG2();
+
+    // Capture the current frame
+    cap &gt;&gt; frame;
+    
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+    
+    // Update the MOG background model based on the current frame
+    pMOG-&gt;apply(frame, fgMaskMOG);
+    
+    // Update the MOG2 background model based on the current frame
+    pMOG2-&gt;apply(frame, fgMaskMOG2);
+    
+    // Show the current frame
+    //imshow(&quot;Frame&quot;, frame);
+    
+    // Show the MOG foreground mask
+    //imshow(&quot;FG Mask MOG&quot;, fgMaskMOG);
+
+    // Show the MOG2 foreground mask
+    imshow(&quot;FG Mask MOG 2&quot;, fgMaskMOG2);
+</code></pre>
+<h3 id="Frame-Differencing"><a href="#Frame-Differencing" class="headerlink" title="Frame Differencing"></a>Frame Differencing</h3><p>Mat frameDiff(Mat prevFrame, Mat curFrame, Mat nextFrame)<br>{<br>    Mat diffFrames1, diffFrames2, output;</p>
+<pre><code>// Compute absolute difference between current frame and the next frame
+absdiff(nextFrame, curFrame, diffFrames1);
+
+// Compute absolute difference between current frame and the previous frame
+absdiff(curFrame, prevFrame, diffFrames2);
+
+// Bitwise &quot;AND&quot; operation between the above two diff images
+bitwise\_and(diffFrames1, diffFrames2, output);
+
+return output;
+</code></pre>
+<p>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/05/03/background-subtraction-vs-frame-differencing/" data-id="cl56jpsn6006oasch83a25mnf" data-title="Background Subtraction VS Frame Differencing" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-tracking-your-ears" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -133,7 +215,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/tracking-your-ears/" data-id="cl56gcw1n00x3lgcheykecena" data-title="Tracking Your Ears" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/tracking-your-ears/" data-id="cl56jpsxx00hxaschats7fkv3" data-title="Tracking Your Ears" class="article-share-link">Share</a>
       
       
       
@@ -226,7 +308,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/overlaying-a-facemask/" data-id="cl56gcvxk00drlgch86opeann" data-title="Overlaying A Facemask" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/overlaying-a-facemask/" data-id="cl56jpsu300duaschfrnd386p" data-title="Overlaying A Facemask" class="article-share-link">Share</a>
       
       
       
@@ -272,7 +354,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/noise-removal-lighting-removal-binarization/" data-id="cl56gcvxa00d5lgchfelugvyl" data-title="Noise removal &amp; Lighting removal &amp; Binarization" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/noise-removal-lighting-removal-binarization/" data-id="cl56jpsth00d8aschgavl7kwr" data-title="Noise removal &amp; Lighting removal &amp; Binarization" class="article-share-link">Share</a>
       
       
       
@@ -325,7 +407,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/" data-id="cl56gcvyt00gslgch1foo1spq" data-title="Segmenting image(The connected components &amp; The findContours function)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/" data-id="cl56jpswx00gtasch34gq01jz" data-title="Segmenting image(The connected components &amp; The findContours function)" class="article-share-link">Share</a>
       
       
       
@@ -454,7 +536,7 @@ for (int i = 0; i &lt; groups.size(); i++)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/the-scene-text-detection-extraction-recognition/" data-id="cl56gcw1j00x0lgch9tfndil1" data-title="The Scene Text Detection &amp; Extraction &amp; Recognition" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/the-scene-text-detection-extraction-recognition/" data-id="cl56jpsxt00hsasch9rmne6o7" data-title="The Scene Text Detection &amp; Extraction &amp; Recognition" class="article-share-link">Share</a>
       
       
       
@@ -500,7 +582,7 @@ for (int i = 0; i &lt; groups.size(); i++)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/tesseract-ocr-api/" data-id="cl56gcvz300hflgch171nh7jr" data-title="Tesseract OCR API" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/tesseract-ocr-api/" data-id="cl56jpsxi00hiaschaxxjhgdn" data-title="Tesseract OCR API" class="article-share-link">Share</a>
       
       
       
@@ -556,7 +638,7 @@ for (int i = 0; i &lt; groups.size(); i++)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/text-segmentation/" data-id="cl56gcvz500hhlgch2ngo9ptm" data-title="Text Segmentation" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/text-segmentation/" data-id="cl56jpsxl00hnaschg6z0aauz" data-title="Text Segmentation" class="article-share-link">Share</a>
       
       
       
@@ -622,7 +704,7 @@ for (int i = 0; i &lt; groups.size(); i++)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/04/12/788/" data-id="cl56gcvux0065lgchd1ow4ssf" data-title="VS2017 OpenSSL x64 Compile &amp; Test Source Code" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/04/12/788/" data-id="cl56jpsm10066aschcysvhg2g" data-title="VS2017 OpenSSL x64 Compile &amp; Test Source Code" class="article-share-link">Share</a>
       
       
       
@@ -730,104 +812,7 @@ for (int i = 0; i &lt; groups.size(); i++)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/" data-id="cl56gcvw1009mlgchcev28eje" data-title="Harris Corner Detector &amp; Shi-Tomasi Corner Detector" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-tracking-specific-color-tracking-object" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/02/13/tracking-specific-color-tracking-object/" class="article-date">
-  <time class="dt-published" datetime="2018-02-13T13:04:47.000Z" itemprop="datePublished">2018-02-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/02/13/tracking-specific-color-tracking-object/">Tracking Specific Color / Tracking Object</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Tracking-Specific-Color"><a href="#Tracking-Specific-Color" class="headerlink" title="Tracking Specific Color"></a>Tracking Specific Color</h3><pre><code>    // Define the range of &quot;blue&quot; color in HSV colorspace
-    Scalar lowerLimit = Scalar(60,100,100);
-    Scalar upperLimit = Scalar(180,255,255);
-    
-    // Threshold the HSV image to get only blue color
-    inRange(hsvImage, lowerLimit, upperLimit, mask);
-    
-    // Compute bitwise-AND of input image and mask
-    bitwise\_and(frame, frame, outputImage, mask=mask);
-    
-    // Run median filter on the output to smoothen it
-    medianBlur(outputImage, outputImage, 5);
-</code></pre>
-<h3 id="Tracking-Object"><a href="#Tracking-Object" class="headerlink" title="Tracking Object"></a>Tracking Object</h3><pre><code>    if(trackingFlag)
-    &#123;
-        // Check for all the values in &#39;hsvimage&#39; that are within the specified range
-        // and put the result in &#39;mask&#39;
-        inRange(hsvImage, Scalar(0, minSaturation, minValue), Scalar(180, 256, maxValue), mask);
-        
-        // Mix the specified channels
-        int channels\[\] = &#123;0, 0&#125;;
-        hueImage.create(hsvImage.size(), hsvImage.depth());
-        mixChannels(&amp;hsvImage, 1, &amp;hueImage, 1, channels, 1);
-        
-        if(trackingFlag &lt; 0)
-        &#123;
-            // Create images based on selected regions of interest
-            Mat roi(hueImage, selectedRect), maskroi(mask, selectedRect);
-            
-            // Compute the histogram and normalize it
-            calcHist(&amp;roi, 1, 0, maskroi, hist, 1, &amp;histSize, &amp;histRanges);
-            normalize(hist, hist, 0, 255, CV\_MINMAX);
-            
-            trackingRect = selectedRect;
-            trackingFlag = 1;
-        &#125;
-        
-        // Compute the histogram back projection
-        calcBackProject(&amp;hueImage, 1, 0, hist, backproj, &amp;histRanges);
-        backproj &amp;= mask;
-        RotatedRect rotatedTrackingRect = CamShift(backproj, trackingRect, TermCriteria(CV\_TERMCRIT\_EPS  CV\_TERMCRIT\_ITER, 10, 1));
-        
-        // Check if the area of trackingRect is too small
-        if(trackingRect.area() &lt;= 1)
-        &#123;
-            // Use an offset value to make sure the trackingRect has a minimum size
-            int cols = backproj.cols, rows = backproj.rows;
-            int offset = MIN(rows, cols) + 1;
-            trackingRect = Rect(trackingRect.x - offset, trackingRect.y - offset, trackingRect.x + offset, trackingRect.y + offset) &amp; Rect(0, 0, cols, rows);
-        &#125;
-        
-        // Draw the ellipse on top of the image
-        ellipse(image, rotatedTrackingRect, Scalar(0,255,0), 3, CV\_AA);
-    &#125;
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/13/tracking-specific-color-tracking-object/" data-id="cl56gcw1j00x1lgch54w49epa" data-title="Tracking Specific Color / Tracking Object" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/" data-id="cl56jpsqo009uasch78e8cgq5" data-title="Harris Corner Detector &amp; Shi-Tomasi Corner Detector" class="article-share-link">Share</a>
       
       
       
@@ -882,6 +867,10 @@ for (int i = 0; i &lt; groups.size(); i++)
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -897,10 +886,6 @@ for (int i = 0; i &lt; groups.size(); i++)
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -914,7 +899,7 @@ for (int i = 0; i &lt; groups.size(); i++)
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

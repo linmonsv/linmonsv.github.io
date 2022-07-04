@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/23/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,103 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-tracking-specific-color-tracking-object" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/02/13/tracking-specific-color-tracking-object/" class="article-date">
+  <time class="dt-published" datetime="2018-02-13T13:04:47.000Z" itemprop="datePublished">2018-02-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/02/13/tracking-specific-color-tracking-object/">Tracking Specific Color / Tracking Object</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Tracking-Specific-Color"><a href="#Tracking-Specific-Color" class="headerlink" title="Tracking Specific Color"></a>Tracking Specific Color</h3><pre><code>    // Define the range of &quot;blue&quot; color in HSV colorspace
+    Scalar lowerLimit = Scalar(60,100,100);
+    Scalar upperLimit = Scalar(180,255,255);
+    
+    // Threshold the HSV image to get only blue color
+    inRange(hsvImage, lowerLimit, upperLimit, mask);
+    
+    // Compute bitwise-AND of input image and mask
+    bitwise\_and(frame, frame, outputImage, mask=mask);
+    
+    // Run median filter on the output to smoothen it
+    medianBlur(outputImage, outputImage, 5);
+</code></pre>
+<h3 id="Tracking-Object"><a href="#Tracking-Object" class="headerlink" title="Tracking Object"></a>Tracking Object</h3><pre><code>    if(trackingFlag)
+    &#123;
+        // Check for all the values in &#39;hsvimage&#39; that are within the specified range
+        // and put the result in &#39;mask&#39;
+        inRange(hsvImage, Scalar(0, minSaturation, minValue), Scalar(180, 256, maxValue), mask);
+        
+        // Mix the specified channels
+        int channels\[\] = &#123;0, 0&#125;;
+        hueImage.create(hsvImage.size(), hsvImage.depth());
+        mixChannels(&amp;hsvImage, 1, &amp;hueImage, 1, channels, 1);
+        
+        if(trackingFlag &lt; 0)
+        &#123;
+            // Create images based on selected regions of interest
+            Mat roi(hueImage, selectedRect), maskroi(mask, selectedRect);
+            
+            // Compute the histogram and normalize it
+            calcHist(&amp;roi, 1, 0, maskroi, hist, 1, &amp;histSize, &amp;histRanges);
+            normalize(hist, hist, 0, 255, CV\_MINMAX);
+            
+            trackingRect = selectedRect;
+            trackingFlag = 1;
+        &#125;
+        
+        // Compute the histogram back projection
+        calcBackProject(&amp;hueImage, 1, 0, hist, backproj, &amp;histRanges);
+        backproj &amp;= mask;
+        RotatedRect rotatedTrackingRect = CamShift(backproj, trackingRect, TermCriteria(CV\_TERMCRIT\_EPS  CV\_TERMCRIT\_ITER, 10, 1));
+        
+        // Check if the area of trackingRect is too small
+        if(trackingRect.area() &lt;= 1)
+        &#123;
+            // Use an offset value to make sure the trackingRect has a minimum size
+            int cols = backproj.cols, rows = backproj.rows;
+            int offset = MIN(rows, cols) + 1;
+            trackingRect = Rect(trackingRect.x - offset, trackingRect.y - offset, trackingRect.x + offset, trackingRect.y + offset) &amp; Rect(0, 0, cols, rows);
+        &#125;
+        
+        // Draw the ellipse on top of the image
+        ellipse(image, rotatedTrackingRect, Scalar(0,255,0), 3, CV\_AA);
+    &#125;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/02/13/tracking-specific-color-tracking-object/" data-id="cl56jpsxv00huaschgsrs5gxp" data-title="Tracking Specific Color / Tracking Object" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-show-histogram-equalize-histogram-lomography-effect-cartoonize-effect" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -268,7 +365,7 @@ imshow(&quot;Result&quot;, result);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/12/show-histogram-equalize-histogram-lomography-effect-cartoonize-effect/" data-id="cl56gcvyt00gqlgchd9ura22r" data-title="Show histogram &amp; Equalize histogram &amp; Lomography effect &amp; Cartoonize effect" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/02/12/show-histogram-equalize-histogram-lomography-effect-cartoonize-effect/" data-id="cl56jpswz00gwaschbiin0i48" data-title="Show histogram &amp; Equalize histogram &amp; Lomography effect &amp; Cartoonize effect" class="article-share-link">Share</a>
       
       
       
@@ -311,7 +408,7 @@ imshow(&quot;Result&quot;, result);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/12/opengl-vtk/" data-id="cl56gcvxg00dhlgch6d6c5nmi" data-title="OpenGL &amp; VTK" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/02/12/opengl-vtk/" data-id="cl56jpstx00dnaschezcl90zo" data-title="OpenGL &amp; VTK" class="article-share-link">Share</a>
       
       
       
@@ -371,7 +468,7 @@ imshow(&quot;Result&quot;, result);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/12/slider-mouse-buttonqt-checkbox-qt-radiobox-qt-push-button/" data-id="cl56gcvyu00gvlgchff1k96j2" data-title="Slider &amp; Mouse &amp; Button(QT_CHECKBOX, QT_RADIOBOX, QT_PUSH_BUTTON)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/02/12/slider-mouse-buttonqt-checkbox-qt-radiobox-qt-push-button/" data-id="cl56jpsx000gyaschb1fnevsh" data-title="Slider &amp; Mouse &amp; Button(QT_CHECKBOX, QT_RADIOBOX, QT_PUSH_BUTTON)" class="article-share-link">Share</a>
       
       
       
@@ -423,7 +520,7 @@ imshow(&quot;Result&quot;, result);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/12/opencv-simple-gui-qt/" data-id="cl56gcvxd00dclgchahrv90ro" data-title="OpenCV Simple GUI / QT" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/02/12/opencv-simple-gui-qt/" data-id="cl56jpstq00dfaschajkv1g1a" data-title="OpenCV Simple GUI / QT" class="article-share-link">Share</a>
       
       
       
@@ -467,7 +564,7 @@ imshow(&quot;Result&quot;, result);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/12/opencv-data-storage/" data-id="cl56gcvxc00dalgchaki60bd4" data-title="OpenCV Data Storage" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/02/12/opencv-data-storage/" data-id="cl56jpsti00daasch3brl9y6w" data-title="OpenCV Data Storage" class="article-share-link">Share</a>
       
       
       
@@ -516,7 +613,7 @@ imshow(&quot;Result&quot;, result);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/12/read-write-image-read-videofile-camera-show/" data-id="cl56gcvyp00gblgch3mpl25bw" data-title="Read/Write Image and Read VideoFile/Camera and Show It" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/02/12/read-write-image-read-videofile-camera-show/" data-id="cl56jpswn00geaschfyq6f70s" data-title="Read/Write Image and Read VideoFile/Camera and Show It" class="article-share-link">Share</a>
       
       
       
@@ -650,7 +747,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/01/28/install-opencv3-with-vtk-with-opengl-macos-high-sierra-10-13-3/" data-id="cl56gcvwo00brlgchaop7di1m" data-title="How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/01/28/install-opencv3-with-vtk-with-opengl-macos-high-sierra-10-13-3/" data-id="cl56jpss100brasch39xrhdkx" data-title="How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3" class="article-share-link">Share</a>
       
       
       
@@ -698,7 +795,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/01/21/install-tesseract-languages/" data-id="cl56gcvwq00bwlgchdgha572v" data-title="How to Install Tesseract With All Languages" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/01/21/install-tesseract-languages/" data-id="cl56jpss600bzasch51dc1fys" data-title="How to Install Tesseract With All Languages" class="article-share-link">Share</a>
       
       
       
@@ -742,54 +839,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/01/12/cross-compiler-toolchain-arm-linux-gcc-32bit-centos-7-64-bit/" data-id="cl56gcvvo008qlgchh6r13geg" data-title="Cross Compiler Toolchain (arm-linux-gcc 32bit &amp; CentOS 7 64 Bit)" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-use-microsofts-remotefx-feature-hyper-v" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2017/12/26/use-microsofts-remotefx-feature-hyper-v/" class="article-date">
-  <time class="dt-published" datetime="2017-12-26T01:56:57.000Z" itemprop="datePublished">2017-12-26</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2017/12/26/use-microsofts-remotefx-feature-hyper-v/">How to Use Microsoft&#39;s RemoteFX Feature In Hyper-V</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Requirement-Example"><a href="#Requirement-Example" class="headerlink" title="Requirement Example"></a>Requirement Example</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Host-Hardware.png"> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/Host-OS-Version.png"></p>
-<h3 id="Turn-On-Hyper-V-Host"><a href="#Turn-On-Hyper-V-Host" class="headerlink" title="Turn On Hyper-V(Host)"></a>Turn On Hyper-V(Host)</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Host-TurnOn-Hyper-V.gif"></p>
-<h3 id="Turn-On-RemoteFX-Host"><a href="#Turn-On-RemoteFX-Host" class="headerlink" title="Turn On RemoteFX(Host)"></a>Turn On RemoteFX(Host)</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Host-TurnOn-RemoteFX.gif"></p>
-<h3 id="Turn-On-RemoteFX-Client"><a href="#Turn-On-RemoteFX-Client" class="headerlink" title="Turn On RemoteFX(Client)"></a>Turn On RemoteFX(Client)</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Client-TurnOn-RemoteFX.gif"></p>
-<h3 id="Check-Display-adapters-Client"><a href="#Check-Display-adapters-Client" class="headerlink" title="Check Display adapters(Client)"></a>Check Display adapters(Client)</h3><p>The Display adapters Must be “Microsoft RemoteFX Graphics Device - WDDM” <img src="http://www.qinuu.com/wp-content/uploads/2017/12/Client-Display-adapters.png"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/26/use-microsofts-remotefx-feature-hyper-v/" data-id="cl56gcw1r00xalgche5ud3bor" data-title="How to Use Microsoft&#39;s RemoteFX Feature In Hyper-V" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/01/12/cross-compiler-toolchain-arm-linux-gcc-32bit-centos-7-64-bit/" data-id="cl56jpspd008tasch3sj1fs54" data-title="Cross Compiler Toolchain (arm-linux-gcc 32bit &amp; CentOS 7 64 Bit)" class="article-share-link">Share</a>
       
       
       
@@ -844,6 +894,10 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -859,10 +913,6 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -876,7 +926,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

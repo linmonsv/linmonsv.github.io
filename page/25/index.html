@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/25/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,99 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-highly-available-image-api" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/11/highly-available-image-api/" class="article-date">
+  <time class="dt-published" datetime="2017-12-11T03:00:07.000Z" itemprop="datePublished">2017-12-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/12/11/highly-available-image-api/">Highly available Image API</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Create-Service-For-Glance"><a href="#Create-Service-For-Glance" class="headerlink" title="Create Service For Glance"></a>Create Service For Glance</h3><p>[root@controller1 ~]# openstack service create –name glance –description “OpenStack Image” image<br>+————-+———————————-+<br> Field        Value<br>+————-+———————————-+<br> description  OpenStack Image<br> enabled      True<br> id           3083848116cd4706bc39241f81e3475b<br> name         glance<br> type         image<br>+————-+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne image public <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            f3eb684e2209471795a04f6e73ce120f<br> interface     public<br> region        RegionOne<br> region_id     RegionOne<br> service_id    3083848116cd4706bc39241f81e3475b<br> service_name  glance<br> service_type  image<br> url           <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>+————–+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne image internal <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            bbf93cdcc35645288cfa90ef6239e1b5<br> interface     internal<br> region        RegionOne<br> region_id     RegionOne<br> service_id    3083848116cd4706bc39241f81e3475b<br> service_name  glance<br> service_type  image<br> url           <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>+————–+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne image admin <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            da194b1e1e8148859a45a83fac2c7403<br> interface     admin<br> region        RegionOne<br> region_id     RegionOne<br> service_id    3083848116cd4706bc39241f81e3475b<br> service_name  glance<br> service_type  image<br> url           <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>+————–+———————————-+</p>
+<h3 id="Install-OpenStack-Glance"><a href="#Install-OpenStack-Glance" class="headerlink" title="Install OpenStack Glance"></a>Install OpenStack Glance</h3><p>[root@controller ~]# yum install openstack-glance python-glance -y</p>
+<h3 id="Configure-Glance-Service"><a href="#Configure-Glance-Service" class="headerlink" title="Configure Glance Service"></a>Configure Glance Service</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;glance&#x2F;glance-api.conf{,.bak}<br>[root@controller1 ~]# cp &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf{,.bak}<br>[root@controller ~]# mkdir -p &#x2F;date&#x2F;glance</p>
+<p>[root@controller1 ~]# echo “#</p>
+<blockquote>
+<p>[DEFAULT]<br>debug &#x3D; False<br>verbose &#x3D; True<br>bind_host &#x3D; controller1<br>bind_port &#x3D; 9292<br>auth_region &#x3D; RegionOne<br>registry_client_protocol &#x3D; http<br>[database]<br>connection &#x3D; mysql+pymysql:&#x2F;&#x2F;glance:glance@controller&#x2F;glance<br>[keystone_authtoken]<br>auth_uri &#x3D; <a target="_blank" rel="noopener" href="http://controller:5000/v3">http://controller:5000/v3</a><br>auth_url &#x3D; <a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a><br>memcached_servers &#x3D; controller1:11211,controller2:11211,controller3:11211<br>auth_type &#x3D; password<br>project_domain_name &#x3D; default<br>user_domain_name &#x3D; default<br>project_name &#x3D; service<br>username &#x3D; glance<br>password &#x3D; glance<br>[paste_deploy]<br>flavor &#x3D; keystone<br>[glance_store]<br>stores &#x3D; file,http<br>default_store &#x3D; file<br>filesystem_store_datadir &#x3D; &#x2F;data&#x2F;glance<br>[oslo_messaging_rabbit]<br>rabbit_userid &#x3D;openstack<br>rabbit_password &#x3D; openstack<br>rabbit_durable_queues&#x3D;true<br>rabbit_ha_queues &#x3D; True<br>rabbit_max_retries&#x3D;0<br>rabbit_port &#x3D; 5672<br>rabbit_hosts &#x3D; controller1:5672,controller2:5672,controller3:5672<br>#”&gt;&#x2F;etc&#x2F;glance&#x2F;glance-api.conf</p>
+</blockquote>
+<p>[root@controller1 ~]# echo “#</p>
+<blockquote>
+<p>[DEFAULT]<br>debug &#x3D; False<br>verbose &#x3D; True<br>bind_host &#x3D; controller1<br>bind_port &#x3D; 9191<br>workers &#x3D; 2<br>[database]<br>connection &#x3D; mysql+pymysql:&#x2F;&#x2F;glance:glance@controller&#x2F;glance<br>[keystone_authtoken]<br>auth_uri &#x3D; <a target="_blank" rel="noopener" href="http://controller:5000/v3">http://controller:5000/v3</a><br>auth_url &#x3D; <a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a><br>memcached_servers &#x3D; controller1:11211,controller2:11211,controller3:11211<br>auth_type &#x3D; password<br>project_domain_name &#x3D; default<br>user_domain_name &#x3D; default<br>project_name &#x3D; service<br>username &#x3D; glance<br>password &#x3D; glance<br>[paste_deploy]<br>flavor &#x3D; keystone<br>[oslo_messaging_rabbit]<br>rabbit_userid &#x3D;openstack<br>rabbit_password &#x3D; openstack<br>rabbit_durable_queues&#x3D;true<br>rabbit_ha_queues &#x3D; True<br>rabbit_max_retries&#x3D;0<br>rabbit_port &#x3D; 5672<br>rabbit_hosts &#x3D; controller1:5672,controller2:5672,controller3:5672<br>#”&gt;&#x2F;etc&#x2F;glance&#x2F;glance-registry.conf<br>[root@controller1 ~]# </p>
+</blockquote>
+<h3 id="Synchronize-Database"><a href="#Synchronize-Database" class="headerlink" title="Synchronize Database"></a>Synchronize Database</h3><p>[root@controller1 ~]# su -s &#x2F;bin&#x2F;sh -c “glance-manage db_sync” glance<br>&#x2F;usr&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;oslo_db&#x2F;sqlalchemy&#x2F;enginefacade.py:1328: OsloDBDeprecationWarning: EngineFacade is deprecated; please use oslo_db.sqlalchemy.enginefacade<br>  expire_on_commit&#x3D;expire_on_commit, _conf&#x3D;conf)<br>INFO  [alembic.runtime.migration] Context impl MySQLImpl.<br>INFO  [alembic.runtime.migration] Will assume non-transactional DDL.<br>INFO  [alembic.runtime.migration] Running upgrade  -&gt; liberty, liberty initial<br>INFO  [alembic.runtime.migration] Running upgrade liberty -&gt; mitaka01, add index on created_at and updated_at columns of ‘images’ table<br>INFO  [alembic.runtime.migration] Running upgrade mitaka01 -&gt; mitaka02, update metadef os_nova_server<br>INFO  [alembic.runtime.migration] Running upgrade mitaka02 -&gt; ocata01, add visibility to and remove is_public from images<br>INFO  [alembic.runtime.migration] Running upgrade ocata01 -&gt; pike01, drop glare artifacts tables<br>INFO  [alembic.runtime.migration] Context impl MySQLImpl.<br>INFO  [alembic.runtime.migration] Will assume non-transactional DDL.<br>Upgraded database to: pike01, current revision(s): pike01</p>
+<p>[root@controller1 ~]# mysql -h controller -u glance -pglance -e “use glance;show tables;”<br>+———————————-+<br> Tables_in_glance<br>+———————————-+<br> alembic_version<br> image_locations<br> image_members<br> image_properties<br> image_tags<br> images<br> metadef_namespace_resource_types<br> metadef_namespaces<br> metadef_objects<br> metadef_properties<br> metadef_resource_types<br> metadef_tags<br> migrate_version<br> task_info<br> tasks<br>+———————————-+</p>
+<h3 id="Start-Glance-Service"><a href="#Start-Glance-Service" class="headerlink" title="Start Glance Service"></a>Start Glance Service</h3><p>[root@controller1 ~]# systemctl enable openstack-glance-api openstack-glance-registry<br>Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;openstack-glance-api.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;openstack-glance-api.service.<br>Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;openstack-glance-registry.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;openstack-glance-registry.service.<br>[root@controller1 ~]# systemctl restart openstack-glance-api openstack-glance-registry<br>[root@controller1 ~]# netstat -antpgrep python2<br>tcp        0      0 192.168.220.21:9292     0.0.0.0:*               LISTEN      13125&#x2F;python2<br>tcp        0      0 192.168.220.21:9191     0.0.0.0:*               LISTEN      13126&#x2F;python2<br>[root@controller1 ~]# netstat -antpegrep ‘92929191’<br>tcp        0      0 192.168.220.21:9292     0.0.0.0:*               LISTEN      13125&#x2F;python2<br>tcp        0      0 192.168.220.21:9191     0.0.0.0:*               LISTEN      13126&#x2F;python2<br>tcp       32      0 192.168.220.21:39292    192.168.220.21:2224     CLOSE_WAIT  699&#x2F;ruby<br>tcp        0      0 192.168.220.11:49292    192.168.220.23:2224     ESTABLISHED 699&#x2F;ruby            </p>
+<h3 id="Configure-HAProxy-For-Glance"><a href="#Configure-HAProxy-For-Glance" class="headerlink" title="Configure HAProxy For Glance"></a>Configure HAProxy For Glance</h3><p>[root@controller1 ~]# echo ‘</p>
+<blockquote>
+<p>#glance_api_cluster<br>listen glance_api_cluster<br>  bind controller:9292<br>  #balance  source<br>  option  tcpka<br>  option  httpchk<br>  option  tcplog<br>  server controller1 controller1:9292 check inter 2000 rise 2 fall 5<br>  server controller2 controller2:9292 check inter 2000 rise 2 fall 5<br>  server controller3 controller3:9292 check inter 2000 rise 2 fall 5<br>‘&gt;&gt;&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg<br>[root@controller1 ~]# ‘<br>[root@controller1 ~]# systemctl restart haproxy.service<br>[root@controller1 ~]# netstat -antpgrep haproxy<br>tcp        0      0 192.168.220.20:9292     0.0.0.0:*               LISTEN      13170&#x2F;haproxy<br>tcp        0      0 0.0.0.0:1080            0.0.0.0:*               LISTEN      13170&#x2F;haproxy<br>tcp        0      0 192.168.220.20:35357    0.0.0.0:*               LISTEN      13170&#x2F;haproxy<br>tcp        0      0 192.168.220.20:5000     0.0.0.0:*               LISTEN      13170&#x2F;haproxy<br>tcp        0      0 0.0.0.0:5000            0.0.0.0:*               LISTEN      13170&#x2F;haproxy       </p>
+</blockquote>
+<h3 id="Create-Cirros-Image"><a href="#Create-Cirros-Image" class="headerlink" title="Create Cirros Image"></a>Create Cirros Image</h3><p>[root@controller glance]# wget <a target="_blank" rel="noopener" href="http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86/_64-disk.img">http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86\_64-disk.img</a><br>–2017-12-18 02:06:45–  <a target="_blank" rel="noopener" href="http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86/_64-disk.img">http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86\_64-disk.img</a><br>Resolving download.cirros-cloud.net (download.cirros-cloud.net)… 64.90.42.85, 2607:f298:6:a036::bd6:a72a<br>Connecting to download.cirros-cloud.net (download.cirros-cloud.net)64.90.42.85:80… connected.<br>HTTP request sent, awaiting response… 200 OK<br>Length: 13267968 (13M) [text&#x2F;plain]<br>Saving to: ‘cirros-0.3.5-x86_64-disk.img’</p>
+<p>100%[&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;] 13,267,968  1.04MB&#x2F;s   in 13s    </p>
+<p>2017-12-18 02:06:58 (1023 KB&#x2F;s) - ‘cirros-0.3.5-x86_64-disk.img’ saved [13267968&#x2F;13267968]</p>
+<p>[root@controller1 glance]# openstack image create “cirros” –file cirros-0.3.5-x86_64-disk.img –disk-format qcow2 –container-format bare –public<br>+——————+——————————————————+<br> Field             Value<br>+——————+——————————————————+<br> checksum          f8ab98ff5e73ebab884d80c9dc9c7290<br> container_format  bare<br> created_at        2017-12-18T07:37:04Z<br> disk_format       qcow2<br> file              &#x2F;v2&#x2F;images&#x2F;82e5d7d9-86a0-4266-a599-e50e8c4b0cbe&#x2F;file<br> id                82e5d7d9-86a0-4266-a599-e50e8c4b0cbe<br> min_disk          0<br> min_ram           0<br> name              cirros<br> owner             2291724ac1a54d65844cc5dba56f4803<br> protected         False<br> schema            &#x2F;v2&#x2F;schemas&#x2F;image<br> size              13267968<br> status            active<br> tags<br> updated_at        2017-12-18T07:37:05Z<br> virtual_size      None<br> visibility        public<br>+——————+——————————————————+</p>
+<h3 id="List-OpenStack-Image"><a href="#List-OpenStack-Image" class="headerlink" title="List OpenStack Image"></a>List OpenStack Image</h3><p>[root@controller1 glance]# openstack image list<br>+————————————–+——–+——–+<br> ID                                    Name    Status<br>+————————————–+——–+——–+<br> 82e5d7d9-86a0-4266-a599-e50e8c4b0cbe  cirros  active<br>+————————————–+——–+——–+</p>
+<h3 id="Configure-Other-Controller-Nodes"><a href="#Configure-Other-Controller-Nodes" class="headerlink" title="Configure Other Controller Nodes"></a>Configure Other Controller Nodes</h3><p>[root@controller1 glance]# rsync -avzP -e ‘ssh -p 22’ &#x2F;etc&#x2F;glance&#x2F;* controller2:&#x2F;etc&#x2F;glance&#x2F;<br>sending incremental file list<br>glance-api.conf<br>         883 100%    0.00kB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;44&#x2F;45)<br>glance-api.conf.bak<br>      150676 100%   14.37MB&#x2F;s    0:00:00 (xfer#2, to-check&#x3D;43&#x2F;45)<br>glance-registry.conf<br>         744 100%   72.66kB&#x2F;s    0:00:00 (xfer#3, to-check&#x3D;41&#x2F;45)<br>glance-registry.conf.bak<br>       77404 100%    5.27MB&#x2F;s    0:00:00 (xfer#4, to-check&#x3D;40&#x2F;45)<br>metadefs&#x2F;<br>rootwrap.d&#x2F;</p>
+<p>sent 61739 bytes  received 126 bytes  123730.00 bytes&#x2F;sec<br>total size is 504600  speedup is 8.16</p>
+<p>[root@controller1 glance]# rsync -avzP -e ‘ssh -p 22’ &#x2F;etc&#x2F;glance&#x2F;* controller3:&#x2F;etc&#x2F;glance&#x2F;<br>sending incremental file list<br>glance-api.conf<br>         883 100%    0.00kB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;44&#x2F;45)<br>glance-api.conf.bak<br>      150676 100%   28.74MB&#x2F;s    0:00:00 (xfer#2, to-check&#x3D;43&#x2F;45)<br>glance-registry.conf<br>         744 100%  121.09kB&#x2F;s    0:00:00 (xfer#3, to-check&#x3D;41&#x2F;45)<br>glance-registry.conf.bak<br>       77404 100%    9.23MB&#x2F;s    0:00:00 (xfer#4, to-check&#x3D;40&#x2F;45)<br>metadefs&#x2F;<br>rootwrap.d&#x2F;</p>
+<p>sent 61739 bytes  received 126 bytes  123730.00 bytes&#x2F;sec<br>total size is 504600  speedup is 8.16</p>
+<p>[root@controller1 glance]# rsync -avzP -e ‘ssh -p 22’ &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg controller2:&#x2F;etc&#x2F;haproxy&#x2F;<br>sending incremental file list<br>haproxy.cfg<br>        4376 100%    3.51MB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;0&#x2F;1)</p>
+<p>sent 75 bytes  received 73 bytes  296.00 bytes&#x2F;sec<br>total size is 4376  speedup is 29.57<br>[root@controller1 glance]# rsync -avzP -e ‘ssh -p 22’ &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg controller3:&#x2F;etc&#x2F;haproxy&#x2F;</p>
+<p>sending incremental file list<br>haproxy.cfg<br>        4376 100%    3.51MB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;0&#x2F;1)</p>
+<p>sent 75 bytes  received 73 bytes  296.00 bytes&#x2F;sec<br>total size is 4376  speedup is 29.57<br>[root@controller1 glance]#<br>[root@controller1 glance]# ssh controller2 “sed -i ‘1,10s&#x2F;controller1&#x2F;controller2&#x2F;‘ &#x2F;etc&#x2F;glance&#x2F;glance-api.conf &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf”<br>[root@controller1 glance]# ssh controller3 “sed -i ‘1,10s&#x2F;controller1&#x2F;controller3&#x2F;‘ &#x2F;etc&#x2F;glance&#x2F;glance-api.conf &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf”</p>
+<h3 id="Start-Other-Nodes’s-Service"><a href="#Start-Other-Nodes’s-Service" class="headerlink" title="Start Other Nodes’s Service"></a>Start Other Nodes’s Service</h3><p>[root@controller1 glance]# ssh controller2 “systemctl enable openstack-glance-api openstack-glance-registry”<br>[root@controller1 glance]# ssh controller2 “systemctl restart openstack-glance-api openstack-glance-registry haproxy.service;”<br>[root@controller1 glance]# ssh controller3 “systemctl enable openstack-glance-api openstack-glance-registry”<br>[root@controller1 glance]# ssh controller3 “systemctl restart openstack-glance-api openstack-glance-registry haproxy.service;”</p>
+<h3 id="Add-OpenStack-Image-API-resource-to-Pacemaker"><a href="#Add-OpenStack-Image-API-resource-to-Pacemaker" class="headerlink" title="Add OpenStack Image API resource to Pacemaker"></a>Add OpenStack Image API resource to Pacemaker</h3><p>[root@controller1 glance]# cd &#x2F;usr&#x2F;lib&#x2F;ocf&#x2F;resource.d&#x2F;openstack<br>[root@controller1 openstack]# wget <a target="_blank" rel="noopener" href="https://git.openstack.org/cgit/openstack/openstack-resource-agents/plain/ocf/glance-api">https://git.openstack.org/cgit/openstack/openstack-resource-agents/plain/ocf/glance-api</a><br>–2017-12-18 03:00:41–  <a target="_blank" rel="noopener" href="https://git.openstack.org/cgit/openstack/openstack-resource-agents/plain/ocf/glance-api">https://git.openstack.org/cgit/openstack/openstack-resource-agents/plain/ocf/glance-api</a><br>Resolving git.openstack.org (git.openstack.org)… 104.130.246.128, 2001:4800:7819:103:be76:4eff:fe06:63c<br>Connecting to git.openstack.org (git.openstack.org)104.130.246.128:443… connected.<br>HTTP request sent, awaiting response… 200 OK<br>Length: 11439 (11K) [text&#x2F;plain]<br>Saving to: ‘glance-api’</p>
+<p>100%[&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;] 11,439      –.-K&#x2F;s   in 0s      </p>
+<p>2017-12-18 03:00:42 (31.5 MB&#x2F;s) - ‘glance-api’ saved [11439&#x2F;11439]</p>
+<p>[root@controller1 openstack]# chmod a+rx *<br>[root@controller1 openstack]# ls<br>glance-api  nova-compute-wait  NovaEvacuate</p>
+<h5 id="Create-Local-Repository"><a href="#Create-Local-Repository" class="headerlink" title="Create Local Repository"></a>Create Local Repository</h5><p>[root@localrepo yum.repos.d]# wget <a target="_blank" rel="noopener" href="http://download.opensuse.org/repositories/network:/ha-clustering:/Stable/CentOS/_CentOS-7/network:ha-clustering:Stable.repo">http://download.opensuse.org/repositories/network:/ha-clustering:/Stable/CentOS\_CentOS-7/network:ha-clustering:Stable.repo</a><br>[root@localrepo myrepo]# reposync –repoid&#x3D;network_ha-clustering_Stable<br>[root@localrepo myrepo]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;network_ha-clustering_Stable&#x2F;</p>
+<p>[root@controller1 openstack]# cat &#x2F;etc&#x2F;yum.repos.d&#x2F;network_ha-clustering_Stable.repo<br>[network_ha-clustering_Stable]<br>name&#x3D;Stable High Availability&#x2F;Clustering packages (CentOS_CentOS-7)<br>type&#x3D;rpm-md<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/network/_ha-clustering/_Stable/">http://192.168.220.200/myrepo/network\_ha-clustering\_Stable/</a><br>gpgcheck&#x3D;0<br>gpgkey&#x3D;<a target="_blank" rel="noopener" href="http://download.opensuse.org/repositories/network:/ha-clustering:/Stable/CentOS/_CentOS-7/repodata/repomd.xml.key">http://download.opensuse.org/repositories/network:/ha-clustering:/Stable/CentOS\_CentOS-7/repodata/repomd.xml.key</a><br>enabled&#x3D;1</p>
+<h3 id="Install-CRMSH"><a href="#Install-CRMSH" class="headerlink" title="Install CRMSH"></a>Install CRMSH</h3><p>[root@controller1 openstack]# yum install crmsh -y</p>
+<p>[root@controller1 openstack]# crm configure</p>
+<p>crm(live)configure# primitive p_glance-api ocf:openstack:glance-api \</p>
+<blockquote>
+<p>  params config&#x3D;”&#x2F;etc&#x2F;glance&#x2F;glance-api.conf” \<br>  os_password&#x3D;”admin” \<br>  os_username&#x3D;”admin” os_tenant_name&#x3D;”admin” \<br>  os_auth_url&#x3D;”<a target="_blank" rel="noopener" href="http://controller:5000/v3/&quot;">http://controller:5000/v3/&quot;</a> \<br>  op monitor interval&#x3D;”30s” timeout&#x3D;”30s”</p>
+</blockquote>
+<p>crm(live)configure# commit</p>
+<h3 id="Configure-OpenStack-Image-service-API"><a href="#Configure-OpenStack-Image-service-API" class="headerlink" title="Configure OpenStack Image service API"></a>Configure OpenStack Image service API</h3><p>cp &#x2F;etc&#x2F;glance&#x2F;glance-api.conf{,.bak}</p>
+<p>connection &#x3D; mysql+pymysql:&#x2F;&#x2F;glance:glance@controller&#x2F;glance<br>bind_host &#x3D; controller<br>registry_host &#x3D; controller<br>notifier_strategy &#x3D; rabbit<br>rabbit_host &#x3D; controller</p>
+<p>nova.conf</p>
+<p>[glance]</p>
+<p>api_servers &#x3D; 10.0.0.11</p>
+<h3 id="Configure-OpenStack-services-to-use-the-highly-available-OpenStack-Image-API"><a href="#Configure-OpenStack-services-to-use-the-highly-available-OpenStack-Image-API" class="headerlink" title="Configure OpenStack services to use the highly available OpenStack Image API"></a>Configure OpenStack services to use the highly available OpenStack Image API</h3><p>$ openstack endpoint create –region $KEYSTONE_REGION image public <a target="_blank" rel="noopener" href="http://10.0.0.10:9292/">http://10.0.0.10:9292</a><br>$ openstack endpoint create –region $KEYSTONE_REGION image admin <a target="_blank" rel="noopener" href="http://10.0.0.11:9292/">http://10.0.0.11:9292</a><br>$ openstack endpoint create –region $KEYSTONE_REGION image internal <a target="_blank" rel="noopener" href="http://10.0.0.11:9292/">http://10.0.0.11:9292</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/11/highly-available-image-api/" data-id="cl56jpsqx00a4asch15bm5gqb" data-title="Highly available Image API" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-highly-available-identity-api" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -138,7 +231,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/08/highly-available-identity-api/" data-id="cl56gcvw4009ylgch3umh504b" data-title="Highly available Identity API" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/08/highly-available-identity-api/" data-id="cl56jpsqs00a1aschdrsnbo81" data-title="Highly available Identity API" class="article-share-link">Share</a>
       
       
       
@@ -194,7 +287,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/08/configure-vip-haproxy/" data-id="cl56gcvvd007plgch7wf22mz0" data-title="Configure the VIP &amp; HAProxy" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/08/configure-vip-haproxy/" data-id="cl56jpsnu007saschaaq8gij4" data-title="Configure the VIP &amp; HAProxy" class="article-share-link">Share</a>
       
       
       
@@ -255,7 +348,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/08/pacemaker-cluster-stack/" data-id="cl56gcvxl00dtlgchg0pk0515" data-title="Pacemaker Cluster Stack" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/08/pacemaker-cluster-stack/" data-id="cl56jpsu500dwasch652sgkll" data-title="Pacemaker Cluster Stack" class="article-share-link">Share</a>
       
       
       
@@ -317,7 +410,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/08/rabbitmq-cluster-setup/" data-id="cl56gcvym00g1lgchfov500pm" data-title="RabbitMQ Cluster Setup" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/08/rabbitmq-cluster-setup/" data-id="cl56jpswa00g4asch2haleuir" data-title="RabbitMQ Cluster Setup" class="article-share-link">Share</a>
       
       
       
@@ -394,7 +487,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/08/mariadb-galera-cluster/" data-id="cl56gcvwv00cblgcha81l23h6" data-title="MariaDB Galera Cluster" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/08/mariadb-galera-cluster/" data-id="cl56jpssm00cgaschbiv9fw7b" data-title="MariaDB Galera Cluster" class="article-share-link">Share</a>
       
       
       
@@ -439,7 +532,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/08/memcached-multiple-servers/" data-id="cl56gcvwz00cqlgch30n918bx" data-title="Memcached on Multiple Servers" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/08/memcached-multiple-servers/" data-id="cl56jpst300ctasch9jgfgojv" data-title="Memcached on Multiple Servers" class="article-share-link">Share</a>
       
       
       
@@ -544,7 +637,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/08/install-centos-configure/" data-id="cl56gcvwm00bklgch7c1g94tw" data-title="Install CentOS &amp; Configure" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/08/install-centos-configure/" data-id="cl56jpsry00bnasch25rb0xsb" data-title="Install CentOS &amp; Configure" class="article-share-link">Share</a>
       
       
       
@@ -602,7 +695,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/07/create-local-ntp/" data-id="cl56gcvvm008elgch1392gjgy" data-title="Create Local NTP" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/07/create-local-ntp/" data-id="cl56jpsp0008hasch1hk9fmqb" data-title="Create Local NTP" class="article-share-link">Share</a>
       
       
       
@@ -690,56 +783,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/06/create-local-repository/" data-id="cl56gcvvm008glgch4b6rbv7u" data-title="Create Local Repository" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-ha-prepare" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2017/12/06/ha-prepare/" class="article-date">
-  <time class="dt-published" datetime="2017-12-06T06:04:33.000Z" itemprop="datePublished">2017-12-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2017/12/06/ha-prepare/">HA Prepare</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Basic-Environment"><a href="#Basic-Environment" class="headerlink" title="Basic Environment"></a>Basic Environment</h3><p>Intel Core i7 processor</p>
-<p>32GB memory</p>
-<p>512GB SSD + 2TB storage</p>
-<h4 id="For-example："><a href="#For-example：" class="headerlink" title="For example："></a>For example：</h4><p>Dell OptiPlex 7050 Intel® Core i7 7700 32GB (2x16GB) DDR4-2400 512GB Solid State Drive SATA hard drive 2TB SATA hard drive (7200RPM)</p>
-<h3 id="VMware-For-OpenStack-Requirement"><a href="#VMware-For-OpenStack-Requirement" class="headerlink" title="VMware For OpenStack Requirement"></a>VMware For OpenStack Requirement</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/VMware-Virtual-NetWork.png"></p>
-<h4 id="3-Controller"><a href="#3-Controller" class="headerlink" title="3 * Controller"></a>3 * Controller</h4><p>1 CPU (2 Core) 4GB RAM 100 GB Storage 4 NIC(NAT + NAT + HostOnly + HostOnly) Virtualize Intel VT-x&#x2F;EPT or AMD-V&#x2F;RVI <img src="http://www.qinuu.com/wp-content/uploads/2017/12/VMware-Controller.png"></p>
-<h4 id="2-Compute"><a href="#2-Compute" class="headerlink" title="2 * Compute"></a>2 * Compute</h4><p>1 CPU (2 Core) 4GB RAM 100 GB Storage 2 NIC(NAT + HostOnly) Virtualize Intel VT-x&#x2F;EPT or AMD-V&#x2F;RVI <img src="http://www.qinuu.com/wp-content/uploads/2017/12/VMware-Compute-1.png"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/06/ha-prepare/" data-id="cl56gcvw0009jlgch9oq83iai" data-title="HA Prepare" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/06/create-local-repository/" data-id="cl56jpsp2008jasch5kdp5nl6" data-title="Create Local Repository" class="article-share-link">Share</a>
       
       
       
@@ -794,6 +838,10 @@
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -809,10 +857,6 @@
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -826,7 +870,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

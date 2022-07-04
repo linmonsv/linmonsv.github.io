@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>Water&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Water&#39;s Home">
 <meta property="og:url" content="http://example.com/page/14/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">Water&#39;s Home</a>
       </h1>
       
     </div>
@@ -70,6 +70,61 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-6-logistic-regression" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/26/6-logistic-regression/" class="article-date">
+  <time class="dt-published" datetime="2019-03-26T06:40:42.000Z" itemprop="datePublished">2019-03-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/26/6-logistic-regression/">6 Logistic Regression</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>Classification : [latex]y &#x3D; [&#x2F;latex] 0 or 1 [latex]h_\theta (x)[&#x2F;latex] can be &gt; 1 or &lt; 0</p>
+<p>Logistic Regression: [latex]0 \leq h_\theta (x) \leq 1 [&#x2F;latex] Logistic regression which has the property that the output, the predictions of logistic regression are always between zero and one. Logistic Regression is actually a classification algorithm.</p>
+<h2 id="Hypothesis-Representation"><a href="#Hypothesis-Representation" class="headerlink" title="Hypothesis Representation"></a>Hypothesis Representation</h2><p><strong>Sigmoid function</strong> : [latex]g(z) &#x3D; \frac {1}{1+e^{-z}}[&#x2F;latex]</p>
+<p>import numpy as np<br>def sigmoid(z):<br>    return 1 &#x2F; (1 + np.exp(-z))</p>
+<h2 id="Decision-Boundary"><a href="#Decision-Boundary" class="headerlink" title="Decision Boundary"></a>Decision Boundary</h2><p>Much higher order polynomials, then it’s possible to show that you can get even more complex decision boundaries and logistic regression can be used to find the zero boundaries.</p>
+<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>How to fit the parameters theta for logistic regression. In particular, I’d like to define the optimization objective or the cost function that we’ll use to fit the parameters. Here’s to supervised learning problem of fitting a logistic regression model.</p>
+<h4 id="Linear-regression-the-cost-function"><a href="#Linear-regression-the-cost-function" class="headerlink" title="Linear regression the cost function"></a>Linear regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} \frac {1}{2}(h_\theta(x^{(i)}) - y^{(i)})^{2} [&#x2F;latex]</p>
+<h4 id="Logistic-regression-the-cost-function"><a href="#Logistic-regression-the-cost-function" class="headerlink" title="Logistic regression the cost function"></a>Logistic regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} Cost(h_\theta(x^{(i)}), y^{(i)}) [&#x2F;latex]</p>
+<p>[latex] Cost(h_\theta (x), y) &#x3D; \begin{cases} -log(h_\theta(x)) &amp; \text{ if } y&#x3D;1 \\ -log(1 - h_\theta(x)) &amp; \text{ if } y&#x3D;0 \end{cases} [&#x2F;latex]</p>
+<h2 id="Simplified-Cost-Function-and-Gradient-Descent"><a href="#Simplified-Cost-Function-and-Gradient-Descent" class="headerlink" title="Simplified Cost Function and Gradient Descent"></a>Simplified Cost Function and Gradient Descent</h2><p>How to implement a fully working version of logistic regression. It’s too hard to notes here , if you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a> A vectorized implementation can update, you know, all of these N plus 1 parameters all in one fell swoop. Feature scaling can help gradient descents converge faster for linear regression. The idea of feature scaling also applies to gradient descent for logistic regression.</p>
+<h2 id="Advanced-Optimization"><a href="#Advanced-Optimization" class="headerlink" title="Advanced Optimization"></a>Advanced Optimization</h2><p>For gradient descent, I guess technically you don’t actually need code to compute the cost function [latex]J_\theta[&#x2F;latex]. You only need code to compute the derivative terms. Conjugate gradient BFGS and L-BFGS are examples of more sophisticated optimization algorithms. <strong>These algorithms have a number of advantages:</strong>*   do not need to manually pick the learning rate alpha.</p>
+<p><em>It is actually entirely possible to use these algorithms successfully and apply to lots of different learning problems without actually understanding the inter-loop of what these algorithms do.</em> For these algorithms also what I would recommend you do is just <strong>use a software library</strong>. Sophisticated optimization library, it makes the just a little bit more opaque and so just maybe a little bit harder to debug. But these algorithms <strong>often run much faster</strong> than gradient descent. If you have <strong>a large machine learning problem</strong>, you can use these algorithms instead of using gradient descent.</p>
+<h2 id="Multiclass-Classification-One-vs-all"><a href="#Multiclass-Classification-One-vs-all" class="headerlink" title="Multiclass Classification_ One-vs-all"></a>Multiclass Classification_ One-vs-all</h2><p>one-versus-all classification Do the same thing for the third class and fit a third classifier H superscript 3 of X and maybe this or give us a classifier that separates the positive and negative examples like that. Basically pick the classifier, pick whichever one of the three classifiers is most confident, or most enthusistically says that it thinks it has a right class. And with this little method you can now take the logistic regression classifier and make it work on multi-class classification problems as well.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/26/6-logistic-regression/" data-id="cl56jpslw0062asch3d1qhvrp" data-title="6 Logistic Regression" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-5-octave-tutorial" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -198,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/26/5-octave-tutorial/" data-id="cl56gcvuv005xlgch4mvn4glt" data-title="5 Octave Tutorial" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/26/5-octave-tutorial/" data-id="cl56jpslt0060asch3i1pc3vq" data-title="5 Octave Tutorial" class="article-share-link">Share</a>
       
       
       
@@ -255,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/25/4-linear-regression-with-multiple-variables/" data-id="cl56gcvuv005zlgchb0a4g5v8" data-title="4 Linear Regression with Multiple Variables" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/25/4-linear-regression-with-multiple-variables/" data-id="cl56jpslr005yasch04208m6k" data-title="4 Linear Regression with Multiple Variables" class="article-share-link">Share</a>
       
       
       
@@ -307,7 +362,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/25/3-linear-algebra-review/" data-id="cl56gcvuq005jlgchb5bl4nxa" data-title="3 Linear Algebra Review" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/25/3-linear-algebra-review/" data-id="cl56jpslg005masch7zhoc1qb" data-title="3 Linear Algebra Review" class="article-share-link">Share</a>
       
       
       
@@ -357,7 +412,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/25/2-linear-regression-with-one-variable/" data-id="cl56gcvu90048lgch1urt67e1" data-title="2 Linear Regression with One Variable" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/25/2-linear-regression-with-one-variable/" data-id="cl56jpsjs0049asch5mad19tw" data-title="2 Linear Regression with One Variable" class="article-share-link">Share</a>
       
       
       
@@ -418,7 +473,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/25/1-introduction/" data-id="cl56gcvsz0013lgchds941ykf" data-title="1 Introduction" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/25/1-introduction/" data-id="cl56jpsfp0013asch0ueh9hp8" data-title="1 Introduction" class="article-share-link">Share</a>
       
       
       
@@ -460,7 +515,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/22/1342/" data-id="cl56gcvtw003jlgchg4te6n60" data-title="Untitled Post - 30" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/22/1342/" data-id="cl56jpsj1003jasch3bbvf5hq" data-title="Untitled Post - 30" class="article-share-link">Share</a>
       
       
       
@@ -503,7 +558,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/22/deep-learning-catalog-andrew-ng/" data-id="cl56gcvvp008slgchellq4tgz" data-title="Deep Learning Catalog : Andrew Ng" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/22/deep-learning-catalog-andrew-ng/" data-id="cl56jpspe008vasch4xar1uh0" data-title="Deep Learning Catalog : Andrew Ng" class="article-share-link">Share</a>
       
       
       
@@ -546,7 +601,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/22/machine-learning-catalog-andrew-ng/" data-id="cl56gcvwt00c6lgch87ebakvp" data-title="Machine Learning Catalog : Andrew Ng" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/22/machine-learning-catalog-andrew-ng/" data-id="cl56jpssb00c6asch7bzi6gf2" data-title="Machine Learning Catalog : Andrew Ng" class="article-share-link">Share</a>
       
       
       
@@ -592,51 +647,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/15/cross-compile-wget-with-openssl-for-arm/" data-id="cl56gcvvn008jlgch29m8cp1x" data-title="Cross compile wget with openssl for ARM" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/" class="article-date">
-  <time class="dt-published" datetime="2019-03-15T02:03:40.000Z" itemprop="datePublished">2019-03-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/">./xxx: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.22&#39; not found (required by ./xxx)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1"><a href="#Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1" class="headerlink" title="Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)"></a>Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)</h3><p>cd &#x2F;usr&#x2F;lib<br>mv libstdc++.so.6 libstdc++.so.6.bak<br>ln -s libstdc++.so.6.0.24 libstdc++.so.6<br>chmod 777 libstdc++.so.6</p>
-<h3 id="Now-it-will-be-like-this"><a href="#Now-it-will-be-like-this" class="headerlink" title="Now, it will be like this !"></a>Now, it will be like this !</h3><p>root@imx6ul7d:&#x2F;usr&#x2F;lib# ls -al libstdc++.so.6*<br>lrwxrwxrwx 1 root root      19 Sep 16 23:03 libstdc++.so.6 -&gt; libstdc++.so.6.0.24<br>-rwxr-xr-x 1 root root 1240644 Sep  9 02:04 libstdc++.so.6.0.21<br>-rwxrwxrwx 1 root root 9459568 Sep 16 23:35 libstdc++.so.6.0.24<br>lrwxrwxrwx 1 root root      19 Jan  1  1970 libstdc++.so.6.bak -&gt; libstdc++.so.6.0.21<br>-rwxr-xr-x 1 root root 9459568 Sep 16 23:11 libstdc++.so.6.bak_24</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/" data-id="cl56gcw1w00xklgch5977dfss" data-title="./xxx: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.22&#39; not found (required by ./xxx)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/15/cross-compile-wget-with-openssl-for-arm/" data-id="cl56jpsp3008lasch82lnhxgi" data-title="Cross compile wget with openssl for ARM" class="article-share-link">Share</a>
       
       
       
@@ -691,6 +702,10 @@
       <ul>
         
           <li>
+            <a href="/2022/07/04/Test-Hexo/">Test-Hexo</a>
+          </li>
+        
+          <li>
             <a href="/2022/07/04/hello-world/">Hello World</a>
           </li>
         
@@ -706,10 +721,6 @@
             <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
           </li>
         
-          <li>
-            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -723,7 +734,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 Water<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

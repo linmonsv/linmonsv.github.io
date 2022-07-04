@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>The Scene Text Detection &amp; Extraction &amp; Recognition | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Separate Channelsvector separateChannels(Mat&amp; src){vector channels;&#x2F;&#x2F;Grayscale imagesif (src.type() &#x3D;&#x3D; CV_8U  src.type() &#x3D;&#x3D; CV_8UC1) {channels.push_back(src);channels">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Scene Text Detection &amp; Extraction &amp; Recognition">
+<meta property="og:url" content="http://example.com/2018/05/03/the-scene-text-detection-extraction-recognition/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Separate Channelsvector separateChannels(Mat&amp; src){vector channels;&#x2F;&#x2F;Grayscale imagesif (src.type() &#x3D;&#x3D; CV_8U  src.type() &#x3D;&#x3D; CV_8UC1) {channels.push_back(src);channels">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-05-03T03:49:12.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.331Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-the-scene-text-detection-extraction-recognition" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/05/03/the-scene-text-detection-extraction-recognition/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T03:49:12.000Z" itemprop="datePublished">2018-05-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      The Scene Text Detection &amp; Extraction &amp; Recognition
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Separate-Channels"><a href="#Separate-Channels" class="headerlink" title="Separate Channels"></a>Separate Channels</h3><p>vector separateChannels(Mat&amp; src)<br>{<br>vector channels;<br>&#x2F;&#x2F;Grayscale images<br>if (src.type() &#x3D;&#x3D; CV_8U  src.type() &#x3D;&#x3D; CV_8UC1) {<br>channels.push_back(src);<br>channels.push_back(255-src);<br>return channels;<br>}</p>
+<p>&#x2F;&#x2F;Colored images<br>if (src.type() &#x3D;&#x3D; CV_8UC3) {<br>computeNMChannels(src, channels);<br>int size &#x3D; static_cast(channels.size())-1;<br>for (int c &#x3D; 0; c &lt; size; c++)<br>channels.push_back(255-channels[c]);<br>return channels;<br>}</p>
+<p>&#x2F;&#x2F;Other types<br>cout &lt;&lt; “Invalid image format!” &lt;&lt; endl;<br>exit(-1);<br>} </p>
+<h3 id="Detection-amp-Draw-Groups-Boxes"><a href="#Detection-amp-Draw-Groups-Boxes" class="headerlink" title="Detection &amp; Draw Groups Boxes"></a>Detection &amp; Draw Groups Boxes</h3><pre><code>//Convert the input image to grayscale.
+//Just do Mat processed = input; to work with colors.
+Mat processed;
+cvtColor(input, processed, CV\_RGB2GRAY);
+
+auto channels = separateChannels(processed);
+
+// Create ERFilter objects with the 1st and 2nd stage classifiers
+auto filter1 = createERFilterNM1(loadClassifierNM1(&quot;trained\_classifierNM1.xml&quot;),15,0.00015f,0.13f,0.2f,true,0.1f);
+auto filter2 = createERFilterNM2(loadClassifierNM2(&quot;trained\_classifierNM2.xml&quot;),0.5);
+
+//Extract text regions using Newmann &amp; Matas algorithm
+cout &lt;&lt; &quot;Processing &quot; &lt;&lt; channels.size() &lt;&lt; &quot; channels...&quot; &lt;&lt; endl;
+vector &gt; regions(channels.size());
+for (int c=0; c &lt; channels.size(); c++)
+&#123;
+    cout &lt;&lt; &quot;    Channel &quot; &lt;&lt; (c+1) &lt;&lt; endl;
+    filter1-&gt;run(channels\[c\], regions\[c\]);
+    filter2-&gt;run(channels\[c\], regions\[c\]);
+&#125;
+filter1.release();
+filter2.release();
+
+//Separate character groups from regions
+vector&lt; vector &gt; groups;
+vector groupRects;
+erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_HORIZ);
+//erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_ANY, &quot;trained\_classifier\_erGrouping.xml&quot;, 0.5);
+
+// draw groups boxes
+for (auto rect : groupRects)
+    rectangle(input, rect, Scalar(0, 255, 0), 3); 
+</code></pre>
+<h3 id="Get-Extremal-Region"><a href="#Get-Extremal-Region" class="headerlink" title="Get Extremal Region"></a>Get Extremal Region</h3><p>Mat drawER(const vector &amp;channels, const vector &gt; ®ions, const vector&amp; group, const Rect&amp; rect)<br>{<br>    Mat out &#x3D; Mat::zeros(channels[0].rows+2, channels[0].cols+2, CV_8UC1);</p>
+<pre><code>int flags = 4//4 neighbors
+            + (255 &lt;&lt; 8)//paint mask in white (255)
+</code></pre>
+<ul>
+<li><p>FLOODFILL_FIXED_RANGE&#x2F;&#x2F;fixed range</p>
+</li>
+<li><p>FLOODFILL_MASK_ONLY;&#x2F;&#x2F;Paint just the mask</p>
+<p>  for (int g&#x3D;0; g &lt; group.size(); g++)<br>  {<br>  int idx &#x3D; group[g][0];<br>  ERStat er &#x3D; regions[idx][group[g][1]];<br><br>  &#x2F;&#x2F;Ignore root region<br>  if (er.parent &#x3D;&#x3D; NULL)<br>      continue;<br>  &#x2F;&#x2F;Transform the linear pixel value to row and col<br>  int px &#x3D; er.pixel % channels[idx].cols;<br>  int py &#x3D; er.pixel &#x2F; channels[idx].cols;</p>
+<p>  &#x2F;&#x2F;Create the point and adds it to the list.<br>  Point p(px, py);</p>
+<p>  &#x2F;&#x2F;Draw the extremal region<br>  floodFill(<br>          channels[idx], out,&#x2F;&#x2F;Image and mask<br>          p, Scalar(255),&#x2F;&#x2F;Seed and color<br>          nullptr,&#x2F;&#x2F;No rect<br>          Scalar(er.level),Scalar(0),&#x2F;&#x2F;LoDiff and upDiff<br>          flags&#x2F;&#x2F;Flags<br>      );<br>  }</p>
+<p>  &#x2F;&#x2F;Crop just the text area and find it’s points<br>  out &#x3D; out(rect);</p>
+<p>  vector points;<br>  findNonZero(out, points);<br>  &#x2F;&#x2F;Use deskew and crop to crop it perfectly<br>  return deskewAndCrop(out, minAreaRect(points));</p>
+</li>
+</ul>
+<p>} </p>
+<h3 id="Create-ERFilter"><a href="#Create-ERFilter" class="headerlink" title="Create ERFilter"></a>Create ERFilter</h3><pre><code>// Create ERFilter objects with the 1st and 2nd stage classifiers
+auto filter1 = createERFilterNM1(loadClassifierNM1(&quot;trained\_classifierNM1.xml&quot;),15,0.00015f,0.13f,0.2f,true,0.1f);
+auto filter2 = createERFilterNM2(loadClassifierNM2(&quot;trained\_classifierNM2.xml&quot;),0.5);
+
+//Extract text regions using Newmann &amp; Matas algorithm
+cout &lt;&lt; &quot;Processing &quot; &lt;&lt; channels.size() &lt;&lt; &quot; channels...&quot; &lt;&lt; endl;
+vector &gt; regions(channels.size());
+for (int c=0; c &lt; channels.size(); c++)
+&#123;
+    cout &lt;&lt; &quot;    Channel &quot; &lt;&lt; (c+1) &lt;&lt; endl;
+    filter1-&gt;run(channels\[c\], regions\[c\]);
+    filter2-&gt;run(channels\[c\], regions\[c\]);
+&#125;
+filter1.release();
+filter2.release(); 
+</code></pre>
+<h3 id="Separate-Characters-amp-OCR-gt-Run"><a href="#Separate-Characters-amp-OCR-gt-Run" class="headerlink" title="Separate Characters &amp; OCR-&gt;Run"></a>Separate Characters &amp; OCR-&gt;Run</h3><pre><code>//Separate character groups from regions
+vector&lt; vector &gt; groups;
+vector groupRects;
+erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_HORIZ);
+//erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_ANY, &quot;trained\_classifier\_erGrouping.xml&quot;, 0.5);
+
+// text detection
+cout &lt;&lt; endl &lt;&lt; &quot;Detected text:&quot; &lt;&lt; endl;
+cout &lt;&lt; &quot;-------------&quot; &lt;&lt; endl;
+auto ocr = initOCR(&quot;tesseract&quot;);
+for (int i = 0; i &lt; groups.size(); i++)
+&#123;
+    Mat wordImage = drawER(channels, regions, groups\[i\], groupRects\[i\]);
+
+    string word;
+    ocr-&gt;run(wordImage, word);
+    cout &lt;&lt; word &lt;&lt; endl;
+&#125;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/05/03/the-scene-text-detection-extraction-recognition/" data-id="cl56gcw1j00x0lgch9tfndil1" data-title="The Scene Text Detection &amp; Extraction &amp; Recognition" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Segmenting image(The connected components &amp; The findContours function)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/03/tesseract-ocr-api/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Tesseract OCR API</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

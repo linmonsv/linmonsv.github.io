@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>1 Foundations of Convolutional Neural Networks | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Computer vision Rapid advances in computer vision are enabling brand new applications to be able. Even if you don’t end up building computer vision systems per se, because the computer vision research">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1 Foundations of Convolutional Neural Networks">
+<meta property="og:url" content="http://example.com/2019/04/18/1-foundations-of-convolutional-neural-networks/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Computer vision Rapid advances in computer vision are enabling brand new applications to be able. Even if you don’t end up building computer vision systems per se, because the computer vision research">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-04-18T09:52:26.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.552Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-1-foundations-of-convolutional-neural-networks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/18/1-foundations-of-convolutional-neural-networks/" class="article-date">
+  <time class="dt-published" datetime="2019-04-18T09:52:26.000Z" itemprop="datePublished">2019-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      1 Foundations of Convolutional Neural Networks
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Computer-vision"><a href="#Computer-vision" class="headerlink" title="Computer vision"></a>Computer vision</h2><ul>
+<li>Rapid advances in computer vision are enabling brand new applications to be able.</li>
+<li>Even if you don’t end up building computer vision systems per se, because the computer vision research community has been so creative and so inventive in coming up with new neural network architectures and algorithms, is actually inspire that creates a lot of cross-fertilization into other areas as well.</li>
+</ul>
+<p><strong>Some examples of computer vision problems :</strong></p>
+<ul>
+<li>Image classification, sometimes also called image recognition</li>
+<li>Object detection</li>
+<li>Neural style transfer</li>
+</ul>
+<p><strong>One of the challenges of computer vision problems is that the inputs can get really big.</strong> To do that, you <strong>need</strong> to be the implement the <strong>convolution</strong> operation.</p>
+<h2 id="Edge-detection-example"><a href="#Edge-detection-example" class="headerlink" title="Edge detection example"></a>Edge detection example</h2><ol>
+<li>The early layers a neural network might detect edges.</li>
+<li>And then the somewhat later layers might detect parts of objects.</li>
+<li>And then even later layers maybe detect parts of complete objects</li>
+</ol>
+<ul>
+<li><strong>A Matrix.</strong> And in the pooling, the terminology of convolutional neural networks, this is going to be called a <strong>filter</strong>. Sometimes research papers will call this a <strong>kernel</strong> instead of a filter.</li>
+</ul>
+<h2 id="More-edge-detection"><a href="#More-edge-detection" class="headerlink" title="More edge detection"></a>More edge detection</h2><p><strong>Sobel filter :</strong> [latex]\begin{bmatrix} 1 &amp; 0 &amp; -1\\ 2 &amp; 0 &amp; -2\\ 1 &amp; 0 &amp; -1 \end{bmatrix}[&#x2F;latex]</p>
+<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p>If we have a n-by-n image, and convolve that with an f-by-f filter, then the dimension of the output will be [latex](n-f+1) * (n-f+1)[&#x2F;latex] <strong>The two downsides to this</strong></p>
+<ul>
+<li>every time you apply a convolutional operator, your image shrinks</li>
+<li>if you look the pixel at the corner of the edge, this pixel is touched or used only in one of the outputs</li>
+</ul>
+<p><strong>So to solve both of these problems :</strong> before apply the convolutional operation, you can pad the image padding all around with an extra border of one pixels, that the output becomes [latex](n+2p-f+1)*(n+2p-f+1)[&#x2F;latex]. So this effective maybe not quite throwing away,  but counting less the information from the edge of a corner or the edge of the image is reduced. <strong>How much to pad :</strong> </p>
+<ul>
+<li>Valid convolution : this basically means no padding.</li>
+<li>Same Convolution : that means when you pad,so the output size is the same as the input size.</li>
+</ul>
+<p><strong>And you rarely see an even-numbered filters, filter would be used in computer vision.</strong></p>
+<ul>
+<li>One is that if f was even, then you need some asymmetric padding</li>
+<li>And then second, when you have an odd dimension filter, then it has a central position.</li>
+</ul>
+<h2 id="Strided-convolutions"><a href="#Strided-convolutions" class="headerlink" title="Strided convolutions"></a>Strided convolutions</h2><p>If you have an n x n matrix or <strong>[latex]n * n[&#x2F;latex] image</strong> that you convolve with an <strong>[latex]f* f[&#x2F;latex] filter</strong> with <strong>padding p</strong>, and <strong>stride s</strong>, then the output size will have this dimension. <strong>[latex]\frac{n+2p-f}{s} + 1 \times \frac{n+2p-f}{s} + 1[&#x2F;latex]</strong> In that case, we’re going to round this down. <strong>[latex]\left \lfloor z \right \rfloor[&#x2F;latex]</strong> And technically, what we’re actually doing, really, is sometimes called <strong>cross-correlation</strong> instead of convolution. But in deep learning literature, by convention we just call this a <strong>convolution operation</strong>.</p>
+<h2 id="Convolutions-over-volumes"><a href="#Convolutions-over-volumes" class="headerlink" title="Convolutions over volumes"></a>Convolutions over volumes</h2><p>Convolve this not to a three by three filter as you had previously, but now with also a 3D filter, That’s going to be three by three by three, So, the filter itself will also have three layers. You can now detect two features or maybe several hundred different features, and the output will then have a number of channels equal to the number of features you are detecting.</p>
+<h2 id="One-layer-of-a-convolutional-network"><a href="#One-layer-of-a-convolutional-network" class="headerlink" title="One layer of a convolutional network"></a>One layer of a convolutional network</h2><p>Suppose you have 10 filters not just 2 filters, that are 3 x 3 x 3 in one layer of a neural network. How many parameters does this layer have? Each filter is a three by three by three volume, So three by three by three, so each filter has 27 parameters, right, so it’s 27 numbers to be learned. And then plus the bias, so that was the b parameters, so this gives you 28 parameters. Then all together you would have 28 times 10, so that would be 280 parameters. <strong>size of the output :</strong> [latex]n_H^{[l]} &#x3D; \left \lfloor \frac{n_W^{[l-1]} + 2p^{[l] - f^{[l]}}}{s^{[l]}} + 1 \right \rfloor[&#x2F;latex] <strong>the number of filters :</strong> [latex]f^{[l]} \times f^{[l]} \times n_c^{[l-1]}[&#x2F;latex]</p>
+<h2 id="A-simple-convolution-network-example"><a href="#A-simple-convolution-network-example" class="headerlink" title="A simple convolution network example"></a>A simple convolution network example</h2><p>A lot of the work in designing a convolutional neural net is selecting hyperparameters like these, deciding what’s the filter size, what’s the stride, what’s the padding, and how many filters you use. <strong>Types of layer in a convolutional network :</strong> </p>
+<ul>
+<li>Convolution</li>
+<li>Pooling</li>
+<li>Fully connected</li>
+</ul>
+<h2 id="Pooling-layers"><a href="#Pooling-layers" class="headerlink" title="Pooling layers"></a>Pooling layers</h2><p>Other than convolutional layers, ConvNets often also use <strong>pooling layers to reduce the size of their representation</strong> to speed up computation, as well as to make some of the features it detects a bit more robust Suppose you have a 4x4 input, and you want to apply a type of pooling called max pooling. And the output of this particular implementation of max pooling will be a 2x2 output. And the way you do that is quite simple. Take your 4x4 input and break it into different regions. And I’m going to color the four regions as follows. And then in the output, which is 2x2, <strong>each of the outputs will just be the max from the correspondingly shaded region</strong>. So what the max operation does is so long as the feature is detected anywhere in one of these quadrants, it then remains preserved in the output of Max pooling. So what the max operator does is really says, if this feature is detected anywhere in this filter, then keep a high number. But if this feature is not detected, so maybe this feature doesn’t exist in the upper right hand quadrant, then the max of all those numbers is still itself quite small. So maybe that’s <strong>the intuition behind max pooling</strong>. The main reason people use max pooling is because it’s been found in a lot of experiments to work well. <strong>Average pooling :</strong> So that’s pretty much what you’d expect, which is instead of taking the maxes within each filter, you take the average. So these days <strong>max pooling is used much more</strong> often than average pooling, One thing to note about pooling is that there are <strong>no parameters to learn</strong>, right.</p>
+<h2 id="Convolutional-neural-network-example"><a href="#Convolutional-neural-network-example" class="headerlink" title="Convolutional neural network example"></a>Convolutional neural network example</h2><p>It turns out that in the literature of a ConvNet, there are two conventions which are slightly in consistence about what you call a layer.</p>
+<ul>
+<li>One convention is that this is called one layer, so this will be Layer 1 of the neural network.</li>
+<li>Another convention would be to count the Conv layer as a layer, and the Pool layer as a layer.</li>
+</ul>
+<p><strong>When people report a number of layers in a neural network, usually people report just the number of layers that have weights, that have parameters, and because the pooling layer has no weights, has no parameters, only a few hyper parameters,</strong> Maybe one common guideline is to actually not try to invent your own settings of hyperparameters, but to <strong>look in the literature to see what hyperparameters that you work for others</strong>. And to just choose an architecture that has worked well for someone else, and there’s a chance that will work for your application as well.</p>
+<h2 id="Why-convolutions"><a href="#Why-convolutions" class="headerlink" title="Why convolutions?"></a>Why convolutions?</h2><ul>
+<li><strong>Parameter sharing:</strong> A feature detector(such as a vertical edge detector) that’s useful in one part of the image is probably useful in another part of the image.</li>
+<li><strong>Sparsity of connections:</strong> In each layer, each output value depends only on a smalll number of inputs.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/18/1-foundations-of-convolutional-neural-networks/" data-id="cl56gcvsy000zlgchc5m70xg1" data-title="1 Foundations of Convolutional Neural Networks" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/19/2-deep-convolutional-models-case-studies/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          2 Deep convolutional models : case studies
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/18/2-ml-strategy-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2 ML strategy (2)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

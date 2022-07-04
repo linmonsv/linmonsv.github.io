@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>MNIST : Caffe | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Preparewget http:&#x2F;&#x2F;deeplearning.net&#x2F;data&#x2F;mnist&#x2F;mnist.pkl.gz Loading data from pklimport osimport pickle, gzipfrom matplotlib import pyplot print(‘Loading data from mnist.pkl.gz …’)with gzip.open(‘mnis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MNIST : Caffe">
+<meta property="og:url" content="http://example.com/2019/01/15/mnist-caffe/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Preparewget http:&#x2F;&#x2F;deeplearning.net&#x2F;data&#x2F;mnist&#x2F;mnist.pkl.gz Loading data from pklimport osimport pickle, gzipfrom matplotlib import pyplot print(‘Loading data from mnist.pkl.gz …’)with gzip.open(‘mnis">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/mlp_train-401x1024.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_zoom_out-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_zoom_out-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_1-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_2-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_3-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug-300x225.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_2-300x165.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_3-300x225.png">
+<meta property="article:published_time" content="2019-01-15T09:01:58.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.430Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/mlp_train-401x1024.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-mnist-caffe" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/15/mnist-caffe/" class="article-date">
+  <time class="dt-published" datetime="2019-01-15T09:01:58.000Z" itemprop="datePublished">2019-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      MNIST : Caffe
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>wget <a target="_blank" rel="noopener" href="http://deeplearning.net/data/mnist/mnist.pkl.gz">http://deeplearning.net/data/mnist/mnist.pkl.gz</a></p>
+<h2 id="Loading-data-from-pkl"><a href="#Loading-data-from-pkl" class="headerlink" title="Loading data from pkl"></a>Loading data from pkl</h2><p>import os<br>import pickle, gzip<br>from matplotlib import pyplot</p>
+<p>print(‘Loading data from mnist.pkl.gz …’)<br>with gzip.open(‘mnist.pkl.gz’, ‘rb’) as f:<br>    train_set, valid_set, test_set &#x3D; pickle.load(f)</p>
+<p>imgs_dir &#x3D; ‘mnist’<br>os.system(‘mkdir -p {}’.format(imgs_dir))<br>datasets &#x3D; {‘train’: train_set, ‘val’: valid_set, ‘test’: test_set}</p>
+<p>for dataname, dataset in datasets.items():<br>    print(‘Converting {} dataset …’.format(dataname))<br>    data_dir &#x3D; os.sep.join([imgs_dir, dataname])</p>
+<pre><code>os.system(&#39;mkdir -p &#123;&#125;&#39;.format(data\_dir))
+
+for i, (img, label) in enumerate(zip(\*dataset)):
+
+    filename = &#39;&#123;:0&gt;6d&#125;\_&#123;&#125;.jpg&#39;.format(i, label)
+
+    filepath = os.sep.join(\[data\_dir, filename\])
+
+    img = img.reshape((28, 28))
+
+    pyplot.imsave(filepath, img, cmap=&#39;gray&#39;)
+    if (i + 1) % 10000 == 0:
+        print(&#39;&#123;&#125; images converted!&#39;.format(i + 1))
+</code></pre>
+<h2 id="Prepare-imglist-for-Caffe"><a href="#Prepare-imglist-for-Caffe" class="headerlink" title="Prepare imglist for Caffe"></a>Prepare imglist for Caffe</h2><p>import os<br>import sys</p>
+<p>input_path &#x3D; sys.argv[1].rstrip(os.sep)</p>
+<p>output_path &#x3D; sys.argv[2]</p>
+<p>filenames &#x3D; os.listdir(input_path)<br>with open(output_path, ‘w’) as f:<br>    for filename in filenames:</p>
+<pre><code>    filepath = os.sep.join(\[input\_path, filename\])
+
+    label = filename\[: filename.rfind(&#39;.&#39;)\].split(&#39;\_&#39;)\[1\]
+
+    line = &#39;&#123;&#125; &#123;&#125;\\n&#39;.format(filepath, label)
+    f.write(line)
+</code></pre>
+<h2 id="Convert-to-LMDB"><a href="#Convert-to-LMDB" class="headerlink" title="Convert to LMDB"></a>Convert to LMDB</h2><p>python gen_caffe_imglist.py mnist&#x2F;train train.txt<br>python gen_caffe_imglist.py mnist&#x2F;val val.txt<br>python gen_caffe_imglist.py mnist&#x2F;test test.txt</p>
+<p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; train.txt train_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; val.txt val_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; test.txt test_lmdb –gray –shuffle</p>
+<h2 id="Train-LeNet-5"><a href="#Train-LeNet-5" class="headerlink" title="Train (LeNet-5)"></a>Train (LeNet-5)</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver.prototxt -log_dir .&#x2F;</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/mlp_train-401x1024.png"></p>
+<h2 id="Log-Visualization"><a href="#Log-Visualization" class="headerlink" title="Log Visualization"></a>Log Visualization</h2><h3 id="loss-iters"><a href="#loss-iters" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters.png caffe.ubuntu.d.log</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_zoom_out-300x225.png"></p>
+<h3 id="accuracy-iters"><a href="#accuracy-iters" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters.png caffe.ubuntu.d.log</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_zoom_out-300x225.png"></p>
+<h2 id="Test-Model-Accuracy"><a href="#Test-Model-Accuracy" class="headerlink" title="Test Model Accuracy"></a>Test Model Accuracy</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe test -model lenet_test.prototxt -weights mnist_lenet_iter_36000.caffemodel -iterations 100</p>
+<h2 id="Test-Model-Time"><a href="#Test-Model-Time" class="headerlink" title="Test Model Time"></a>Test Model Time</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe time -model lenet.prototxt</p>
+<h2 id="Augmented-Train"><a href="#Augmented-Train" class="headerlink" title="Augmented, Train"></a>Augmented, Train</h2><h3 id="loss-iters-1"><a href="#loss-iters-1" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_1-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_2-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_3-300x225.png"></p>
+<h3 id="accuracy-iters-1"><a href="#accuracy-iters-1" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_2-300x165.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_3-300x225.png"></p>
+<h2 id="Update-solver-max-iter-Train"><a href="#Update-solver-max-iter-Train" class="headerlink" title="Update solver max_iter, Train"></a>Update solver max_iter, Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver_aug.prototxt -snapshot mnist_aug_lenet_iter_36000.solverstate -log_dir .&#x2F;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/15/mnist-caffe/" data-id="cl56gcvx100cvlgch3jge4jbi" data-title="MNIST : Caffe" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/15/mnist-mxnet/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          MNIST : MXNet
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Install NVIDIA Driver &amp; CUDA : Ubuntu 16.04</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Configure the VIP &amp; HAProxy | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Configure the VIP[root@controller1 ~]# pcs resource create vip ocf:heartbeat:IPaddr2 ip&#x3D;”192.168.220.20” cidr_netmask&#x3D;”24” op monitor interval&#x3D;”30s” Installing HAProxy On Controllers[ro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Configure the VIP &amp; HAProxy">
+<meta property="og:url" content="http://example.com/2017/12/08/configure-vip-haproxy/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Configure the VIP[root@controller1 ~]# pcs resource create vip ocf:heartbeat:IPaddr2 ip&#x3D;”192.168.220.20” cidr_netmask&#x3D;”24” op monitor interval&#x3D;”30s” Installing HAProxy On Controllers[ro">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/HAProxy-V1.gif">
+<meta property="article:published_time" content="2017-12-08T03:55:01.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.225Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/HAProxy-V1.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-configure-vip-haproxy" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/08/configure-vip-haproxy/" class="article-date">
+  <time class="dt-published" datetime="2017-12-08T03:55:01.000Z" itemprop="datePublished">2017-12-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Configure the VIP &amp; HAProxy
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Configure-the-VIP"><a href="#Configure-the-VIP" class="headerlink" title="Configure the VIP"></a>Configure the VIP</h3><p>[root@controller1 ~]# pcs resource create vip ocf:heartbeat:IPaddr2 ip&#x3D;”192.168.220.20” cidr_netmask&#x3D;”24” op monitor interval&#x3D;”30s”</p>
+<h3 id="Installing-HAProxy-On-Controllers"><a href="#Installing-HAProxy-On-Controllers" class="headerlink" title="Installing HAProxy On Controllers"></a>Installing HAProxy On Controllers</h3><p>[root@controller ~]# yum install haproxy httpd -y</p>
+<h3 id="Configuring-HAProxy"><a href="#Configuring-HAProxy" class="headerlink" title="Configuring HAProxy"></a>Configuring HAProxy</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg{,.bak}</p>
+<p>[root@controller1 ~]# diff &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg.bak<br>87,99d86<br>&lt; listen stats<br>&lt;       bind 0.0.0.0:1080<br>&lt;       mode http<br>&lt;       option httplog<br>&lt;       log 127.0.0.1 local0 err<br>&lt;       maxconn 10<br>&lt;       stats refresh 30s<br>&lt;       stats uri &#x2F;admin<br>&lt;       stats realm Haproxy\ Statistics<br>&lt;       stats auth admin:admin<br>&lt;       stats hide-version<br>&lt;       stats admin if TRUE<br>&lt; </p>
+<p>[root@controller1 ~]# scp &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg root@controller2:&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg<br>[root@controller1 ~]# scp &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg root@controller3:&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg</p>
+<h4 id="Allow-Non-Local-IP-Binding"><a href="#Allow-Non-Local-IP-Binding" class="headerlink" title="Allow Non-Local IP Binding"></a>Allow Non-Local IP Binding</h4><p>[root@controller ~]# echo “net.ipv4.ip_nonlocal_bind &#x3D; 1” &gt;&gt;&#x2F;etc&#x2F;sysctl.conf<br>[root@controller ~]# sysctl -p<br>net.ipv4.ip_nonlocal_bind &#x3D; 1</p>
+<h4 id="Add-HAProxy-To-The-Cluster"><a href="#Add-HAProxy-To-The-Cluster" class="headerlink" title="Add HAProxy To The Cluster"></a>Add HAProxy To The Cluster</h4><p>[root@controller1 ~]# pcs resource create lb-haproxy systemd:haproxy –clone<br>[root@controller1 ~]# pcs constraint order start vip then lb-haproxy-clone kind&#x3D;Optional<br>Adding vip lb-haproxy-clone (kind: Optional) (Options: first-action&#x3D;start then-action&#x3D;start)<br>[root@controller1 ~]# pcs constraint colocation add lb-haproxy-clone with vip</p>
+<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p><a target="_blank" rel="noopener" href="http://192.168.220.20:1080/admin">http://192.168.220.20:1080/admin</a> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/HAProxy-V1.gif"></p>
+<h4 id="username-x2F-password"><a href="#username-x2F-password" class="headerlink" title="username&#x2F;password :"></a>username&#x2F;password :</h4><p>admin&#x2F;admin</p>
+<h4 id="Add-RabbitMQTo-The-HAProxy"><a href="#Add-RabbitMQTo-The-HAProxy" class="headerlink" title="Add RabbitMQTo The HAProxy"></a>Add RabbitMQTo The HAProxy</h4><p>[root@controller1 ~]# echo ‘#RabbitMQ</p>
+<blockquote>
+<p>listen RabbitMQ-Server<br>bind controller:5673<br>mode tcp<br>balance roundrobin<br>option tcpka<br>timeout client  3h<br>timeout server  3h<br>option          clitcpka<br>server controller1 controller1:5672 check inter 5s rise 2 fall 3<br>server controller2 controller2:5672 check inter 5s rise 2 fall 3<br>server controller3 controller3:5672 check inter 5s rise 2 fall 3</p>
+<p>listen RabbitMQ-Web<br>bind controller:15673<br>mode tcp<br>balance roundrobin<br>option tcpka<br>server controller1 controller1:15672 check inter 5s rise 2 fall 3<br>server controller2 controller2:15672 check inter 5s rise 2 fall 3<br>server controller3 controller3:15672 check inter 5s rise 2 fall 3<br>‘&gt;&gt;&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg<br>[root@controller1 ~]#<br>[root@controller1 ~]# systemctl restart haproxy.service</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/08/configure-vip-haproxy/" data-id="cl56gcvvd007plgch7wf22mz0" data-title="Configure the VIP &amp; HAProxy" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/08/highly-available-identity-api/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Highly available Identity API
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/08/pacemaker-cluster-stack/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Pacemaker Cluster Stack</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

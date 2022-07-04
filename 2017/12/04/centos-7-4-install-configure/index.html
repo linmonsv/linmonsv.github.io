@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>CentOS 7.4 Install &amp; Configure | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="CentOS 7.4 Minimum Install Firewalls Configure[root@controller ~]# systemctl stop firewalld.service[root@controller ~]# systemctl disable firewalld.serviceRemoved symlink &#x2F;etc&#x2F;systemd&#x2F;s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7.4 Install &amp; Configure">
+<meta property="og:url" content="http://example.com/2017/12/04/centos-7-4-install-configure/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="CentOS 7.4 Minimum Install Firewalls Configure[root@controller ~]# systemctl stop firewalld.service[root@controller ~]# systemctl disable firewalld.serviceRemoved symlink &#x2F;etc&#x2F;systemd&#x2F;s">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171204170802.png">
+<meta property="article:published_time" content="2017-12-04T08:46:36.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.165Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171204170802.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-centos-7-4-install-configure" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/04/centos-7-4-install-configure/" class="article-date">
+  <time class="dt-published" datetime="2017-12-04T08:46:36.000Z" itemprop="datePublished">2017-12-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      CentOS 7.4 Install &amp; Configure
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="CentOS-7-4-Minimum-Install"><a href="#CentOS-7-4-Minimum-Install" class="headerlink" title="CentOS 7.4 Minimum Install"></a>CentOS 7.4 Minimum Install</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171204170802.png"></p>
+<h3 id="Firewalls-Configure"><a href="#Firewalls-Configure" class="headerlink" title="Firewalls Configure"></a>Firewalls Configure</h3><p>[root@controller ~]# systemctl stop firewalld.service<br>[root@controller ~]# systemctl disable firewalld.service<br>Removed symlink &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;firewalld.service.<br>Removed symlink &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;dbus-org.fedoraproject.FirewallD1.service.</p>
+<h3 id="Install-Tools"><a href="#Install-Tools" class="headerlink" title="Install Tools"></a>Install Tools</h3><p>[root@controller ~]# yum install net-tools wget vim ntpdate bash-completion -y</p>
+<h3 id="Network-Configure"><a href="#Network-Configure" class="headerlink" title="Network Configure"></a>Network Configure</h3><p>external：9.1.1.0&#x2F;24 admin manage：10.1.1.0&#x2F;24 tunnel：10.2.2.0&#x2F;24 internet：10.0.2.0&#x2F;24</p>
+<h4 id="Controller："><a href="#Controller：" class="headerlink" title="Controller："></a>Controller：</h4><p>List all the network adapter:</p>
+<p>[root@controller ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–. 1 root root 284 Oct 16 02:13 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>-rw-r–r– 1 root root 347 Oct 26 22:42 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s3<br>-rw-r–r– 1 root root 365 Oct 19 03:27 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>-rw-r–r– 1 root root 365 Oct 19 03:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>-rw-r–r–. 1 root root 254 May 3 2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s3<br>HWADDR&#x3D;08:00:27:6a:0e:c6<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s3<br>UUID&#x3D;213e8c02-7e99-4380-a080-a845923d5088<br>DEVICE&#x3D;enp0s3<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;9.1.1.61<br>NETMASK&#x3D;255.255.255.0</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>HWADDR&#x3D;08:00:27:01:4e:3a<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;edaf67ed-cc12-41a3-97aa-b71a497d7ac0<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.1.1.61<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.1.1.1</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>HWADDR&#x3D;08:00:27:66:23:8c<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s9<br>UUID&#x3D;7f5ab86f-efb6-4a93-b09a-af2fe80ea347<br>DEVICE&#x3D;enp0s9<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.2.2.61<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.2.2.1</p>
+<p>Update the 4th network adapter:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;dhcp<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s10<br>UUID&#x3D;ad48bc1f-4e7b-4643-b35a-f6cd457a75a0<br>DEVICE&#x3D;enp0s10<br>ONBOOT&#x3D;yes</p>
+<h4 id="Compute："><a href="#Compute：" class="headerlink" title="Compute："></a>Compute：</h4><p>List all the network adapter:</p>
+<p>[root@compute ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–. 1 root root 284 Oct 16 02:13 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>-rw-r–r– 1 root root 365 Oct 18 12:35 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>-rw-r–r– 1 root root 365 Oct 18 12:36 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>-rw-r–r–. 1 root root 254 May 3 2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>HWADDR&#x3D;08:00:27:b8:bd:60<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;edaf67ed-cc12-41a3-97aa-b71a497d7ac0<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.1.1.62<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.1.1.1</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>HWADDR&#x3D;08:00:27:42:5a:df<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s9<br>UUID&#x3D;7f5ab86f-efb6-4a93-b09a-af2fe80ea347<br>DEVICE&#x3D;enp0s9<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.2.2.62<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.2.2.1</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;dhcp<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s10<br>UUID&#x3D;ad48bc1f-4e7b-4643-b35a-f6cd457a75a0<br>DEVICE&#x3D;enp0s10<br>ONBOOT&#x3D;yes</p>
+<h3 id="Update-hostname"><a href="#Update-hostname" class="headerlink" title="Update hostname"></a>Update hostname</h3><p>Controller:</p>
+<p>[root@controller ~]# hostnamectl set-hostname controller</p>
+<p>Compute:</p>
+<p>[root@compute ~]# hostnamectl set-hostname compute</p>
+<p>Controller &amp; Compute:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;hosts<br>127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4<br>::1 localhost localhost.localdomain localhost6 localhost6.localdomain6<br>10.1.1.61 controller<br>10.1.1.62 compute</p>
+<h3 id="synchronize-system-time-important"><a href="#synchronize-system-time-important" class="headerlink" title="synchronize system time ( important)"></a>synchronize system time ( important)</h3><p>[root@controller ~]# yum install ntp -y<br>[root@controller ~]# systemctl enable ntpd &amp;&amp; systemctl restart ntpd<br>[root@controller ~]# ntpq -p<br>[root@controller ~]# date</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/04/centos-7-4-install-configure/" data-id="cl56gcvv70073lgchb9uzg3co" data-title="CentOS 7.4 Install &amp; Configure" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/04/controller-mariadb/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Controller --- MariaDB
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/01/prepare/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Prepare</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

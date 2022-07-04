@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>MariaDB Galera Cluster | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Install Database On Controller Nodes[root@controller1 ~]# yum install memcached python-memcached -y[root@controller1 ~]# yum install mariadb-galera-server mariadb-galera-common galera rsync -y Databas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MariaDB Galera Cluster">
+<meta property="og:url" content="http://example.com/2017/12/08/mariadb-galera-cluster/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Install Database On Controller Nodes[root@controller1 ~]# yum install memcached python-memcached -y[root@controller1 ~]# yum install mariadb-galera-server mariadb-galera-common galera rsync -y Databas">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-08T02:38:30.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.215Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-mariadb-galera-cluster" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/08/mariadb-galera-cluster/" class="article-date">
+  <time class="dt-published" datetime="2017-12-08T02:38:30.000Z" itemprop="datePublished">2017-12-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      MariaDB Galera Cluster
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Install-Database-On-Controller-Nodes"><a href="#Install-Database-On-Controller-Nodes" class="headerlink" title="Install Database On Controller Nodes"></a>Install Database On Controller Nodes</h3><p>[root@controller1 ~]# yum install memcached python-memcached -y<br>[root@controller1 ~]# yum install mariadb-galera-server mariadb-galera-common galera rsync -y</p>
+<h3 id="Database-configuration-controller1"><a href="#Database-configuration-controller1" class="headerlink" title="Database configuration(controller1)"></a>Database configuration(controller1)</h3><p>[root@controller1 ~]# cat &#x2F;etc&#x2F;my.cnf<br>[mysqld]<br>datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>user&#x3D;mysql<br>binlog_format&#x3D;ROW<br>bind-address&#x3D;192.168.220.21 # The management IP address of the controller node</p>
+<h1 id="InnoDB-Configuration"><a href="#InnoDB-Configuration" class="headerlink" title="InnoDB Configuration"></a>InnoDB Configuration</h1><p>default_storage_engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>innodb_flush_log_at_trx_commit&#x3D;0<br>innodb_buffer_pool_size&#x3D;122M</p>
+<p>!includedir &#x2F;etc&#x2F;my.cnf.d&#x2F;</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf  grep ^[^#].*<br>[mysqld]<br>binlog_format&#x3D;ROW<br>default-storage-engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>bind-address&#x3D;0.0.0.0<br>wsrep_on&#x3D;1<br>wsrep_provider&#x3D;&#x2F;usr&#x2F;lib64&#x2F;galera&#x2F;libgalera_smm.so<br>wsrep_cluster_name&#x3D;”my_wsrep_cluster”<br>wsrep_cluster_address&#x3D;”gcomm:&#x2F;&#x2F;controller1,controller2,controller3”<br>wsrep_node_name&#x3D;controller1<br>wsrep_node_address&#x3D;192.168.220.21<br>wsrep_slave_threads&#x3D;1<br>wsrep_certify_nonPK&#x3D;1<br>wsrep_max_ws_rows&#x3D;131072<br>wsrep_max_ws_size&#x3D;1073741824<br>wsrep_debug&#x3D;0<br>wsrep_convert_LOCK_to_trx&#x3D;0<br>wsrep_retry_autocommit&#x3D;1<br>wsrep_auto_increment_control&#x3D;1<br>wsrep_drupal_282555_workaround&#x3D;0<br>wsrep_causal_reads&#x3D;0<br>wsrep_notify_cmd&#x3D;<br>wsrep_sst_method&#x3D;rsync<br>wsrep_sst_auth&#x3D;root:</p>
+<h3 id="Database-configuration-controller2-controller3"><a href="#Database-configuration-controller2-controller3" class="headerlink" title="Database configuration(controller2,controller3)"></a>Database configuration(controller2,controller3)</h3><p>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;my.cnf controller2:&#x2F;etc&#x2F;<br>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf controller2:&#x2F;etc&#x2F;my.cnf.d&#x2F;<br>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;my.cnf controller3:&#x2F;etc&#x2F;<br>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf controller3:&#x2F;etc&#x2F;my.cnf.d&#x2F;</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;my.cnf<br>[mysqld]<br>datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>user&#x3D;mysql<br>binlog_format&#x3D;ROW<br>bind-address&#x3D;192.168.220.22 # The management IP address of the controller node</p>
+<h1 id="InnoDB-Configuration-1"><a href="#InnoDB-Configuration-1" class="headerlink" title="InnoDB Configuration"></a>InnoDB Configuration</h1><p>default_storage_engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>innodb_flush_log_at_trx_commit&#x3D;0<br>innodb_buffer_pool_size&#x3D;122M</p>
+<p>!includedir &#x2F;etc&#x2F;my.cnf.d&#x2F;</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf  grep ^[^#].*<br>[mysqld]<br>binlog_format&#x3D;ROW<br>default-storage-engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>bind-address&#x3D;0.0.0.0<br>wsrep_on&#x3D;1<br>wsrep_provider&#x3D;&#x2F;usr&#x2F;lib64&#x2F;galera&#x2F;libgalera_smm.so<br>wsrep_cluster_name&#x3D;”my_wsrep_cluster”<br>wsrep_cluster_address&#x3D;”gcomm:&#x2F;&#x2F;controller1,controller2,controller3”<br>wsrep_node_name&#x3D;controller2<br>wsrep_node_address&#x3D;192.168.220.22<br>wsrep_slave_threads&#x3D;1<br>wsrep_certify_nonPK&#x3D;1<br>wsrep_max_ws_rows&#x3D;131072<br>wsrep_max_ws_size&#x3D;1073741824<br>wsrep_debug&#x3D;0<br>wsrep_convert_LOCK_to_trx&#x3D;0<br>wsrep_retry_autocommit&#x3D;1<br>wsrep_auto_increment_control&#x3D;1<br>wsrep_drupal_282555_workaround&#x3D;0<br>wsrep_causal_reads&#x3D;0<br>wsrep_notify_cmd&#x3D;<br>wsrep_sst_method&#x3D;rsync<br>wsrep_sst_auth&#x3D;root:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;my.cnf<br>[mysqld]<br>datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>user&#x3D;mysql<br>binlog_format&#x3D;ROW<br>bind-address&#x3D;192.168.220.23 # The management IP address of the controller node</p>
+<h1 id="InnoDB-Configuration-2"><a href="#InnoDB-Configuration-2" class="headerlink" title="InnoDB Configuration"></a>InnoDB Configuration</h1><p>default_storage_engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>innodb_flush_log_at_trx_commit&#x3D;0<br>innodb_buffer_pool_size&#x3D;122M</p>
+<p>!includedir &#x2F;etc&#x2F;my.cnf.d&#x2F;</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf  grep ^[^#].*<br>[mysqld]<br>binlog_format&#x3D;ROW<br>default-storage-engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>bind-address&#x3D;0.0.0.0<br>wsrep_on&#x3D;1<br>wsrep_provider&#x3D;&#x2F;usr&#x2F;lib64&#x2F;galera&#x2F;libgalera_smm.so<br>wsrep_cluster_name&#x3D;”my_wsrep_cluster”<br>wsrep_cluster_address&#x3D;”gcomm:&#x2F;&#x2F;controller1,controller2,controller3”<br>wsrep_node_name&#x3D;controller3<br>wsrep_node_address&#x3D;192.168.220.23<br>wsrep_slave_threads&#x3D;1<br>wsrep_certify_nonPK&#x3D;1<br>wsrep_max_ws_rows&#x3D;131072<br>wsrep_max_ws_size&#x3D;1073741824<br>wsrep_debug&#x3D;0<br>wsrep_convert_LOCK_to_trx&#x3D;0<br>wsrep_retry_autocommit&#x3D;1<br>wsrep_auto_increment_control&#x3D;1<br>wsrep_drupal_282555_workaround&#x3D;0<br>wsrep_causal_reads&#x3D;0<br>wsrep_notify_cmd&#x3D;<br>wsrep_sst_method&#x3D;rsync<br>wsrep_sst_auth&#x3D;root:</p>
+<h3 id="Database-Management"><a href="#Database-Management" class="headerlink" title="Database Management"></a>Database Management</h3><h5 id="Initialize-the-Primary-Component-on-one-cluster-node"><a href="#Initialize-the-Primary-Component-on-one-cluster-node" class="headerlink" title="Initialize the Primary Component on one cluster node"></a>Initialize the Primary Component on one cluster node</h5><p>[root@controller1 ~]# &#x2F;usr&#x2F;libexec&#x2F;mysqld –wsrep-new-cluster –user&#x3D;root &amp;</p>
+<h5 id="Start-the-database-server-on-all-other-cluster-nodes"><a href="#Start-the-database-server-on-all-other-cluster-nodes" class="headerlink" title="Start the database server on all other cluster nodes"></a>Start the database server on all other cluster nodes</h5><p>[root@controller2 ~]# systemctl start mariadb<br>[root@controller3 ~]# systemctl start mariadb</p>
+<h5 id="Check-MaribDB-Cluster"><a href="#Check-MaribDB-Cluster" class="headerlink" title="Check MaribDB Cluster"></a>Check MaribDB Cluster</h5><h6 id="The-Key-Value"><a href="#The-Key-Value" class="headerlink" title="The Key Value :"></a>The Key Value :</h6><ul>
+<li>wsrep_connected ON</li>
+<li>wsrep_cluster_size 3</li>
+<li>wsrep_local_index 0 (controller1 : 0 controller2 : 1 controller3 : 2)</li>
+<li>wsrep_incoming_addresses 192.168.220.21:3306,192.168.220.22:3306,192.168.220.23:3306</li>
+</ul>
+<p>[root@controller1 ~]# mysql -uroot -proot -e “show status like ‘wsrep_%’”<br>+——————————+————————————————————-+<br> Variable_name                 Value<br>+——————————+————————————————————-+<br> wsrep_apply_oooe              0.000000<br> wsrep_apply_oool              0.000000<br> wsrep_apply_window            0.000000<br> wsrep_causal_reads            0<br> wsrep_cert_deps_distance      0.000000<br> wsrep_cert_index_size         0<br> wsrep_cert_interval           0.000000<br> wsrep_cluster_conf_id         3<br> wsrep_cluster_size            3<br> wsrep_cluster_state_uuid      37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_cluster_status          Primary<br> wsrep_commit_oooe             0.000000<br> wsrep_commit_oool             0.000000<br> wsrep_commit_window           0.000000<br> wsrep_connected               ON<br> wsrep_desync_count            0<br> wsrep_evs_delayed<br> wsrep_evs_evict_list<br> wsrep_evs_repl_latency        0&#x2F;0&#x2F;0&#x2F;0&#x2F;0<br> wsrep_evs_state               OPERATIONAL<br> wsrep_flow_control_paused     0.000000<br> wsrep_flow_control_paused_ns  0<br> wsrep_flow_control_recv       0<br> wsrep_flow_control_sent       0<br> wsrep_gcomm_uuid              37644373-e137-11e7-8fef-c76eb92175c6<br> wsrep_incoming_addresses      192.168.220.21:3306,192.168.220.22:3306,192.168.220.23:3306<br> wsrep_last_committed          0<br> wsrep_local_bf_aborts         0<br> wsrep_local_cached_downto     18446744073709551615<br> wsrep_local_cert_failures     0<br> wsrep_local_commits           0<br> wsrep_local_index             0<br> wsrep_local_recv_queue        0<br> wsrep_local_recv_queue_avg    0.100000<br> wsrep_local_recv_queue_max    2<br> wsrep_local_recv_queue_min    0<br> wsrep_local_replays           0<br> wsrep_local_send_queue        0<br> wsrep_local_send_queue_avg    0.000000<br> wsrep_local_send_queue_max    1<br> wsrep_local_send_queue_min    0<br> wsrep_local_state             4<br> wsrep_local_state_comment     Synced<br> wsrep_local_state_uuid        37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_protocol_version        7<br> wsrep_provider_name           Galera<br> wsrep_provider_vendor         Codership Oy wsrep_provider_version        3.16(r5c765eb)<br> wsrep_ready                   ON<br> wsrep_received                10<br> wsrep_received_bytes          794<br> wsrep_repl_data_bytes         0<br> wsrep_repl_keys               0<br> wsrep_repl_keys_bytes         0<br> wsrep_repl_other_bytes        0<br> wsrep_replicated              0<br> wsrep_replicated_bytes        0<br> wsrep_thread_count            2<br>+——————————+————————————————————-+<br>[root@controller2 ~]# mysql -uroot -proot -e “show status like ‘wsrep_%’”<br>+——————————+————————————————————-+<br> Variable_name                 Value<br>+——————————+————————————————————-+<br> wsrep_apply_oooe              0.000000<br> wsrep_apply_oool              0.000000<br> wsrep_apply_window            0.000000<br> wsrep_causal_reads            0<br> wsrep_cert_deps_distance      0.000000<br> wsrep_cert_index_size         0<br> wsrep_cert_interval           0.000000<br> wsrep_cluster_conf_id         3<br> wsrep_cluster_size            3<br> wsrep_cluster_state_uuid      37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_cluster_status          Primary<br> wsrep_commit_oooe             0.000000<br> wsrep_commit_oool             0.000000<br> wsrep_commit_window           0.000000<br> wsrep_connected               ON<br> wsrep_desync_count            0<br> wsrep_evs_delayed<br> wsrep_evs_evict_list<br> wsrep_evs_repl_latency        0.000204825&#x2F;0.00047307&#x2F;0.000741314&#x2F;0.000268244&#x2F;2<br> wsrep_evs_state               OPERATIONAL<br> wsrep_flow_control_paused     0.000000<br> wsrep_flow_control_paused_ns  0<br> wsrep_flow_control_recv       0<br> wsrep_flow_control_sent       0<br> wsrep_gcomm_uuid              781401a8-e137-11e7-bba3-9e3f83e88f32<br> wsrep_incoming_addresses      192.168.220.21:3306,192.168.220.22:3306,192.168.220.23:3306<br> wsrep_last_committed          0<br> wsrep_local_bf_aborts         0<br> wsrep_local_cached_downto     18446744073709551615<br> wsrep_local_cert_failures     0<br> wsrep_local_commits           0<br> wsrep_local_index             1<br> wsrep_local_recv_queue        0<br> wsrep_local_recv_queue_avg    0.000000<br> wsrep_local_recv_queue_max    1<br> wsrep_local_recv_queue_min    0<br> wsrep_local_replays           0<br> wsrep_local_send_queue        0<br> wsrep_local_send_queue_avg    0.000000<br> wsrep_local_send_queue_max    1<br> wsrep_local_send_queue_min    0<br> wsrep_local_state             4<br> wsrep_local_state_comment     Synced<br> wsrep_local_state_uuid        37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_protocol_version        7<br> wsrep_provider_name           Galera<br> wsrep_provider_vendor         Codership Oy wsrep_provider_version        3.16(r5c765eb)<br> wsrep_ready                   ON<br> wsrep_received                4<br> wsrep_received_bytes          529<br> wsrep_repl_data_bytes         0<br> wsrep_repl_keys               0<br> wsrep_repl_keys_bytes         0<br> wsrep_repl_other_bytes        0<br> wsrep_replicated              0<br> wsrep_replicated_bytes        0<br> wsrep_thread_count            2<br>+——————————+————————————————————-+<br>[root@controller3 ~]# mysql -uroot -proot -e “show status like ‘wsrep_%’”<br>+——————————+————————————————————-+<br> Variable_name                 Value<br>+——————————+————————————————————-+<br> wsrep_apply_oooe              0.000000<br> wsrep_apply_oool              0.000000<br> wsrep_apply_window            0.000000<br> wsrep_causal_reads            0<br> wsrep_cert_deps_distance      0.000000<br> wsrep_cert_index_size         0<br> wsrep_cert_interval           0.000000<br> wsrep_cluster_conf_id         3<br> wsrep_cluster_size            3<br> wsrep_cluster_state_uuid      37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_cluster_status          Primary<br> wsrep_commit_oooe             0.000000<br> wsrep_commit_oool             0.000000<br> wsrep_commit_window           0.000000<br> wsrep_connected               ON<br> wsrep_desync_count            0<br> wsrep_evs_delayed<br> wsrep_evs_evict_list<br> wsrep_evs_repl_latency        0.000224679&#x2F;0.000465885&#x2F;0.000643407&#x2F;0.000164076&#x2F;5<br> wsrep_evs_state               OPERATIONAL<br> wsrep_flow_control_paused     0.000000<br> wsrep_flow_control_paused_ns  0<br> wsrep_flow_control_recv       0<br> wsrep_flow_control_sent       0<br> wsrep_gcomm_uuid              7ce71d07-e137-11e7-b720-baa5cd647a15<br> wsrep_incoming_addresses      192.168.220.21:3306,192.168.220.22:3306,192.168.220.23:3306<br> wsrep_last_committed          0<br> wsrep_local_bf_aborts         0<br> wsrep_local_cached_downto     18446744073709551615<br> wsrep_local_cert_failures     0<br> wsrep_local_commits           0<br> wsrep_local_index             2<br> wsrep_local_recv_queue        0<br> wsrep_local_recv_queue_avg    0.000000<br> wsrep_local_recv_queue_max    1<br> wsrep_local_recv_queue_min    0<br> wsrep_local_replays           0<br> wsrep_local_send_queue        0<br> wsrep_local_send_queue_avg    0.333333<br> wsrep_local_send_queue_max    2<br> wsrep_local_send_queue_min    0<br> wsrep_local_state             4<br> wsrep_local_state_comment     Synced<br> wsrep_local_state_uuid        37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_protocol_version        7<br> wsrep_provider_name           Galera<br> wsrep_provider_vendor         Codership Oy wsrep_provider_version        3.16(r5c765eb)<br> wsrep_ready                   ON<br> wsrep_received                3<br> wsrep_received_bytes          311<br> wsrep_repl_data_bytes         0<br> wsrep_repl_keys               0<br> wsrep_repl_keys_bytes         0<br> wsrep_repl_other_bytes        0<br> wsrep_replicated              0<br> wsrep_replicated_bytes        0<br> wsrep_thread_count            2<br>+——————————+————————————————————-+ </p>
+<h5 id="Test-MaribDB-Cluster"><a href="#Test-MaribDB-Cluster" class="headerlink" title="Test MaribDB Cluster"></a>Test MaribDB Cluster</h5><p>[root@controller1 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller2 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller3 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller1 ~]# mysql -uroot -proot -e “create database galera_test”<br>[root@controller1 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> galera_test<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller2 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> galera_test<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller3 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> galera_test<br> information_schema<br> mysql<br> performance_schema<br>+——————–+</p>
+<h3 id="Database-Management-1"><a href="#Database-Management-1" class="headerlink" title="Database Management"></a>Database Management</h3><p>echo ‘<br>MYSQL_USERNAME&#x3D;”clustercheck_user”<br>MYSQL_PASSWORD&#x3D;”my_clustercheck_password”<br>MYSQL_HOST&#x3D;”localhost”<br>MYSQL_PORT&#x3D;”3306”<br>‘ &gt; &#x2F;etc&#x2F;sysconfig&#x2F;clustercheck</p>
+<h3 id="Grant-the-clustercheck-user"><a href="#Grant-the-clustercheck-user" class="headerlink" title="Grant the clustercheck user"></a>Grant the clustercheck user</h3><p>[root@controller1 ~]# mysql -uroot -proot -e “GRANT PROCESS ON *.* TO ‘clustercheck_user‘@’localhost’ IDENTIFIED BY ‘my_clustercheck_password’;FLUSH PRIVILEGES;”<br>[root@controller1 ~]# mysql -uroot -proot -e “SELECT User, Host, Password FROM mysql.user;”<br>+——————-+———–+——————————————-+<br> User               Host       Password<br>+——————-+———–+——————————————-+<br> root               localhost  *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B<br> root               127.0.0.1  *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B<br> root               ::1        *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B<br> clustercheck_user  localhost  *B7ECF4F5C3B1DDB87695D91C5D27631AEC569993<br>+——————-+———–+——————————————-+</p>
+<h3 id="Create-a-configuration-file-for-the-HAProxy-monitor-service"><a href="#Create-a-configuration-file-for-the-HAProxy-monitor-service" class="headerlink" title="Create a configuration file for the HAProxy monitor service"></a>Create a configuration file for the HAProxy monitor service</h3><p>echo ‘<br>service galera-monitor<br>{<br>   port &#x3D; 9200<br>   disable &#x3D; no<br>   socket_type &#x3D; stream<br>   protocol &#x3D; tcp<br>   wait &#x3D; no<br>   user &#x3D; root<br>   group &#x3D; root<br>   groups &#x3D; yes<br>   server &#x3D; &#x2F;usr&#x2F;bin&#x2F;clustercheck<br>   type &#x3D; UNLISTED<br>   per_source &#x3D; UNLIMITED<br>   log_on_success &#x3D;<br>   log_on_failure &#x3D; HOST<br>   flags &#x3D; REUSE<br>}<br>‘ &gt; &#x2F;etc&#x2F;xinetd.d&#x2F;galera-monitor</p>
+<h3 id="Create-OpenStack-Users-amp-Databases"><a href="#Create-OpenStack-Users-amp-Databases" class="headerlink" title="Create OpenStack Users &amp; Databases"></a>Create OpenStack Users &amp; Databases</h3><p>[root@controller1 ~]# mysql -u root -proot -e “</p>
+<blockquote>
+<p>create database keystone;<br>grant all privileges on keystone.* to ‘keystone‘@’localhost’ identified by ‘keystone’;<br>grant all privileges on keystone.* to ‘keystone‘@’%’ identified by ‘keystone’;<br>create database glance;<br>grant all privileges on glance.* to ‘glance‘@’localhost’ identified by ‘glance’;<br>grant all privileges on glance.* to ‘glance‘@’%’ identified by ‘glance’;</p>
+<p>create database nova;<br>grant all privileges on nova.* to ‘nova‘@’localhost’ identified by ‘nova’;<br>grant all privileges on nova.* to ‘nova‘@’%’ identified by ‘nova’;<br>create database nova_api;<br>grant all privileges on nova_api.* to ‘nova‘@’localhost’ identified by ‘nova’;<br>grant all privileges on nova_api.* to ‘nova‘@’%’ identified by ‘nova’;<br>create database nova_cell0;<br>grant all privileges on nova_cell0.* to ‘nova‘@’localhost’ identified by ‘nova’;<br>grant all privileges on nova_cell0.* to ‘nova‘@’%’ identified by ‘nova’;</p>
+<p>create database neutron;<br>grant all privileges on neutron.* to ‘neutron‘@’localhost’ identified by ‘neutron’;<br>grant all privileges on neutron.* to ‘neutron‘@’%’ identified by ‘neutron’;</p>
+<p>flush privileges;<br>select user,host from mysql.user;<br>show databases;<br>“<br>“<br>+——————-+———–+<br> user               host<br>+——————-+———–+<br> glance             %<br> keystone           %<br> neutron            %<br> nova               %<br> root               127.0.0.1<br> root               ::1<br> clustercheck_user  localhost<br> glance             localhost<br> keystone           localhost<br> neutron            localhost<br> nova               localhost<br> root               localhost<br>+——————-+———–+<br>+——————–+<br> Database<br>+——————–+<br> galera_test<br> glance<br> information_schema<br> keystone<br> mysql<br> neutron<br> nova<br> nova_api<br> nova_cell0<br> performance_schema<br>+——————–+</p>
+</blockquote>
+<h3 id="Start-the-xinetd-daemon-for-clustercheck"><a href="#Start-the-xinetd-daemon-for-clustercheck" class="headerlink" title="Start the xinetd daemon for clustercheck"></a>Start the xinetd daemon for clustercheck</h3><p>[root@controller1 ~]# systemctl daemon-reload<br>[root@controller1 ~]# systemctl enable xinetd<br>[root@controller1 ~]# systemctl start xinetd</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/08/mariadb-galera-cluster/" data-id="cl56gcvwv00cblgcha81l23h6" data-title="MariaDB Galera Cluster" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/08/rabbitmq-cluster-setup/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          RabbitMQ Cluster Setup
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/08/memcached-multiple-servers/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Memcached on Multiple Servers</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/13/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/03/how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet/" class="article-date">
+  <time class="dt-published" datetime="2019-04-03T02:29:26.000Z" itemprop="datePublished">2019-04-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a>►<a class="article-category-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>►<a class="article-category-link" href="/categories/operating-system/Linux/Windows/">Windows</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/03/how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet/">How to expose a local server behind a NAT or firewall to the internet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Download-FRP-Server-amp-Client"><a href="#Download-FRP-Server-amp-Client" class="headerlink" title="Download FRP Server &amp; Client"></a><a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases">Download FRP Server &amp; Client</a></h3><h3 id="Modify-frps-ini"><a href="#Modify-frps-ini" class="headerlink" title="Modify frps.ini"></a>Modify frps.ini</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# cat frps.ini<br>[common]<br>bind_port &#x3D; xxxxxx<br>dashboard_port &#x3D; xxxxxx<br>dashboard_user &#x3D; xxxxxxxxxxxxxxxx<br>dashboard_pwd &#x3D; xxxxxxxxxxxxxxxx<br>allow_ports &#x3D; xxxxx-xxxxx<br>token &#x3D; xxxxxxxxxxxxxxxx<br>max_pool_count &#x3D; 10<br>pool_count &#x3D; 3</p>
+<h3 id="Start-frps"><a href="#Start-frps" class="headerlink" title="Start frps"></a>Start frps</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# .&#x2F;frps -c .&#x2F;frps.ini</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/frp_dashboard.png"></p>
+<h3 id="Modify-frpc-ini"><a href="#Modify-frpc-ini" class="headerlink" title="Modify frpc.ini"></a>Modify frpc.ini</h3><p>root@imx6ul7d:~&#x2F;frp# cat frpc.ini<br>[common]<br>server_addr &#x3D; qinuu.com<br>server_port &#x3D; xxxxxx<br>token &#x3D; xxxxxxxxxxxxxxxx<br>[ssh]<br>type &#x3D; tcp<br>local_ip &#x3D; 127.0.0.1<br>local_port &#x3D; 22<br>remote_port &#x3D; xxxxxx</p>
+<h3 id="Start-frpc"><a href="#Start-frpc" class="headerlink" title="Start frpc"></a>Start frpc</h3><p>root@imx6ul7d:~&#x2F;frp# .&#x2F;frpc -c .&#x2F;frpc.ini</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/frp_putty.png"></p>
+<h3 id="Start-a-systemd-service"><a href="#Start-a-systemd-service" class="headerlink" title="Start a systemd service"></a>Start a systemd service</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# cat &#x2F;lib&#x2F;systemd&#x2F;system&#x2F;frps.service<br>[Unit]<br>Description&#x3D;Frp Server Service<br>After&#x3D;network.target</p>
+<p>[Service]<br>Type&#x3D;simple<br>User&#x3D;nobody<br>Restart&#x3D;on-failure<br>RestartSec&#x3D;5s<br>ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;frp&#x2F;frp_0.25.3_linux_amd64&#x2F;frps -c &#x2F;usr&#x2F;local&#x2F;frp&#x2F;frp_0.25.3_linux_amd64&#x2F;frps.ini</p>
+<p>[Install]<br>WantedBy&#x3D;multi-user.targethis</p>
+<p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# systemctl start frps<br>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# systemctl enable frps<br>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# systemctl status frps</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/03/how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet/" data-id="cl56gcvwc00aqlgchf6jj7cft" data-title="How to expose a local server behind a NAT or firewall to the internet" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-13-clustering" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/02/13-clustering/" class="article-date">
+  <time class="dt-published" datetime="2019-04-02T09:22:55.000Z" itemprop="datePublished">2019-04-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/02/13-clustering/">13 Clustering</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Unsupervised-Learning-Introduction"><a href="#Unsupervised-Learning-Introduction" class="headerlink" title="Unsupervised Learning Introduction"></a>Unsupervised Learning Introduction</h2><p>In unsupervised learning, what we do is, we give this sort of unlabeled training set to an algorithm and we just ask the algorithm: find some structure in the data for us. Given this data set, one type of structure we might have an algorithm find, is that it looks like this data set has points grouped into two separate clusters and so an algorithm that finds that clusters like the ones I just circled, is called a <strong>clustering algorithm</strong>.</p>
+<h4 id="So-what-is-clustering-good-for"><a href="#So-what-is-clustering-good-for" class="headerlink" title="So what is clustering good for?"></a>So what is clustering good for?</h4><ul>
+<li>Market segmentation</li>
+<li>Social network analysis</li>
+<li>Organize compute clusters or to organize data centers</li>
+<li>Understand galaxy formation and astronomical detail</li>
+</ul>
+<h2 id="K-Means-Algorithm"><a href="#K-Means-Algorithm" class="headerlink" title="K-Means Algorithm"></a>K-Means Algorithm</h2><p>The K Means algorithm is by far the most popular, by far the most widely used clustering algorithm. K Means is an iterative algorithm and it does two things.</p>
+<p><em>randomly initialize two points, called the <strong>cluster centroids</strong></em></p>
+<ol>
+<li>cluster assignment step</li>
+<li>move centroid step</li>
+</ol>
+<p>Repeat {<br>for i &#x3D; 1 to m<br>c(i) :&#x3D; index (from 1 to K) of cluster centroid closet to x(i)<br>for k &#x3D; 1 to K<br>µk :&#x3D; average (mean) of points assigned to cluster k<br>}</p>
+<h2 id="Optimization-Objective"><a href="#Optimization-Objective" class="headerlink" title="Optimization Objective"></a>Optimization Objective</h2><p>**Distortion function : ** [latex]J(c^{(1)},\cdots c^{(m)}, \mu_1,\cdots \mu_K) &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m}\left \ X^{(i)}-\mu_c(i) \right \^2[&#x2F;latex]   [latex]\mu_c(i)[&#x2F;latex] : the distance between [latex]X^{(i)}[&#x2F;latex] and the cluster centroid</p>
+<h2 id="Random-Initialization"><a href="#Random-Initialization" class="headerlink" title="Random Initialization"></a>Random Initialization</h2><p>K-means can end up converging to different solutions depending on exactly how the clusters were initialized, and so, depending on the random initialization. K-means can end up at different solutions. And, in particular, K-means can actually end up at local optima. How to initialize K-means and how to make K-means avoid local optima as well. What we can do is, <strong>initialize K-means lots of times and run K-means lots of times</strong>, and use that to try to make sure we get as good a solution, as good a local or global optima as possible. If <strong>the number of clusters</strong> is anywhere from <strong>two up to maybe 10</strong> then doing multiple random initialization can often, can sometimes make sure that you find a better local optima. <strong>But if K is very large, less likely to make a huge difference.</strong></p>
+<h2 id="Choosing-the-Number-of-Clusters"><a href="#Choosing-the-Number-of-Clusters" class="headerlink" title="Choosing the Number of Clusters"></a>Choosing the Number of Clusters</h2><p>There <strong>actually isn’t a great way</strong> of answering this or doing this automatically and by far the most common way of choosing the number of clusters, is still <strong>choosing it manually</strong> by <strong>looking at visualizations</strong> or by <strong>looking at the output of the clustering algorithm</strong> or something else. One method  is called the <strong>Elbow Method,</strong> but don’t always expect that to work well.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/02/13-clustering/" data-id="cl56gcvtv003hlgchhkf95vzh" data-title="13 Clustering" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-12-support-vector-machines" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/02/12-support-vector-machines/" class="article-date">
+  <time class="dt-published" datetime="2019-04-02T08:07:38.000Z" itemprop="datePublished">2019-04-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/02/12-support-vector-machines/">12 Support Vector Machines</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Optimization-Objective"><a href="#Optimization-Objective" class="headerlink" title="Optimization Objective"></a>Optimization Objective</h2><p><strong>Within supervised learning, the performance of many supervised learning algorithms will be pretty similar</strong> and when that is less more often be whether you use learning algorithm A or learning algorithm B but when that is small there will often be things like the amount of data you are creating these algorithms on. That’s always <strong>your skill in applying this algorithms</strong>. Seems like your <strong>choice of the features</strong> that you designed to give the learning algorithms and how you choose the <strong>regularization parameter</strong> and things like that. <strong>Support Vector Machine</strong> (<strong>SVM</strong>) : sometimes gives a cleaner and sometimes more powerful way of learning complex nonlinear functions. <strong>Alternative view of logistic regression</strong> [latex]h_\theta (x) &#x3D; \frac {1}{1 + e^{-\theta ^{T}x}}[&#x2F;latex]   Cost of example :  [latex]-(ylogh_\theta (x) + (1-y)log(1-h_\theta(x))) [&#x2F;latex]   [latex]&#x3D; -ylog\frac {1}{1 + e^{-\theta ^{T}x}} + (1-y)log(1-\frac {1}{1 + e^{-\theta ^{T}x}})[&#x2F;latex]   <strong>Support vector machine</strong> Logistic regression :  [latex]\underset{\theta }{min} \frac{1}{m} [\sum_{i&#x3D;1}^{m}y^{(i)}(-logh_\theta(x^{(i)})) + (1-y^{(i)})(-log(1-h_\theta (x^{(i)})))] + \frac{\lambda }{2m}\sum_{j&#x3D;1}^{n} \theta _j^2[&#x2F;latex]   Support vector machine :  [latex]\underset{\theta }{min} C [\sum_{i&#x3D;1}^{m}y^{(i)}cost_1(\theta ^Tx^{(i)}) + (1-y^{(i)})cost_0(\theta ^Tx^{(i)})] + \frac{1}{2}\sum_{i&#x3D;1}^{n} \theta _j^2[&#x2F;latex]  </p>
+<h2 id="Large-Margin-Intuition"><a href="#Large-Margin-Intuition" class="headerlink" title="Large Margin Intuition"></a>Large Margin Intuition</h2><p>Sometimes people talk about support vector machines, as <strong>large margin classifiers</strong>. The margin of the support vector machine and this gives the SVM a certain robustness, because it tries to separate the data with as a large a margin as possible. So the support vector machine is sometimes also called a large  margin classifier. [latex]min \frac{1}{2} \sum _{j&#x3D;1}^{n} \ \theta _j^2 \ s.t \ \left\{\begin{matrix} \theta^Tx^{(i)} \geq \ 1 \ \ if \ y^{(i)} &#x3D; 1\\ \theta^Tx^{(i)} \leq -1 \ \ if \ y^{(i)} &#x3D; 0\\ \end{matrix}\right.[&#x2F;latex]   In practice when applying support vector machines, when C is not very very large like that, it can do a better job ignoring the few outliers.</p>
+<h2 id="Mathematics-Behind-Large-Margin-Classification"><a href="#Mathematics-Behind-Large-Margin-Classification" class="headerlink" title="Mathematics Behind Large Margin Classification"></a>Mathematics Behind Large Margin Classification</h2><p>[latex]\left \ u \right \ &#x3D; \sqrt{u_1^2 + u_2^2}[&#x2F;latex] <strong>p</strong> is the length of the projection of the vector V onto the vector U. so [latex]u^Tv &#x3D; p \cdot \left \ u \right \[&#x2F;latex] and [latex]u^Tv &#x3D; u_1 \times  v_1 + u_2 \times v_2[&#x2F;latex] so [latex]p \cdot \left \ u \right \ &#x3D; u_1 \times  v_1 + u_2 \times v_2[&#x2F;latex] <strong>SVM Decision Boundary</strong> [latex]\underset {\theta }{min} \frac{1}{2} \sum _{j&#x3D;1}^{n} \ \theta _j^2 \ s.t \ \left\{\begin{matrix} \theta^Tx^{(i)} \geq \ 1 \ \ if \ y^{(i)} &#x3D; 1\\ \theta^Tx^{(i)} \leq -1 \ \ if \ y^{(i)} &#x3D; 0\\ \end{matrix}\right.[&#x2F;latex]   <strong>if n &#x3D;&#x3D; 2:</strong> [latex]\begin{Vmatrix} u \end{Vmatrix} &#x3D; \sqrt{u_1^2 + u_2^2}[&#x2F;latex]   [latex]\frac{1}{2} (\theta _1^2 + \theta _2^2) &#x3D; \frac{1}{2} (\sqrt {\theta _1^2 + \theta _2^2})^2 &#x3D; \frac{1}{2}\left \ \theta \right \ ^2[&#x2F;latex]   <strong>So all the support vector machine is doing in the optimization objective is it’s minimizing the squared norm of the square length of the parameter vector theta.</strong> [latex]p^{(i)}[&#x2F;latex] : a projection of the i-th training example onto the parameter vector [latex]\theta [&#x2F;latex]. [latex]\theta ^Tx^{(i)} &#x3D; \theta_1 \cdot x_1^{(i)} + \theta_2 \cdot x_2^{(i)} [&#x2F;latex]   <strong>SVM Decision Boundary</strong> [latex]\underset {\theta }{min} \frac{1}{2} \sum _{j&#x3D;1}^{n} \ \theta _j^2 \ s.t \ \left\{\begin{matrix} p^{(i)} \cdot \left \ \theta \right \ \geq \ 1 \ \ if \ y^{(i)} &#x3D; 1\\ p^{(i)} \cdot \left \ \theta \right \ \leq -1 \ \ if \ y^{(i)} &#x3D; 0\\ \end{matrix}\right.[&#x2F;latex] If we can make the norm of theta smaller and therefore make the squared norm of theta smaller, <strong>which is why the SVM would choose this hypothesis</strong> on the right instead. And this is how the SVM gives rise to this large margin certification effect. Mainly, if you look at this green line, if you look at this green hypothesis we want the projections of my positive and negative examples onto theta to be large, and the only way for that to hold true this is if surrounding the green line. There’s this large margin, there’s this large gap that separates positive and negative examples is really the magnitude of this gap. The magnitude of this margin is exactly the values of P1, P2, P3 and so on. And so by making the margin large, by these tyros P1, P2, P3 and so on that’s <strong>the SVM can end up with a smaller value for the norm of theta</strong> which is what it is trying to do in the objective. And <strong>this is why this machine ends up with enlarge margin classifiers</strong> because itss trying to maximize the norm of these P1 which is the distance from the training examples to the decision boundary.</p>
+<h2 id="Kernels"><a href="#Kernels" class="headerlink" title="Kernels"></a>Kernels</h2><ul>
+<li>complex polynomial features</li>
+</ul>
+<p>[latex]\theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_1x_2 + \theta_4x_1^2 + \theta_5x_2^2 + \cdots[&#x2F;latex]  </p>
+<ul>
+<li>new denotation</li>
+</ul>
+<p>[latex]f_1 &#x3D; x_1, \ f_2 &#x3D; x_2, \ f_3 &#x3D; x_1x_2, \ f_4 &#x3D; x_1^2, \ f_5 &#x3D; x_2^2[&#x2F;latex] [latex]h_\theta (x) &#x3D; \theta_1f_1 + \theta_2f_2 + \cdots + \theta_nf_n[&#x2F;latex]   <strong>Gaussian Kernel</strong> [latex]f_1 &#x3D; similarity(x, l^{(1)}) &#x3D; e^{(-\frac {\left \ x - l^{(1)} \right \ ^ 2}{2\sigma ^2})}[&#x2F;latex]   [latex]\left \ x - l^{(1)} \right \ ^ 2 &#x3D; \sum _{j&#x3D;1}^{n}(x_j - l_j^{(1)})^2[&#x2F;latex]   We define some extra features using landmarks and similarity functions to learn more complex nonlinear classifiers. We <strong>use new features</strong> that are computed by Kernels, <strong>not original features</strong>.</p>
+<h4 id="How-the-landmarks-are-chosen"><a href="#How-the-landmarks-are-chosen" class="headerlink" title="How the landmarks are chosen"></a>How the landmarks are chosen</h4><p>Choose the the location of my landmarks to be exactly near the locations of my m training examples. Given [latex](x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), \cdots , (x^{(m)}, y^{(m)})[&#x2F;latex] choose [latex]l^{(1)} &#x3D; x^{(1)}, l^{(2)} &#x3D; x^{(2)}, \cdots \cdots , l^{(m)} &#x3D; x^{(m)}[&#x2F;latex] Given example x :  [latex]f_1 &#x3D; similarity(x, l^{(1)})[&#x2F;latex] [latex]f_2 &#x3D; similarity(x, l^{(2)})[&#x2F;latex] [latex]\cdots [&#x2F;latex] **Cost Function : ** [latex]minC\sum _{i&#x3D;1}^{m}[y^{(i)}cost_1(\theta^Tf^{(i)}) + (1-y^{(i)})cost_0(\theta^Tf^{(i)})]+\frac{1}{2}\sum_{j&#x3D;1}^{n&#x3D;m}\theta_j^2[&#x2F;latex]   Using kernels with logistic regression is going too very slow.</p>
+<h4 id="How-to-choose-latex-C-and-sigma-x2F-latex"><a href="#How-to-choose-latex-C-and-sigma-x2F-latex" class="headerlink" title="How to choose [latex]C \ and \ \sigma[&#x2F;latex]"></a>How to choose [latex]C \ and \ \sigma[&#x2F;latex]</h4><p>[latex]C &#x3D; 1 \ &#x2F; \ \lambda[&#x2F;latex]</p>
+<ul>
+<li>[latex]C[&#x2F;latex] big: overfitting, higher variance</li>
+<li>[latex]C[&#x2F;latex] small: underfitting, higher bias</li>
+<li>[latex]\sigma[&#x2F;latex] big : lower variance, higher bias</li>
+<li>[latex]\sigma[&#x2F;latex] small : lower bias, higher variance</li>
+</ul>
+<h2 id="Using-An-SVM"><a href="#Using-An-SVM" class="headerlink" title="Using An SVM"></a>Using An SVM</h2><p><strong>Some library function :</strong></p>
+<ul>
+<li>liblinear</li>
+<li>libsvm</li>
+</ul>
+<p><strong>There are a few things need to do :</strong></p>
+<ol>
+<li>parameter’s C</li>
+<li>choose the kernel (If we decide not to use any kernel. And the idea of no kernel is also called a <strong>linear kernel</strong>)</li>
+</ol>
+<h4 id="Logistic-Regression-or-Support-Vector-Machine"><a href="#Logistic-Regression-or-Support-Vector-Machine" class="headerlink" title="Logistic Regression or Support Vector Machine"></a>Logistic Regression or Support Vector Machine</h4><ul>
+<li>n : number of features</li>
+<li>m : number of training examples</li>
+</ul>
+<ol>
+<li>n &gt;&gt; m, Logistic Regression or Linear Kernel</li>
+<li>n small, and m middle, like 1 &lt; n &lt; 1000, 10 &lt; m &lt; 10000, SVM with Gaussian Kernel</li>
+<li>n small, and m big, like 1 &lt; n &lt; 1000, 50000 &lt; m, SVM is slower, so try to munually create more features and then use logistic regression or an SVM without the Kernel</li>
+</ol>
+<p>Well for all of these problems, for all of these different regimes, a well designed <strong>neural network</strong> is likely to work well as well. The <strong>algorithm</strong> does matter, but what often matters even more is things like, <strong>how much data</strong> do you have. And <strong>how skilled</strong> are you, how good are you at doing <strong>error analysis and debugging learning algorithms</strong>, figuring out how to <strong>design new features</strong> and <strong>figuring out what other features</strong> to give you learning algorithms and so on.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/02/12-support-vector-machines/" data-id="cl56gcvtq0032lgche6ua7gdc" data-title="12 Support Vector Machines" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-11-machine-learning-system-design" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/01/11-machine-learning-system-design/" class="article-date">
+  <time class="dt-published" datetime="2019-04-01T08:07:51.000Z" itemprop="datePublished">2019-04-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/01/11-machine-learning-system-design/">11 Machine Learning System Design</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Prioritizing-What-to-Work-On"><a href="#Prioritizing-What-to-Work-On" class="headerlink" title="Prioritizing What to Work On"></a>Prioritizing What to Work On</h2><p>How to strategize putting together a complex machine learning system. It’s hard to choose the options which is the best use of your time. In fact, if you even get to the stage where you brainstorm a list of different options to try, you’re probably already ahead of the curve. We must have a more <strong>systematic way to choose</strong> among the options of the many different things.</p>
+<h2 id="Error-Analysis"><a href="#Error-Analysis" class="headerlink" title="Error Analysis"></a>Error Analysis</h2><p>If you’re starting work on a machine learning product or building a machine learning application, it is often considered very good practice to start, not by building a very complicated system with lots of complex features and so on, <strong>but to instead start by building a very simple algorithm, the you can implement quickly</strong>. It’s often by implementing even a very, very quick and dirty implementation and by plotting learning curves that that helps you make these decisions. And often by doing that, this is the process that would inspire you to design new features. Or they’ll tell you whether the current things or current shortcomings of the system and give you <strong>the inspiration</strong> you need to come up with improvements to it.</p>
+<h4 id="Recommended-way"><a href="#Recommended-way" class="headerlink" title="Recommended way :"></a>Recommended way :</h4><ol>
+<li>start by building a very simple algorithm</li>
+<li>plot a learning curve</li>
+<li>error analysis (a single rule number evaluation metric)</li>
+</ol>
+<p><strong>Strongly recommended way to do error analysis is on the cross validation set rather than the test set.</strong></p>
+<h2 id="Error-Metrics-for-Skewed-Classes"><a href="#Error-Metrics-for-Skewed-Classes" class="headerlink" title="Error Metrics for Skewed Classes"></a>Error Metrics for Skewed Classes</h2><p>It’s particularly tricky to come up with an appropriate error metric, or evaluation metric, for your learning algorithm. [table id&#x3D;1 &#x2F;]</p>
+<h2 id="Trading-Off-Precision-and-Recall"><a href="#Trading-Off-Precision-and-Recall" class="headerlink" title="Trading Off Precision and Recall"></a>Trading Off Precision and Recall</h2><p>[latex]Precision &#x3D; TP &#x2F; (TP + FP)[&#x2F;latex]</p>
+<ul>
+<li>If you want to make predicting only when you’re <strong>more confident</strong>, and so you end up with a classifier that has <strong>higher precision</strong>.</li>
+</ul>
+<p>[latex]Recall&#x3D; TP &#x2F; (TP + FN)[&#x2F;latex]</p>
+<ul>
+<li>If we want to <strong>avoid missing</strong> too many actual cases. So we want to avoid the false negatives. And in this case, what we would have is going to be a <strong>higher recall</strong> classifier.</li>
+</ul>
+<p>[latex]F_1Score : 2 \frac{PR}{P + R}[&#x2F;latex]</p>
+<ul>
+<li>Maybe we can choose the higher F1 value in some cases.</li>
+</ul>
+<h2 id="Data-For-Machine-Learning"><a href="#Data-For-Machine-Learning" class="headerlink" title="Data For Machine Learning"></a>Data For Machine Learning</h2><p>In <strong>some cases</strong>, I had cautioned against blindly going out and just spending lots of time collecting <strong>lots of data</strong>, because <strong>it’s only</strong> sometimes that that would <strong>actually help</strong>. In machine learning that often in machine learning it’s not who has the best algorithm that wins, it’s who has the <strong>most data</strong>. If you have a lot of data and you train a learning algorithm with lot of parameters, that might be a good way to give a high performance learning algorithm.</p>
+<h4 id="The-Key"><a href="#The-Key" class="headerlink" title="The Key :"></a>The Key :</h4><ol>
+<li>Find some features x and confidently predict the value of y.</li>
+<li>Actually get a large training set, and train the learning algorithm with a lot of parameters in the training set.</li>
+</ol>
+<p><strong>If you can’t do both then you need a very kind performance learning algorithm.</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/01/11-machine-learning-system-design/" data-id="cl56gcvtp002zlgchbsa34i82" data-title="11 Machine Learning System Design" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-precision-recall" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/27/precision-recall/" class="article-date">
+  <time class="dt-published" datetime="2019-03-27T08:13:55.000Z" itemprop="datePublished">2019-03-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/27/precision-recall/">Precision &amp; Recall</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>[[“Matrix”,”#colspan#”,”Prediction Value”,”#colspan#”],[“”,””,”Positive”,”Negtive”],[“Actual Value”,”Negtive”,”FP”,”TN”],[“#rowspan#”,”Positive”,”TP”,”FN”]]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/27/precision-recall/" data-id="cl56gcvxo00dylgch7dfugdgd" data-title="Precision &amp; Recall" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-10-advice-for-applying-machine-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/27/10-advice-for-applying-machine-learning/" class="article-date">
+  <time class="dt-published" datetime="2019-03-27T07:31:08.000Z" itemprop="datePublished">2019-03-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/27/10-advice-for-applying-machine-learning/">10 Advice for Applying Machine Learning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Deciding-What-to-Try-Next"><a href="#Deciding-What-to-Try-Next" class="headerlink" title="Deciding What to Try Next"></a>Deciding What to Try Next</h2><p>If you are <strong>developing</strong> a machine learning system or trying to <strong>improve the performance</strong> of a machine learning system, how do you go about deciding <strong>what are the proxy avenues to try next</strong>? If you find that this is making <strong>huge errors in this prediction</strong>. <strong>What should you then try</strong> mixing in order to improve the learning algorithm? One thing they could try, is to get <strong>more training examples</strong>. But sometimes getting more training data doesn’t actually help. Other things you might try are to well maybe try a <strong>smaller set of features</strong>. There is a pretty simple technique that can let you very <strong>quickly rule out half of the things on this list</strong> as being potentially promising things to pursue. And there is a very simple technique, that if you run, can easily rule out many of these options, and potentially save you a lot of time pursuing something that’s just is not going to work. <strong>Machine Learning Diagnostics</strong>, and what a diagnostic is, is a test you can run, to get insight into what is or isn’t working with an algorithm, and which will often give you insight as to what are promising things to try to improve a learning algorithm’s performance.</p>
+<h2 id="Evaluating-a-Hypothesis"><a href="#Evaluating-a-Hypothesis" class="headerlink" title="Evaluating a Hypothesis"></a>Evaluating a Hypothesis</h2><p>If there is any sort of ordinary to the data. That should be better to send a <strong>random 70%</strong> of your data to the <strong>training set</strong> and a <strong>random 30%</strong> of your data to the <strong>test set</strong>.</p>
+<h2 id="Model-Selection-and-Train-Validation-Test-Sets"><a href="#Model-Selection-and-Train-Validation-Test-Sets" class="headerlink" title="Model Selection and Train_Validation_Test Sets"></a>Model Selection and Train_Validation_Test Sets</h2><p>To send <strong>60%</strong> of your data’s, your training set, maybe <strong>20%</strong> to your cross validation set, and <strong>20%</strong> to your test set.</p>
+<h2 id="Diagnosing-Bias-vs-Variance"><a href="#Diagnosing-Bias-vs-Variance" class="headerlink" title="Diagnosing Bias vs. Variance"></a>Diagnosing Bias vs. Variance</h2><p>The <strong>training set error, will be high</strong>. And you might find that the <strong>cross validation error will also be high</strong>. It might be a close. Maybe just slightly higher than a training error. The algorithm may be suffering from <strong>high bias</strong>. In contrast if your algorithm is suffering from <strong>high variance</strong>.</p>
+<h2 id="Regularization-and-Bias-Variance"><a href="#Regularization-and-Bias-Variance" class="headerlink" title="Regularization and Bias_Variance"></a>Regularization and Bias_Variance</h2><p><strong>Looking at the plot of the whole or cross validation error</strong>, you can either manually, automatically try to select a point that minimizes  the cross-validation error and select the value of lambda corresponding to low cross-validation error.</p>
+<h2 id="Learning-Curves"><a href="#Learning-Curves" class="headerlink" title="Learning Curves"></a>Learning Curves</h2><p>Learning curves is often a very useful thing to plot. If either you wanted to sanity check that your algorithm is working correctly, or if you want to improve the performance of the algorithm. To plot a learning curve, is plot j train which is, say, average squared error on my training set or Jcv which is the average squared error on my <strong>cross validation set</strong>. And I’m going to plot that as a function of m, that is as a function of <strong>the number of training examples</strong>. In the <strong>high variance</strong> setting, getting <strong>more training data</strong> is, indeed, likely to help.</p>
+<h2 id="Deciding-What-to-Do-Next-Revisited"><a href="#Deciding-What-to-Do-Next-Revisited" class="headerlink" title="Deciding What to Do Next Revisited"></a>Deciding What to Do Next Revisited</h2><ol>
+<li>getting more training examples is good for <em>high variance</em></li>
+<li>a smaller set of features fixes <em>high variance</em></li>
+<li>adding features usually is a solution for fixing high bias</li>
+<li>similarly, adding polynomial features</li>
+<li>decreasing lambda fixes fixes high bias</li>
+<li>increasing lambda fixes <em>high variance</em></li>
+</ol>
+<p>It turns out if you’re applying neural network very often using <strong>a large neural network</strong> often it’s actually the larger, the better. <strong>Using a single hidden layer is a reasonable default</strong>, but if you want to choose the number of hidden layers, one other thing you can try is find yourself a training cross-validation, and test set split and try training neural networks with <strong>one hidden layer or two hidden layers or three hidden layers</strong> and see which of those neural networks performs best on the cross-validation sets.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/27/10-advice-for-applying-machine-learning/" data-id="cl56gcvt5001dlgch49b50vg2" data-title="10 Advice for Applying Machine Learning" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-9-neural-networks-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/27/9-neural-networks-learning/" class="article-date">
+  <time class="dt-published" datetime="2019-03-27T06:41:20.000Z" itemprop="datePublished">2019-03-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/27/9-neural-networks-learning/">9 Neural Networks: Learning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>Two types of classification problems:</p>
+<ul>
+<li>Binary classification : where the labels y are either zero or one.</li>
+<li>multiclass classification : where we may have k distinct classes.</li>
+</ul>
+<h2 id="Backpropagation-Algorithm"><a href="#Backpropagation-Algorithm" class="headerlink" title="Backpropagation Algorithm"></a>Backpropagation Algorithm</h2><p>It’s too hard to describe.</p>
+<h2 id="Backpropagation-Intuition"><a href="#Backpropagation-Intuition" class="headerlink" title="Backpropagation Intuition"></a>Backpropagation Intuition</h2><p>It’s too hard to describe.</p>
+<h2 id="Implementation-Note-Unrolling-Parameters"><a href="#Implementation-Note-Unrolling-Parameters" class="headerlink" title="Implementation Note_ Unrolling Parameters"></a>Implementation Note_ Unrolling Parameters</h2><p>It’s too hard to describe.</p>
+<h2 id="Gradient-Checking"><a href="#Gradient-Checking" class="headerlink" title="Gradient Checking"></a>Gradient Checking</h2><p>Back prop as an algorithm has one unfortunate property is that there are many ways to have subtle bugs in back prop so that if you run it with gradient descent or some other optimization algorithm, it could actually look like it’s working. And, you know, your cost function [latex]J(\theta )[&#x2F;latex] may end up decreasing on every iteration of gradient descent, but this could pull through even though there might be some bug in your implementation of back prop. So it looks like [latex]J(\theta )[&#x2F;latex] is decreasing, but you might just wind up with a neural network that has a higher level of error than you would with a bug-free implementation and you might just not know that there was this subtle bug that’s giving you this performance. Gradient checking that eliminates almost all of these problems.</p>
+<h2 id="Random-Initialization"><a href="#Random-Initialization" class="headerlink" title="Random Initialization"></a>Random Initialization</h2><p>To train a neural network, what you should do is randomly initialize the weights to, you know, small values close to 0, between [latex]-\epsilon[&#x2F;latex] and [latex]+\epsilon[&#x2F;latex].</p>
+<h2 id="Putting-It-Together"><a href="#Putting-It-Together" class="headerlink" title="Putting It Together"></a>Putting It Together</h2><p>How to implement a neural network learning algorithm ?</p>
+<ul>
+<li>Pick some network architecture, it means connectivity pattern between the neurons.</li>
+<li>Once you decides on the fix set of features x the number of input units will just be, the dimension of your features x(i) would be determined by that.</li>
+<li>The number of output of this will be determined by the number of classes in your classification problem.</li>
+<li>If you use more than one hidden layer, again the reasonable default will be to have the same number of hidden units in every single layer.</li>
+<li>(<em>As for the number of hidden units - usually, the more hidden units the better</em>)</li>
+</ul>
+<p>What we need to implement in order to trade in neural network ?</p>
+<ol>
+<li>set up the neural network and to randomly initialize the values of the weights</li>
+<li>forward propagation</li>
+<li>compute this cost function [latex]J(\theta )[&#x2F;latex]</li>
+<li>back-propagation</li>
+<li>gradient checking</li>
+<li>use an optimization algorithm</li>
+</ol>
+<h2 id="Autonomous-Driving"><a href="#Autonomous-Driving" class="headerlink" title="Autonomous Driving"></a>Autonomous Driving</h2><p>A fun and historically important example of Neural Network Learning, just so so.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/27/9-neural-networks-learning/" data-id="cl56gcvuy0069lgchhz3v64v9" data-title="9 Neural Networks: Learning" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-8-neural-networks-representation" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/27/8-neural-networks-representation/" class="article-date">
+  <time class="dt-published" datetime="2019-03-27T06:07:58.000Z" itemprop="datePublished">2019-03-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/27/8-neural-networks-representation/">8 Neural Networks: Representation</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Non-linear-Hypotheses"><a href="#Non-linear-Hypotheses" class="headerlink" title="Non-linear Hypotheses"></a>Non-linear Hypotheses</h2><p>Neural Networks, which turns out to be a much better way to learn complex hypotheses, complex nonlinear hypotheses even when your input feature space, even when n is large.</p>
+<h2 id="Neurons-and-the-Brain"><a href="#Neurons-and-the-Brain" class="headerlink" title="Neurons and the Brain"></a>Neurons and the Brain</h2><p>Neural Networks are a pretty old algorithm that was originally motivated by the goal of having machines that can mimic the brain. It’s actually a very effective state of the art technique for modern day machine learning applications.</p>
+<h2 id="Model-Representation"><a href="#Model-Representation" class="headerlink" title="Model Representation"></a>Model Representation</h2><p>A neuron is is a computational unit that gets a number of inputs through its input wires, does some computation, and then it sends outputs, via its axon to other nodes or other neurons in the brain. <strong>Weights</strong> of a model just means exactly the same thing as parameters of the model. <strong>Forward Propagation</strong> : Because it start of with the activation of the input-units and then it sort of forward-propagate that to the hidden layer and then it sort of forward propagate that and compute the activation of the output layer. The more complex features will be better than x^n, and it will be more work well for prediction new data.</p>
+<h2 id="Examples-and-Intuitions"><a href="#Examples-and-Intuitions" class="headerlink" title="Examples and Intuitions"></a>Examples and Intuitions</h2><p>In normal Logistic Regression, though we can use some polynomial to contract some features, we still be limited by original features.But in Neuron Network, the original features just be work on input layer. We can use contract neuron network to  be more complex neuron network that will do more complex compute.</p>
+<h2 id="Multiclass-Classification"><a href="#Multiclass-Classification" class="headerlink" title="Multiclass Classification"></a>Multiclass Classification</h2><p>four output units represents four classification</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/27/8-neural-networks-representation/" data-id="cl56gcvuy0067lgch6m8x4ces" data-title="8 Neural Networks: Representation" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-7-regularization" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/27/7-regularization/" class="article-date">
+  <time class="dt-published" datetime="2019-03-27T03:56:33.000Z" itemprop="datePublished">2019-03-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/27/7-regularization/">7 Regularization</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="The-Problem-of-Overfitting"><a href="#The-Problem-of-Overfitting" class="headerlink" title="The Problem of Overfitting"></a>The Problem of Overfitting</h2><p>Regularization, that will allow us to ameliorate or to reduce this overfitting problem and get these learning algorithms to <strong>maybe work much better</strong>. If you were to fit a very <strong>high-order polynomial</strong>, if you were to generate lots of high-order polynomial terms of speeches, then, logistical regression may contort itself, may try really hard to find a decision boundary that fits your training data or go to great lengths to contort itself, to fit every single training example well. But this really doesn’t look like a very good hypothesis, for <strong>making predictions</strong>. The term <strong>generalized</strong> refers to how well a hypothesis applies even to new examples. In order to address over fitting, there are two main options for things that we can do.*   reduce the number of features</p>
+<ul>
+<li>regularization, keep all the features, but we’re going to reduce the magnitude or the values of the parameters</li>
+</ul>
+<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><h4 id="Orignal-Model"><a href="#Orignal-Model" class="headerlink" title="Orignal Model :"></a>Orignal Model :</h4><p>[latex] h_\theta(x) &#x3D; \theta_0 + \theta_1x_1 + \theta_2x\underset{2}{2} + \theta_3x\underset{3}{3} + \theta_4x\underset{4}{4} [&#x2F;latex]</p>
+<h4 id="Modified-Model"><a href="#Modified-Model" class="headerlink" title="Modified Model :"></a>Modified Model :</h4><p>[latex] \underset{\theta }{min}\frac{1}{2m}[\sum_{i&#x3D;1}^{m}(h_\theta(x^{(i)}-y^{(i)})^2+1000\theta\underset{3}{2}+10000\theta \underset{4}{2})] [&#x2F;latex]</p>
+<h4 id="Suppose"><a href="#Suppose" class="headerlink" title="Suppose :"></a>Suppose :</h4><p>[latex] J(\theta) &#x3D; \frac {1}{2m} [\sum_{i&#x3D;1}^{m} (h_\theta(x^{(i)}-y^{(i)})^2 + \lambda \sum_{j&#x3D;1}^{n} \theta _j^2] [&#x2F;latex]</p>
+<p><strong>regularization parameter</strong> : [latex]\lambda[&#x2F;latex]</p>
+<h4 id="Notice"><a href="#Notice" class="headerlink" title="Notice :"></a>Notice :</h4><p>[latex]\lambda \sum_{j&#x3D;1}^{n} \theta _j^2[&#x2F;latex]</p>
+<p>The extra regularization term at the end to shrink every single parameter and so this term we tend to shrink all of my parameters.</p>
+<h2 id="Regularized-Linear-Regression"><a href="#Regularized-Linear-Regression" class="headerlink" title="Regularized Linear Regression"></a>Regularized Linear Regression</h2><p>[latex] J(\theta) &#x3D; \frac {1}{2m} [\sum_{i&#x3D;1}^{m} (h_\theta(x^{(i)}-y^{(i)})^2 + \lambda \sum_{j&#x3D;1}^{n} \theta _j^2] [&#x2F;latex]</p>
+<p>repeat until convergence {</p>
+<p>[latex]\theta _0 :&#x3D; \theta _0 - \alpha \frac {1}{m} \sum _{i&#x3D;1}^{m} (h_\theta (x^{(i)}) - y^{(i)})x_0^{(i)}[&#x2F;latex] [latex]\theta _j :&#x3D; \theta _j - \alpha [\frac {1}{m} \sum _{i&#x3D;1}^{m} (h_\theta (x^{(i)}) - y^{(i)})x_j^{(i)} + \frac {\lambda }{m}\theta _j][&#x2F;latex]</p>
+<p>}</p>
+<h4 id="Modified"><a href="#Modified" class="headerlink" title="Modified :"></a>Modified :</h4><p>[latex]\theta _j :&#x3D; \theta _j(1 - \alpha \frac {\lambda }{m}) - \alpha \frac {1}{m} \sum _{i&#x3D;1}^{m} (h_\theta (x^{(i)}) - y^{(i)})x_j^{(i)}[&#x2F;latex]</p>
+<h2 id="Regularized-Logistic-Regression"><a href="#Regularized-Logistic-Regression" class="headerlink" title="Regularized Logistic Regression"></a>Regularized Logistic Regression</h2><p>[latex]J(\theta) &#x3D; \frac {1}{m}\sum _{i&#x3D;1}^{m} [-y^{(i)} log(h_\theta (x^{(i)})) - (1 - y^{(i)})log(1 - h_\theta (x^{(i)}))] + \frac {\lambda}{2m} \sum _{i&#x3D;1}^{n} \theta _j^{2}[&#x2F;latex]</p>
+<h4 id="Python-Code"><a href="#Python-Code" class="headerlink" title="Python Code :"></a>Python Code :</h4><p>import numpy as np<br>def costReg(theta, X, y, learningRate):<br>theta &#x3D; np.matrix(theta)<br>X &#x3D; np.matrix(X)<br>y &#x3D; np.matrix(y)<br>first &#x3D; np.multiply(-y, np.log(sigmoid(X * theta.T)))<br>second &#x3D; np.multiply((1 - y), np.log(1 - sigmoid(X * theta.T)))<br>reg &#x3D; learningRate &#x2F; (2 * len(X)) * np.sum(np.power(theta[:,1:theta.shape[1]], 2))<br>return np.sum(first - second) &#x2F; len(X) + reg</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/27/7-regularization/" data-id="cl56gcvux0063lgch53x4dcqp" data-title="7 Regularization" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-6-logistic-regression" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/26/6-logistic-regression/" class="article-date">
+  <time class="dt-published" datetime="2019-03-26T06:40:42.000Z" itemprop="datePublished">2019-03-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/26/6-logistic-regression/">6 Logistic Regression</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>Classification : [latex]y &#x3D; [&#x2F;latex] 0 or 1 [latex]h_\theta (x)[&#x2F;latex] can be &gt; 1 or &lt; 0</p>
+<p>Logistic Regression: [latex]0 \leq h_\theta (x) \leq 1 [&#x2F;latex] Logistic regression which has the property that the output, the predictions of logistic regression are always between zero and one. Logistic Regression is actually a classification algorithm.</p>
+<h2 id="Hypothesis-Representation"><a href="#Hypothesis-Representation" class="headerlink" title="Hypothesis Representation"></a>Hypothesis Representation</h2><p><strong>Sigmoid function</strong> : [latex]g(z) &#x3D; \frac {1}{1+e^{-z}}[&#x2F;latex]</p>
+<p>import numpy as np<br>def sigmoid(z):<br>    return 1 &#x2F; (1 + np.exp(-z))</p>
+<h2 id="Decision-Boundary"><a href="#Decision-Boundary" class="headerlink" title="Decision Boundary"></a>Decision Boundary</h2><p>Much higher order polynomials, then it’s possible to show that you can get even more complex decision boundaries and logistic regression can be used to find the zero boundaries.</p>
+<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>How to fit the parameters theta for logistic regression. In particular, I’d like to define the optimization objective or the cost function that we’ll use to fit the parameters. Here’s to supervised learning problem of fitting a logistic regression model.</p>
+<h4 id="Linear-regression-the-cost-function"><a href="#Linear-regression-the-cost-function" class="headerlink" title="Linear regression the cost function"></a>Linear regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} \frac {1}{2}(h_\theta(x^{(i)}) - y^{(i)})^{2} [&#x2F;latex]</p>
+<h4 id="Logistic-regression-the-cost-function"><a href="#Logistic-regression-the-cost-function" class="headerlink" title="Logistic regression the cost function"></a>Logistic regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} Cost(h_\theta(x^{(i)}), y^{(i)}) [&#x2F;latex]</p>
+<p>[latex] Cost(h_\theta (x), y) &#x3D; \begin{cases} -log(h_\theta(x)) &amp; \text{ if } y&#x3D;1 \\ -log(1 - h_\theta(x)) &amp; \text{ if } y&#x3D;0 \end{cases} [&#x2F;latex]</p>
+<h2 id="Simplified-Cost-Function-and-Gradient-Descent"><a href="#Simplified-Cost-Function-and-Gradient-Descent" class="headerlink" title="Simplified Cost Function and Gradient Descent"></a>Simplified Cost Function and Gradient Descent</h2><p>How to implement a fully working version of logistic regression. It’s too hard to notes here , if you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a> A vectorized implementation can update, you know, all of these N plus 1 parameters all in one fell swoop. Feature scaling can help gradient descents converge faster for linear regression. The idea of feature scaling also applies to gradient descent for logistic regression.</p>
+<h2 id="Advanced-Optimization"><a href="#Advanced-Optimization" class="headerlink" title="Advanced Optimization"></a>Advanced Optimization</h2><p>For gradient descent, I guess technically you don’t actually need code to compute the cost function [latex]J_\theta[&#x2F;latex]. You only need code to compute the derivative terms. Conjugate gradient BFGS and L-BFGS are examples of more sophisticated optimization algorithms. <strong>These algorithms have a number of advantages:</strong>*   do not need to manually pick the learning rate alpha.</p>
+<p><em>It is actually entirely possible to use these algorithms successfully and apply to lots of different learning problems without actually understanding the inter-loop of what these algorithms do.</em> For these algorithms also what I would recommend you do is just <strong>use a software library</strong>. Sophisticated optimization library, it makes the just a little bit more opaque and so just maybe a little bit harder to debug. But these algorithms <strong>often run much faster</strong> than gradient descent. If you have <strong>a large machine learning problem</strong>, you can use these algorithms instead of using gradient descent.</p>
+<h2 id="Multiclass-Classification-One-vs-all"><a href="#Multiclass-Classification-One-vs-all" class="headerlink" title="Multiclass Classification_ One-vs-all"></a>Multiclass Classification_ One-vs-all</h2><p>one-versus-all classification Do the same thing for the third class and fit a third classifier H superscript 3 of X and maybe this or give us a classifier that separates the positive and negative examples like that. Basically pick the classifier, pick whichever one of the three classifiers is most confident, or most enthusistically says that it thinks it has a right class. And with this little method you can now take the logistic regression classifier and make it work on multi-class classification problems as well.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/26/6-logistic-regression/" data-id="cl56gcvuw0061lgch6f121sqd" data-title="6 Logistic Regression" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

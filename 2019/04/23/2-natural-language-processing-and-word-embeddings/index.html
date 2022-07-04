@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>2 Natural Language Processing and Word Embeddings | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Word RepresentationNLP, Natural Language Processing Word embeddings, which is a way of representing words. that let your algorithms automatically understand analogies like that, man is to woman, as ki">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2 Natural Language Processing and Word Embeddings">
+<meta property="og:url" content="http://example.com/2019/04/23/2-natural-language-processing-and-word-embeddings/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Word RepresentationNLP, Natural Language Processing Word embeddings, which is a way of representing words. that let your algorithms automatically understand analogies like that, man is to woman, as ki">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Word_representation.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Featurized_representation_word_embedding.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Visualizing_word_embeddings.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Embedding_matrix.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/GloVe_global_vectors_for_word_representation.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/A_note_on_the_featurization_view_of_word_embeddings.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Sentiment_classification_problem.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Simple_sentiment_classification_model.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_for_sentiment_classification.png">
+<meta property="article:published_time" content="2019-04-23T01:43:11.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.563Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Word_representation.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-2-natural-language-processing-and-word-embeddings" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/23/2-natural-language-processing-and-word-embeddings/" class="article-date">
+  <time class="dt-published" datetime="2019-04-23T01:43:11.000Z" itemprop="datePublished">2019-04-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      2 Natural Language Processing and Word Embeddings
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Word-Representation"><a href="#Word-Representation" class="headerlink" title="Word Representation"></a>Word Representation</h2><p><strong>NLP, Natural Language Processing</strong> <strong>Word embeddings</strong>, which is a way of representing words. that let your algorithms automatically understand analogies like that, man is to woman, as king is to queen, and many other examples. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Word_representation.png"> <strong>Representing words using a vocabulary of words.</strong> </p>
+<p>One of the weaknesses of this representation is that it treats each word as a thing onto itself, and it doesn’t allow an algorithm to easily generalize the cross words.</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Featurized_representation_word_embedding.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Visualizing_word_embeddings.png"> You see plots like these sometimes on the internet to visualize some of these 300 or higher dimensional embeddings. To visualize it, algorithms like <strong>t-SNE</strong>, map this to a much lower dimensional space.</p>
+<h2 id="Using-Word-Embeddings"><a href="#Using-Word-Embeddings" class="headerlink" title="Using Word Embeddings"></a>Using Word Embeddings</h2><p><strong>Transfer learning and word embeddings</strong></p>
+<ol>
+<li>Learn word embeddings from large text corpus. (1-100B words or download pre-trained embedding online.)</li>
+<li>Transfer embedding to new task with smaller training set. (say, 100k words)</li>
+<li>Optional: Continue to finetune the word embeddings with new data.</li>
+</ol>
+<h2 id="Properties-of-Word-Embeddings"><a href="#Properties-of-Word-Embeddings" class="headerlink" title="Properties of Word Embeddings"></a>Properties of Word Embeddings</h2><p>One of the most fascinating properties of word embeddings is that they can also help with <strong>analogy reasoning</strong>. The most commonly used similarity function is called <strong>cosine similarity</strong> : [latex]CosineSimilarity(u,v) &#x3D; \frac{u.v}{\left \ u \right \_2\left \ v \right \_2} &#x3D; cos(\theta)[&#x2F;latex]</p>
+<h2 id="Embedding-Matrix"><a href="#Embedding-Matrix" class="headerlink" title="Embedding Matrix"></a>Embedding Matrix</h2><p>When you <strong>implement an algorithm to learn a word embedding</strong>, what you end up learning is an embedding matrix. And the <strong>columns</strong> of this matrix would be <strong>the different embeddings for the 10,000 different words</strong> you have in your vocabulary. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Embedding_matrix.png"></p>
+<h2 id="Learning-Word-Embeddings"><a href="#Learning-Word-Embeddings" class="headerlink" title="Learning Word Embeddings"></a>Learning Word Embeddings</h2><p>It turns out that <strong>building a neural language model</strong> is a reasonable way to learn a set of embedding. Well, what’s actually more commonly done is to have a <strong>fixed historical window</strong>.</p>
+<p><em>And using a fixed history, just means that you can deal with even arbitrarily long sentences because the input sizes are always fixed.</em></p>
+<p>If your goal is to learn a embedding. Researchers have experimented with many different types of context.</p>
+<ul>
+<li>If your goal is to build a language model then it is natural for the context to be a few words right before the target word.</li>
+<li>But if your goal isn’t to learn the language model per se, then you can choose other contexts.</li>
+</ul>
+<h2 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h2><p>The Word2Vec algorithm which is simple and computationally more efficient way to learn this types of embeddings.</p>
+<h4 id="Skip-Gram-model"><a href="#Skip-Gram-model" class="headerlink" title="Skip-Gram model"></a>Skip-Gram model</h4><p>[latex]\begin{matrix} Softmax : &amp; p(tc) &#x3D; \frac{e^{\theta ^T_t e_c}}{\sum _{j&#x3D;1}^{10,000} e^{\theta ^T_j e_c}} \\ Loss Function : &amp; L(\hat y, y) &#x3D; - \sum _{i&#x3D;1}^{10,000} y_i log \hat y _i \end{matrix}[&#x2F;latex] the primary problem is computational speed, because of the softmax step is very expensive to calculate because needing to sum over your entire vocabulary size into the denominator of the softmax.</p>
+<p><strong>a few solutions</strong></p>
+<ul>
+<li><ul>
+<li>hierarchical softmax classifier</li>
+<li>negative sampling</li>
+</ul>
+</li>
+</ul>
+<h4 id="CBow"><a href="#CBow" class="headerlink" title="CBow"></a>CBow</h4><p>the Continuous Bag-Of-Words Model, which takes the surrounding contexts from middle word, and and uses the surrounding words to try to predict the middle word.</p>
+<h2 id="Negative-Sampling"><a href="#Negative-Sampling" class="headerlink" title="Negative Sampling"></a>Negative Sampling</h2><p>What to do in this algorithm is create a new supervised learning problem. And the problem is, given a pair of words like orange and juice, we’re going to predict is this a context-target pair? It’s really to <strong>try to distinguish between these two types of distributions</strong> from which you might sample a pair of words. <strong>How do you choose the negative examples?</strong></p>
+<ul>
+<li>sample the words in the middle, the candidate target words.</li>
+<li>use 1 over the vocab size, sample the negative examples uniformly at random, but that’s also very non-representative of the distribution of English words.</li>
+<li>the authors, Mikolov et al, reported that <strong>empirically</strong>, [latex]P(w_i) &#x3D; \frac{f(w_i)^{\frac{3}{4}}}{\sum _{j&#x3D;1}^{10,000}f(w_j)^{\frac{3}{4}}}[&#x2F;latex]</li>
+</ul>
+<h2 id="GloVe-Word-Vectors"><a href="#GloVe-Word-Vectors" class="headerlink" title="GloVe Word Vectors"></a>GloVe Word Vectors</h2><p><strong>GloVe</strong> stands for <strong>global vectors for word representation</strong>. Sampling pairs of words, context and target words, by picking two words that appear in close proximity to each other in our text corpus. So, what the GloVe algorithm does is, it starts off just by making that explicit. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/GloVe_global_vectors_for_word_representation.png"><img src="http://www.qinuu.com/wp-content/uploads/2019/04/A_note_on_the_featurization_view_of_word_embeddings.png"></p>
+<h2 id="Sentiment-Classification"><a href="#Sentiment-Classification" class="headerlink" title="Sentiment Classification"></a>Sentiment Classification</h2><p>Sentiment classification is the task of looking at a piece of text and telling if someone <strong>likes or dislikes</strong> the thing they’re talking about. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Sentiment_classification_problem.png"> One of the challenges of sentiment classification is you might not have a huge label training set for it. But <strong>with word embeddings</strong>, you’re able to build good sentiment classifiers <strong>even with only modest-size label training sets</strong>. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Simple_sentiment_classification_model.png"> <strong>One of the problems with this algorithm is it ignores word order.</strong> **More Sophisticated Model : ** <img src="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_for_sentiment_classification.png"></p>
+<h2 id="Debiasing-Word-Embeddings"><a href="#Debiasing-Word-Embeddings" class="headerlink" title="Debiasing Word Embeddings"></a>Debiasing Word Embeddings</h2><p>Machine learning and AI algorithms are increasingly trusted to help with, or <strong>to make, extremely important decisions</strong>. And so we like to <strong>make sure that as much as possible that they’re free of undesirable forms of bias</strong>, such as gender bias, ethnicity bias and so on.</p>
+<ul>
+<li>So the first thing we’re going to do is <strong>identify the direction corresponding to a particular bias</strong> we want to reduce or eliminate.</li>
+<li>the next step is a <strong>neutralization</strong> step. So for every word that’s not definitional, project it to get rid of bias.</li>
+<li>And then the final step is called <strong>equalization</strong> in which you might have pairs of words such as grandmother and grandfather, or girl and boy, where you want the only difference in their embedding to be the gender.</li>
+<li>And then, finally, the number of pairs you want to equalize, that’s <strong>actually also relatively small</strong>, and is, at least for the gender example, it is quite feasible to hand-pick.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/23/2-natural-language-processing-and-word-embeddings/" data-id="cl56gcvub004dlgchao7k229x" data-title="2 Natural Language Processing and Word Embeddings" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/23/3-sequence-models-attention-mechanism/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          3 Sequence models &amp; Attention mechanism
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/22/1-recurrent-neural-networks/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">1 Recurrent Neural Networks</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

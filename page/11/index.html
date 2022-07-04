@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/11/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-1-ml-strategy-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/18/1-ml-strategy-1/" class="article-date">
+  <time class="dt-published" datetime="2019-04-18T06:15:07.000Z" itemprop="datePublished">2019-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/18/1-ml-strategy-1/">1 ML strategy (1)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Why-ML-Strategy"><a href="#Why-ML-Strategy" class="headerlink" title="Why ML Strategy?"></a>Why ML Strategy?</h2><p><strong>How to improve your system :</strong> </p>
+<ul>
+<li>more data</li>
+<li>diverse<ul>
+<li>poses</li>
+</ul>
+</li>
+<li>negative examples</li>
+<li>train the algorithm longer</li>
+<li>try a different optimization algorithm<ul>
+<li>trying a bigger network or a smaller network</li>
+<li>try to dropout or maybe L2 regularization</li>
+<li>change the network architecture</li>
+<li>changing activation functions</li>
+<li>changing the number of hidden units and so on</li>
+</ul>
+</li>
+</ul>
+<p>And the problem is that if you choose poorly, it is entirely possible that you end up spending six months charging in some direction only to realize after six months that that didn’t do any good. So we <strong>need a number of strategies</strong>, that is, ways of analyzing a machine learning problem that will point you in the direction of the most promising things to try.</p>
+<h2 id="Orthogonalization"><a href="#Orthogonalization" class="headerlink" title="Orthogonalization"></a>Orthogonalization</h2><p>You must be very clear-eyed about what to tune in order to try to achieve one effect. This is a process we call orthogonalization. So the concept of orthogonalization refers to that, if you think of one dimension of what you want to do as controlling a steering angle, and another dimension as controlling your speed. And by having orthogonal, orthogonal means at 90 degrees to each other. By having orthogonal controls that are ideally aligned with the things you actually want to control, it makes it much easier to tune the knobs you have to tune.</p>
+<h4 id="Chain-of-assumptions-in-ML"><a href="#Chain-of-assumptions-in-ML" class="headerlink" title="Chain of assumptions in ML"></a>Chain of assumptions in ML</h4><ul>
+<li>Fit training set well on cost function</li>
+<li>Fit dev set well on cost function</li>
+<li>Fit test set well on cost function</li>
+<li>Performs well in real world</li>
+</ul>
+<h2 id="Single-number-evaluation-metric"><a href="#Single-number-evaluation-metric" class="headerlink" title="Single number evaluation metric"></a>Single number evaluation metric</h2><p>Whether you’re tuning hyperparameters, or trying out different ideas for learning algorithms, or just trying out different options for building your machine learning system. You’ll find that your progress will be <strong>much faster if you have</strong> a single real number evaluation metric that lets you quickly tell if the new thing you just tried is working better or worse than your last idea. One reasonable way to evaluate the performance of your classifiers is to look at its precision and recall. It turns out that there’s often a tradeoff between precision and recall, and you care about both. [latex]F_1 &#x3D; \frac{2}{\frac{1}{P} + \frac{1}{R}}[&#x2F;latex] And in mathematics, this function is called the harmonic mean of precision P and recall R. A well-defined dev set which is how you’re measuring precision and recall, plus a <strong>single number evaluation metric</strong> allows you to quickly tell if classifier A or classifier B is better,</p>
+<h2 id="Satisficing-and-optimizing-metrics"><a href="#Satisficing-and-optimizing-metrics" class="headerlink" title="Satisficing and optimizing metrics"></a>Satisficing and optimizing metrics</h2><p>It’s not always easy to combine all the things you care about into a single real number evaluation metric. In those cases it sometimes useful to set up satisficing as well as optimizing metrics. If you have N metrics that you care about it’s sometimes reasonable to <strong>pick one of them to be optimizing</strong>. So you want to do as well as is possible on that one. And then N minus 1 to be <strong>satisficing</strong>, meaning that so long as they reach some threshold. Such as running times faster than 100 milliseconds, but <strong>so long as they reach some threshold, you don’t care how much better it is in that threshold, but they have to reach that threshold</strong>. If there are multiple things you care about by say there’s one as the optimizing metric that you want to do as well as possible on and one or more as satisficing metrics were you’ll be satisfice. Almost it does better than some threshold you can now have an almost automatic way of quickly looking at multiple cost size and picking the, quote, best one.</p>
+<h2 id="Train-x2F-dev-x2F-test-distributions"><a href="#Train-x2F-dev-x2F-test-distributions" class="headerlink" title="Train&#x2F;dev&#x2F;test distributions"></a>Train&#x2F;dev&#x2F;test distributions</h2><p>The <strong>dev set</strong> is also called the <strong>development set</strong>, or sometimes called the hold out <strong>cross validation set</strong>. <strong>Make your dev and test sets come from the same distribution.</strong> Take all this data, randomly shuffled data into the dev and test set. So that, both the dev and test sets have data from all eight regions and that the dev and test sets really come from the same distribution, Machine learning teams are often very good at shooting different arrows into targets and iterating to get closer and closer to hitting the bullseye. Once you do well on, try to get data that looks like that. And, whatever that data is, put it into both your dev set and your test set. A totally different location that just was a very frustrating experience for the team. <strong>Setting up the dev set, as well as the evaluation metric, is really defining what target you want to aim at.</strong></p>
+<h2 id="Size-of-dev-and-test-sets"><a href="#Size-of-dev-and-test-sets" class="headerlink" title="Size of dev and test sets"></a>Size of dev and test sets</h2><ul>
+<li>train and test set : 70&#x2F;30</li>
+<li>train dev and test sets : 60&#x2F;20&#x2F;20</li>
+<li>train dev and test sets : 98&#x2F;1&#x2F;1</li>
+</ul>
+<h4 id="Size-of-test-set"><a href="#Size-of-test-set" class="headerlink" title="Size of test set"></a>Size of test set</h4><p>Set your test set to be big enough to give high condifience in the over all performance of your system.</p>
+<h2 id="When-to-change-dev-x2F-test-sets-and-metrics"><a href="#When-to-change-dev-x2F-test-sets-and-metrics" class="headerlink" title="When to change dev&#x2F;test sets and metrics"></a>When to change dev&#x2F;test sets and metrics</h2><p>Sometimes partway through a project you might realize you put your target in the wrong place. In that case you should move your target. Misclassification error metric : [latex]Error &#x3D; \frac{1}{m_{dev}} \sum _{i&#x3D;1}^{m_{dev}}I\{y_{pred}^{(i)} \neq y^{(i)}\}[&#x2F;latex] One way to change this evaluation metric : [latex]Error &#x3D; \frac{1}{m_{dev}} \sum _{i&#x3D;1}^{m_{dev}}w^{(i)}I\{y_{pred}^{(i)} \neq y^{(i)}\}[&#x2F;latex] If you want this normalization constant, technically this becomes sum over i of w(i), so then this error would still be between zero and one. [latex]Error &#x3D; \frac{1}{\sum w^{(i)}} \sum _{i&#x3D;1}^{m_{dev}}w^{(i)}I\{y_{pred}^{(i)} \neq y^{(i)}\}[&#x2F;latex] <strong>The goal of the evaluation metric is accurately tell you, given two classifiers, which one is better for your application.</strong> If you’re not satisfied with your old error metric then don’t keep coasting with an error metric you’re unsatisfied with, instead try to define a new one that you think better captures your preferences in terms of what’s actually a better algorithm. <strong>Take a machine learning problem and break it into distinct steps.</strong></p>
+<ul>
+<li>place the target</li>
+<li>shooting at the target</li>
+</ul>
+<p><strong>The point was with the philosophy of orthogonalization.</strong> If doing well on your metric and your current dev sets or dev and test sets’ distribution, if that does not correspond to doing well on the application you actually care about, then change your metric and your dev test set. <strong>The overall guideline is if your current metric and data you are evaluating on doesn’t correspond to doing well on what you actually care about, then change your metrics and&#x2F;or your dev&#x2F;test set to better capture what you need your algorithm to actually do well on.</strong> <strong>Even if you can’t define the perfect evaluation metric and dev set, just set something up quickly and use that to drive the speed of your team iterating.</strong> And if later down the line you find out that it wasn’t a good one, you have better idea, change it at that time, it’s perfectly okay.</p>
+<h2 id="Why-human-level-performance"><a href="#Why-human-level-performance" class="headerlink" title="Why human-level performance?"></a>Why human-level performance?</h2><ol>
+<li>In deep learning, machine learning algorithms are suddenly working much better and so it has become much more feasible in a lot of application areas for machine learning algorithms to actually become competitive with human-level performance.</li>
+<li>The workflow of designing and building a machine learning system, the workflow is much more efficient when you’re trying to do something that humans can also do.</li>
+</ol>
+<p>And over time, as you keep training the algorithm, maybe bigger and bigger models on more and more data, the performance approaches but never surpasses some theoretical limit, which is called the <strong>Bayes optimal error</strong>. So Bayes optimal error, think of this as the best possible error. And Bayes optimal error, or Bayesian optimal error, or sometimes Bayes error for short, is the very best theoretical function for mapping from x to y. <strong>That can never be surpassed</strong>. <strong>It turns out that progress is often quite fast until you surpass human level performance. And it sometimes slows down after you surpass human level performance.</strong></p>
+<ol>
+<li>One reason is that human level performance is for many tasks not that far from Bayes’ optimal error.</li>
+<li>so long as your performance is worse than human level performance, then there are actually certain tools you could use to improve performance that are harder to use once you’ve surpassed human level performance.<ul>
+<li>For tasks that humans are good at, so long as your machine learning algorithm is still worse than the human, you can get labeled data from humans. That is you can ask people, ask or hire humans, to label examples for you so that you can have more data to feed your learning algorithm.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Knowing how well humans can do well on a task can help you understand better how much you should try to reduce bias and how much you should try to reduce variance.</strong></p>
+<h2 id="Avoidable-bias"><a href="#Avoidable-bias" class="headerlink" title="Avoidable bias"></a>Avoidable bias</h2><p>If there’s a <strong>huge gap between how well your algorithm does on your training set versus how humans do</strong> shows that your algorithm isn’t even fitting the training set well.So in terms of tools to reduce bias or variance, in this case I would say focus on <strong>reducing bias</strong>. In another case, even though your training error and dev error are the same as the other example, you see that maybe you’re actually doing just fine on the training set. It’s doing only <strong>a little bit worse than human level performance</strong>. You would maybe want to focus on reducing this component, <strong>reducing the variance</strong> in your learning algorithm. Think of <strong>human level error as a proxy or as a estimate for Bayes error</strong> or for Bayes optimal error. And <strong>for computer vision tasks, this is a pretty reasonable proxy</strong> because humans are actually very good at computer vision and so whatever a human can do is maybe not too far from Bayes error. The difference between Bayes error or approximation of Bayes error and the training error is the <strong>avoidable bias</strong>. The difference between your training area and the dev error, there’s a measure still of the variance problem of your algorithm.</p>
+<h2 id="Understanding-human-level-performance"><a href="#Understanding-human-level-performance" class="headerlink" title="Understanding human-level performance"></a>Understanding human-level performance</h2><p>Human-level error, is that it gives us a way of estimating Bayes error. What is the best possible error any function could, either now or in the future.</p>
+<h4 id="How-should-you-define-human-level-error"><a href="#How-should-you-define-human-level-error" class="headerlink" title="How should you define human-level error?"></a>How should you define human-level error?</h4><p><strong>To be clear about what your purpose is in defining the term human-level error.</strong></p>
+<p>This gap between Bayes error or estimate of Bayes error and training error is calling that a measure of the avoidable bias. And this as a measure or an estimate of how much of a variance problem you have in your learning algorithm.</p>
+<ul>
+<li>The difference between your estimate of Bayes error tells you how much avoidable bias is a problem, how much avoidable bias there is.</li>
+<li>And the difference between training error and dev error, that tells you how much variance is a problem, whether your algorithm’s able to generalize from the training set to the dev set.</li>
+</ul>
+<p><strong>A better estimate for Bayes error can help you better estimate avoidable bias and variance. And therefore make better decisions on whether to focus on bias reduction tactics, or on variance reduction tactics.</strong></p>
+<h2 id="Surpassing-human-level-performance"><a href="#Surpassing-human-level-performance" class="headerlink" title="Surpassing human- level performance"></a>Surpassing human- level performance</h2><p><strong>Surpassing human-level performance :</strong> </p>
+<ul>
+<li>Team of humans</li>
+<li>One human</li>
+<li>Training error</li>
+<li>Dev error</li>
+</ul>
+<p>If your error is already better than even a team of humans looking at and discussing and debating the right label, then it’s just also harder to rely on human intuition to tell your algorithm what are ways that your algorithm could still improve the performance <strong>Humans tend to be very good in natural perception task</strong>. So it is possible, but it’s just a bit harder for computers to surpass human-level performance on natural perception task. <strong>Problems where ML significantly surpasses human-level performance :</strong></p>
+<ul>
+<li>Online advertising</li>
+<li>Product recommendations</li>
+<li>Logistics (predicting transit time)</li>
+<li>Loan approvals</li>
+</ul>
+<p>And finally, all of these are problems where there are teams that have access to huge amounts of data. So for example, the best systems for all four of these applications have <strong>probably looked at far more data</strong> of that application than any human could possibly look at. And so, that’s also made it relatively easy for a computer to surpass human-level performance.</p>
+<h2 id="Improving-your-model-performance"><a href="#Improving-your-model-performance" class="headerlink" title="Improving your model performance"></a>Improving your model performance</h2><p><strong>The two fundamental assumptions of supervised learning</strong></p>
+<ul>
+<li>You can fit the training set pretty well</li>
+<li>The training set performance generalizes pretty well to the dev&#x2F;test set</li>
+</ul>
+<p><strong>Reducing (avoidable) bias and variance</strong></p>
+<ul>
+<li>Human-level<ul>
+<li>Train bigger model</li>
+<li>Train longer&#x2F;better optimization algorithms</li>
+<li>NN architecture&#x2F;hyperparameters search</li>
+</ul>
+</li>
+<li>Training error<ul>
+<li>More data</li>
+<li>Regularization</li>
+<li>NN architecture&#x2F;hyperparameters search</li>
+</ul>
+</li>
+<li>Dev error</li>
+</ul>
+<p><strong>This notion of bias or avoidable bias and variance there is one of those things that easily learned, but tough to master</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/18/1-ml-strategy-1/" data-id="cl56gcvt00016lgch8logb12v" data-title="1 ML strategy (1)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-3-hyperparameter-tuning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/18/3-hyperparameter-tuning/" class="article-date">
+  <time class="dt-published" datetime="2019-04-18T01:37:59.000Z" itemprop="datePublished">2019-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/18/3-hyperparameter-tuning/">3 Hyperparameter tuning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Tuning-process"><a href="#Tuning-process" class="headerlink" title="Tuning process"></a>Tuning process</h2><p>How to systematically organize your hyperparameter tuning process One of the painful things about training deepness :</p>
+<ul>
+<li>the sheer number of hyperparameters</li>
+<li><strong>Momentum</strong></li>
+<li>the number of layers</li>
+<li>the number of <strong>hidden units</strong> for the different layers</li>
+<li><strong>learning rate</strong> decay</li>
+<li><strong>mini-batch</strong> size</li>
+</ul>
+<p>How do you select a set of values to explore</p>
+<ul>
+<li>It was common practice to sample the points in a grid and systematically explore these values.</li>
+<li>In deep learning, what we tend to do, is choose the points at random.</li>
+<li>Another common practice is to use a coarse to fine sampling scheme.<ul>
+<li>zoom in to a smaller region of the hyperparameters and then sample more density within this space </li>
+<li>use random sampling and adequate search</li>
+</ul>
+</li>
+</ul>
+<h2 id="Using-an-appropriate-scale-to-pick-hyperparameters"><a href="#Using-an-appropriate-scale-to-pick-hyperparameters" class="headerlink" title="Using an appropriate scale to pick hyperparameters"></a>Using an appropriate scale to pick hyperparameters</h2><p>It’s important to pick the <strong>appropriate scale</strong> on which to explore the hyperparamaters.</p>
+<ul>
+<li>uniformly at random</li>
+<li>log scale</li>
+</ul>
+<h2 id="Pandas-VS-Caviar（Hyperparameters-tuning-in-practice-Pandas-vs-Caviar）"><a href="#Pandas-VS-Caviar（Hyperparameters-tuning-in-practice-Pandas-vs-Caviar）" class="headerlink" title="Pandas VS Caviar（Hyperparameters tuning in practice: Pandas vs. Caviar）"></a>Pandas VS Caviar（Hyperparameters tuning in practice: Pandas vs. Caviar）</h2><p>Deep learning today is applied to many different application areas and that intuitions about hyperparameter settings from one application area may or may not transfer to a different one. People from different application domains do read increasingly research papers from other application domains to look for inspiration for cross-fertilization. How to search for good hyperparameters : <strong>the panda approach</strong> versus <strong>the caviar approach</strong></p>
+<h2 id="Normalizing-activations-in-a-network"><a href="#Normalizing-activations-in-a-network" class="headerlink" title="Normalizing activations in a network"></a>Normalizing activations in a network</h2><p>Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters that work well, and will also enable you to much more easily train even very deep networks.</p>
+<h2 id="Fitting-Batch-Norm-into-a-neural-network"><a href="#Fitting-Batch-Norm-into-a-neural-network" class="headerlink" title="Fitting Batch Norm into a neural network"></a>Fitting Batch Norm into a neural network</h2><p>The Programming framework which will make using Batch Norm much easier.</p>
+<h2 id="Why-does-Batch-Norm-work？"><a href="#Why-does-Batch-Norm-work？" class="headerlink" title="Why does Batch Norm work？"></a>Why does Batch Norm work？</h2><ul>
+<li>normalizing all the features to take on a similar range of values that can speed up learning</li>
+<li>makes weights,later or deeper than your network</li>
+<li>It reduces the amount that the distribution of these hidden unit values shifts around.</li>
+<li>Batch norm reduces the problem of the input values changing, it really causes these values to become more stable, so that the later layers of the neural network has more firm ground to stand on.</li>
+<li>It weakens the coupling between what the early layers parameters has to do and what the later layers parameters have to do. And so it allows each layer of the network to learn by itself, a little bit more independently of other layers, and this has the effect of speeding up learning in the whole network.</li>
+<li>Batch norm therefore has a slight regularization effect. Because by adding noise to the hidden units, it’s forcing the downstream hidden units not to rely too much on any one hidden unit.</li>
+</ul>
+<h2 id="Batch-Norm-at-test-time"><a href="#Batch-Norm-at-test-time" class="headerlink" title="Batch Norm at test time"></a>Batch Norm at test time</h2><p>Batch norm processes your data one mini batch at a time, but the test time you might need to process the examples one at a time. So the takeaway from this is that during training time [latex]\mu[&#x2F;latex] and [latex]\sigma ^2[&#x2F;latex] are computed on an entire mini batch of, say, 64, 28 or some number of examples. But at test time, you might need to process a single example at a time. So, the way to do that is to estimate [latex]\mu[&#x2F;latex] and [latex]\sigma ^2[&#x2F;latex] from your training set and there are many ways to do that. But in practice, what people usually do is implement an exponentially weighted average where you just keep track of the [latex]\mu[&#x2F;latex] and [latex]\sigma ^2[&#x2F;latex] values you’re seeing during training and use an exponentially weighted average, also sometimes called the running average, to just get a rough estimate of [latex]\mu[&#x2F;latex] and [latex]\sigma ^2[&#x2F;latex] and then you use those values of [latex]\mu[&#x2F;latex] and [latex]\sigma ^2[&#x2F;latex] at test time to do the scaling you need of the hidden unit values Z. Deep learning framework usually have some default way to estimate the [latex]\mu[&#x2F;latex] and [latex]\sigma ^2[&#x2F;latex] that should work reasonably well as well.</p>
+<h2 id="Softmax-regression"><a href="#Softmax-regression" class="headerlink" title="Softmax regression"></a>Softmax regression</h2><p>Softmax regression that lets you make predictions where you’re trying to recognize one of C or one of multiple classes, rather than just recognize two classes.</p>
+<h2 id="Training-a-Softmax-classifier"><a href="#Training-a-Softmax-classifier" class="headerlink" title="Training a Softmax classifier"></a>Training a Softmax classifier</h2><p>Loss Function in softmax classification : [latex]L(\hat y, y) &#x3D; -\sum _{j&#x3D;1}^{j}y_{j}log(\hat y_{j})[&#x2F;latex] It looks at whatever is the ground truth class in your training set, and it tries to make the corresponding probability of that class as high as possible. If you’re familiar with maximum likelihood estimation statistics, this turns out to be a form of maximum likelyhood estimation. The cost J on the entire training set : [latex]J(w^{[1]}, b^{[1]}, \cdots \cdots ) &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} L(\hat y ^{(i)}, y ^{(i)})[&#x2F;latex] Usually it turns out you just need to focus on getting the forward prop right. And so long as you specify it as a program framework, the forward prop pass, the program framework will figure out how to do back prop, how to do the backward pass for you.</p>
+<h2 id="Deep-Learning-frameworks"><a href="#Deep-Learning-frameworks" class="headerlink" title="Deep Learning frameworks"></a>Deep Learning frameworks</h2><p>At least for most people, is not practical to implement everything yourself from scratch. Fortunately, there are now many good deep learning software frameworks that can help you implement these models. <strong>choose frameworks :</strong></p>
+<ul>
+<li><strong>Ease of programming</strong></li>
+<li><strong>Running speed</strong></li>
+<li><strong>Truly open</strong></li>
+<li>Preferences of language</li>
+<li>What application you’re working on</li>
+</ul>
+<h2 id="TensorFlow"><a href="#TensorFlow" class="headerlink" title="TensorFlow"></a>TensorFlow</h2><h4 id="Example"><a href="#Example" class="headerlink" title="Example :"></a>Example :</h4><p>import numpy as np<br>import tensorflow as tf</p>
+<p>w&#x3D;tf.Variable(0,dtype&#x3D;tf.float32)<br>#cost&#x3D;tf.add(tf.add(w**2,tf.multiply(-10,w)),25)<br>cost&#x3D;w**2-10*w+25<br>train&#x3D;tf.train.GradientDescentOptimizer(0.01).minimize(cost)</p>
+<p>init&#x3D;tf.global_variables_initializer()<br>session&#x3D;tf.Session()<br>session.run(init)<br>print(session.run(w))<br>#0.0</p>
+<p>session.run(train)<br>print(session.run(w))<br>#0.1</p>
+<p>for i in range(1000):<br>    session.run(train)<br>print(session.run(w))<br>#4.99999</p>
+<h4 id="Example-placeholder"><a href="#Example-placeholder" class="headerlink" title="Example (placeholder):"></a>Example (placeholder):</h4><p>coefficients&#x3D;np.array([[1.],[-10.],[25.]])</p>
+<p>w&#x3D;tf.Variable(0,dtype&#x3D;tf.float32)<br>x&#x3D;tf.placeholder(tf.float32,[3,1])</p>
+<p>cost&#x3D;x[0][0]*w**2+x[1][0]*w+x[2][0]<br>train&#x3D;tf.train.GradientDescentOptimizer(0.01).minimize(cost)</p>
+<p>init&#x3D;tf.global_variables_initializer()<br>session&#x3D;tf.Session()<br>session.run(init)<br>print(session.run(w))<br>#0.0</p>
+<p>session.run(train,feed_dict&#x3D;{x:coefficients})<br>print(session.run(w))<br>#0.1</p>
+<p>for i in range(1000):<br>    session.run(train,feed_dict&#x3D;{x:coefficients})<br>print(session.run(w))<br>#4.99999</p>
+<p><strong>the TensorFlow documentation tends to just write the operation.</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/18/3-hyperparameter-tuning/" data-id="cl56gcvur005nlgchdvcx50ju" data-title="3 Hyperparameter tuning" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-2-optimization-algorithms" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/17/2-optimization-algorithms/" class="article-date">
+  <time class="dt-published" datetime="2019-04-17T08:05:50.000Z" itemprop="datePublished">2019-04-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/17/2-optimization-algorithms/">2 Optimization algorithms</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Mini-batch-gradient-descent"><a href="#Mini-batch-gradient-descent" class="headerlink" title="Mini-batch gradient descent"></a>Mini-batch gradient descent</h2><p>Mini-batch gradient descent in contrast, refers to the algorithm which we’ll talk about on the next slide, and which you process is single mini batch [latex]X^[&#x2F;latex], [latex]Y^[&#x2F;latex] at the same time, rather than processing your entire training set X, Y the same time. <strong>Mini-batch gradient descent runs much faster</strong> than batch gradient descent that’s pretty much what everyone in Deep Learning will use when you’re training on a large data set.</p>
+<h2 id="Understanding-mini-batch-gradient-descent"><a href="#Understanding-mini-batch-gradient-descent" class="headerlink" title="Understanding mini-batch gradient descent"></a>Understanding mini-batch gradient descent</h2><ul>
+<li>If the mini-batch size&#x3D;m then you just end up with <strong>Batch Gradient Descent</strong>.</li>
+<li>If your mini-batch size&#x3D;1 and this gives you an algorithm called <strong>Stochastic Gradient Descent</strong>.</li>
+</ul>
+<p><strong>Disadvantage：</strong></p>
+<ul>
+<li>Lose almost all your speed up from vectorization. Because of that we processing a single training example at a time.</li>
+<li>It doesn’t always exactly converge or oscillate in a very small region. If that’s an issue you can always reduce the learning rate slowly.</li>
+</ul>
+<p><strong>Guidelines :</strong> </p>
+<ul>
+<li>If you have a small training set (maybe 2000), just use batch gradient descent.</li>
+<li>If you have a bigger training set, typical mini batch sizes would be, anything from 64 up to maybe 512 are quite typical.</li>
+<li>Because of the way computer memory is laid out and accessed, sometimes your code runs faster if your mini-batch size is a power of 2.</li>
+</ul>
+<p> </p>
+<h2 id="Exponentially-weighted-averages"><a href="#Exponentially-weighted-averages" class="headerlink" title="Exponentially weighted averages"></a>Exponentially weighted averages</h2><p>Exponentially weighted averages and it’s also called exponentially weighted moving averages in statistics.</p>
+<h2 id="Understanding-exponentially-weighted-averages"><a href="#Understanding-exponentially-weighted-averages" class="headerlink" title="Understanding exponentially weighted averages"></a>Understanding exponentially weighted averages</h2><p>The key equation for implementing exponentially weighted averages : [latex]v_t &#x3D; \beta v_{t-1} + (1- \beta) \theta _t[&#x2F;latex] It takes very little memory.</p>
+<h2 id="Bias-correction-in-exponentially-weighted-averages"><a href="#Bias-correction-in-exponentially-weighted-averages" class="headerlink" title="Bias correction in exponentially weighted averages"></a>Bias correction in exponentially weighted averages</h2><p><strong>Bias Correction</strong> that can make you computation of these averages more accurately. If you are concerned about the bias during this initial phase, while your exponentially weighted moving average is still warming up. Then bias correction can help you get a better estimate early on.</p>
+<h2 id="Gradient-descent-with-Momentum"><a href="#Gradient-descent-with-Momentum" class="headerlink" title="Gradient descent with Momentum"></a>Gradient descent with Momentum</h2><p>Momentum, or gradient descent with momentum that almost always works faster than the standard gradient descent algorithm. In one sentence, the basic idea is to compute an exponentially weighted average of your gradients, and then use that gradient to update your weights instead. This will almost always work better than the straightforward gradient descent algorithm without momentum.</p>
+<h2 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h2><p>RMSprop (Root Mean Square Prop) that can also speed up gradient descent. And so, you want to slow down the learning in the b direction, or in the vertical direction. And speed up learning, or at least not slow it down in the horizontal direction. So this is what the RMSprop algorithm does to accomplish this.</p>
+<h2 id="Adam-optimization-algorithm"><a href="#Adam-optimization-algorithm" class="headerlink" title="Adam optimization algorithm"></a>Adam optimization algorithm</h2><p>RMSprop and the Adam optimization algorithm, which we’ll talk about in this video, is one of those rare algorithms that has really stood up, and has been shown to work well across a wide range of deep learning architectures. And the Adam optimization algorithm is basically taking momentum and RMSprop and putting them together.</p>
+<h2 id="Learning-rate-decay"><a href="#Learning-rate-decay" class="headerlink" title="Learning rate decay"></a>Learning rate decay</h2><p>One of the things that might help speed up your learning algorithm, is to slowly reduce your learning rate over time. some formula :  [latex]\begin{matrix} \alpha &#x3D; \frac {1}{1 + decayrate*epoch -num} \alpha _0\\ \alpha &#x3D; \frac {k}{\sqrt{epoch -num}} \alpha _0\\ \alpha &#x3D; \frac {k}{\sqrt{t}} \alpha _0 \end{matrix}[&#x2F;latex]</p>
+<h2 id="The-problem-of-local-optima"><a href="#The-problem-of-local-optima" class="headerlink" title="The problem of local optima"></a>The problem of local optima</h2><p>Instead most points of zero gradient in a cost function are saddle points. In very high-dimensional spaces you’re actually much more likely to run into a saddle point.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/17/2-optimization-algorithms/" data-id="cl56gcvud004hlgch4ik5cfm0" data-title="2 Optimization algorithms" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-1-practical-aspects-of-deep-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/17/1-practical-aspects-of-deep-learning/" class="article-date">
+  <time class="dt-published" datetime="2019-04-17T06:59:41.000Z" itemprop="datePublished">2019-04-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/17/1-practical-aspects-of-deep-learning/">1 Practical aspects of Deep Learning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Train-x2F-Dev-x2F-Test-sets"><a href="#Train-x2F-Dev-x2F-Test-sets" class="headerlink" title="Train &#x2F; Dev &#x2F; Test sets"></a>Train &#x2F; Dev &#x2F; Test sets</h2><p>Applied deep learning is a very iterative process.</p>
+<ul>
+<li>In the previous era of machine learning : the 70&#x2F;30 train test splits, if you don’t have an explicit dev set or maybe a 60&#x2F;20&#x2F;20% split</li>
+<li>In the modern big data era : 100w examples, 98&#x2F;1&#x2F;1 or 99.5&#x2F;0.25&#x2F;0.25</li>
+<li>Make sure that the dev and test sets come from the same distribution</li>
+<li>It might be okay to not have a test set. <em>The goal of the test set is to give you a unbiased estimate</em> <em>of the performance of your final network, of the network that you selected. But if you don’t need that unbiased estimate, then it might be okay to not have a test set.</em></li>
+</ul>
+<h2 id="Bias-x2F-Variance"><a href="#Bias-x2F-Variance" class="headerlink" title="Bias &#x2F; Variance"></a>Bias &#x2F; Variance</h2><ul>
+<li>High Bias : not a very good fit to the data what we say that this is underfitting the data.</li>
+<li>High Variance : this is overfitting the data and would not generalizing well.</li>
+<li>The optimal error, sometimes called Bayesian error.</li>
+</ul>
+<p>How to analyze bias and variance when no classifier can do very well :</p>
+<ul>
+<li>Get a sense of how well you are fitting by looking at your training set error</li>
+<li>Go to the dev set and look at how bad is the variance problem</li>
+</ul>
+<h2 id="Basic-Recipe-for-Machine-Learning"><a href="#Basic-Recipe-for-Machine-Learning" class="headerlink" title="Basic Recipe for Machine Learning"></a>Basic Recipe for Machine Learning</h2><ol>
+<li>Does your algorithm have high bias? And so to try and evaluate if there is high bias, And so, if it does not even fit in the training set that well, some things you could try would be to try pick a network.</li>
+<li>Maybe you can make it work, maybe not, whereas getting a bigger network almost always helps. And training longer doesn’t always help, but it certainly never hurts. Try these things until I can at least get rid of the bias problems, as in go back after I’ve tried this and keep doing that until I can fit, at least, fit the training set pretty well.</li>
+<li>Once you reduce bias to a acceptable amounts, then ask, do you have a variance problem?</li>
+<li>And if you have high variance, well, best way to solve a high variance problem is to get more data. But sometimes you can’t get more data. Or you could try regularization.</li>
+</ol>
+<p><strong>Repeat until hopefully you find something with both low bias and low variance.</strong> <strong>Notes :</strong></p>
+<ul>
+<li>If you actually have a high bias problem, getting more training data is actually not going to help.</li>
+<li>Getting a bigger network almost always just reduces your bias without necessarily hurting your variance, so long as you regularize appropriately. And getting more data pretty much always reduces your variance and doesn’t hurt your bias much.</li>
+</ul>
+<p>Training a bigger network almost never hurts. And the main cost of training a neural network that’s too big is just computational time, so long as you’re regularizing.</p>
+<h2 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h2><p><strong>High Variance Problem :</strong></p>
+<ul>
+<li>probably regularization</li>
+<li>get more training data</li>
+</ul>
+<p>Regularization will often help to prevent overfitting, or to reduce the errors in your network. Add regularization to the logistic regression, what you do is add [latex]\lambda[&#x2F;latex] to it, which is called the Regularization Parameter.</p>
+<ul>
+<li>L2 regularization (the most common type of regularization) [latex]J(w,b) &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} L(\hat y ^{(i)}, y ^{(i)}) + \frac {\lambda}{2m} \left \ w \right \ ^{2}_{2}[&#x2F;latex]</li>
+<li>L1 regularization [latex][&#x2F;latex]</li>
+</ul>
+<p><strong>Frobenius norm :</strong> (L2 normal of a matrix) It just means the sum of square of elements of a matrix. L2 regularization is sometimes also called weight decay.</p>
+<h2 id="Why-regularization-reduces-overfitting"><a href="#Why-regularization-reduces-overfitting" class="headerlink" title="Why regularization reduces overfitting?"></a>Why regularization reduces overfitting?</h2><p>One piece of intuition is that if you crank regularisation lambda to be really, really big, they’ll be really incentivized to set the weight matrices W to be reasonably close to zero. So one piece of intuition is maybe it set the weight to be so close to zero for a lot of hidden units that’s basically zeroing out a lot of the impact of these hidden units.</p>
+<h2 id="Dropout-Regularization"><a href="#Dropout-Regularization" class="headerlink" title="Dropout Regularization"></a>Dropout Regularization</h2><p>With dropout, what we’re going to do is go through each of the layers of the network, and set some probability of eliminating a node in neural network. So you end up with a much smaller, really much diminished network. And then you do back propagation training. By far the most common implementation of dropouts today is inverted dropouts.</p>
+<h2 id="Understanding-Dropout"><a href="#Understanding-Dropout" class="headerlink" title="Understanding Dropout"></a>Understanding Dropout</h2><ul>
+<li>So it’s as if on every iteration, you’re working with a smaller neural network, and so using a smaller neural network seems like it should have a regularizing effect.</li>
+<li>Similar to what we saw with L2 regularization, the effect of implementing dropout is that it shrinks the weights, and does some of those outer regularization that helps prevent over-fitting.</li>
+</ul>
+<p><strong>Notice that the keep_prob of one point zero means that you’re keeping every unit</strong> If you’re more worried about some layers overfitting than others, you can set a lower keep_prob for some layers than others. The downside is, this gives you even more hyper parameters to search for using cross-validation. One other alternative might be to have some layers where you apply dropout and some layers where you don’t apply dropout and then just have one hyper parameter, which is the keep_prob for the layers for which you do apply dropout. On computer vision, the input size is so big, you inputting all these pixels that you almost never have enough data. So you’re almost always overfitting, And so dropout is very frequently used by computer vision. One big downside of dropout is that the cost function J is no longer well-defined. On every iteration, you are randomly killing off a bunch of nodes. and so, if you are double checking the performance of gradient dissent, it’s actually harder to double check that right, you have a well-defined cost function J that is going downhill on every iteration.</p>
+<h2 id="Other-regularization-methods"><a href="#Other-regularization-methods" class="headerlink" title="Other regularization methods"></a>Other regularization methods</h2><ul>
+<li>data augmentation : flipping it horizontally, random rotations and distortions</li>
+<li>early stopping : <ol>
+<li>And the advantage of early stopping is that running the gradient descent process just once, you get to try out values of small w, mid-size w, and large w, without needing to try a lot of values of the L2 regularization hyperparameter lambda.</li>
+<li>The Problem is that because of stopping gradient descent eailer, so that not doing a great job reducing the cost function J. And then you also trying to not over fit.</li>
+</ol>
+</li>
+</ul>
+<h2 id="Normalizing-inputs"><a href="#Normalizing-inputs" class="headerlink" title="Normalizing inputs"></a>Normalizing inputs</h2><p>When training a neural network, one of the techniques that will <strong>speed up</strong> your training. Normalizing your inputs corresponds to two steps : </p>
+<ol>
+<li>subtract out or to zero out the mean</li>
+<li>normalize the variances</li>
+</ol>
+<p>If your features came in on similar scales, then this step is less important, although performing this type of normalization pretty much never does any harm, so I’ll often do it anyway if I’m not sure whether or not it will help with speeding up training for your algorithm.</p>
+<h2 id="Vanishing-x2F-Exploding-gradients"><a href="#Vanishing-x2F-Exploding-gradients" class="headerlink" title="Vanishing &#x2F; Exploding gradients"></a>Vanishing &#x2F; Exploding gradients</h2><p>When you’re training a very deep network, your derivatives or your slopes can sometimes get either very very big or very very small, maybe even exponentially small, and this makes training difficult. Use careful choices of the random weight initialization to significantly reduce this problem.</p>
+<h2 id="Weight-Initialization-for-Deep-Networks"><a href="#Weight-Initialization-for-Deep-Networks" class="headerlink" title="Weight Initialization for Deep Networks"></a>Weight Initialization for Deep Networks</h2><p>More careful choice of the random initialization for your neural network. Some formulas gives a default value to use for the variance of the initialization of weight matrices :</p>
+<ul>
+<li>tanh : Xavier initialization [latex]\sqrt{\frac{1}{n^{[l-1]}}}[&#x2F;latex], or [latex]\sqrt{\frac{2}{n^{[l-1]}+n^{[l]}}}[&#x2F;latex]</li>
+<li>Relu : [latex]\sqrt{\frac{2}{n^{[l-1]}}}[&#x2F;latex]</li>
+</ul>
+<h2 id="Numerical-approximation-of-gradients"><a href="#Numerical-approximation-of-gradients" class="headerlink" title="Numerical approximation of gradients"></a>Numerical approximation of gradients</h2><p>When you implement back propagation you’ll find that there’s a test called <strong>gradient checking</strong> that can really help you <strong>make sure</strong> that your implementation of <strong>back prop is correct</strong>. Because sometimes you write all these equations and you’re just not 100% sure if you’ve got all the details right and implementing back propagation. So <strong>in order to build up to gradient checking</strong>, let’s first talk about how to <strong>numerically approximate computations of gradients</strong>. How to numerically approximate computations of gradients The formal definition of a derivative : [latex]f’(\theta) &#x3D; \frac {f(\theta + \varepsilon) - f(\theta - \varepsilon)}{2\varepsilon }[&#x2F;latex]</p>
+<h2 id="Gradient-checking"><a href="#Gradient-checking" class="headerlink" title="Gradient checking"></a>Gradient checking</h2><p>How you could use it too to debug, or to verify that your implementation and back props correct. [latex]\mathrm{d} \theta _{approx}[i] &#x3D; \frac {J(\theta_1, \theta_2, \cdots \theta_i + \varepsilon, \cdots) - J(\theta_1, \theta_2, \cdots \theta_i - \varepsilon, \cdots)}{2\varepsilon }[&#x2F;latex]   [latex]\frac{\left \ \mathrm{d} \theta _{approx}[i] - \mathrm{d} \theta [i] \right \_2}{\left \ \mathrm{d} \theta _{approx}[i] \right \_2 + \left \ \mathrm{d} \theta [i] \right \_2} &#x3D; \varepsilon \left\{\begin{matrix} &lt; 10^{-7} &amp; , that’s great\\ &gt; 10^{-5} &amp; , maybe have a bug somewhere \end{matrix}\right.[&#x2F;latex]  </p>
+<h2 id="Gradient-Checking-Implementation-Notes"><a href="#Gradient-Checking-Implementation-Notes" class="headerlink" title="Gradient Checking Implementation Notes"></a>Gradient Checking Implementation Notes</h2><ol>
+<li>Don’t use in training - only to debug</li>
+<li>If algorithm fails grad check , look at components to try to identify bug.</li>
+<li>Remember regularization</li>
+<li>Doesn’t work with dropout</li>
+<li>Run at random initialization; perhaps again after some training.</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/17/1-practical-aspects-of-deep-learning/" data-id="cl56gcvt30018lgch2w6waive" data-title="1 Practical aspects of Deep Learning" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-4-deep-neural-networks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/17/4-deep-neural-networks/" class="article-date">
+  <time class="dt-published" datetime="2019-04-17T01:59:30.000Z" itemprop="datePublished">2019-04-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/17/4-deep-neural-networks/">4 Deep Neural Networks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Deep-L-layer-neural-network"><a href="#Deep-L-layer-neural-network" class="headerlink" title="Deep L-layer neural network"></a>Deep L-layer neural network</h2><p>Over the last several years the AI or the machine learning community has realized that there are functions that very deep neural networks can learn and the shallower models are often unable to. Although for any given problem it might be hard to predict in advance exactly how deep a neural network you would want, it would be reasonable to try logistic regression <strong>Symbol definition for deep learning :</strong> </p>
+<ul>
+<li>[latex]L[&#x2F;latex] : the number of layers in the network</li>
+<li>[latex]n^{[1]} &#x3D; 5[&#x2F;latex] : the number of nodes or the number of units in layer</li>
+<li>[latex]a^{[l]}[&#x2F;latex] : the activations in layer l</li>
+<li>computing [latex]a^{[l]}[&#x2F;latex] as g</li>
+<li>[latex]W^{[l]}[&#x2F;latex] : weights on layer l</li>
+<li>[latex]x[&#x2F;latex] : feature and [latex]x &#x3D; a^{[0]}[&#x2F;latex]</li>
+<li>[latex]\hat {y} &#x3D; a^{[l]}[&#x2F;latex] : the activation of the final layer</li>
+</ul>
+<h2 id="Forward-and-backward-propagation"><a href="#Forward-and-backward-propagation" class="headerlink" title="Forward and backward propagation"></a>Forward and backward propagation</h2><p><strong>forward propagation :</strong> [latex]\begin{matrix} z^{[l]} &#x3D; W^{[l]} \cdot a^{[l - 1]} + b^{[l]}\\ a^{[l]} &#x3D; g^{[l]}(z^{[l]}) \end{matrix}[&#x2F;latex] <strong>vectorized version :</strong> [latex]\begin{matrix} z^{[l]} &#x3D; W^{[l]} \cdot A^{[l - 1]} + b^{[l]}\\ A^{[l]} &#x3D; g^{[l]}(Z^{[l]}) \end{matrix}[&#x2F;latex] <strong>backward propagation :</strong> [latex]\begin{matrix} \mathrm{d}z^{[l]} &#x3D; \mathrm{d}a^{[l]} * g^{[l]^{‘}}(z^{[l]})\\ \mathrm{d}w^{[l]} &#x3D; \mathrm{d}z^{[l]} \cdot a^{[l-1]}\\ \mathrm{d}b^{[l]} &#x3D; \mathrm{d}z^{[l]} \\ \mathrm{d}a^{[l-1]} &#x3D; w^{[l]T} \cdot \mathrm{d}z^{[l]}\\ \mathrm{d}z^{[l]} &#x3D; w^{[l+1]T} \mathrm{d}z^{[l+1]} \cdot g^{[l]^{‘}}(z^{[l]}) \end{matrix}[&#x2F;latex] <strong>vectorized version :</strong> [latex]\begin{matrix} \mathrm{d}Z^{[l]} &#x3D; \mathrm{d}A^{[l]} * g^{[l]^{‘}}(Z^{[l]})\\ \mathrm{d}W^{[l]} &#x3D; \frac{1}{m} \mathrm{d}Z^{[l]} \cdot A^{[l-1]T}\\ \mathrm{d}b^{[l]} &#x3D; \frac{1}{m} np.sum(\mathrm{d}z^{[l]} , axis &#x3D; 1, keepdims &#x3D; True)\\ \mathrm{d}A^{[l-1]} &#x3D; W^{[l]T} \cdot \mathrm{d}Z^{[l]} \end{matrix}[&#x2F;latex]</p>
+<h2 id="Forward-propagation-in-a-Deep-Network"><a href="#Forward-propagation-in-a-Deep-Network" class="headerlink" title="Forward propagation in a Deep Network"></a>Forward propagation in a Deep Network</h2><p><strong>for a single training example :</strong> [latex]z^{[l]} &#x3D; w^{[l]}a^{[l-1]} + b^{[l]}, \ a^{[l]} &#x3D; g^{[l]}(z^{[l]})[&#x2F;latex] <strong>vectorized way :</strong> [latex]Z^{[l]} &#x3D; W^{[l]}a^{[l-1]} + b^{[l]}, \ A^{[l]} &#x3D; g^{[l]}(Z^{[l]}) \ (A^{[0]} &#x3D; X)[&#x2F;latex]</p>
+<h2 id="Getting-your-matrix-dimensions-right"><a href="#Getting-your-matrix-dimensions-right" class="headerlink" title="Getting your matrix dimensions right"></a>Getting your matrix dimensions right</h2><p>one of the debugging tools to check the correctness of my code is to work through the dimensions and matrix. make sure that all the matrices dimensions are consistent that will usually help you go some ways toward eliminating some cause of possible bugs.</p>
+<h2 id="Why-deep-representations"><a href="#Why-deep-representations" class="headerlink" title="Why deep representations?"></a>Why deep representations?</h2><p><strong>Deep neural networks work really well for a lot of problems it’s not just that they need to be big neural networks is that specifically they need to be deep or to have a lot of hidden layers</strong></p>
+<ol>
+<li>The earlier layers learn these low levels simpler features and then have the later deeper layers then put together the simpler things that’s detected in order to detect more complex things</li>
+<li>If you try to compute the same function with a shallow network so we aren’t allowed enough hidden layers then you might require exponentially more hidden units to compute</li>
+</ol>
+<p><strong>Starting out on a new problem :</strong> </p>
+<ul>
+<li>Start out with even logistic regressions and try something with one or two hidden layers and use that as a hyper parameter use that as a parameter or hyper parameter that you tune</li>
+<li>But over the last several years there has been a trend toward people finding that for some applications very very deep neural networks sometimes can be the best model for a problem</li>
+</ul>
+<h2 id="Building-blocks-of-deep-neural-networks"><a href="#Building-blocks-of-deep-neural-networks" class="headerlink" title="Building blocks of deep neural networks"></a>Building blocks of deep neural networks</h2><p>Nothing ……</p>
+<h2 id="Parameters-vs-Hyperparameters"><a href="#Parameters-vs-Hyperparameters" class="headerlink" title="Parameters vs Hyperparameters"></a>Parameters vs Hyperparameters</h2><p>These are parameters that control the ultimate parameters W and b and so we call all of these things below hyper parameters : </p>
+<ul>
+<li>[latex]\alpha[&#x2F;latex] (learning rate)</li>
+<li>iterations (the number of iterations of gradient descent)</li>
+<li>L (the number of hidden layers)</li>
+<li>[latex]n^{[l]}[&#x2F;latex] (the number of hidden units)</li>
+<li>choice of activation function</li>
+</ul>
+<p><strong>Find the best value :</strong></p>
+<p>Idea—Code—Experiment—Idea— ……</p>
+<p>Try a few values for the hyper parameters and double check if there’s a better value for the hyper parameters and as you do so you slowly gain intuition as well about the hyper parameters.</p>
+<h2 id="What-does-this-have-to-do-with-the-brain"><a href="#What-does-this-have-to-do-with-the-brain" class="headerlink" title="What does this have to do with the brain?"></a>What does this have to do with the brain?</h2><p>Maybe that was useful but now the field has moved to the point where that analogy is breaking down.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/17/4-deep-neural-networks/" data-id="cl56gcvut005tlgchb97ohap0" data-title="4 Deep Neural Networks" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-3-shallow-neural-networks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/16/3-shallow-neural-networks/" class="article-date">
+  <time class="dt-published" datetime="2019-04-16T08:40:13.000Z" itemprop="datePublished">2019-04-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/16/3-shallow-neural-networks/">3 Shallow Neural Networks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Neural-Network-Overview"><a href="#Neural-Network-Overview" class="headerlink" title="Neural Network Overview"></a>Neural Network Overview</h2><p>Refer to Example : [latex]x^{(i)}[&#x2F;latex] Refer to Layer : [latex]\alpha^{[m]}[&#x2F;latex] Algorithm 3.1 : [latex]\left.\begin{matrix} x\\ w\\ b \end{matrix}\right\} \Rightarrow z &#x3D; w^Tx + b[&#x2F;latex] Algorithm 3.2 : [latex]\left.\begin{matrix} x\\ w\\ b \end{matrix}\right\} \Rightarrow z &#x3D; w^Tx + b \Rightarrow \alpha &#x3D; \sigma(z) \Rightarrow L(a,y) \ (Loss \ Function)[&#x2F;latex] Algorithm 3.3 : [latex]\left.\begin{matrix} x\\ W^{[1]}\\ b^{[1]} \end{matrix}\right\} \Rightarrow z^{[1]} &#x3D; W^{[1]}x + b^{[1]} \Rightarrow \alpha^{[1]} &#x3D; \sigma(z^{[1]})[&#x2F;latex] Algorithm 3.4 : [latex]\left.\begin{matrix} x\\ dW^{[1]}\\ db^{[1]} \end{matrix}\right\} \Leftarrow dz^{[1]} &#x3D; d(W^{[1]}x + b^{[1]}) \Leftarrow d\alpha^{[1]} &#x3D; d\sigma(z^{[1]})[&#x2F;latex] Algorithm 3.5 : [latex]\left.\begin{matrix} x\\ dW^{[1]}\\ db^{[1]} \end{matrix}\right\} \Leftarrow dz^{[1]} &#x3D; d(W^{[1]}x + b^{[1]}) \Leftarrow d\alpha^{[1]} &#x3D; d\sigma(z^{[1]})[&#x2F;latex] Algorithm 3.6 : [latex]\left.\begin{matrix} d\alpha^{[1]} &#x3D; d\sigma(z^{[1]})\\ dW^{[2]}\\ db^{[2]} \end{matrix}\right\} \Leftarrow dz^{[2]} &#x3D; d(W^{[2]}\alpha^{[1]} + b^{[2]}) \Leftarrow d\alpha^{[2]} &#x3D; d\sigma(z^{[2]}) \Leftarrow dL(a^{[2]}, y)[&#x2F;latex]</p>
+<h2 id="Neural-Network-Representation"><a href="#Neural-Network-Representation" class="headerlink" title="Neural Network Representation"></a>Neural Network Representation</h2><ul>
+<li>input layer</li>
+<li>hidden layer</li>
+<li>output layer</li>
+</ul>
+<p>[latex]a[&#x2F;latex] : activations [latex]a^{[0]}[&#x2F;latex] : the activations of the input layer [latex]a^{[0]}_1[&#x2F;latex] : first node Algorithm 3.7 : [latex]a^{[1]}&#x3D;\begin{bmatrix} a^{[1]}_1\\ a^{[1]}_2\\ a^{[1]}_3\\ a^{[1]}_4 \end{bmatrix}[&#x2F;latex]</p>
+<ul>
+<li>when we count layers in neural networks we don’t count the input layer so the hidden layer is layer 1</li>
+<li>In our notational convention we’re calling the input layer layer 0</li>
+</ul>
+<p><strong>so a two layer neural network looks like a neural network with one hidden layer.</strong></p>
+<h2 id="Computing-a-Neural-Network’s-output"><a href="#Computing-a-Neural-Network’s-output" class="headerlink" title="Computing a Neural Network’s output"></a>Computing a Neural Network’s output</h2><p>Symbols in neural networks：</p>
+<ul>
+<li>𝑥 : features</li>
+<li>𝑎 : output</li>
+<li>𝑊 : weight</li>
+<li>superscript : layers</li>
+<li>subscript : number of the items</li>
+</ul>
+<p>How this neural network computers outputs :</p>
+<ol>
+<li>[latex]z_1^{[1]} &#x3D; w_1^{[1]T}x + b_1^{[1]}[&#x2F;latex]</li>
+<li>[latex]a_1^{[1]} &#x3D; \sigma(z_1^{[1]})[&#x2F;latex]</li>
+<li>[latex]a_2^{[1]}, a_3^{[1]}, a_4^{[1]}[&#x2F;latex]</li>
+</ol>
+<p>Vectorizing : stack nodes in a layer vertically Algorithm 3.10 : [latex]a^{[1]} &#x3D; \begin{bmatrix} a_1^{[1]}\\ a_2^{[1]}\\ a_3^{[1]}\\ a_4^{[1]} \end{bmatrix} &#x3D; \sigma(z^{[1]})[&#x2F;latex] Algorithm 3.11 : [latex]\begin{bmatrix} z_1^{[1]}\\ z_2^{[1]}\\ z_3^{[1]}\\ z_4^{[1]} \end{bmatrix} &#x3D; \begin{bmatrix} \cdots W_1^{[1]T} \cdots \\ \cdots W_2^{[1]T} \cdots \\ \cdots W_3^{[1]T} \cdots \\ \cdots W_4^{[1]T} \cdots \end{bmatrix} * \begin{bmatrix} x_1\\ x_2\\ x_3 \end{bmatrix} + \begin{bmatrix} b_1^{[1]}\\ b_2^{[1]}\\ b_3^{[1]}\\ b_4^{[1]} \end{bmatrix}[&#x2F;latex]</p>
+<h2 id="Vectorizing-across-multiple-examples"><a href="#Vectorizing-across-multiple-examples" class="headerlink" title="Vectorizing across multiple examples"></a>Vectorizing across multiple examples</h2><p>Take the equations you had from the previous algorithm and with very little modification, change them to make the neural network compute the outputs on all the examples, pretty much all at the same time. [latex]a^{[2](i)}[&#x2F;latex] : Refers to training example i and layer two Algorithm 3.12 : [latex]x &#x3D; \begin{bmatrix} \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\ x^{(1)} &amp; x^{(2)} &amp; \cdots &amp; x^{(m)}\\ \vdots &amp; \vdots &amp; \vdots &amp; \vdots \end{bmatrix}[&#x2F;latex] Algorithm 3.13 : [latex]Z^{[1]} &#x3D; \begin{bmatrix} \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\ z^{[1](1)} &amp; z^{[1](2)} &amp; \cdots &amp; z^{[1](m)}\\ \vdots &amp; \vdots &amp; \vdots &amp; \vdots \end{bmatrix}[&#x2F;latex] Algorithm 3.14 : [latex]A^{[1]} &#x3D; \begin{bmatrix} \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\ a^{[1](1)} &amp; a^{[1](2)} &amp; \cdots &amp; a^{[1](m)}\\ \vdots &amp; \vdots &amp; \vdots &amp; \vdots \end{bmatrix}[&#x2F;latex] Algorithm 3.15 : [latex]\left.\begin{matrix} z^{[1](i)} &#x3D; W^{[1](i)}x^{(i)} + b^{[1]}\\ a^{[1](i)} &#x3D; \sigma(z^{[1](i)})\\ z^{[2](i)} &#x3D; W^{[2](i)}a^{[1](i)} + b^{[2]}\\ a^{[2](i)} &#x3D; \sigma(z^{[2](i)}) \end{matrix}\right\} \Rightarrow \left\{\begin{matrix} A^{[1]} &#x3D; \sigma (z^{[1]})\\ z^{[2]} &#x3D; W^{[2]}A^{[1]} + b^{[2]}\\ A^{[2]} &#x3D; \sigma (z^{[2]}) \end{matrix}\right.[&#x2F;latex]</p>
+<h2 id="Justification-for-vectorized-implementation"><a href="#Justification-for-vectorized-implementation" class="headerlink" title="Justification for vectorized implementation"></a>Justification for vectorized implementation</h2><p>Algorithm 3.16 : [latex]\begin{matrix} z^{[1](1)} &#x3D; W^{[1]}x^{(1)} + b^{[1]}\\ z^{[1](2)} &#x3D; W^{[1]}x^{(2)} + b^{[1]}\\ z^{[1](3)} &#x3D; W^{[1]}x^{(3)} + b^{[1]} \end{matrix}[&#x2F;latex] Algorithm 3.17 : [latex]W^{[1]}x &#x3D; \begin{bmatrix} \cdots \\ \cdots \\ \cdots \end{bmatrix} \begin{bmatrix} \vdots &amp;\vdots &amp;\vdots &amp;\vdots \\ x^{(1)} &amp;x^{(2)} &amp;x^{(3)} &amp;\vdots \\ \vdots &amp;\vdots &amp;\vdots &amp;\vdots \end{bmatrix} &#x3D; \begin{bmatrix} \vdots &amp;\vdots &amp;\vdots &amp;\vdots \\ w^{(1)}x^{(1)} &amp;w^{(1)}x^{(2)} &amp;w^{(1)}x^{(3)} &amp;\vdots \\ \vdots &amp;\vdots &amp;\vdots &amp;\vdots \end{bmatrix} &#x3D; \begin{bmatrix} \vdots &amp;\vdots &amp;\vdots &amp;\vdots \\ z^{[1](1)} &amp;z^{[1](2)} &amp;z^{[1](3)} &amp;\vdots \\ \vdots &amp;\vdots &amp;\vdots &amp;\vdots \end{bmatrix} &#x3D; Z^{[1]}[&#x2F;latex] <strong>Stack up the training examples in the columns of matrix X, and their outputs are also stacked into the columns of matrix [latex]z^{[1]}[&#x2F;latex].</strong></p>
+<h2 id="Activation-functions"><a href="#Activation-functions" class="headerlink" title="Activation functions"></a>Activation functions</h2><p>Algorithm 3.18 Sigmoid : [latex]a &#x3D; \sigma (z) &#x3D; \frac{1}{1 + e^{-z}}[&#x2F;latex] Algorithm 3.19 tanh : [latex]a &#x3D; \tanh (z) &#x3D; \frac{e^{z} - e^{-z}}{e^{z} + e^{-z}}[&#x2F;latex] (almost always works better than the sigmoid function) Algorithm 3.20 hidden layer : [latex]g(z^{[1]}) &#x3D; tanh(z^{[1]})[&#x2F;latex] (almost always strictly superior) Algorithm 3.21 binaray : [latex]g(z^{[2]}) &#x3D; \sigma(z^{[2]})[&#x2F;latex] (if y is either 0 or 1) if z is either very large or very small then the gradient of the derivative or the slope of this function becomes very small so z is very large or z is very small the slope of the function you know ends up being close to zero and so this can slow down gradient descent Algorithm 3.22 Relu (Rectified Linear Unit) : [latex]a &#x3D; max(0, z)[&#x2F;latex] Algorithm 3.23 Leaky Relu: [latex]a &#x3D; max(0.01z, z)[&#x2F;latex] some rules of thumb for choosing activation functions :</p>
+<ul>
+<li>sigmoid : binary classification</li>
+<li>tanh : pretty much strictly superior</li>
+<li>ReLu : default</li>
+</ul>
+<p>If you’re not sure which one of these activation functions work best you know try them all and then evaluate on like a holdout validation set or like a development set which we’ll talk about later and see which one works better and then go with that.</p>
+<h2 id="Why-need-a-nonlinear-activation-function"><a href="#Why-need-a-nonlinear-activation-function" class="headerlink" title="Why need a nonlinear activation function?"></a>Why need a nonlinear activation function?</h2><p>It turns out that for your neural network to compute interesting functions you do need to take a nonlinear activation function. It turns out that if you use a linear activation function or alternatively if you don’t have an activation function then no matter how many layers your neural network has always doing is just computing a linear activation function so you might as well not have any hidden layers.</p>
+<h2 id="Derivatives-of-activation-functions"><a href="#Derivatives-of-activation-functions" class="headerlink" title="Derivatives of activation functions"></a>Derivatives of activation functions</h2><p>Algorithm 3.25 : [latex]\frac{\mathrm{d} }{\mathrm{d} z}g(z) &#x3D; \frac{1}{1+e^{-z}}(1 - \frac{1}{1+e^{-z}}) &#x3D; g(z)(1 - g(z))[&#x2F;latex] Algorithm 3.26 : [latex]g(z) &#x3D; \tanh (z) &#x3D; \frac{e^{z} - e^{-z}}{e^{z} + e^{-z}}[&#x2F;latex] Algorithm 3.27 : [latex]\frac{\mathrm{d} }{\mathrm{d} z}g(z) &#x3D; 1 - (tanh(z))^2[&#x2F;latex] Algorithm Rectified Linear Unit (ReLU) : [latex]g(z)’ &#x3D; \left\{\begin{matrix} 0 &amp; if\ z &lt; 0\\ 1 &amp; if\ z &gt; 0\\ undefined &amp; if\ z &#x3D; 0 \end{matrix}\right.[&#x2F;latex] Algorithm Leaky linear unit (Leaky ReLU) : [latex]g(z)’ &#x3D; \left\{\begin{matrix} 0.01 &amp; if\ z &lt; 0\\ 1 &amp; if\ z &gt; 0\\ undefined &amp; if\ z &#x3D; 0 \end{matrix}\right.[&#x2F;latex]</p>
+<h2 id="Gradient-descent-for-neural-networks"><a href="#Gradient-descent-for-neural-networks" class="headerlink" title="Gradient descent for neural networks"></a>Gradient descent for neural networks</h2><p>**forward propagation : ** (1) : [latex]z^{[1]} &#x3D; W^{[1]}x + b^{[1]}[&#x2F;latex] (2) : [latex]a^{[1]} &#x3D; \sigma(z^{[1]})[&#x2F;latex] (3) : [latex]z^{[2]} &#x3D; W^{[2]}a^{[1]} + b^{[2]}[&#x2F;latex] (4) : [latex]a^{[2]} &#x3D; g^{[2]}(z^{[2]}) &#x3D; \sigma(z^{[2]})[&#x2F;latex] **back propagation : ** Algorithm 3.32 : [latex]\mathrm{d}z^{[2]} &#x3D; A^{[2]} - Y, \ Y &#x3D; [y^{[1]} \ y^{[2]} \ \cdots \ y^{[m]}][&#x2F;latex] Algorithm 3.33 : [latex]\mathrm{d}W^{[2]} &#x3D; \frac{1}{m} \mathrm{d}z^{[2]}A^{[1]T}[&#x2F;latex] Algorithm 3.34 : [latex]\mathrm{d}b^{[2]} &#x3D; \frac{1}{m} np.sum(\mathrm{d}z^{[2]}, axis &#x3D; 1, keepdims &#x3D; True)[&#x2F;latex] Algorithm 3.35 : [latex]\mathrm{d}z^{[1]} &#x3D; \underbrace{W^{[2]T}\mathrm{d}z^{[2]}} * \underbrace{g^{[1]^{‘}}} * \underbrace{z^{[1]}}[&#x2F;latex] Algorithm 3.36 : [latex]\mathrm{d}W^{[1]} &#x3D; \frac{1}{m}\mathrm{d}z^{[1]}x^T[&#x2F;latex] Algorithm 3.37 : [latex]\underbrace{\mathrm{d}b^{[1]}} &#x3D; \frac {1}{m} np.sum(\mathrm{d}z^{[1]}, axis &#x3D; 1, keepdims &#x3D; True)[&#x2F;latex] (axis &#x3D; 1 : horizontally, keepdims : ensures that Python outputs, for d b^[2] a vector that is some n by one)</p>
+<h2 id="Backpropagation-intuition"><a href="#Backpropagation-intuition" class="headerlink" title="Backpropagation intuition"></a>Backpropagation intuition</h2><p>It is one of the very hardest pieces of math. One of the very hardest derivations in all of machine learning.</p>
+<p>&#x2F;&#x2F;TODO, maybe never …</p>
+<h2 id="Random-Initialization"><a href="#Random-Initialization" class="headerlink" title="Random Initialization"></a>Random Initialization</h2><p><strong>It is important to initialize the weights randomly.</strong></p>
+<ol>
+<li>Gaussian random variable (2,2) : [latex]W^{[1]} &#x3D; np.random.randn(2, 2)[&#x2F;latex]</li>
+<li>then usually you multiply this by a very small number such as 0.01 so you initialize it to very small random values</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/16/3-shallow-neural-networks/" data-id="cl56gcvus005rlgch8s9o2a99" data-title="3 Shallow Neural Networks" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-1899" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/10/1899/" class="article-date">
+  <time class="dt-published" datetime="2019-04-10T09:54:12.000Z" itemprop="datePublished">2019-04-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/10/1899/">Untitled Post - 32</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/10/1899/" data-id="cl56gcvu80041lgchf0hr7j8t" data-title="Untitled Post - 32" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-routes-stream-to-specified-buffer" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/10/routes-stream-to-specified-buffer/" class="article-date">
+  <time class="dt-published" datetime="2019-04-10T09:53:32.000Z" itemprop="datePublished">2019-04-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/C/">C++</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>►<a class="article-category-link" href="/categories/windows/">windows</a>►<a class="article-category-link" href="/categories/windows/Visual-Studio/">Visual Studio</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/10/routes-stream-to-specified-buffer/">Routes stream to specified buffer</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="Developer-Command-Prompt-for-VS-2019"><a href="#Developer-Command-Prompt-for-VS-2019" class="headerlink" title="Developer Command Prompt for VS 2019"></a>Developer Command Prompt for VS 2019</h4><p>cl basic_ios_rdbuf.cpp &#x2F;EHsc</p>
+<h4 id="MSDN-Source-Code"><a href="#MSDN-Source-Code" class="headerlink" title="MSDN Source Code"></a>MSDN Source Code</h4><p>#include #include #include int main( )<br>{<br>   using namespace std;<br>   ofstream file( “rdbuf.txt” );<br>   streambuf *x &#x3D; cout.rdbuf( file.rdbuf( ) );<br>   cout &lt;&lt; “test” &lt;&lt; endl; &#x2F;&#x2F; Goes to file<br>   cout.rdbuf(x);<br>   cout &lt;&lt; “test2” &lt;&lt; endl; &#x2F;&#x2F;normal<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/10/routes-stream-to-specified-buffer/" data-id="cl56gcvyq00gglgchd9sxdhio" data-title="Routes stream to specified buffer" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-ipc-performance-socket-on-arm" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/10/ipc-performance-socket-on-arm/" class="article-date">
+  <time class="dt-published" datetime="2019-04-10T09:09:41.000Z" itemprop="datePublished">2019-04-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/10/ipc-performance-socket-on-arm/">IPC Performance : Socket on ARM</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="Test-Environment"><a href="#Test-Environment" class="headerlink" title="Test Environment"></a>Test Environment</h4><p>CPU: Freescale i.MX6UL rev1.1 528 MHz DRAM: 512 MiB</p>
+<h4 id="Test-Code"><a href="#Test-Code" class="headerlink" title="Test Code"></a>Test Code</h4><p>#include #include #include #include #include #include #include #include #define CLTIP “127.0.0.1”<br>#define SRVPORT 10172<br>#define MAX_NUM 1024</p>
+<p>int main(int argc, char* argv[])<br>{<br>struct timeval tv_sta, tv_end;</p>
+<p>gettimeofday(&amp;tv_sta, NULL);</p>
+<p>int i &#x3D; 0;<br>int total &#x3D; 1;<br>int is_printf &#x3D; 1;<br>if (argc &gt; 1) {<br>total &#x3D; atoi(argv[1]);<br>}<br>if (argc &gt; 2) {<br>is_printf &#x3D; atoi(argv[2]);<br>}</p>
+<p>for (i &#x3D; 0; i &lt; total; i++) {</p>
+<p>int clientsock &#x3D; socket(PF_INET, SOCK_STREAM, 0);<br>if (clientsock &lt; 0)<br>{<br>printf(“socket creation failed\n”);<br>exit(-1);<br>}<br>if (is_printf)<br>printf(“socket create successfully.\n”);</p>
+<p>struct sockaddr_in clientAddr;<br>clientAddr.sin_family &#x3D; AF_INET;<br>clientAddr.sin_port &#x3D; htons((u_short)SRVPORT);<br>clientAddr.sin_addr.s_addr &#x3D; inet_addr(CLTIP);</p>
+<p>int flags &#x3D; fcntl(clientsock, F_GETFL, 0);<br>fcntl(clientsock, F_SETFL, flags  O_NONBLOCK);</p>
+<p>int n;<br>if ((n &#x3D; connect(clientsock, (struct sockaddr*) &amp; clientAddr, sizeof(struct sockaddr))) &lt; 0)<br>{<br>if (errno !&#x3D; EINPROGRESS) {<br>printf(“Connect error.IP[%s], port[%d]\n”, CLTIP, clientAddr.sin_port);<br>exit(-1);<br>}<br>}</p>
+<p>if (n !&#x3D; 0) {</p>
+<p>fd_set rset, wset;<br>FD_ZERO(&amp;rset);<br>FD_SET(clientsock, &amp;rset);<br>wset &#x3D; rset;<br>struct timeval tval;<br>tval.tv_sec &#x3D; 1;<br>tval.tv_usec &#x3D; 0;<br>if ((n &#x3D; select(clientsock + 1, &amp;rset, &amp;wset, NULL, 3 ? &amp;tval : NULL)) &#x3D;&#x3D; 0) {<br>printf(“Connect TIMEOUT.IP[%s], port[%d]\n”, CLTIP, clientAddr.sin_port);<br>exit(-1);<br>}<br>if (FD_ISSET(clientsock, &amp;rset)  FD_ISSET(clientsock, &amp;wset)) {<br>int error;<br>int len &#x3D; sizeof(error);<br>if (getsockopt(clientsock, SOL_SOCKET, SO_ERROR, &amp;error, &amp;len) &lt; 0) {<br>printf(“pending error”);<br>exit(-1);<br>}<br>}<br>else {<br>printf(“select error: clientsock not set”);<br>exit(-1);<br>}</p>
+<p>}<br>fcntl(clientsock, F_SETFL, flags);</p>
+<p>if (is_printf)<br>printf(“Connect to IP[%s], port[%d]\n”, CLTIP, clientAddr.sin_port);</p>
+<p>const char* sendBuf &#x3D; “{\“signalType\“:\“CONFIG\“, \“signalData\“:[{\“id\“:\“CONF_NAME\“, \“value\“:\“PPS_MChip1\“}]}”;<br>char recvBuf[MAX_NUM] &#x3D; { 0 };</p>
+<p>&#x2F;&#x2F;while(gets(sendBuf) !&#x3D; ‘\0’)<br>{<br>if (send(clientsock, sendBuf, strlen(sendBuf), 0) &#x3D;&#x3D; -1)<br>{<br>printf(“send error!\n”);<br>}<br>if (is_printf)<br>printf(“send to server:%s\n”, sendBuf);<br>&#x2F;&#x2F;memset(sendBuf, 0, sizeof(sendBuf));</p>
+<p>{<br>int timeOut &#x3D; 3000;<br>int nRet &#x3D; 0;<br>struct timeval timeout;<br>fd_set recvset;<br>FD_ZERO(&amp;recvset);<br>FD_SET(clientsock, &amp;recvset);<br>timeout.tv_sec &#x3D; timeOut &#x2F; 1000;<br>timeout.tv_usec &#x3D; timeOut % 1000;<br>nRet &#x3D; select(clientsock + 1, &amp;recvset, 0, 0, &amp;timeout);<br>if (nRet &lt;&#x3D; 0)<br>{<br>printf(“clientsock recv select is error!\n”);<br>exit(-1);<br>}<br>}</p>
+<p>if (recv(clientsock, recvBuf, MAX_NUM, 0) &#x3D;&#x3D; -1)<br>{<br>printf(“rev error!\n”);<br>}<br>if (is_printf)<br>printf(“receive from server:%s\n”, recvBuf);<br>if (strcmp(recvBuf, “Goodbye,my dear client!”) &#x3D;&#x3D; 0)<br>{<br>&#x2F;&#x2F;break;<br>}<br>memset(recvBuf, 0, sizeof(recvBuf));<br>}<br>close(clientsock);</p>
+<p>}</p>
+<p>gettimeofday(&amp;tv_end, NULL);</p>
+<p>int total_millisecond &#x3D; (tv_end.tv_sec * 1000 + tv_end.tv_usec &#x2F; 1000) - (tv_sta.tv_sec * 1000 + tv_sta.tv_usec &#x2F; 1000);<br>int average_millisecond &#x3D; (total_millisecond &#x2F; total);</p>
+<p>printf(“total_millisecond : %ld total_nums : %d\n”, total_millisecond, total);<br>printf(“average_millisecond   : %ld\n”, average_millisecond);</p>
+<p>return 0;<br>} </p>
+<h4 id="Test-Result"><a href="#Test-Result" class="headerlink" title="Test Result"></a>Test Result</h4><p>root@imx6ul7d:<del>&#x2F;tmp# .&#x2F;a.out 1 0<br>total_millisecond : 13 total_nums : 1<br>average_millisecond   : 13<br>root@imx6ul7d:</del>&#x2F;tmp# .&#x2F;a.out 10 0<br>total_millisecond : 104 total_nums : 10<br>average_millisecond   : 10<br>root@imx6ul7d:<del>&#x2F;tmp# .&#x2F;a.out 100 0<br>total_millisecond : 1023 total_nums : 100<br>average_millisecond   : 10<br>root@imx6ul7d:</del>&#x2F;tmp# .&#x2F;a.out 1000 0<br>total_millisecond : 10801 total_nums : 1000<br>average_millisecond   : 10</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/10/ipc-performance-socket-on-arm/" data-id="cl56gcvwp00btlgchhbllg4ev" data-title="IPC Performance : Socket on ARM" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-2-basics-of-neural-network-programming" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/09/2-basics-of-neural-network-programming/" class="article-date">
+  <time class="dt-published" datetime="2019-04-09T09:45:11.000Z" itemprop="datePublished">2019-04-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/09/2-basics-of-neural-network-programming/">2 Basics of Neural Network programming</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>Logistic regression is an algorithm for binary classification.</p>
+<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>[latex]\hat{y} &#x3D; w^Tx + b[&#x2F;latex] : An algorithm that can output a prediction. More formally, you want [latex]\hat{y}[&#x2F;latex] to be the probability of the chance. And [latex]\hat{y}[&#x2F;latex] should really be between zero and one. <strong>sigmoid : [latex]\sigma (z) &#x3D; \frac {1}{1 + e^{-z}}[&#x2F;latex]</strong></p>
+<h2 id="Logistic-Regression-Cost-Function"><a href="#Logistic-Regression-Cost-Function" class="headerlink" title="Logistic Regression Cost Function"></a>Logistic Regression Cost Function</h2><p>To train the parameters W and B of the logistic regression model, we need to define a cost function. <strong>Sigmoid(z) :</strong> [latex]z^{(i)} &#x3D; w^Tx^{(i)} + b[&#x2F;latex] <strong>Loss function :</strong> [latex]L(\hat{y}, y)[&#x2F;latex] (measure how good our output [latex]\hat{y}[&#x2F;latex] is when the true label is [latex]y[&#x2F;latex]) <strong>Loss Function In Logistic Regression :</strong> [latex]L(\hat{y}, y) &#x3D; -ylog(\hat{y}) - (1-y)log(1 - \hat{y})[&#x2F;latex] (It measures how well you’re doing on a <strong>single</strong> training example) <strong>Cost Function :</strong> [latex]J(w,b) &#x3D; \frac {1}{m} \sum_{i&#x3D;1}^{m} L(\hat{y} ^{(i)}, y ^{(i)}) &#x3D;\frac {1}{m} \sum_{i&#x3D;1}^{m} (-y ^{(i)}log\hat{y} ^{(i)} - (1-y ^{(i)})log(1 - \hat{y} ^{(i)}))[&#x2F;latex] (It measures how well you’re doing an <strong>entire</strong> training set)</p>
+<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p><strong>Cost function J is a convex function</strong></p>
+<ol>
+<li>Random initialization</li>
+<li>takes a step in the steepest downhill direction repeatedly [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex]</li>
+<li>converge to this global optimum or get to something close to the global optimum</li>
+</ol>
+<h2 id="Derivatives"><a href="#Derivatives" class="headerlink" title="Derivatives"></a>Derivatives</h2><p>Really all you need is an intuitive understanding of this in order to build and successfully apply these algorithms. Watch the videos and then if you could do the homework and complete the programming homework successfully then you can <strong>apply</strong> deep learning.</p>
+<h2 id="More-Derivative-Examples"><a href="#More-Derivative-Examples" class="headerlink" title="More Derivative Examples"></a>More Derivative Examples</h2><ul>
+<li>the derivative of the function just means the slope of a function and the slope of a function can be different at different points on the function</li>
+<li>if you want to look up the derivative of a function you can flip open your calculus textbook or look at Wikipedia and often get a formula for the slope of these functions at different points</li>
+</ul>
+<h2 id="Computation-Graph"><a href="#Computation-Graph" class="headerlink" title="Computation Graph"></a>Computation Graph</h2><p>In order to compute derivatives Opa right to left pass like this kind of going in the opposite direction as the blue arrows that would be most natural for computing the derivatives so the recap the computation graph organizes a computation with this blue arrow left to right computation.</p>
+<h2 id="Derivatives-with-a-Computation-Graph"><a href="#Derivatives-with-a-Computation-Graph" class="headerlink" title="Derivatives with a Computation Graph"></a>Derivatives with a Computation Graph</h2><p>If you want to compute the derivative of this final output variable which uses variable you care most about, with respect to v, then we’re done sort of one step of backpropagation so the called one step backwards in this graph. By changing a you end up increasing v. Well, how much does v increase? It is increased by an amount that’s determined by dv&#x2F;da and then the change in v will cause the value of J to also increase. So, in Calculus this is actually called the chain rule. A computation graph and how there’s a forward or left to right calculation to compute the cost functions. Do you might want to optimize. And a backwards or a right to left calculation to compute derivatives.</p>
+<h2 id="Logistic-Regression-Gradient-Descent"><a href="#Logistic-Regression-Gradient-Descent" class="headerlink" title="Logistic Regression Gradient Descent"></a>Logistic Regression Gradient Descent</h2><p>How to compute derivatives for you to implement gradient descent for logistic regression. [latex]\frac{\mathrm{d} J}{\mathrm{d} u} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} v} \frac{\mathrm{d} v}{\mathrm{d} u} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} b} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} b} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} a} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} a} [&#x2F;latex]   Get you familiar with these ideas so that hopefully you’ll make a bit more sense when we talk about full fledged neural networks. <strong>Logistic Regression [latex]\left\{\begin{matrix} Lost \ Function : &amp; L(\hat y^{(i)}, y^{(i)}) &#x3D; -y^{(i)}log\hat y^{(i)} - (1-y^{(i)})log(1-\hat y^{(i)}) \\ Cost \ Function : &amp; J(w,b) &#x3D; \frac {1}{m} \sum _{i}^{m} L(\hat y^{(i)}, y^{(i)}) \end{matrix}\right.[&#x2F;latex]</strong> <strong>Gredient Descent :</strong> [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex] <strong>Calculus :</strong> [latex]\frac{\mathrm{d} L(a,y)}{\mathrm{d} a} &#x3D; -y&#x2F;a + (1-y)&#x2F;(1-a)[&#x2F;latex] [latex]\left\{\begin{matrix} \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} a} \frac {\mathrm{d} a}{\mathrm{d} z} \\ \frac {\mathrm{d} a}{\mathrm{d} z} &#x3D; a \cdot (1-a) \\ \frac{\mathrm{d} L}{\mathrm{d} a} &#x3D; -\frac{y}{a} + \frac{(1-y)}{(1-a)} \end{matrix}\right.[&#x2F;latex]   [latex]{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L}{\mathrm{d} z} &#x3D; (\frac {\mathrm{d} L}{\mathrm{d} a}) \cdot (\frac {\mathrm{d} a}{\mathrm{d} z} ) &#x3D; (-\frac{y}{a} + \frac{(1-y)}{(1-a)}) \cdot a(1-a) &#x3D; a - y[&#x2F;latex] [latex]\left\{\begin{matrix} {\mathrm{d} w_1} &#x3D; \frac {1}{m} \sum _i^m x_1^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} w_2} &#x3D; \frac {1}{m} \sum _i^m x_2^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} b} &#x3D; \frac {1}{m} \sum _i^m (a^{(i)} - y^{(i)}) \end{matrix}\right.[&#x2F;latex]</p>
+<h2 id="Gradient-Descent-on-m-Examples"><a href="#Gradient-Descent-on-m-Examples" class="headerlink" title="Gradient Descent on m Examples"></a>Gradient Descent on m Examples</h2><p>[latex]J(w,b) &#x3D; \frac {1}{m}\sum _{i&#x3D;1}^m L (a^{(i)}, y^{(i)})[&#x2F;latex]  </p>
+<p>J&#x3D;0;dw1&#x3D;0;dw2&#x3D;0;db&#x3D;0;<br>    for i &#x3D; 1 to m<br>        z(i) &#x3D; wx(i)+b;<br>        a(i) &#x3D; sigmoid(z(i));<br>        J +&#x3D; -[y(i)log(a(i))+(1-y(i)）log(1-a(i));<br>        dz(i) &#x3D; a(i)-y(i);<br>        dw1 +&#x3D; x1(i)dz(i);<br>        dw2 +&#x3D; x2(i)dz(i);<br>        db +&#x3D; dz(i);<br>J&#x2F;&#x3D; m;<br>dw1&#x2F;&#x3D; m;<br>dw2&#x2F;&#x3D; m;<br>db&#x2F;&#x3D; m;<br>w&#x3D;w-alpha*dw<br>b&#x3D;b-alpha*db</p>
+<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><p>Vectorization is basically the art of getting rid of explicit for loops in your code. non-vectorized implementation :</p>
+<p>z&#x3D;0<br>for i in range(n_x)<br>    z+&#x3D;w[i]*x[i]<br>z+&#x3D;b</p>
+<p>vectorized implementation :</p>
+<p>z&#x3D;np.dot(w,x)+b</p>
+<p><em>They’re sometimes called SIMD instructions. This stands for a single instruction multiple data.</em> <strong>The rule of thumb to remember is whenever possible, avoid using explicit four loops.</strong></p>
+<h2 id="More-Examples-of-Vectorization"><a href="#More-Examples-of-Vectorization" class="headerlink" title="More Examples of Vectorization"></a>More Examples of Vectorization</h2><p>It’s not always possible to never use a for-loop, but when you can use a built in function or find some other way to compute whatever you need, you’ll often go faster than if you have an explicit for-loop.</p>
+<h2 id="Vectorizing-Logistic-Regression"><a href="#Vectorizing-Logistic-Regression" class="headerlink" title="Vectorizing Logistic Regression"></a>Vectorizing Logistic Regression</h2><p>How you can vectorize the implementation of logistic regression [latex]\left\{\begin{matrix} z^{(1)} &#x3D; w^Tx^{(1)} + b \\ a^{(1)} &#x3D; \sigma (z^{(1)}) \\ \hat y \end{matrix}\right.[&#x2F;latex]  </p>
+<p>Z&#x3D;np.dot(w.T, X)+b</p>
+<p>It turns out, you can also use vectorization very efficiently to compute the backward propagation, to compute the gradients.</p>
+<h2 id="Vectorizing-Logistic-Regression’s-Gradient"><a href="#Vectorizing-Logistic-Regression’s-Gradient" class="headerlink" title="Vectorizing Logistic Regression’s Gradient"></a>Vectorizing Logistic Regression’s Gradient</h2><p>How you can use vectorization to also perform the gradient computations for all m training samples. [latex]\begin{matrix} Z &#x3D; w^TX + b &#x3D; np.dot(w.T, X) + b\\ A &#x3D; \sigma (Z)\\ {\mathrm{d} Z} &#x3D; A - Y\\ {\mathrm{d} w} &#x3D; \frac {1}{m} * X * {\mathrm{d} z} ^T\\ {\mathrm{d} b} &#x3D; \frac {1}{m} * np.sum({\mathrm{d} Z})\\ w :&#x3D; w - a * {\mathrm{d} w}\\ b :&#x3D; b - a * {\mathrm{d} b} \end{matrix} [&#x2F;latex]  </p>
+<h2 id="Broadcasting-in-Python"><a href="#Broadcasting-in-Python" class="headerlink" title="Broadcasting in Python"></a>Broadcasting in Python</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Broadcasting-in-Python.png"></p>
+<h2 id="A-note-on-python-or-numpy-vectors"><a href="#A-note-on-python-or-numpy-vectors" class="headerlink" title="A note on python or numpy vectors"></a>A note on python or numpy vectors</h2><ul>
+<li>Because with broadcasting and this great amount of flexibility, sometimes it’s possible you can introduce very subtle bugs very strange looking bugs.</li>
+<li>When you’re coding neural networks, that you just not use data structures where the shape is 5, or n, rank 1 array.</li>
+<li>Don’t hesitate to throw in assertion statements like this whenever you feel like it.</li>
+<li>Do not use these rank 1 arrays, you can reshape this.</li>
+</ul>
+<h2 id="Quick-tour-of-Jupyter-x2F-iPython-Notebooks"><a href="#Quick-tour-of-Jupyter-x2F-iPython-Notebooks" class="headerlink" title="Quick tour of Jupyter&#x2F;iPython Notebooks"></a>Quick tour of Jupyter&#x2F;iPython Notebooks</h2><p>It’s so simple that nothing need to say.</p>
+<h2 id="Explanation-of-logistic-regression-cost-function"><a href="#Explanation-of-logistic-regression-cost-function" class="headerlink" title="Explanation of logistic regression cost function"></a>Explanation of logistic regression cost function</h2><p>A quick justification for why we like to use that cost function for logistic regression. [latex]\begin{matrix} \hat y &#x3D; \sigma (w^Tx + b)\\ \sigma (z) &#x3D; \sigma (w^Tx + b) &#x3D; \frac {1}{1+e^{-z}}\\ \hat y &#x3D; p(y &#x3D; 1 x) \end{matrix}[&#x2F;latex]   [latex]\left.\begin{matrix} If \ y &#x3D; 1 \ : &amp; p(yx) &#x3D; \hat y\\ If \ y &#x3D; 0 \ : &amp; p(yx) &#x3D; 1 - \hat y \end{matrix}\right\} p(yx) &#x3D; \hat y(1 - \hat y)^{(1-y)}[&#x2F;latex]   [latex]ylog\hat y + (1-y)log(1-\hat y)[&#x2F;latex]   In statistics, there’s a principle called the <strong>principle of maximum likelihood estimation</strong>, which just means to choose the parameters that maximizes this thing. Or in other words, that maximizes this thing. [latex]P(labels\ in\ training\ set) &#x3D; \prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)})[&#x2F;latex]   [latex]logP(labels\ in\ training\ set) &#x3D; log\prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m}log P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m} -L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]   [latex]J(w,b) &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/09/2-basics-of-neural-network-programming/" data-id="cl56gcvu80043lgchawdh3pdb" data-title="2 Basics of Neural Network programming" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

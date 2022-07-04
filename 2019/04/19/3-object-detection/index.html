@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>3 Object detection | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Object localizationObject detection is one of the areas of computer vision that’s just exploding. Object localization which means not only do you have to label this as say a car, but the algorithm als">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3 Object detection">
+<meta property="og:url" content="http://example.com/2019/04/19/3-object-detection/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Object localizationObject detection is one of the areas of computer vision that’s just exploding. Object localization which means not only do you have to label this as say a car, but the algorithm als">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Anchor_box_example.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/YOLO_Outputting_the_non-max_supressed_outputs.png">
+<meta property="article:published_time" content="2019-04-19T11:39:45.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.556Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Anchor_box_example.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-3-object-detection" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/19/3-object-detection/" class="article-date">
+  <time class="dt-published" datetime="2019-04-19T11:39:45.000Z" itemprop="datePublished">2019-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      3 Object detection
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Object-localization"><a href="#Object-localization" class="headerlink" title="Object localization"></a>Object localization</h2><p><strong>Object detection</strong> is one of the areas of computer vision that’s just exploding. <strong>Object localization</strong> which means not only do you have to label this as say a car, but the algorithm also is responsible for putting a bounding box, so that’s called the classification with localization problem. <strong>Defining the target label y :</strong> </p>
+<ol>
+<li>pedestrian</li>
+<li>card</li>
+<li>motorcycle</li>
+<li>background</li>
+</ol>
+<p>Need to output bx, by, bh, bw, class label(1-4) [latex]y&#x3D;\begin{bmatrix} p_c \\ b_x \\ b_y \\ b_h \\ h_w \\ c_1 \\ c_2 \\ c_3 \end{bmatrix}[&#x2F;latex]</p>
+<p><strong>If using squared error, then loss function :</strong> [latex]L(\hat y, y) &#x3D; (\hat y_1 - y_1)^2 + (\hat y_2 - y_2)^2 + \cdots (\hat y_8 - y_8)^2[&#x2F;latex] In practice you could use you improbably use a log likelihood loss for the [latex]c_1[&#x2F;latex], [latex]c_2[&#x2F;latex], [latex]c_3[&#x2F;latex]to the softmax, output one of those elements, <strong>usually you can use squared error or something like squared error for the bounding box coordinates and then for [latex]p_c[&#x2F;latex]</strong>, you could use something like the logistic regression loss, although even if you use squared error or predict work okay.</p>
+<h2 id="Landmark-detection"><a href="#Landmark-detection" class="headerlink" title="Landmark detection"></a>Landmark detection</h2><p>Neural network just output x and y coordinates of important points in image sometimes called landmarks that you want the netural network to recognize. The labels have to be consistent across different images.</p>
+<h2 id="Object-detection"><a href="#Object-detection" class="headerlink" title="Object detection"></a>Object detection</h2><p><strong>Sliding windows detection algorithm :</strong> </p>
+<ul>
+<li>using a pretty large stride in this example just to make the animation go faster</li>
+<li>repeat it, but now use a larger window</li>
+<li>then slide the window over again using some stride and so on, and you run that throughout your entire image until you get to the end</li>
+</ul>
+<p><strong>There’s a huge disadvantage of sliding windows detection which is the computational cost :</strong> </p>
+<ul>
+<li>if you use a very coarse stride, a very big stride, a very big step size, then that will reduce the number of windows you need to pass through the ConvNet, but that coarser granularity may hurt performance</li>
+<li>whereas if you use a very fine granularity or a very small stride, then the huge number of all these little regions you’re passing through the ConvNet means that there’s a very high computational cost</li>
+</ul>
+<p><em>So before the rise of neural networks, people used to use much simpler classifiers</em></p>
+<h2 id="Convolutional-implementation-of-sliding-windows"><a href="#Convolutional-implementation-of-sliding-windows" class="headerlink" title="Convolutional implementation of sliding windows"></a>Convolutional implementation of sliding windows</h2><p>Turn fully connected layers in your neural network into convolutional layers It turns out a lot of this computation done by these 4 ConvNet is highly duplicated Sliding windows convolutionally makes the whole thing <strong>much more efficient</strong>, but it still has one weakness which is the position of the bounding boxes <strong>is not going to be too accurate</strong>.</p>
+<h2 id="Bounding-box-predictions"><a href="#Bounding-box-predictions" class="headerlink" title="Bounding box predictions"></a>Bounding box predictions</h2><p>A good way to get this output more accurate bounding boxes is with the <strong>YOLO</strong> algorithm, YOLO stands for <strong>you only look once</strong>. The basic idea is you’re going to take the <strong>image classification and localization algorithm</strong> and  <strong>what the YOLO algorithm does is it takes the midpoint of each of the two objects and it assigns the object to the grid cell containing the midpoint</strong>. The advantage of this algorithm is that the neural network outputs <strong>precise bounding boxes</strong> as follows so long as you don’t have more than one object in each grid cell this algorithm should work okay. <strong><em>Assign an object to grid cell is you look at the mid point of an object and then you assign that object to whichever one grid cell contains the mid point of the object.</em></strong> This is a pretty efficient algorithm and in fact one nice thing about the YOLO algorithm which which accounts for popularity is because this is a convolutional implementation it actually runs very fast so this works even for <strong>real-time object detection</strong>. <strong>The YOLO paper is one of the harder papers to read.</strong> <em>It’s not that uncommon sadly for even you know senior researchers to read research papers and have a hard time figuring out the details and have to look at the open source code or contact the authors or something else to figure out the details of these algorithms.</em></p>
+<h2 id="Intersection-over-union"><a href="#Intersection-over-union" class="headerlink" title="Intersection over union"></a>Intersection over union</h2><p>Intersection over union, and just we use both for <strong>evaluating your object detection algorithm</strong>. So, what the <strong>intersection over union</strong> function does or <strong>IoU</strong> does is it computes the intersection over union of these two bounding boxes. <strong>So, the union of these two bounding boxes is this area, is really the area that is contained in either bounding boxes, whereas the intersection is this smaller region here. So, what the intersection over union does is it computes the size of the intersection,</strong> And by convention, law of computer vision task will judge that your answer is correct, if the IoU is greater than or <strong>0.5</strong> (<em>just a human-chosen convention, there’s no particularly deep theoretical reason for it</em>).</p>
+<h2 id="Non-max-suppression"><a href="#Non-max-suppression" class="headerlink" title="Non-max suppression"></a>Non-max suppression</h2><p>One of the problems of object detection as you’ve learned about so far is that your algorithm may find multiple detections of the same object so rather than detecting an object just once it might detect it multiple times non-max suppression is a way for you to <strong>make sure that your algorithm detects each object only once</strong>.</p>
+<ul>
+<li>so concretely what it does is it first looks at the probabilities associated with each of these detections count on the p_c, and then it first takes the largest one <ul>
+<li>and says that’s my most confident detection</li>
+<li>so let’s highlight it, </li>
+<li>and all the ones with a high overlap with a high IoU with this one that you’ve just output will get suppressed.</li>
+</ul>
+</li>
+<li>and find the one with the highest probability the highest</li>
+</ul>
+<p><strong>Non max</strong> means that you’re going to output your maximal probabilities classifications but suppress it close by ones that are non maximal so that’s as a name non max suppression.</p>
+<h2 id="Anchor-Boxes"><a href="#Anchor-Boxes" class="headerlink" title="Anchor Boxes"></a>Anchor Boxes</h2><p>One of the problems with object detection as you’ve seen it so far is that each of the grid cells can detect only one object What if a grid cell wants to <strong>detect multiple objects</strong> here’s what you can do you can use the idea of anchor boxes. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Anchor_box_example.png">   The idea of anchor boxes what you’re going to do is predefined two different shapes called anchor boxes or anchor boxes shapes and what you’re going to do is now be able to associate two predictions with the two anchor boxes and in general you might use more anchor boxes maybe five or even more. <strong>Anchor box algorithm :</strong></p>
+<ul>
+<li>Previously :</li>
+</ul>
+<p>Echo object in training image is assigned to grid cell that contains that object’s midpoint.</p>
+<ul>
+<li>With two anchor boxes :</li>
+</ul>
+<p>Echo object in training image is assigned to grid cell that contains object’s midpoint and anchor box for the grid cell with highest IoU.</p>
+<p><strong>Now just some additional details what if you have two anchor boxes but 3 objects in the same grid cell that’s one case that this algorithm doesn’t handle it well.</strong> Anchor boxes gives you is it allows your learning algorithm to specialize better in particular if your data set has some tall skinny objects like pedestrians and some wide objects like cars then this allows your learning algorithm to specialize. <strong>How to choose the anchor boxes :</strong></p>
+<ul>
+<li>People used to just choose them by hand you choose maybe five or ten anchor box shapes that spans a variety of shapes that see to cover the types of objects you seem to detect.</li>
+<li>One of the later YOLO research papers is to use a k-means algorithm to group together two types of object shapes you tend to get and if we use that to select a set of anchor boxes that this most stereotypically representative of the may be multiple there may be dozens of object classes you’re trying to detect but that’s a more advanced way to automatically choose the anchor boxes.</li>
+</ul>
+<h2 id="Putting-it-together-YOLO-algorithm"><a href="#Putting-it-together-YOLO-algorithm" class="headerlink" title="Putting it together: YOLO algorithm"></a>Putting it together: YOLO algorithm</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/YOLO_Outputting_the_non-max_supressed_outputs.png">  </p>
+<p><strong>One of the most effective object detection algorithms that</strong></p>
+<p><strong>also encompasses many of the best ideas across the entire computer vision literature that relate to object detection.</strong></p>
+<h2 id="Region-proposals-Optional"><a href="#Region-proposals-Optional" class="headerlink" title="Region proposals (Optional)"></a>Region proposals (Optional)</h2><p><em><strong>Algorithm convolutionally but one downside that the algorithm is it just classifies a lot of regions where there’s clearly no object.</strong></em> <strong>Faster algorithms :</strong> </p>
+<ul>
+<li>R-CNN : Propose regions. Classify proposed regions one at a time. Output label + bounding box.</li>
+<li>Fast R-CNN : Propose regions. Use convolution implementation of sliding windows to classify all the proposed regions.</li>
+<li>Faster R-CNN : Use convolutional network to propose regions.</li>
+</ul>
+<p>Although the faster R-CNN algorithm most implementations are usually still quite a bit slower than the YOLO algorithm. <strong>The idea of region proposals has been quite influential in computer vision.</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/19/3-object-detection/" data-id="cl56gcvus005plgchgq651qg8" data-title="3 Object detection" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/22/4-special-applications-face-recognition-neural-style-transfer/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          4 Special applications : Face recognition &amp; Neural style transfer
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/19/2-deep-convolutional-models-case-studies/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2 Deep convolutional models : case studies</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

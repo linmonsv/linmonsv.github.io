@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/16/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-object-detection-mxnet-ssd-example" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/17/object-detection-mxnet-ssd-example/" class="article-date">
+  <time class="dt-published" datetime="2019-01-17T02:48:42.000Z" itemprop="datePublished">2019-01-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Computer-Vision/">Computer Vision</a>►<a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/MXNet/">MXNet</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/17/object-detection-mxnet-ssd-example/">Object Detection : MXNet SSD Example</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>cd &#x2F;home&#x2F;water&#x2F;mxnet&#x2F;example&#x2F;ssd<br>wget <a target="_blank" rel="noopener" href="https://github.com/zhreshold/mxnet-ssd/releases/download/v0.6/resnet50/_ssd/_512/_voc0712/_trainval.zi">https://github.com/zhreshold/mxnet-ssd/releases/download/v0.6/resnet50\_ssd\_512\_voc0712\_trainval.zi</a><br>unzip resnet50_ssd_512_voc0712_trainval.zip<br>python data&#x2F;demo&#x2F;download_demo_images.py</p>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>python demo.py –gpu 0<br>python demo.py –epoch 0 –images .&#x2F;data&#x2F;demo&#x2F;dog.jpg –thresh 0.5<br>python demo.py –cpu –network resnet50 –data-shape 512<br>. . . . . .<br>python demo.py –images .&#x2F;data&#x2F;demo&#x2F;person.jpg –thresh 0.3<br>python demo.py –images .&#x2F;data&#x2F;demo&#x2F;person.jpg –network inceptionv3</p>
+<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/dog_bicycle_car.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/dog_bicycle_car_thresh_0_5.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/dog_bicycle_car_cpu.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/car_04.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/train_02.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/street.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/person_01.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/horse_person_10.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/person.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/person_inceptionv3.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/TIM20190117105840.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/TIM20190117105906.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/TIM20190117105921.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/TIM20190117110004.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/TIM20190117110008.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/TIM20190117111514.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/TIM20190117111514_2.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/17/object-detection-mxnet-ssd-example/" data-id="cl56gcvxb00d7lgchbqi86ubx" data-title="Object Detection : MXNet SSD Example" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-transfer-learning-fine-tuning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/15/transfer-learning-fine-tuning/" class="article-date">
+  <time class="dt-published" datetime="2019-01-15T09:42:30.000Z" itemprop="datePublished">2019-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/15/transfer-learning-fine-tuning/">Transfer learning &amp; Fine tuning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Based-on-CVGJ-model"><a href="#Based-on-CVGJ-model" class="headerlink" title="Based on CVGJ model"></a>Based on CVGJ model</h2><p><a target="_blank" rel="noopener" href="https://github.com/cvjena/cnn-models/tree/master/ResNet_preact/ResNet10_cvgj">ResNet10_cvgj</a> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/Transfer-learning_Fine-tune_Train.png"></p>
+<h2 id="Train-Curve"><a href="#Train-Curve" class="headerlink" title="Train Curve"></a>Train Curve</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/tlft_train_loss_iters.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/tlft_test_loss_iters.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/tlft_test_accuracy_iters.png"></p>
+<h2 id="Confusion-Matrix"><a href="#Confusion-Matrix" class="headerlink" title="Confusion Matrix"></a>Confusion Matrix</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Confusion_matrix.png"></p>
+<h2 id="Precision-Recall-PR"><a href="#Precision-Recall-PR" class="headerlink" title="Precision-Recall, PR"></a>Precision-Recall, PR</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Kao_Ya_Precision-Recall_Curve.png"></p>
+<h2 id="Receiver-operating-characteristic-curve-ROC"><a href="#Receiver-operating-characteristic-curve-ROC" class="headerlink" title="Receiver operating characteristic curve, ROC"></a>Receiver operating characteristic curve, ROC</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Receiver_operating_characteristic.png"></p>
+<h2 id="Visualize-Activation"><a href="#Visualize-Activation" class="headerlink" title="Visualize Activation"></a>Visualize Activation</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/visualize_activation_kaoya.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/visualize_activation_yangrouchuan.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/visualize_activation_baozi.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/15/transfer-learning-fine-tuning/" data-id="cl56gcw1k00x2lgchbdu44d8x" data-title="Transfer learning &amp; Fine tuning" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-collecting-data-remove" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/15/collecting-data-remove/" class="article-date">
+  <time class="dt-published" datetime="2019-01-15T09:38:27.000Z" itemprop="datePublished">2019-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/15/collecting-data-remove/">Collecting Data &amp; Remove</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Collecting Data from the Web with Python If you like</p>
+<h2 id="Remove-duplicate-image"><a href="#Remove-duplicate-image" class="headerlink" title="Remove duplicate image"></a>Remove duplicate image</h2><h3 id="1-Remove-invalid-images"><a href="#1-Remove-invalid-images" class="headerlink" title="1. Remove invalid images"></a>1. Remove invalid images</h3><p>import os<br>import sys<br>import cv2</p>
+<p>from collect_data import SUPPORTED_FORMATS</p>
+<p>input_path &#x3D; sys.argv[1]</p>
+<p>for root, dirs, files in os.walk(input_path):<br>    for filename in files:<br>        ext &#x3D; filename[filename.rfind(‘.’)+1:].lower()<br>        if ext not in SUPPORTED_FORMATS:<br>            continue<br>        filepath &#x3D; os.sep.join([root, filename])<br>        if cv2.imread(filepath) is None:<br>            os.system(‘rm {}’.format(filepath))<br>            print(‘{} is not a valid image file. Deleted!’.format(filepath))</p>
+<h3 id="2-Remove-duplicate-files"><a href="#2-Remove-duplicate-files" class="headerlink" title="2. Remove duplicate files"></a>2. Remove duplicate files</h3><p>FDUPES is a program for identifying duplicate files residing within specified directories.</p>
+<p>sudo apt-get install fdupes<br>fdupes -rdN .&#x2F;</p>
+<h3 id="3-Remove-visually-similar-or-duplicate-images"><a href="#3-Remove-visually-similar-or-duplicate-images" class="headerlink" title="3. Remove visually similar or duplicate images"></a>3. Remove visually similar or duplicate images</h3><h4 id="3-1-Down-scale"><a href="#3-1-Down-scale" class="headerlink" title="3.1 Down scale"></a>3.1 Down scale</h4><p>import os<br>import cv2<br>import sys</p>
+<p>input_path &#x3D; sys.argv[1].rstrip(os.sep)</p>
+<p>target_short_edge &#x3D; int(sys.argv[2])</p>
+<p>for root, dirs, files in os.walk(input_path):<br>    print(‘scanning {} …’.format(root))<br>    for filename in files:<br>        filepath &#x3D; os.sep.join([root, filename])<br>        img &#x3D; cv2.imread(filepath)<br>        h, w &#x3D; img.shape[:2]<br>        short_edge &#x3D; min(w, h)</p>
+<pre><code>    if short\_edge &gt; target\_short\_edge:
+        scale = float(target\_short\_edge) / float(short\_edge)
+        new\_w = int(round(w \* scale))
+        new\_h = int(round(h \* scale))
+        print(&#39;Down sampling &#123;&#125; from &#123;&#125; x &#123;&#125; to &#123;&#125; x &#123;&#125; ...&#39;.format(
+            filepath, w, w, new\_w, new\_h
+        ))
+        img = cv2.resize(img, (new\_w, new\_h))
+        cv2.imwrite(filepath, img)
+</code></pre>
+<p>print(‘Done!’)</p>
+<h4 id="3-2-Find-image-dupes"><a href="#3-2-Find-image-dupes" class="headerlink" title="3.2 Find image dupes"></a>3.2 Find image dupes</h4><p>sudo apt-get install findimagedupes<br>findimagedupes -R train &gt; dup_list</p>
+<h4 id="3-3-Remove-duplicates"><a href="#3-3-Remove-duplicates" class="headerlink" title="3.3 Remove duplicates"></a>3.3 Remove duplicates</h4><p>import os<br>import sys<br>dup_list &#x3D; sys.argv[1]<br>with open(dup_list, ‘r’) as f:<br>    lines &#x3D; f.readlines()<br>    for line in lines:<br>        dups &#x3D; line.split()<br>        print(‘Removing duplicates of {}’.format(dups[0]))<br>        for dup in dups[1:]:<br>            cmd &#x3D; ‘rm {}’.format(dup)<br>            os.system(cmd)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/15/collecting-data-remove/" data-id="cl56gcvva007flgch1bzi8lhb" data-title="Collecting Data &amp; Remove" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-regression-caffe" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/15/regression-caffe/" class="article-date">
+  <time class="dt-published" datetime="2019-01-15T09:18:44.000Z" itemprop="datePublished">2019-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/15/regression-caffe/">Regression : Caffe</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Based-on-LeNet-5"><a href="#Based-on-LeNet-5" class="headerlink" title="Based on LeNet-5"></a>Based on LeNet-5</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Regression_train.png"></p>
+<h2 id="Deploy-with-GPU"><a href="#Deploy-with-GPU" class="headerlink" title="Deploy with GPU"></a>Deploy with GPU</h2><p>name: “RegressionExample”<br>layer {<br>  name: “data”<br>  type: “Input”<br>  top: “data”<br>  input_param    {<br>    shape:  {<br>        dim:    100<br>        dim:    1<br>        dim:    100<br>        dim:    100<br>    }<br>  }<br>}<br>……</p>
+<h2 id="Convolution-Visualization"><a href="#Convolution-Visualization" class="headerlink" title="Convolution Visualization"></a>Convolution Visualization</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/regression_predict_conv.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/15/regression-caffe/" data-id="cl56gcvyp00gdlgchhmxjbyoh" data-title="Regression : Caffe" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mnist-mxnet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/15/mnist-mxnet/" class="article-date">
+  <time class="dt-published" datetime="2019-01-15T09:11:01.000Z" itemprop="datePublished">2019-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/MXNet/">MXNet</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/15/mnist-mxnet/">MNIST : MXNet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="MNIST-Data-refer-to-MNIST-Caffe"><a href="#MNIST-Data-refer-to-MNIST-Caffe" class="headerlink" title="MNIST Data (refer to MNIST : Caffe)"></a>MNIST Data (refer to MNIST : Caffe)</h4><h2 id="Prepare-imglist-for-MXNet"><a href="#Prepare-imglist-for-MXNet" class="headerlink" title="Prepare imglist for MXNet"></a>Prepare imglist for MXNet</h2><p>import os<br>import sys</p>
+<p>input_path &#x3D; sys.argv[1].rstrip(os.sep)</p>
+<p>out_path &#x3D; sys.argv[2]</p>
+<p>filenames &#x3D; os.listdir(input_path)<br>with open(out_path, ‘w’) as f:<br>    for i, filename in enumerate(filenames):<br>        filepath &#x3D; os.sep.join([input_path, filename])<br>        label &#x3D; filename[: filename.rfind(‘.’)].split(‘_‘)[1]</p>
+<pre><code>    line = &#39;&#123;&#125;\\t&#123;&#125;\\t&#123;&#125;\\n&#39;.format(i, label, filepath)
+    f.write(line)
+</code></pre>
+<h2 id="Convert-to-rec"><a href="#Convert-to-rec" class="headerlink" title="Convert to rec"></a>Convert to rec</h2><p>python gen_mxnet_imglist.py mnist&#x2F;train train.lst<br>python gen_mxnet_imglist.py mnist&#x2F;val val.lst<br>python gen_mxnet_imglist.py mnist&#x2F;test test.lst</p>
+<p>&#x2F;home&#x2F;d&#x2F;mxnet&#x2F;bin&#x2F;im2rec train.lst .&#x2F; train.rec color&#x3D;0<br>&#x2F;home&#x2F;d&#x2F;mxnet&#x2F;bin&#x2F;im2rec val.lst .&#x2F; val.rec color&#x3D;0<br>&#x2F;home&#x2F;d&#x2F;mxnet&#x2F;bin&#x2F;im2rec test.lst .&#x2F; test.rec color&#x3D;0</p>
+<h2 id="Train-LeNet-5"><a href="#Train-LeNet-5" class="headerlink" title="Train (LeNet-5)"></a>Train (LeNet-5)</h2><p>import mxnet as mx</p>
+<p>data &#x3D; mx.symbol.Variable(‘data’)</p>
+<p>conv1 &#x3D; mx.symbol.Convolution(data&#x3D;data, kernel&#x3D;(5, 5), num_filter&#x3D;20)<br>pool1 &#x3D; mx.symbol.Pooling(data&#x3D;conv1, pool_type&#x3D;”max”, kernel&#x3D;(2, 2), stride&#x3D;(2, 2))</p>
+<p>conv2 &#x3D; mx.symbol.Convolution(data&#x3D;pool1, kernel&#x3D;(5, 5), num_filter&#x3D;50)<br>pool2 &#x3D; mx.symbol.Pooling(data&#x3D;conv2, pool_type&#x3D;”max”, kernel&#x3D;(2, 2), stride&#x3D;(2, 2))</p>
+<p>flatten &#x3D; mx.symbol.Flatten(data&#x3D;pool2)<br>fc1 &#x3D; mx.symbol.FullyConnected(data&#x3D;flatten, num_hidden&#x3D;500)<br>relu1 &#x3D; mx.symbol.Activation(data&#x3D;fc1, act_type&#x3D;”relu”)</p>
+<p>fc2 &#x3D; mx.symbol.FullyConnected(data&#x3D;relu1, num_hidden&#x3D;10)</p>
+<p>lenet5 &#x3D; mx.symbol.SoftmaxOutput(data&#x3D;fc2, name&#x3D;’softmax’)</p>
+<p>mod &#x3D; mx.mod.Module(lenet5, context&#x3D;mx.gpu(0))</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>train_dataiter &#x3D; mx.io.ImageRecordIter(<br>    path_imgrec&#x3D;”train.rec”,<br>    data_shape&#x3D;(1, 28, 28),<br>    batch_size&#x3D;50,<br>    mean_r&#x3D;128,<br>    scale&#x3D;0.00390625,<br>    rand_crop&#x3D;True,<br>    min_crop_size&#x3D;24,<br>    max_crop_size&#x3D;28,<br>    max_rotate_angle&#x3D;15,<br>    fill_value&#x3D;0<br>)<br>val_dataiter &#x3D; mx.io.ImageRecordIter(<br>    path_imgrec&#x3D;”val.rec”,<br>    data_shape&#x3D;(1, 28, 28),<br>    batch_size&#x3D;100,<br>    mean_r&#x3D;128,<br>    scale&#x3D;0.00390625,<br>)</p>
+<h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><p>import logging</p>
+<p>logging.getLogger().setLevel(logging.DEBUG)<br>fh &#x3D; logging.FileHandler(‘train_mnist_lenet.log’)<br>logging.getLogger().addHandler(fh)</p>
+<p>lr_scheduler &#x3D; mx.lr_scheduler.FactorScheduler(1000, factor&#x3D;0.95)<br>optimizer_params &#x3D; {<br>    ‘learning_rate’: 0.01,<br>    ‘momentum’: 0.9,<br>    ‘wd’: 0.0005,<br>    ‘lr_scheduler’: lr_scheduler<br>}</p>
+<p>checkpoint &#x3D; mx.callback.do_checkpoint(‘mnist_lenet’, period&#x3D;5)</p>
+<p>mod.fit(train_dataiter,<br>        eval_data&#x3D;val_dataiter,<br>        optimizer_params&#x3D;optimizer_params,<br>        num_epoch&#x3D;36,<br>        epoch_end_callback&#x3D;checkpoint)</p>
+<h2 id="Log-Visualization"><a href="#Log-Visualization" class="headerlink" title="Log Visualization"></a>Log Visualization</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_epoch_mxnet.png"></p>
+<h2 id="Test-Model-Accuracy"><a href="#Test-Model-Accuracy" class="headerlink" title="Test Model Accuracy"></a>Test Model Accuracy</h2><p>import mxnet as mx</p>
+<p>test_dataiter &#x3D; mx.io.ImageRecordIter(<br>    path_imgrec&#x3D;”test.rec”,<br>    data_shape&#x3D;(1, 28, 28),<br>    batch_size&#x3D;100,<br>    mean_r&#x3D;128,<br>    scale&#x3D;0.00390625,<br>)</p>
+<p>mod &#x3D; mx.mod.Module.load(‘mnist_lenet’, 35, context&#x3D;mx.gpu(0))</p>
+<p>mod.bind(<br>    data_shapes&#x3D;test_dataiter.provide_data,<br>    label_shapes&#x3D;test_dataiter.provide_label,<br>    for_training&#x3D;False)</p>
+<p>metric &#x3D; mx.metric.create(‘acc’)</p>
+<p>mod.score(test_dataiter, metric)</p>
+<p>for name, val in metric.get_name_value():<br>    print(‘{} &#x3D; {:.2f}%’.format(name, val * 100))</p>
+<h2 id="Test-Model-Time"><a href="#Test-Model-Time" class="headerlink" title="Test Model Time"></a>Test Model Time</h2><p>import time<br>import mxnet as mx</p>
+<p>benchmark_dataiter &#x3D; mx.io.ImageRecordIter(<br>    path_imgrec&#x3D;”test.rec”,<br>    data_shape&#x3D;(1, 28, 28),<br>    batch_size&#x3D;64,<br>    mean_r&#x3D;128,<br>    scale&#x3D;0.00390625,<br>)</p>
+<p>mod &#x3D; mx.mod.Module.load(‘mnist_lenet’, 35, context&#x3D;mx.gpu(0))<br>mod.bind(<br>    data_shapes&#x3D;benchmark_dataiter.provide_data,<br>    label_shapes&#x3D;benchmark_dataiter.provide_label,<br>    for_training&#x3D;False)</p>
+<p>start &#x3D; time.time()</p>
+<p>for i, batch in enumerate(benchmark_dataiter):<br>    mod.forward(batch)</p>
+<p>time_elapsed &#x3D; time.time() - start<br>msg &#x3D; ‘{} batches iterated!\nAverage forward time per batch: {:.6f} ms’<br>print(msg.format(i + 1, 1000 * time_elapsed &#x2F; float(i)))</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/15/mnist-mxnet/" data-id="cl56gcvx400cxlgch4y43gogt" data-title="MNIST : MXNet" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mnist-caffe" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/15/mnist-caffe/" class="article-date">
+  <time class="dt-published" datetime="2019-01-15T09:01:58.000Z" itemprop="datePublished">2019-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/15/mnist-caffe/">MNIST : Caffe</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>wget <a target="_blank" rel="noopener" href="http://deeplearning.net/data/mnist/mnist.pkl.gz">http://deeplearning.net/data/mnist/mnist.pkl.gz</a></p>
+<h2 id="Loading-data-from-pkl"><a href="#Loading-data-from-pkl" class="headerlink" title="Loading data from pkl"></a>Loading data from pkl</h2><p>import os<br>import pickle, gzip<br>from matplotlib import pyplot</p>
+<p>print(‘Loading data from mnist.pkl.gz …’)<br>with gzip.open(‘mnist.pkl.gz’, ‘rb’) as f:<br>    train_set, valid_set, test_set &#x3D; pickle.load(f)</p>
+<p>imgs_dir &#x3D; ‘mnist’<br>os.system(‘mkdir -p {}’.format(imgs_dir))<br>datasets &#x3D; {‘train’: train_set, ‘val’: valid_set, ‘test’: test_set}</p>
+<p>for dataname, dataset in datasets.items():<br>    print(‘Converting {} dataset …’.format(dataname))<br>    data_dir &#x3D; os.sep.join([imgs_dir, dataname])</p>
+<pre><code>os.system(&#39;mkdir -p &#123;&#125;&#39;.format(data\_dir))
+
+for i, (img, label) in enumerate(zip(\*dataset)):
+
+    filename = &#39;&#123;:0&gt;6d&#125;\_&#123;&#125;.jpg&#39;.format(i, label)
+
+    filepath = os.sep.join(\[data\_dir, filename\])
+
+    img = img.reshape((28, 28))
+
+    pyplot.imsave(filepath, img, cmap=&#39;gray&#39;)
+    if (i + 1) % 10000 == 0:
+        print(&#39;&#123;&#125; images converted!&#39;.format(i + 1))
+</code></pre>
+<h2 id="Prepare-imglist-for-Caffe"><a href="#Prepare-imglist-for-Caffe" class="headerlink" title="Prepare imglist for Caffe"></a>Prepare imglist for Caffe</h2><p>import os<br>import sys</p>
+<p>input_path &#x3D; sys.argv[1].rstrip(os.sep)</p>
+<p>output_path &#x3D; sys.argv[2]</p>
+<p>filenames &#x3D; os.listdir(input_path)<br>with open(output_path, ‘w’) as f:<br>    for filename in filenames:</p>
+<pre><code>    filepath = os.sep.join(\[input\_path, filename\])
+
+    label = filename\[: filename.rfind(&#39;.&#39;)\].split(&#39;\_&#39;)\[1\]
+
+    line = &#39;&#123;&#125; &#123;&#125;\\n&#39;.format(filepath, label)
+    f.write(line)
+</code></pre>
+<h2 id="Convert-to-LMDB"><a href="#Convert-to-LMDB" class="headerlink" title="Convert to LMDB"></a>Convert to LMDB</h2><p>python gen_caffe_imglist.py mnist&#x2F;train train.txt<br>python gen_caffe_imglist.py mnist&#x2F;val val.txt<br>python gen_caffe_imglist.py mnist&#x2F;test test.txt</p>
+<p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; train.txt train_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; val.txt val_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; test.txt test_lmdb –gray –shuffle</p>
+<h2 id="Train-LeNet-5"><a href="#Train-LeNet-5" class="headerlink" title="Train (LeNet-5)"></a>Train (LeNet-5)</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver.prototxt -log_dir .&#x2F;</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/mlp_train-401x1024.png"></p>
+<h2 id="Log-Visualization"><a href="#Log-Visualization" class="headerlink" title="Log Visualization"></a>Log Visualization</h2><h3 id="loss-iters"><a href="#loss-iters" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters.png caffe.ubuntu.d.log</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_zoom_out-300x225.png"></p>
+<h3 id="accuracy-iters"><a href="#accuracy-iters" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters.png caffe.ubuntu.d.log</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_zoom_out-300x225.png"></p>
+<h2 id="Test-Model-Accuracy"><a href="#Test-Model-Accuracy" class="headerlink" title="Test Model Accuracy"></a>Test Model Accuracy</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe test -model lenet_test.prototxt -weights mnist_lenet_iter_36000.caffemodel -iterations 100</p>
+<h2 id="Test-Model-Time"><a href="#Test-Model-Time" class="headerlink" title="Test Model Time"></a>Test Model Time</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe time -model lenet.prototxt</p>
+<h2 id="Augmented-Train"><a href="#Augmented-Train" class="headerlink" title="Augmented, Train"></a>Augmented, Train</h2><h3 id="loss-iters-1"><a href="#loss-iters-1" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_1-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_2-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_3-300x225.png"></p>
+<h3 id="accuracy-iters-1"><a href="#accuracy-iters-1" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_2-300x165.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_3-300x225.png"></p>
+<h2 id="Update-solver-max-iter-Train"><a href="#Update-solver-max-iter-Train" class="headerlink" title="Update solver max_iter, Train"></a>Update solver max_iter, Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver_aug.prototxt -snapshot mnist_aug_lenet_iter_36000.solverstate -log_dir .&#x2F;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/15/mnist-caffe/" data-id="cl56gcvx100cvlgch3jge4jbi" data-title="MNIST : Caffe" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-install-nvidia-driver-cuda-ubuntu-16-04" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/" class="article-date">
+  <time class="dt-published" datetime="2019-01-12T06:32:05.000Z" itemprop="datePublished">2019-01-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/Operating-System/">Operating System</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/">Install NVIDIA Driver &amp; CUDA : Ubuntu 16.04</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Remove-Default-Driver"><a href="#Remove-Default-Driver" class="headerlink" title="Remove Default Driver"></a>Remove Default Driver</h2><p>sudo apt –purge remove xserver-xorg-video-nouveau</p>
+<h2 id="Add-NVIDIA-Respository"><a href="#Add-NVIDIA-Respository" class="headerlink" title="Add NVIDIA Respository"></a>Add NVIDIA Respository</h2><p>sudo add-apt-repository ppa:graphics-drivers&#x2F;ppa</p>
+<h2 id="Install-NVIDIA-Driver"><a href="#Install-NVIDIA-Driver" class="headerlink" title="Install NVIDIA Driver"></a>Install NVIDIA Driver</h2><p>sudo apt install nvidia-361 nvidia-settings nvidia-prime</p>
+<h2 id="Install-NVIDIA-CUDA"><a href="#Install-NVIDIA-CUDA" class="headerlink" title="Install NVIDIA CUDA"></a>Install NVIDIA CUDA</h2><p>sudo apt install nvidia-cuda-toolkit</p>
+<h2 id="Reboot"><a href="#Reboot" class="headerlink" title="Reboot"></a>Reboot</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/nvidia-smi.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/" data-id="cl56gcvwn00bmlgchbtu43mum" data-title="Install NVIDIA Driver &amp; CUDA : Ubuntu 16.04" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-caffe-sample" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/09/caffe-sample/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T09:58:25.000Z" itemprop="datePublished">2019-01-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/09/caffe-sample/">Caffe Sample</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Gen-HDF5-Data"><a href="#Gen-HDF5-Data" class="headerlink" title="Gen HDF5 Data"></a>Gen HDF5 Data</h2><p>import pickle<br>import numpy as np<br>import h5py</p>
+<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)<br>sample_size &#x3D; len(labels)</p>
+<p>samples &#x3D; np.array(samples).reshape((sample_size, 2))<br>labels &#x3D; np.array(labels).reshape((sample_size, 1))</p>
+<p>h5_filename &#x3D; ‘data.h5’<br>with h5py.File(h5_filename, ‘w’) as h:<br>    h.create_dataset(‘data’, data&#x3D;samples)<br>    h.create_dataset(‘label’, data&#x3D;labels)</p>
+<p>with open(‘data_h5.txt’, ‘w’) as f:<br>    f.write(h5_filename)</p>
+<h2 id="Network-Train"><a href="#Network-Train" class="headerlink" title="Network Train"></a>Network Train</h2><p>name: “SimpleMLP”<br>layer {<br>    name:   “data”<br>    type:   “HDF5Data”<br>    top:    “data”<br>    top:    “label”<br>    include {<br>        phase:  TRAIN<br>    }<br>    hdf5_data_param {<br>        source: “data_h5.txt”<br>        batch_size: 41<br>    }<br>}<br>layer {<br>    name:   “fc1”<br>    type:   “InnerProduct”<br>    bottom: “data”<br>    top:    “fc1”<br>    inner_product_param {<br>        num_output: 2<br>        weight_filler   {<br>            type:   “uniform”<br>        }<br>    }<br>}<br>layer {<br>    name:   “sigmoid1”<br>    type:   “Sigmoid”<br>    bottom: “fc1”<br>    top:    “sigmoid1”<br>}<br>layer {<br>    name:   “fc2”<br>    type:   “InnerProduct”<br>    bottom: “sigmoid1”<br>    top:    “fc2”<br>    inner_product_param {<br>        num_output: 2<br>        weight_filler   {<br>            type:   “uniform”<br>        }<br>    }<br>}<br>layer {<br>    name:   “loss”<br>    type:   “SoftmaxWithLoss”<br>    bottom: “fc2”<br>    bottom: “label”<br>    top:    “loss”<br>}</p>
+<h2 id="Gen-Network-Picture"><a href="#Gen-Network-Picture" class="headerlink" title="Gen Network Picture"></a>Gen Network Picture</h2><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python&#x2F;draw_net.py train.prototxt mlp_train.png –rankdir BT</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Caffe_mlp_train-315x1024.png"></p>
+<h2 id="Network-Solver"><a href="#Network-Solver" class="headerlink" title="Network Solver"></a>Network Solver</h2><p>net:    “train.prototxt”<br>base_lr:    0.15<br>lr_policy:  “fixed”<br>display:    100<br>max_iter:   2000<br>momentum:   0.95<br>snapshot_prefix:    “simple_mlp”<br>solver_mode:    CPU</p>
+<h2 id="Start-Train"><a href="#Start-Train" class="headerlink" title="Start Train"></a>Start Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver solver.prototxt</p>
+<h2 id="Network-Test"><a href="#Network-Test" class="headerlink" title="Network Test"></a>Network Test</h2><p>name: “SimpleMLP”<br>input:  “data”<br>input_shape {<br>    dim:    1<br>    dim:    2<br>}<br>layer {<br>    name:   “fc1”<br>    type:   “InnerProduct”<br>    bottom: “data”<br>    top:    “fc1”<br>    inner_product_param {<br>        num_output: 2<br>    }<br>}<br>layer {<br>    name:   “sigmoid1”<br>    type:   “Sigmoid”<br>    bottom: “fc1”<br>    top:    “sigmoid1”<br>}<br>layer {<br>    name:   “fc2”<br>    type:   “InnerProduct”<br>    bottom: “sigmoid1”<br>    top:    “fc2”<br>    inner_product_param {<br>        num_output: 2<br>    }<br>}<br>layer {<br>    name:   “softmax”<br>    type:   “Softmax”<br>    bottom: “fc2”<br>    top:    “prob”<br>}</p>
+<h2 id="Start-Test"><a href="#Start-Test" class="headerlink" title="Start Test"></a>Start Test</h2><p>import sys<br>import pickle<br>import numpy as np<br>import matplotlib.pyplot as plt<br>from mpl_toolkits.mplot3d import Axes3D<br>sys.path.append(‘&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python’)<br>import caffe</p>
+<p>net &#x3D; caffe.Net(‘test.prototxt’, ‘simple_mlp_iter_2000.caffemodel’, caffe.TEST)</p>
+<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)<br>samples &#x3D; np.array(samples)<br>labels &#x3D; np.array(labels)</p>
+<p>X &#x3D; np.arange(0, 1.05, 0.05)<br>Y &#x3D; np.arange(0, 1.05, 0.05)<br>X, Y &#x3D; np.meshgrid(X, Y)</p>
+<p>grids &#x3D; np.array([[X[i][j], Y[i][j]] for i in range(X.shape[0]) for j in range(X.shape[1])])</p>
+<p>grid_probs &#x3D; []<br>for grid in grids:<br>    net.blobs[‘data’].data[…] &#x3D; grid.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    grid_probs.append(output[‘prob’][0][1])<br>grid_probs &#x3D; np.array(grid_probs).reshape(X.shape)<br>fig &#x3D; plt.figure(‘Sample Surface’)<br>ax &#x3D; fig.gca(projection&#x3D;’3d’)<br>ax.plot_surface(X, Y, grid_probs, alpha&#x3D;0.15, color&#x3D;’k’, rstride&#x3D;2, cstride&#x3D;2, lw&#x3D;0.5)</p>
+<p>samples0 &#x3D; samples[labels&#x3D;&#x3D;0]<br>samples0_probs &#x3D; []<br>for sample in samples0:<br>    net.blobs[‘data’].data[…] &#x3D; sample.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    samples0_probs.append(output[‘prob’][0][1])<br>samples1 &#x3D; samples[labels&#x3D;&#x3D;1]<br>samples1_probs &#x3D; []<br>for sample in samples1:<br>    net.blobs[‘data’].data[…] &#x3D; sample.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    samples1_probs.append(output[‘prob’][0][1])</p>
+<p>ax.scatter(samples0[:, 0], samples0[:, 1], samples0_probs, c&#x3D;’r’, marker&#x3D;’o’, s&#x3D;50)<br>ax.scatter(samples1[:, 0], samples1[:, 1], samples1_probs, c&#x3D;’b’, marker&#x3D;’^’, s&#x3D;50)</p>
+<p>plt.show()</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Caffe_Sample_Surface.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/09/caffe-sample/" data-id="cl56gcvv5006ylgch6ji3f5we" data-title="Caffe Sample" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mxnet-sample" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/09/mxnet-sample/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T08:14:37.000Z" itemprop="datePublished">2019-01-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/MXNet/">MXNet</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/09/mxnet-sample/">MXNet Sample</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="MXNet-Sample"><a href="#MXNet-Sample" class="headerlink" title="MXNet Sample"></a>MXNet Sample</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/MXNet_simple_mlp.gv_.png"></p>
+<p>import pickle<br>import numpy as np</p>
+<p>def cos_curve(x):<br>    return 0.25 * np.sin(2 * x * np.pi + 0.5 * np.pi) + 0.5</p>
+<p>np.random.seed(123)<br>samples &#x3D; []<br>labels &#x3D; []</p>
+<p>sample_density &#x3D; 50<br>for i in range(sample_density):<br>    x1, x2 &#x3D; np.random.random(2)</p>
+<pre><code>bound = cos\_curve(x1)
+
+if bound - 0.1 &lt; x2 &lt;= bound + 0.1:
+    continue
+else:
+    samples.append((x1, x2))
+
+    if x2 &gt; bound:
+        labels.append(1)
+    else:
+        labels.append(0)
+</code></pre>
+<p>with open(‘data.pkl’, ‘wb’) as f:<br>    pickle.dump((samples, labels), f)</p>
+<p>import matplotlib.pyplot as plt</p>
+<p>for i, sample in enumerate(samples):<br>    plt.plot(sample[0], sample[1], ‘o’ if labels[i] else ‘^’,<br>             mec&#x3D;’r’ if labels[i] else ‘b’,<br>             mfc&#x3D;’none’,<br>             markersize&#x3D;10)<br>x1 &#x3D; np.linspace(0, 1)<br>plt.plot(x1, cos_curve(x1), ‘k–’)<br>plt.show()</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>import numpy as np<br>import mxnet as mx</p>
+<p>data &#x3D; mx.sym.Variable(‘data’)</p>
+<p>fc1 &#x3D; mx.sym.FullyConnected(data&#x3D;data, name&#x3D;’fc1’, num_hidden&#x3D;2)</p>
+<p>sigmoid1 &#x3D; mx.sym.Activation(data&#x3D;fc1, name&#x3D;’sigmoid1’, act_type&#x3D;’sigmoid’)</p>
+<p>fc2 &#x3D; mx.sym.FullyConnected(data&#x3D;sigmoid1, name&#x3D;’fc2’, num_hidden&#x3D;2)</p>
+<p>mlp &#x3D; mx.sym.SoftmaxOutput(data&#x3D;fc2, name&#x3D;’softmax’)</p>
+<p>shape &#x3D; {‘data’: (2,)}<br>mlp_dot &#x3D; mx.viz.plot_network(symbol&#x3D;mlp, shape&#x3D;shape)<br>mlp_dot.render(‘simple_mlp.gv’, view&#x3D;True)</p>
+<h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><p>import pickle<br>import logging</p>
+<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)</p>
+<p>logging.getLogger().setLevel(logging.DEBUG)</p>
+<p>batch_size &#x3D; len(labels)<br>samples &#x3D; np.array(samples)<br>labels &#x3D; np.array(labels)</p>
+<p>train_iter &#x3D; mx.io.NDArrayIter(samples, labels, batch_size)</p>
+<p>model &#x3D; mx.model.FeedForward.create(<br>    symbol&#x3D;mlp,<br>    X&#x3D;train_iter,<br>    num_epoch&#x3D;1000,<br>    learning_rate&#x3D;0.1,<br>    momentum&#x3D;0.99<br>)<br>‘’’<br>model &#x3D; mx.model.FeedForward(<br>    symbol&#x3D;mlp,<br>    num_epoch&#x3D;1000,<br>    learning_rate&#x3D;0.1<br>    momentum&#x3D;0.99<br>)<br>model.fit(X&#x3D;train_iter)<br>‘’’<br>print(model.predict(mx.nd.array([[0.5, 0.5]])))</p>
+<h1 id="-2"><a href="#-2" class="headerlink" title=""></a></h1><p>import matplotlib.pyplot as plt<br>from mpl_toolkits.mplot3d import Axes3D</p>
+<p>X &#x3D; np.arange(0, 1.05, 0.05)<br>Y &#x3D; np.arange(0, 1.05, 0.05)<br>X, Y &#x3D; np.meshgrid(X, Y)</p>
+<p>grids &#x3D; mx.nd.array([[X[i][j], Y[i][j]] for i in range(X.shape[0]) for j in range(X.shape[1])])</p>
+<p>grid_probs &#x3D; model.predict(grids)[:, 1].reshape(X.shape)</p>
+<p>fig &#x3D; plt.figure(‘Sample Surface’)<br>ax &#x3D; fig.gca(projection&#x3D;’3d’)</p>
+<p>ax.plot_surface(X, Y, grid_probs, alpha&#x3D;0.15, color&#x3D;’k’, rstride&#x3D;2, cstride&#x3D;2, lw&#x3D;0.5)</p>
+<p>samples0 &#x3D; samples[labels&#x3D;&#x3D;0]<br>samples0_probs &#x3D; model.predict(samples0)[:, 1]<br>samples1 &#x3D; samples[labels&#x3D;&#x3D;1]<br>samples1_probs &#x3D; model.predict(samples1)[:, 1]</p>
+<p>ax.scatter(samples0[:, 0], samples0[:, 1], samples0_probs, c&#x3D;’r’, marker&#x3D;’o’, s&#x3D;50)<br>ax.scatter(samples1[:, 0], samples1[:, 1], samples1_probs, c&#x3D;’b’, marker&#x3D;’^’, s&#x3D;50)</p>
+<p>plt.show()</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/MXNet_Figure_1.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/MXNet_Sample_Surface.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/09/mxnet-sample/" data-id="cl56gcvx600d0lgch3fadhy5t" data-title="MXNet Sample" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-matplotlib-rgb-opencv-bgr" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/09/matplotlib-rgb-opencv-bgr/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T03:11:45.000Z" itemprop="datePublished">2019-01-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/01/09/matplotlib-rgb-opencv-bgr/">Matplotlib RGB &amp; OpenCV BGR</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Matplotlib-RGB-amp-OpenCV-BGR"><a href="#Matplotlib-RGB-amp-OpenCV-BGR" class="headerlink" title="Matplotlib RGB &amp; OpenCV BGR"></a>Matplotlib RGB &amp; OpenCV BGR</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>import cv2</p>
+<p>img &#x3D; np.array([<br>    [[255, 0, 0], [0, 255, 0], [0, 0, 255]],<br>    [[255, 255, 0], [255, 0, 255], [0, 255, 255]],<br>    [[255, 255, 255], [128, 128, 128], [0, 0, 0]],<br>], dtype&#x3D;np.uint8)</p>
+<p>plt.imsave(‘img_pyplot.png’, img)<br>cv2.imwrite(‘img_cv2.jpg’, img)</p>
+<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/img_pyplot.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/img_cv2.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/09/matplotlib-rgb-opencv-bgr/" data-id="cl56gcvwy00cllgcheegn0u89" data-title="Matplotlib RGB &amp; OpenCV BGR" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/15/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/17/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

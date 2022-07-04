@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>1 Recurrent Neural Networks | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Why Sequence Models?Models like recurrent neural networks or RNNs have transformed speech recognition, natural language processing and other areas.  NotationSuppose the input is the sequence of nine w">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1 Recurrent Neural Networks">
+<meta property="og:url" content="http://example.com/2019/04/22/1-recurrent-neural-networks/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Why Sequence Models?Models like recurrent neural networks or RNNs have transformed speech recognition, natural language processing and other areas.  NotationSuppose the input is the sequence of nine w">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Examples_of_sequence_data.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Notation_Representing_words.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_Forward_Propagation.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_Back_Propagation.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Summary_of_RNN_types.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_unit.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/GRU_and_LSTM.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/LSTM_in_pictures.png">
+<meta property="article:published_time" content="2019-04-22T08:55:03.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.561Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Examples_of_sequence_data.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-1-recurrent-neural-networks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/22/1-recurrent-neural-networks/" class="article-date">
+  <time class="dt-published" datetime="2019-04-22T08:55:03.000Z" itemprop="datePublished">2019-04-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      1 Recurrent Neural Networks
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Why-Sequence-Models"><a href="#Why-Sequence-Models" class="headerlink" title="Why Sequence Models?"></a>Why Sequence Models?</h2><p>Models like <strong>recurrent neural networks</strong> or <strong>RNNs</strong> have transformed speech recognition, natural language processing and other areas. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Examples_of_sequence_data.png"></p>
+<h2 id="Notation"><a href="#Notation" class="headerlink" title="Notation"></a>Notation</h2><p>Suppose the input is the sequence of nine words. So, eventually we’re going to have nine sets of features to represent these nine words, and index into the positions in the sequence, I’m going to use [latex]x^{&lt;1&gt;}[&#x2F;latex], [latex]x^{&lt;2&gt;}[&#x2F;latex], [latex]x^{&lt;3&gt;}[&#x2F;latex] and so on up to [latex]x^{&lt;9&gt;}[&#x2F;latex] to index into the different positions. use [latex]x^{<t>}[&#x2F;latex] to index into positions, in the middle of the sequence. And t implies that these are temporal sequences although whether the sequences are temporal one or not, I’m going to use the index t to index into the positions in the sequence. Used [latex]T_{x}[&#x2F;latex] denote the length of the input sequence, [latex]x^{(i)<t>}[&#x2F;latex] refer to the Tth element or the Tth element in the sequence of training example i [latex]T_{x}^{(i)}[&#x2F;latex] is the length of sequence i <strong>NLP</strong> or Natural Language Processing Use <strong>one-hot representations</strong> to represent each of these words. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Notation_Representing_words.png"> What if you encounter a word that is not in your vocabulary? Well the answer is, you create a new token or a new fake word called Unknown Word which under note as follows angle brackets <strong>UNK</strong> to represent words not in your vocabulary.</p>
+<h2 id="Recurrent-Neural-Network-Model"><a href="#Recurrent-Neural-Network-Model" class="headerlink" title="Recurrent Neural Network Model"></a>Recurrent Neural Network Model</h2><p><strong>Why not a standard network?</strong> <strong>Problems:</strong></p>
+<ul>
+<li>Inputs, outputs can be different lengths in different examples.</li>
+<li>Doesn’t share features learned across different positions of text.</li>
+</ul>
+<p>And <strong>what a recurrent neural network does is</strong> when it then goes on to read the second word in a sentence, say X2, instead of just predicting Y2 using only X2, it also gets to input some information from what had computed that time-step one’s. <strong>At each time-step,  the recurrent neural network passes on this activation to the next time-step for it to use</strong>. Now <strong>one limitation of this</strong> particular neural network structure is that the prediction at a certain time <strong>uses</strong> inputs or uses information from the inputs <strong>earlier in the sequence but not information later</strong> in the sequence. We will address this in a later video where we talk about a <strong>bidirectional recurrent neural networks</strong> or <strong>BRNNs</strong>. The activation function used in to compute the activations will often be a tanh and the choice of an RNN and sometimes, Relu are also used although the tanh is actually a pretty common choice. Simplified RNN notation : [latex]\begin{matrix} a^{<t>} &#x3D; g_1(W_{aa}a^{<t-1>} + W_{ax}x^{<t>} + b_a)\\ \hat y ^{<t>} &#x3D; g_2(W_{ya}a^{<t>} + b_y) \end{matrix}[&#x2F;latex] <img src="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_Forward_Propagation.png"></p>
+<h2 id="Backpropagation-through-time"><a href="#Backpropagation-through-time" class="headerlink" title="Backpropagation through time"></a>Backpropagation through time</h2><p>As usual, when you implement this in one of the programming frameworks, <strong>often, the programming framework will automatically take care of backpropagation</strong>. <strong>Element-wise</strong> loss funtion : [latex]L^{<t>}(\hat y ^{<t>}, y ^{<t>}) &#x3D; -y ^{<t>}log \hat y ^{<t>} - (1 - \hat y ^{<t>})log(1 - \hat y ^{<t>})[&#x2F;latex] standard logistic regression loss also called the <strong>cross entropy loss</strong>. <strong>Overall</strong> loss of the entire sequence : [latex]L(\hat y, y) &#x3D; \sum _{t&#x3D;1}^{T_x} L ^{<t>}(\hat y ^{<t>}, y^{<t>})[&#x2F;latex] <strong>Backpropagation through time</strong>, And the motivation for this name is that for forward prop you are scanning from left to right, increasing indices of the time t, whereas the backpropagation, you’re going from right to left, kind of going backwards in time. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_Back_Propagation.png"></p>
+<h2 id="Different-types-of-RNNs"><a href="#Different-types-of-RNNs" class="headerlink" title="Different types of RNNs"></a>Different types of RNNs</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Summary_of_RNN_types.png"></p>
+<h2 id="Language-model-and-sequence-generation"><a href="#Language-model-and-sequence-generation" class="headerlink" title="Language model and sequence generation"></a>Language model and sequence generation</h2><p><strong>What a language model does is</strong> given any sentence its job is to tell you <strong>what is the probability of a sentence</strong>, of that particular sentence. And this is a fundamental component for both speech recognition systems as you’ve just seen, as well as for machine translation systems where translation systems wants output. <strong>How do you build a language model?</strong></p>
+<ul>
+<li>first need a training set comprising a large corpus of English text. Or text from whatever language you want to build a language model of. And the word corpus is an NLP terminology that just means a large body or a very large set of English text of English sentences.<ul>
+<li>The first thing you would do is tokenize this sentence. And that means you would form a vocabulary as we saw in an earlier video. And then map each of these words to, say, one-hot vectors, all to indices in your vocabulary.</li>
+<li>One thing you might also want to do is model when sentences end. So another common thing to do is to add an extra token called a EOS.</li>
+</ul>
+</li>
+<li>Go on to built the RNN model<ul>
+<li>what [latex]a^{&lt;1&gt;}[&#x2F;latex] does is it will make a softmax prediction to try to figure out what is the probability of the first words y. And so that’s going to be y&lt;1&gt;. So what this step does is really, it has a softmax it’s trying to predict. What is the probability of any word in the dictionary?</li>
+<li>Then, the RNN steps forward to the next step and has some activation, [latex]a^{&lt;1&gt;}[&#x2F;latex] to the next step. And at this step, this job is try to figure out, what is the second word?</li>
+<li>whatever this given, everything that comes before, and hopefully it will predict that there’s a high chance of it, EOS end sentence token.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sampling-novel-sequences"><a href="#Sampling-novel-sequences" class="headerlink" title="Sampling novel sequences"></a>Sampling novel sequences</h2><p>After you train a sequence model, one of the ways you can informally get a sense of what is learned is to have a sample novel sequences.</p>
+<ul>
+<li>what you want to do is first sample what is the first word you want your model to generate.</li>
+<li>…</li>
+</ul>
+<p>Then you will <strong>generate a randomly chosen sentence</strong> from your RNN language model.</p>
+<ul>
+<li><strong>words level RNN</strong></li>
+<li><strong>character level RNN</strong><ul>
+<li>advantage : you don’t ever have to worry about unknown word tokens.</li>
+<li>disadvantage : you end up with much more, much longer sequences.<ul>
+<li>so they are not in widespread used today. Except for maybe specialized applications where you might need to deal with unknown words or other vocabulary words a lot.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Vanishing-gradients-with-RNNs"><a href="#Vanishing-gradients-with-RNNs" class="headerlink" title="Vanishing gradients with RNNs"></a>Vanishing gradients with RNNs</h2><p>It turns out the basics RNN we’ve seen so far it’s <strong>not very good at capturing very long-term dependencies</strong>.</p>
+<ul>
+<li>It turns out that <strong>vanishing gradients tends to be the bigger problem with training RNNs</strong>, </li>
+<li>although when <strong>exploding gradients</strong> happens, it can be catastrophic because the exponentially large gradients can cause your parameters to become so large that your neural network parameters get really messed up. So it turns out that exploding gradients are easier to spot because the parameters just blow up and you might often see NaNs, or not a numbers, meaning results of a numerical overflow in your neural network computation. <ul>
+<li>And if you do see exploding gradients, one solution to that is apply gradient clipping. And what that really means, all that means is look at your gradient vectors, and if it is bigger than some threshold, re-scale some of your gradient vector so that is not too big. So there are clips according to some maximum value. So if you see exploding gradients, if your derivatives do explode or you see NaNs, just apply <strong>gradient clipping</strong>, and that’s a relatively robust solution that will take care of exploding gradients.</li>
+</ul>
+</li>
+</ul>
+<p> </p>
+<h2 id="Gated-Recurrent-Unit（GRU）"><a href="#Gated-Recurrent-Unit（GRU）" class="headerlink" title="Gated Recurrent Unit（GRU）"></a>Gated Recurrent Unit（GRU）</h2><p>The <strong>Gated Recurrent Unit</strong> which is a modification to the RNN hidden layer that makes it much better capturing long range connections and helps a lot with the vanishing gradient problems. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_unit.png">                   The GRU unit is going to have a new variable called c which stands for cell, for <strong>memory cell</strong>. And what the memory cell do is it will provide a bit of memory to remember. [latex]\tilde{c} ^{<t>} &#x3D; tanh (W_c [c ^{<t-1>}, x ^{<t>}] + b_c)[&#x2F;latex] <strong>the important idea of the GRU :</strong> [latex]\begin{matrix} \Gamma _u &#x3D; \sigma(W_u[c^{<t-1>}, x^{<t>}] + b_u) \\ c^{<t>} &#x3D; \Gamma _u * \tilde{c} ^{<t>} + (1 - \Gamma _u) * c^{<t-1>} \end{matrix}[&#x2F;latex]</p>
+<h2 id="LSTM（long-short-term-memory）unit"><a href="#LSTM（long-short-term-memory）unit" class="headerlink" title="LSTM（long short term memory）unit"></a>LSTM（long short term memory）unit</h2><p>the long short term memory units, and this is even more powerful than the GRU. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/GRU_and_LSTM.png"><img src="http://www.qinuu.com/wp-content/uploads/2019/04/LSTM_in_pictures.png">   Perhaps, the most common one is that instead of just having the gate values be dependent only on a^{<t-1>} , x^{<t>}, sometimes, people also sneak in there the values c^{<t-1>} as well. This is called a <strong>peephole connection.</strong></p>
+<h4 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h4><ul>
+<li>relatively recent invention</li>
+<li>a simpler model and so it is actually easier to build a much bigger network, it only has two gates, so computationally, it runs a bit faster. So, it scales the building somewhat bigger models</li>
+</ul>
+<h4 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h4><ul>
+<li>actually came much earlier</li>
+<li>more powerful and more flexible since it has three gates instead of two.</li>
+</ul>
+<p><strong>LSTM has been the historically more proven choice.</strong></p>
+<h2 id="Bidirectional-RNN"><a href="#Bidirectional-RNN" class="headerlink" title="Bidirectional RNN"></a>Bidirectional RNN</h2><p><strong>Bidirectional RNNs</strong>, which lets you at a point in time to take information from both earlier and later in the sequence. In fact, for a lots of NLP problems, for a lot of text with natural language processing problems, <strong>a bidirectional RNN with a LSTM</strong> appears to <strong>be commonly used</strong>. The <strong>disadvantage</strong> of the bidirectional RNN is that you <strong>do need the entire sequence of data</strong> before you can make predictions anywhere.</p>
+<h2 id="Deep-RNNs"><a href="#Deep-RNNs" class="headerlink" title="Deep RNNs"></a>Deep RNNs</h2><p>The different versions of RNNs you’ve seen so far will already work quite well by themselves. But for learning very complex functions sometimes <strong>it’s useful to stack multiple layers of RNNs together to build even deeper versions</strong> of these models. For RNNs, having three layers is already quite a lot. Because of the temporal dimension, these networks can already get quite big even if you have just a small handful of layers. And you don’t usually see these stacked up to be like 100 layers. One thing you do see sometimes is that you have recurrent layers that are stacked on top of each other. But then you might take the output here, let’s get rid of this, and then <strong>just have a bunch of deep layers that are not connected horizontally but have a deep network here</strong> that then finally predicts y&lt;1&gt;.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/22/1-recurrent-neural-networks/" data-id="cl56gcvt4001blgche13u0nqk" data-title="1 Recurrent Neural Networks" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/23/2-natural-language-processing-and-word-embeddings/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          2 Natural Language Processing and Word Embeddings
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/22/4-special-applications-face-recognition-neural-style-transfer/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">4 Special applications : Face recognition &amp; Neural style transfer</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

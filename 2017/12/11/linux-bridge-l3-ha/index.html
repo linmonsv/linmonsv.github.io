@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Linux bridge &amp; L3 HA | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Create OpenStack Service[root@controller1 ~]# source admin-openrc[root@controller1 ~]# openstack service create –name neutron –description “OpenStack Networking” network+————-+———————————-+ Field">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux bridge &amp; L3 HA">
+<meta property="og:url" content="http://example.com/2017/12/11/linux-bridge-l3-ha/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Create OpenStack Service[root@controller1 ~]# source admin-openrc[root@controller1 ~]# openstack service create –name neutron –description “OpenStack Networking” network+————-+———————————-+ Field">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-11T06:05:00.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.238Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-linux-bridge-l3-ha" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/11/linux-bridge-l3-ha/" class="article-date">
+  <time class="dt-published" datetime="2017-12-11T06:05:00.000Z" itemprop="datePublished">2017-12-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux bridge &amp; L3 HA
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Create-OpenStack-Service"><a href="#Create-OpenStack-Service" class="headerlink" title="Create OpenStack Service"></a>Create OpenStack Service</h3><p>[root@controller1 ~]# source admin-openrc<br>[root@controller1 ~]# openstack service create –name neutron –description “OpenStack Networking” network<br>+————-+———————————-+<br> Field        Value<br>+————-+———————————-+<br> description  OpenStack Networking<br> enabled      True<br> id           ad17484f2f19423b9ffe8ab2b451906d<br> name         neutron<br> type         network<br>+————-+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne network public <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            c4e2c0741118449d933107948c67651d<br> interface     public<br> region        RegionOne<br> region_id     RegionOne<br> service_id    ad17484f2f19423b9ffe8ab2b451906d<br> service_name  neutron<br> service_type  network<br> url           <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>+————–+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne network internal <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            f35d94a749ae47d68b243a90015493bb<br> interface     internal<br> region        RegionOne<br> region_id     RegionOne<br> service_id    ad17484f2f19423b9ffe8ab2b451906d<br> service_name  neutron<br> service_type  network<br> url           <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>+————–+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne network admin <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            61e469452d914b78aabbf4bcc0a51732<br> interface     admin<br> region        RegionOne<br> region_id     RegionOne<br> service_id    ad17484f2f19423b9ffe8ab2b451906d<br> service_name  neutron<br> service_type  network<br> url           <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>+————–+———————————-+</p>
+<h3 id="Install-OpenStack-Neutron"><a href="#Install-OpenStack-Neutron" class="headerlink" title="Install OpenStack Neutron"></a>Install OpenStack Neutron</h3><p>[root@controller ~]# yum install openstack-neutron openstack-neutron-ml2 openstack-neutron-linuxbridge python-neutronclient ebtables ipset -y</p>
+<h3 id="Configure-Neutron"><a href="#Configure-Neutron" class="headerlink" title="Configure Neutron"></a>Configure Neutron</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;neutron&#x2F;neutron.conf{,.bak2}<br>[root@controller1 ~]# echo ‘</p>
+<blockquote>
+<p>[DEFAULT]<br>bind_port &#x3D; 9696<br>bind_host &#x3D; controller1<br>core_plugin &#x3D; ml2<br>service_plugins &#x3D;<br>#service_plugins &#x3D; trunk<br>#service_plugins &#x3D; router<br>allow_overlapping_ips &#x3D; true<br>transport_url &#x3D; rabbit:&#x2F;&#x2F;openstack:openstack@controller<br>auth_strategy &#x3D; keystone<br>notify_nova_on_port_status_changes &#x3D; true<br>notify_nova_on_port_data_changes &#x3D; true</p>
+<p>[keystone_authtoken]<br>auth_uri &#x3D; <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>auth_url &#x3D; <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>memcached_servers &#x3D; controller1:11211<br>auth_type &#x3D; password<br>project_domain_name &#x3D; default<br>user_domain_name &#x3D; default<br>project_name &#x3D; service<br>username &#x3D; neutron<br>password &#x3D; neutron</p>
+<p>[nova]<br>auth_url &#x3D; <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>auth_plugin &#x3D; password<br>project_domain_id &#x3D; default<br>user_domain_id &#x3D; default<br>region_name &#x3D; RegionOne<br>project_name &#x3D; service<br>username &#x3D; nova<br>password &#x3D; nova</p>
+<p>[database]<br>connection &#x3D; mysql:&#x2F;&#x2F;neutron:neutron@controller:3306&#x2F;neutron</p>
+<p>[oslo_concurrency]<br>lock_path &#x3D; &#x2F;var&#x2F;lib&#x2F;neutron&#x2F;tmp<br>#’&gt;&#x2F;etc&#x2F;neutron&#x2F;neutron.conf</p>
+</blockquote>
+<h3 id="Configure-ML2"><a href="#Configure-ML2" class="headerlink" title="Configure ML2"></a>Configure ML2</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini{,.bak}<br>[root@controller1 ~]# echo ‘#</p>
+<blockquote>
+<p>[ml2]<br>tenant_network_types &#x3D;<br>type_drivers &#x3D; vlan,flat<br>mechanism_drivers &#x3D; linuxbridge<br>extension_drivers &#x3D; port_security<br>[ml2_type_flat]<br>flat_networks &#x3D; provider<br>[securitygroup]<br>enable_ipset &#x3D; True<br>#vlan</p>
+<h1 id="ml2-type-valn"><a href="#ml2-type-valn" class="headerlink" title="[ml2_type_valn]"></a>[ml2_type_valn]</h1><h1 id="network-vlan-ranges-x3D-provider-3001-4000"><a href="#network-vlan-ranges-x3D-provider-3001-4000" class="headerlink" title="network_vlan_ranges &#x3D; provider:3001:4000"></a>network_vlan_ranges &#x3D; provider:3001:4000</h1><p>#’&gt;&#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini<br>[root@controller1 ~]# ln -s &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini &#x2F;etc&#x2F;neutron&#x2F;plugin.ini</p>
+</blockquote>
+<h3 id="Configure-Linux-Bridge"><a href="#Configure-Linux-Bridge" class="headerlink" title="Configure Linux Bridge"></a>Configure Linux Bridge</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini{,.bak}<br>[root@controller1 ~]# echo ‘#</p>
+<blockquote>
+<p>[linux_bridge]<br>physical_interface_mappings &#x3D; provider:’ens37’<br>[vxlan]<br>enable_vxlan &#x3D; false<br>[agent]<br>prevent_arp_spoofing &#x3D; True<br>[securitygroup]<br>firewall_driver &#x3D; neutron.agent.linux.iptables_firewall.IptablesFirewallDriver<br>enable_security_group &#x3D; True<br>#’&gt;&#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini</p>
+</blockquote>
+<h3 id="Configure-DHCP"><a href="#Configure-DHCP" class="headerlink" title="Configure DHCP"></a>Configure DHCP</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini{,.bak}<br>[root@controller1 ~]# echo ‘#</p>
+<blockquote>
+<p>[DEFAULT]<br>interface_driver &#x3D; linuxbridge<br>dhcp_driver &#x3D; neutron.agent.linux.dhcp.Dnsmasq<br>enable_isolated_metadata &#x3D; true<br>#’&gt;&#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini</p>
+</blockquote>
+<h3 id="Configure-Metadata"><a href="#Configure-Metadata" class="headerlink" title="Configure Metadata"></a>Configure Metadata</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;neutron&#x2F;metadata_agent.ini{,.bak}<br>[root@controller1 ~]# echo ‘</p>
+<blockquote>
+<p>[DEFAULT]<br>nova_metadata_ip &#x3D; controller<br>metadata_proxy_shared_secret &#x3D; metadata<br>#’&gt;&#x2F;etc&#x2F;neutron&#x2F;metadata_agent.ini</p>
+</blockquote>
+<h3 id="Configure-Nova"><a href="#Configure-Nova" class="headerlink" title="Configure Nova"></a>Configure Nova</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;nova&#x2F;nova.conf{,.bak}<br>[root@controller1 ~]# echo ‘</p>
+<blockquote>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>[neutron]<br>url &#x3D; <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>auth_url &#x3D; <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>auth_type &#x3D; password<br>project_domain_name &#x3D; default<br>user_domain_name &#x3D; default<br>region_name &#x3D; RegionOne<br>project_name &#x3D; service<br>username &#x3D; neutron<br>password &#x3D; neutron<br>service_metadata_proxy &#x3D; true<br>metadata_proxy_shared_secret &#x3D; metadata<br>#’&gt;&gt;&#x2F;etc&#x2F;nova&#x2F;nova.conf</p>
+</blockquote>
+<h3 id="Configure-L3"><a href="#Configure-L3" class="headerlink" title="Configure L3"></a>Configure L3</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini{,.bak}<br>[root@controller1 ~]#<br>[root@controller1 ~]# echo ‘</p>
+<blockquote>
+<p>[DEFAULT]<br>interface_driver &#x3D; linuxbridge<br>#’&gt;&#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini</p>
+</blockquote>
+<h3 id="Synchronize-Database"><a href="#Synchronize-Database" class="headerlink" title="Synchronize Database"></a>Synchronize Database</h3><p>[root@controller1 ~]# su -s &#x2F;bin&#x2F;sh -c “neutron-db-manage –config-file &#x2F;etc&#x2F;neutron&#x2F;neutron.conf –config-file &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini upgrade head” neutron<br>[root@controller1 ~]# mysql -h controller -u neutron -pneutron -e “use neutron;show tables;” </p>
+<h3 id="Configure-HAProxy-For-Neutron-API"><a href="#Configure-HAProxy-For-Neutron-API" class="headerlink" title="Configure HAProxy For Neutron API"></a>Configure HAProxy For Neutron API</h3><p>[root@controller1 ~]# echo ‘</p>
+<blockquote>
+<p>#Neutron_API<br>listen Neutron_API_cluster<br>bind controller:9696<br>balance source<br>option tcpka<br>option tcplog<br>server controller1 controller1:9696 check inter 2000 rise 2 fall 5<br>server controller2 controller2:9696 check inter 2000 rise 2 fall 5<br>server controller3 controller3:9696 check inter 2000 rise 2 fall 5<br>‘&gt;&gt;&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg<br>[root@controller1 ~]# ‘<br>[root@controller1 ~]# systemctl restart haproxy.service<br>[root@controller1 ~]# netstat -antpgrep haproxy<br>tcp        0      0 192.168.220.20:9292     0.0.0.0:*               LISTEN      76948&#x2F;haproxy<br>tcp        0      0 0.0.0.0:1080            0.0.0.0:*               LISTEN      76948&#x2F;haproxy<br>tcp        0      0 192.168.220.20:35357    0.0.0.0:*               LISTEN      76948&#x2F;haproxy<br>tcp        0      0 192.168.220.20:9696     0.0.0.0:*               LISTEN      76948&#x2F;haproxy<br>tcp        0      0 192.168.220.20:5000     0.0.0.0:*               LISTEN      76948&#x2F;haproxy       </p>
+</blockquote>
+<h3 id="Start-Neutron-Service"><a href="#Start-Neutron-Service" class="headerlink" title="Start Neutron Service"></a>Start Neutron Service</h3><p>[root@controller1 ~]# systemctl enable neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service<br>[root@controller1 ~]# systemctl start neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service<br>[root@controller1 ~]# systemctl status neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service</p>
+<h3 id="Configure-Controller-Node-2-amp-Start-Service"><a href="#Configure-Controller-Node-2-amp-Start-Service" class="headerlink" title="Configure Controller Node 2 &amp; Start Service"></a>Configure Controller Node 2 &amp; Start Service</h3><p>[root@controller2 ~]# rsync -avzP -e ‘ssh -p 22’ controller1:&#x2F;etc&#x2F;nova&#x2F;* &#x2F;etc&#x2F;nova&#x2F;<br>[root@controller2 ~]# sed -i ‘s&#x2F;controller1&#x2F;controller2&#x2F;‘ &#x2F;etc&#x2F;neutron&#x2F;neutron.conf<br>[root@controller2 ~]# rsync -avzP -e ‘ssh -p 22’ controller1:&#x2F;etc&#x2F;haproxy&#x2F;* &#x2F;etc&#x2F;haproxy&#x2F;<br>[root@controller2 ~]# systemctl restart haproxy<br>[root@controller2 ~]# systemctl enable neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service<br>[root@controller2 ~]# systemctl start neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service</p>
+<h3 id="Configure-Controller-Node-3-amp-Start-Service"><a href="#Configure-Controller-Node-3-amp-Start-Service" class="headerlink" title="Configure Controller Node 3 &amp; Start Service"></a>Configure Controller Node 3 &amp; Start Service</h3><p>[root@controller3 ~]# rsync -avzP -e ‘ssh -p 22’ controller1:&#x2F;etc&#x2F;neutron&#x2F;* &#x2F;etc&#x2F;neutron&#x2F;<br>[root@controller3 ~]# sed -i ‘s&#x2F;controller1&#x2F;controller3&#x2F;‘ &#x2F;etc&#x2F;neutron&#x2F;neutron.conf<br>[root@controller3 ~]# rsync -avzP -e ‘ssh -p 22’ controller1:&#x2F;etc&#x2F;haproxy&#x2F;* &#x2F;etc&#x2F;haproxy&#x2F;<br>[root@controller3 ~]# systemctl restart haproxy<br>[root@controller3 ~]# systemctl enable neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service<br>[root@controller3 ~]# systemctl start neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service</p>
+<h3 id="Configure-L3-HA-on-Controller-node"><a href="#Configure-L3-HA-on-Controller-node" class="headerlink" title="Configure L3 HA on Controller node"></a>Configure L3 HA on Controller node</h3><p>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT l3_ha True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT core_plugin ml2<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT service_plugins router<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT allow_overlapping_ips True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT router_distributed True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT l3_ha True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT l3_ha_net_cidr 169.254.192.0&#x2F;18<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT max_l3_agents_per_router 3<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT min_l3_agents_per_router 2</p>
+<p>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 type_drivers flat,vxlan<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 tenant_network_types vxlan<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 mechanism_drivers openvswitch,l2population<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 extension_drivers port_security<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2_type_flat flat_networks external<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2_type_vxlan vni_ranges 1:1000</p>
+<p>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ovs local_ip TUNNEL_INTERFACE_IP_ADDRESS<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ovs bridge_mappings external:br-ex<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini agent enable_distributed_routing True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini agent tunnel_types vxlan<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini agent l2_population True</p>
+<p>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT ha_vrrp_auth_password password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT interface_driver openvswitch<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT external_network_bridge<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT agent_mode dvr_snat</p>
+<h3 id="Configure-L3-HA-on-Compute-Node"><a href="#Configure-L3-HA-on-Compute-Node" class="headerlink" title="Configure L3 HA on Compute Node"></a>Configure L3 HA on Compute Node</h3><p>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ovs local_ip TUNNEL_INTERFACE_IP_ADDRESS<br>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ovs bridge_mappings external:br-ex</p>
+<p>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini agent enable_distributed_routing True<br>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini agent tunnel_types vxlan<br>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini agent l2_population True</p>
+<p>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini securitygroup firewall_driver neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</p>
+<p>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT interface_driver openvswitch<br>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT external_network_bridge<br>openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT agent_mode dvr</p>
+<h3 id="Verify-Service"><a href="#Verify-Service" class="headerlink" title="Verify Service"></a>Verify Service</h3><p>[root@controller1 ~]# openstack network agent list<br>+————————————–+——————–+————-+——————-+——-+——-+—————————+<br> ID                                    Agent Type          Host         Availability Zone  Alive  State  Binary<br>+————————————–+——————–+————-+——————-+——-+——-+—————————+<br> 1a4efb8b-aa65-4d4a-8092-7213592acd22  Linux bridge agent  controller1  None               :-)    UP     neutron-linuxbridge-agent<br> 3b35bc6e-4cec-42e2-9fde-e99c601cf609  DHCP agent          controller3  nova               :-)    UP     neutron-dhcp-agent<br> 42e57e23-eecb-490d-b709-d8e3730107e8  DHCP agent          controller2  nova               :-)    UP     neutron-dhcp-agent<br> 6b2058a2-d3e3-4342-afbb-717338b1499f  Metadata agent      controller1  None               :-)    UP     neutron-metadata-agent<br> 750b5e5c-c7b6-4f48-ae2f-37580b6e03d9  DHCP agent          controller1  nova               :-)    UP     neutron-dhcp-agent<br> 7e63ce46-3fd5-40ee-9f63-ee8cc52dd5a4  Metadata agent      controller3  None               :-)    UP     neutron-metadata-agent<br> 92199bf0-08ef-4642-9557-c33360796405  Linux bridge agent  controller2  None               :-)    UP     neutron-linuxbridge-agent<br> 9ae5bafa-0075-4408-b827-1be9bb1ccf99  Linux bridge agent  controller3  None               :-)    UP     neutron-linuxbridge-agent<br> f1ed9e45-39e7-4980-aaec-10364e42263f  Metadata agent      controller2  None               :-)    UP     neutron-metadata-agent<br>+————————————–+——————–+————-+——————-+——-+——-+—————————+</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/11/linux-bridge-l3-ha/" data-id="cl56gcvws00c1lgchfywdgmwp" data-title="Linux bridge &amp; L3 HA" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/12/highly-available-horizon-api/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Highly available Horizon API
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/11/highly-available-block-storage-api/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Highly available Block Storage API</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Highly available Nova API | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Create Nova Service &amp; Endpoint[root@controller1 ~]# openstack service create –name nova –description “OpenStack Compute” compute+————-+———————————-+ Field        Value+————-+———————————-+ descript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Highly available Nova API">
+<meta property="og:url" content="http://example.com/2017/12/13/highly-available-nova-api/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Create Nova Service &amp; Endpoint[root@controller1 ~]# openstack service create –name nova –description “OpenStack Compute” compute+————-+———————————-+ Field        Value+————-+———————————-+ descript">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-13T05:50:20.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.241Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-highly-available-nova-api" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/13/highly-available-nova-api/" class="article-date">
+  <time class="dt-published" datetime="2017-12-13T05:50:20.000Z" itemprop="datePublished">2017-12-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Highly available Nova API
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Create-Nova-Service-amp-Endpoint"><a href="#Create-Nova-Service-amp-Endpoint" class="headerlink" title="Create Nova Service &amp; Endpoint"></a>Create Nova Service &amp; Endpoint</h3><p>[root@controller1 ~]# openstack service create –name nova –description “OpenStack Compute” compute<br>+————-+———————————-+<br> Field        Value<br>+————-+———————————-+<br> description  OpenStack Compute<br> enabled      True<br> id           365c1378f8c641ba81f48efa7c62cd29<br> name         nova<br> type         compute<br>+————-+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne compute public <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            2afb267d1bd34f9388f9568321313167<br> interface     public<br> region        RegionOne<br> region_id     RegionOne<br> service_id    365c1378f8c641ba81f48efa7c62cd29<br> service_name  nova<br> service_type  compute<br> url           <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a><br>+————–+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne compute internal <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            92de622e904546cc9bd1ca4087529e98<br> interface     internal<br> region        RegionOne<br> region_id     RegionOne<br> service_id    365c1378f8c641ba81f48efa7c62cd29<br> service_name  nova<br> service_type  compute<br> url           <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a><br>+————–+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne compute admin <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            9295b974edec4e06842ee4db2e2d2458<br> interface     admin<br> region        RegionOne<br> region_id     RegionOne<br> service_id    365c1378f8c641ba81f48efa7c62cd29<br> service_name  nova<br> service_type  compute<br> url           <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a><br>+————–+———————————-+</p>
+<h3 id="Create-Placement-amp-Endpoint"><a href="#Create-Placement-amp-Endpoint" class="headerlink" title="Create Placement &amp; Endpoint"></a>Create Placement &amp; Endpoint</h3><p>[root@controller1 ~]# openstack user create –domain default –password&#x3D;placement placement<br>+———————+———————————-+<br> Field                Value<br>+———————+———————————-+<br> domain_id            default<br> enabled              True<br> id                   c18a3e3bf63c4114924fb6b31b3305fd<br> name                 placement<br> options              {}<br> password_expires_at  None<br>+———————+———————————-+<br>[root@controller1 ~]# openstack role add –project service –user placement admin<br>[root@controller1 ~]# openstack service create –name placement –description “Placement API” placement<br>+————-+———————————-+<br> Field        Value<br>+————-+———————————-+<br> description  Placement API<br> enabled      True<br> id           99a48fd2c3bf496287fa1fcf82376c02<br> name         placement<br> type         placement<br>+————-+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne placement public <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            c271472e882f49c3a77c518296d4045c<br> interface     public<br> region        RegionOne<br> region_id     RegionOne<br> service_id    99a48fd2c3bf496287fa1fcf82376c02<br> service_name  placement<br> service_type  placement<br> url           <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>+————–+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne placement internal <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            b04f59956eca4d8cab4b3a41a071fc6b<br> interface     internal<br> region        RegionOne<br> region_id     RegionOne<br> service_id    99a48fd2c3bf496287fa1fcf82376c02<br> service_name  placement<br> service_type  placement<br> url           <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>+————–+———————————-+<br>[root@controller1 ~]# openstack endpoint create –region RegionOne placement admin <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>+————–+———————————-+<br> Field         Value<br>+————–+———————————-+<br> enabled       True<br> id            582bf2a041734838adbf92d7dd4b602e<br> interface     admin<br> region        RegionOne<br> region_id     RegionOne<br> service_id    99a48fd2c3bf496287fa1fcf82376c02<br> service_name  placement<br> service_type  placement<br> url           <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>+————–+———————————-+</p>
+<h3 id="Install-Nova"><a href="#Install-Nova" class="headerlink" title="Install Nova"></a>Install Nova</h3><p>[root@controller ~]# yum install openstack-nova-api openstack-nova-conductor openstack-nova-cert openstack-nova-console openstack-nova-novncproxy openstack-nova-scheduler openstack-nova-placement-api -y</p>
+<h3 id="Configure-Nova"><a href="#Configure-Nova" class="headerlink" title="Configure Nova"></a>Configure Nova</h3><p>[root@controller1 ~]# cp &#x2F;etc&#x2F;nova&#x2F;nova.conf{,.bak}</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT my_ip controller1<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT use_neutron True<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT osapi_compute_listen controller1<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT osapi_compute_listen_port 8774<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT metadata_listen controller1<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT metadata_listen_port 8775<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT firewall_driver nova.virt.firewall.NoopFirewallDriver<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT enabled_apis osapi_compute,metadata<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT transport_url rabbit:&#x2F;&#x2F;openstack:openstack@controller:5673</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf database connection mysql+pymysql:&#x2F;&#x2F;nova:nova@controller&#x2F;nova<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf api_database connection mysql+pymysql:&#x2F;&#x2F;nova:nova@controller&#x2F;nova_api</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf api auth_strategy keystone</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_uri <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken memcached_servers controller1:11211,controller2:11211,controller3:11211<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_type password<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken project_domain_name default<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken user_domain_name default<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken project_name service<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken username nova<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken password nova</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc enabled true<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc vncserver_listen controller1<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc vncserver_proxyclient_address controller1<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc novncproxy_host controller1<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc novncproxy_port 6080</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf glance api_servers <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a></p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf oslo_concurrency lock_path &#x2F;var&#x2F;lib&#x2F;nova&#x2F;tmp</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement os_region_name RegionOne<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement project_domain_name Default<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement project_name service<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement auth_type password<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement user_domain_name Default<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement auth_url  <a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a><br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement username placement<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement password placement</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf scheduler discover_hosts_in_cells_interval 300</p>
+<p>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf cache enabled true<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf cache backend oslo_cache.memcache_pool<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf cache memcache_servers controller1:11211,controller2:11211,controller3:11211</p>
+<h3 id="Configure-Nova-Placement"><a href="#Configure-Nova-Placement" class="headerlink" title="Configure Nova-Placement"></a>Configure Nova-Placement</h3><p>Refer to “CLOUD COMPUTING —&gt; OpenStack Pike Installation —&gt; 7.Nova”</p>
+<p>[root@controller1 ~]# echo “</p>
+<blockquote>
+<p>#Placement API</p>
+<blockquote>
+<p>   = 2.4&gt;<br>      Require all granted</p>
+</blockquote>
+<blockquote>
+<pre><code>  Order allow,deny
+  Allow from all
+</code></pre>
+</blockquote>
+<p>“&gt;&gt;&#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;00-nova-placement-api.conf<br>[root@controller1 ~]# “<br>[root@controller1 ~]# systemctl restart httpd</p>
+</blockquote>
+<h3 id="Synchronize-Database"><a href="#Synchronize-Database" class="headerlink" title="Synchronize Database"></a>Synchronize Database</h3><p>[root@controller1 ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage api_db sync” nova<br>[root@controller1 ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage cell_v2 map_cell0” nova<br>[root@controller1 ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage cell_v2 create_cell –name&#x3D;cell1 –verbose” nova<br>[root@controller1 ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage db sync” nova</p>
+<h3 id="List-Nova-Cell"><a href="#List-Nova-Cell" class="headerlink" title="List Nova Cell"></a>List Nova Cell</h3><p>[root@controller1 ~]# nova-manage cell_v2 list_cells<br>+——-+————————————–+—————————————–+————————————————-+<br>  Name                  UUID                               Transport URL                             Database Connection<br>+——-+————————————–+—————————————–+————————————————-+<br> cell0  00000000-0000-0000-0000-000000000000                   none:&#x2F;                  mysql+pymysql:&#x2F;&#x2F;nova:****@controller&#x2F;nova_cell0<br> cell1  b55310bc-6d58-4c8d-9b7c-014b77cd48ac  rabbit:&#x2F;&#x2F;openstack:****@controller:5673     mysql+pymysql:&#x2F;&#x2F;nova:****@controller&#x2F;nova<br>+——-+————————————–+—————————————–+————————————————-+</p>
+<h3 id="Replace-Default-IP"><a href="#Replace-Default-IP" class="headerlink" title="Replace Default IP"></a>Replace Default IP</h3><p>[root@controller1 ~]# sed -i ‘s&#x2F;8778&#x2F;9778&#x2F;‘ &#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;00-nova-placement-api.conf<br>[root@controller1 ~]# systemctl restart httpd</p>
+<h3 id="Configure-HA-With-HAProxy"><a href="#Configure-HA-With-HAProxy" class="headerlink" title="Configure HA With HAProxy"></a>Configure HA With HAProxy</h3><p>[root@controller1 ~]# echo ‘</p>
+<blockquote>
+<p>##nova_compute<br>listen nova_compute_api_cluster<br>  bind controller:8774<br>  balance source<br>  option tcpka<br>  option httpchk<br>  option tcplog<br>  server controller1 controller1:8774 check inter 2000 rise 2 fall 5<br>  server controller2 controller2:8774 check inter 2000 rise 2 fall 5<br>  server controller3 controller3:8774 check inter 2000 rise 2 fall 5<br>#Nova-api-metadata<br>listen Nova-api-metadata_cluster<br>  bind controller:8775<br>  balance source<br>  option tcpka<br>  option httpchk<br>  option tcplog<br>  server controller1 controller1:8775 check inter 2000 rise 2 fall 5<br>  server controller2 controller2:8775 check inter 2000 rise 2 fall 5<br>  server controller3 controller3:8775 check inter 2000 rise 2 fall 5<br>#nova_placement<br>listen nova_placement_cluster<br>  bind controller:8778<br>  balance source<br>  option tcpka<br>  option tcplog<br>  server controller1 controller1:9778 check inter 2000 rise 2 fall 5<br>  server controller2 controller2:9778 check inter 2000 rise 2 fall 5<br> server controller3 controller3:9778 check inter 2000 rise 2 fall 5<br>‘&gt;&gt;&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg<br>[root@controller1 ~]# ‘<br>[root@controller1 ~]# systemctl restart haproxy.service</p>
+</blockquote>
+<p>netstat -antpgrep haproxy<br>netstat -antpegrep ‘8774877587786080’</p>
+<h3 id="Start-Nova-Service"><a href="#Start-Nova-Service" class="headerlink" title="Start Nova Service"></a>Start Nova Service</h3><p>[root@controller ~]# systemctl enable openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service<br>[root@controller ~]# systemctl restart openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service<br>[root@controller ~]# systemctl status openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service</p>
+<h3 id="List-Nova-Status"><a href="#List-Nova-Status" class="headerlink" title="List Nova Status"></a>List Nova Status</h3><p>[root@controller1 ~]# openstack catalog list<br>+———–+———–+—————————————–+<br> Name       Type       Endpoints<br>+———–+———–+—————————————–+<br> glance     image      RegionOne<br>                         internal: <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>                       RegionOne<br>                         admin: <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>                       RegionOne<br>                         public: <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a>        </p>
+<p> nova       compute    RegionOne<br>                         public: <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a><br>                       RegionOne<br>                         admin: <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a><br>                       RegionOne<br>                         internal: <a target="_blank" rel="noopener" href="http://controller:8774/v2.1">http://controller:8774/v2.1</a> </p>
+<p> placement  placement  RegionOne<br>                         admin: <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>                       RegionOne<br>                         internal: <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>                       RegionOne<br>                         public: <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a>        </p>
+<p> neutron    network    RegionOne<br>                         admin: <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>                       RegionOne<br>                         public: <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>                       RegionOne<br>                         internal: <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a>      </p>
+<p> keystone   identity   RegionOne<br>                         admin: <a target="_blank" rel="noopener" href="http://controller:35357/v3/">http://controller:35357/v3/</a><br>                       RegionOne<br>                         internal: <a target="_blank" rel="noopener" href="http://controller:5000/v3/">http://controller:5000/v3/</a><br>                       RegionOne<br>                         public: <a target="_blank" rel="noopener" href="http://controller:5000/v3/">http://controller:5000/v3/</a>    </p>
+<p>+———–+———–+—————————————–+<br>[root@controller1 ~]# nova-status upgrade check<br>+——————————————————————–+<br> Upgrade Check Results<br>+——————————————————————–+<br> Check: Cells v2<br> Result: Success<br> Details: No host mappings or compute nodes were found. Remember to<br>   run command ‘nova-manage cell_v2 discover_hosts’ when new<br>   compute hosts are deployed.<br>+——————————————————————–+<br> Check: Placement API<br> Result: Success<br> Details: None<br>+——————————————————————–+<br> Check: Resource Providers<br> Result: Success<br> Details: There are no compute resource providers in the Placement<br>   service nor are there compute nodes in the database.<br>   Remember to configure new compute nodes to report into the<br>   Placement service. See<br>   <a target="_blank" rel="noopener" href="http://docs.openstack.org/developer/nova/placement.html">http://docs.openstack.org/developer/nova/placement.html</a><br>   for more details.<br>+——————————————————————–+<br>[root@controller1 ~]# openstack compute service list<br>+—-+——————+————-+———-+———+——-+—————————-+<br> ID  Binary            Host         Zone      Status   State  Updated At<br>+—-+——————+————-+———-+———+——-+—————————-+<br> 15  nova-conductor    controller1  internal  enabled  up     2017-12-19T09:02:58.000000<br> 18  nova-scheduler    controller1  internal  enabled  up     2017-12-19T09:02:56.000000<br> 21  nova-consoleauth  controller1  internal  enabled  up     2017-12-19T09:02:59.000000<br> 27  nova-consoleauth  controller2  internal  enabled  up     2017-12-19T09:03:04.000000<br> 30  nova-conductor    controller2  internal  enabled  up     2017-12-19T09:03:03.000000<br> 39  nova-scheduler    controller2  internal  enabled  up     2017-12-19T09:02:57.000000<br> 42  nova-consoleauth  controller3  internal  enabled  up     2017-12-19T09:03:04.000000<br> 45  nova-conductor    controller3  internal  enabled  up     2017-12-19T09:03:05.000000<br> 54  nova-scheduler    controller3  internal  enabled  up     2017-12-19T09:02:59.000000<br> 57  nova-compute      compute01    nova      enabled  up     2017-12-19T09:02:59.000000<br>+—-+——————+————-+———-+———+——-+—————————-+</p>
+<h3 id="Install-On-Other-Controller-Nodes"><a href="#Install-On-Other-Controller-Nodes" class="headerlink" title="Install On Other Controller Nodes"></a>Install On Other Controller Nodes</h3><p>[root@controller2 ~]# yum install openstack-nova-api openstack-nova-conductor openstack-nova-console openstack-nova-novncproxy openstack-nova-scheduler openstack-nova-placement-api -y </p>
+<p>[root@controller2 ~]# rsync -avzP  -e ‘ssh -p 22’  controller1:&#x2F;etc&#x2F;nova&#x2F;*  &#x2F;etc&#x2F;nova&#x2F;<br>[root@controller2 ~]# rsync -avzP  -e ‘ssh -p 22’  controller1:&#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;00-nova-placement-api.conf &#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;<br>[root@controller2 ~]# rsync -avzP  -e ‘ssh -p 22’  controller1:&#x2F;etc&#x2F;haproxy&#x2F;* &#x2F;etc&#x2F;haproxy&#x2F;</p>
+<p>[root@controller2 ~]# sed -i ‘1,9s&#x2F;controller1&#x2F;controller2&#x2F;‘  &#x2F;etc&#x2F;nova&#x2F;nova.conf<br>[root@controller3 ~]# sed -i ‘1,9s&#x2F;controller1&#x2F;controller3&#x2F;‘  &#x2F;etc&#x2F;nova&#x2F;nova.conf</p>
+<p>[root@controller2 ~]# systemctl enable openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service<br>[root@controller2 ~]# systemctl restart openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service<br>[root@controller2 ~]# systemctl status openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service</p>
+<p>[root@controller2 ~]# systemctl restart httpd haproxy</p>
+<h3 id="Discover-New-Compute-Node"><a href="#Discover-New-Compute-Node" class="headerlink" title="Discover New Compute Node"></a>Discover New Compute Node</h3><p>[root@controller1 ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage cell_v2 discover_hosts –verbose” nova<br>Found 2 cell mappings.<br>Skipping cell0 since it does not contain hosts.<br>Getting compute nodes from cell ‘cell1’: b55310bc-6d58-4c8d-9b7c-014b77cd48ac<br>Found 0 unmapped computes in cell: b55310bc-6d58-4c8d-9b7c-014b77cd48ac<br>[root@controller1 ~]# openstack compute service list<br>+—-+——————+————-+———-+———+——-+—————————-+<br> ID  Binary            Host         Zone      Status   State  Updated At<br>+—-+——————+————-+———-+———+——-+—————————-+<br> 15  nova-conductor    controller1  internal  enabled  up     2017-12-19T09:28:08.000000<br> 18  nova-scheduler    controller1  internal  enabled  up     2017-12-19T09:28:16.000000<br> 21  nova-consoleauth  controller1  internal  enabled  up     2017-12-19T09:28:10.000000<br> 27  nova-consoleauth  controller2  internal  enabled  up     2017-12-19T09:28:15.000000<br> 30  nova-conductor    controller2  internal  enabled  up     2017-12-19T09:28:13.000000<br> 39  nova-scheduler    controller2  internal  enabled  up     2017-12-19T09:28:17.000000<br> 42  nova-consoleauth  controller3  internal  enabled  up     2017-12-19T09:28:15.000000<br> 45  nova-conductor    controller3  internal  enabled  up     2017-12-19T09:28:15.000000<br> 54  nova-scheduler    controller3  internal  enabled  up     2017-12-19T09:28:09.000000<br> 57  nova-compute      compute01    nova      enabled  up     2017-12-19T09:28:10.000000<br> 60  nova-compute      compute02    nova      enabled  up     2017-12-19T09:28:16.000000<br>+—-+——————+————-+———-+———+——-+—————————-+</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/13/highly-available-nova-api/" data-id="cl56gcvw600a3lgch3bm447xa" data-title="Highly available Nova API" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/13/make-compute-nodes-highly-available/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Make the Compute nodes Highly Available
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/12/highly-available-horizon-api/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Highly available Horizon API</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

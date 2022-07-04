@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Install CentOS &amp; Configure | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Firewall Configure[root@localhost ~]# systemctl stop firewalld.service[root@localhost ~]# systemctl disable firewalld.service[root@localhost ~]# firewall-cmd –state Disable SELinux[root@localhost ~]#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install CentOS &amp; Configure">
+<meta property="og:url" content="http://example.com/2017/12/08/install-centos-configure/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Firewall Configure[root@localhost ~]# systemctl stop firewalld.service[root@localhost ~]# systemctl disable firewalld.service[root@localhost ~]# firewall-cmd –state Disable SELinux[root@localhost ~]#">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-08T02:06:42.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.203Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-install-centos-configure" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/08/install-centos-configure/" class="article-date">
+  <time class="dt-published" datetime="2017-12-08T02:06:42.000Z" itemprop="datePublished">2017-12-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Install CentOS &amp; Configure
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Firewall-Configure"><a href="#Firewall-Configure" class="headerlink" title="Firewall Configure"></a>Firewall Configure</h3><p>[root@localhost ~]# systemctl stop firewalld.service<br>[root@localhost ~]# systemctl disable firewalld.service<br>[root@localhost ~]# firewall-cmd –state</p>
+<h3 id="Disable-SELinux"><a href="#Disable-SELinux" class="headerlink" title="Disable SELinux"></a>Disable SELinux</h3><p>[root@localhost ~]# sed -i ‘&#x2F;^SELINUX&#x3D;.*&#x2F;c SELINUX&#x3D;disabled’ &#x2F;etc&#x2F;selinux&#x2F;config<br>[root@localhost ~]# sed -i ‘s&#x2F;^SELINUXTYPE&#x3D;.*&#x2F;SELINUXTYPE&#x3D;disabled&#x2F;g’ &#x2F;etc&#x2F;selinux&#x2F;config<br>[root@localhost ~]# grep –color&#x3D;auto ‘^SELINUX’ &#x2F;etc&#x2F;selinux&#x2F;config<br>[root@localhost ~]# setenforce 0</p>
+<h3 id="Synchronize-time"><a href="#Synchronize-time" class="headerlink" title="Synchronize time"></a>Synchronize time</h3><p>Refer to “CLOUD COMPUTING —&gt; OpenStack High Availability —&gt; 3.Create Local NTP”</p>
+<h3 id="Set-HostName"><a href="#Set-HostName" class="headerlink" title="Set HostName"></a>Set HostName</h3><p>[root@localhost ~]# hostnamectl set-hostname controller1<br>[root@localhost ~]# hostnamectl set-hostname controller2<br>[root@localhost ~]# hostnamectl set-hostname controller3<br>[root@localhost ~]# hostnamectl set-hostname compute01<br>[root@localhost ~]# hostnamectl set-hostname compute02</p>
+<h3 id="Network-Configure"><a href="#Network-Configure" class="headerlink" title="Network Configure"></a>Network Configure</h3><p>192.168.200.0Host-only 192.168.220.0NAT</p>
+<h4 id="Controller1"><a href="#Controller1" class="headerlink" title="Controller1"></a>Controller1</h4><p>[root@controller1 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 369 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–  1 root root 326 Dec 13 22:26 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>-rw-r–r–  1 root root 326 Dec 13 22:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;9eb00433-c8b9-4be2-af53-50cab2247226<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.11<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;cf7a62c9-e135-4488-b252-99717664941c<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.21<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens38<br>UUID&#x3D;b077534d-3154-43ca-a240-ac811f255f42<br>DEVICE&#x3D;ens38<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.11<br>NETMASK&#x3D;255.255.255.0</p>
+<p>Update the 4th network adapter:</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens39<br>UUID&#x3D;ea5e0f92-8f8c-457f-a693-f946c623d0e7<br>DEVICE&#x3D;ens39<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.21<br>NETMASK&#x3D;255.255.255.0</p>
+<h4 id="Controller2"><a href="#Controller2" class="headerlink" title="Controller2"></a>Controller2</h4><p>[root@controller2 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 369 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–  1 root root 326 Dec 13 22:26 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>-rw-r–r–  1 root root 326 Dec 13 22:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;14a0d64d-bca2-4b37-ac1d-460897567fff<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.12<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;c382316f-97d8-4e3f-a82b-b48cd6d0d025<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.22<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens38<br>UUID&#x3D;f727a6f1-0ae0-4c0d-aa54-fbaefb3570c7<br>DEVICE&#x3D;ens38<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.12<br>NETMASK&#x3D;255.255.255.0</p>
+<p>Update the 4th network adapter:</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens39<br>UUID&#x3D;b56c3af9-2844-47e3-9e30-ef078640b2f1<br>DEVICE&#x3D;ens39<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.22<br>NETMASK&#x3D;255.255.255.0</p>
+<h4 id="Controller3"><a href="#Controller3" class="headerlink" title="Controller3"></a>Controller3</h4><p>[root@controller3 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 369 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–  1 root root 326 Dec 13 22:26 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>-rw-r–r–  1 root root 326 Dec 13 22:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;5ca30d63-789d-4df4-9f98-29aa74945e1b<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.13<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;8cb6cd8b-304f-4148-96bb-326976276d17<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.23<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens38<br>UUID&#x3D;9d8e2ebb-ded2-4d51-8b77-072ccfc269c3<br>DEVICE&#x3D;ens38<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.13<br>NETMASK&#x3D;255.255.255.0</p>
+<p>Update the 4th network adapter:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens39<br>UUID&#x3D;639fdbe3-b6f4-4f8d-b988-b9e01ef5041e<br>DEVICE&#x3D;ens39<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.23<br>NETMASK&#x3D;255.255.255.0</p>
+<h4 id="Compute01"><a href="#Compute01" class="headerlink" title="Compute01"></a>Compute01</h4><p>[root@compute01 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 326 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@compute01 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;fdab3eb4-d1c6-46e4-a09e-f3cff2c23514<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.51<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@compute01 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;0157d35c-ced3-4c0c-a519-48cb2a11e8db<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.51<br>NETMASK&#x3D;255.255.255.0</p>
+<h4 id="Compute02"><a href="#Compute02" class="headerlink" title="Compute02"></a>Compute02</h4><p>[root@compute02 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 326 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@compute02 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;e8cf9148-b8dd-4879-8851-f523bb0cefd0<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.61<br>NETMAKE&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@compute02 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;308add2b-09df-495f-b706-5afbdff0ff9e<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.61<br>NETMAKE&#x3D;255.255.255.0</p>
+<h3 id="Update-HostName"><a href="#Update-HostName" class="headerlink" title="Update HostName"></a>Update HostName</h3><p>[root@controller1 ~]# cat &#x2F;etc&#x2F;hosts<br>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4<br>::1         localhost localhost.localdomain localhost6 localhost6.localdomain6<br>192.168.220.20 controller # virtual IP<br>192.168.220.21 controller1<br>192.168.220.22 controller2<br>192.168.220.23 controller3<br>192.168.220.51 compute01<br>192.168.220.61 compute02</p>
+<h3 id="Controller-SSH"><a href="#Controller-SSH" class="headerlink" title="Controller SSH"></a>Controller SSH</h3><p>[root@controller1 ~]# ssh-keygen -t rsa -P “” -f ~&#x2F;.ssh&#x2F;id_rsa<br>Generating public&#x2F;private rsa key pair.<br>Created directory ‘&#x2F;root&#x2F;.ssh’.<br>Your identification has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.<br>Your public key has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub.<br>The key fingerprint is:<br>SHA256:RJz627PplvqRVorpdiRPXLZ15aiQD&#x2F;YruvXT&#x2F;Cu1sSo root@controller1<br>The key s randomart image is:<br>+—[RSA 2048]—-+<br>       …<br>       .o       .<br>       ..  .   o.<br>      ..  &#x3D; o o o<br>       .So B.+ .<br>        oo++&#x3D;  o<br>        oB*. +. +<br>       .ooOEo.oo<br>       .&#x3D;O&#x3D;+ooooo<br>+—-[SHA256]—–+<br>[root@controller1 ~]# ssh-copy-id -i ~&#x2F;.ssh&#x2F;id_rsa.pub root@controller2<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: Source of key(s) to be installed: “&#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub”<br>The authenticity of host ‘controller2 (192.168.220.22)’ can’t be established.<br>ECDSA key fingerprint is SHA256:Q5vLVMvx0+FWYxqM263f4&#x2F;&#x2F;dH72IwEgT&#x2F;bWeOIlwTfY.<br>ECDSA key fingerprint is MD5:b5:6a:fb:3f:be:98:f7:d9:71:4e:d1:89:c4:7f:8f:00.<br>Are you sure you want to continue connecting (yes&#x2F;no)? yes<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: 1 key(s) remain to be installed – if you are prompted now it is to install the new keys<br>root@controller2’s password: </p>
+<p>Number of key(s) added: 1</p>
+<p>Now try logging into the machine, with:   “ssh ‘root@controller2’”<br>and check to make sure that only the key(s) you wanted were added.</p>
+<p>[root@controller1 ~]# ssh-copy-id -i ~&#x2F;.ssh&#x2F;id_rsa.pub root@controller3<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: Source of key(s) to be installed: “&#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub”<br>The authenticity of host ‘controller3 (192.168.220.23)’ can’t be established.<br>ECDSA key fingerprint is SHA256:Q5vLVMvx0+FWYxqM263f4&#x2F;&#x2F;dH72IwEgT&#x2F;bWeOIlwTfY.<br>ECDSA key fingerprint is MD5:b5:6a:fb:3f:be:98:f7:d9:71:4e:d1:89:c4:7f:8f:00.<br>Are you sure you want to continue connecting (yes&#x2F;no)? yes<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: 1 key(s) remain to be installed – if you are prompted now it is to install the new keys<br>root@controller3’s password: </p>
+<p>Number of key(s) added: 1</p>
+<p>Now try logging into the machine, with:   “ssh ‘root@controller3’”<br>and check to make sure that only the key(s) you wanted were added.</p>
+<p>[root@controller1 ~]# ssh controller2<br>Last login: Thu Dec 14 00:47:15 2017 from 192.168.220.1<br>[root@controller2 ~]# exit<br>logout<br>Connection to controller2 closed.<br>[root@controller1 ~]# ssh controller3<br>Last login: Thu Dec 14 00:47:16 2017 from 192.168.220.1<br>[root@controller3 ~]# exit<br>logout<br>Connection to controller3 closed.<br>[root@controller1 ~]# </p>
+<h3 id="Use-Local-Repository"><a href="#Use-Local-Repository" class="headerlink" title="Use Local Repository"></a>Use Local Repository</h3><p>Refer to “CLOUD COMPUTING —&gt; OpenStack High Availability —&gt; 2.Create Local Repository</p>
+<h4 id="Use-Ali-Mirror"><a href="#Use-Ali-Mirror" class="headerlink" title="Use Ali Mirror"></a>Use Ali Mirror</h4><p>[root@localrepo ~]# wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a><br>[root@localrepo ~]# cat &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Pike.repo </p>
+<p>[centos-openstack-pike]<br>name&#x3D;centos-openstack-pike<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/centos/$releasever/cloud/$basearch/openstack-pike/">https://mirrors.aliyun.com/centos/$releasever/cloud/$basearch/openstack-pike/</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+<p>[centos-qemu-ev]<br>name&#x3D;centos-qemu-ev<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/centos/$releasever/virt/$basearch/kvm-common/">https://mirrors.aliyun.com/centos/$releasever/virt/$basearch/kvm-common/</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+<h4 id="Sync-Repo"><a href="#Sync-Repo" class="headerlink" title="Sync Repo"></a>Sync Repo</h4><p>[root@localrepo myrepo]# reposync –repoid&#x3D;centos-openstack-pike<br>[root@localrepo myrepo]# reposync –repoid&#x3D;centos-qemu-ev<br>[root@localrepo myrepo]# ls -al<br>total 120<br>drwxr-xr-x. 7 root root    98 Dec 14 02:51 .<br>drwxr-xr-x. 3 root root    20 Dec 13 03:03 ..<br>drwxr-xr-x. 4 root root    38 Dec 14 02:30 base<br>drwxr-xr-x. 3 root root 90112 Dec 14 02:50 centos-openstack-pike<br>drwxr-xr-x. 2 root root  4096 Dec 14 02:51 centos-qemu-ev<br>drwxr-xr-x. 4 root root    38 Dec 14 02:31 extras<br>drwxr-xr-x. 4 root root    38 Dec 14 02:31 updates</p>
+<h4 id="Create-Repo"><a href="#Create-Repo" class="headerlink" title="Create Repo"></a>Create Repo</h4><p>[root@localrepo myrepo]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;centos-openstack-pike<br>Spawning worker 0 with 1091 pkgs<br>Spawning worker 1 with 1091 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete<br>[root@localrepo myrepo]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;centos-qemu-ev&#x2F;<br>Spawning worker 0 with 18 pkgs<br>Spawning worker 1 with 17 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete</p>
+<h4 id="Add-Ali-Mirror-On-Client-Node"><a href="#Add-Ali-Mirror-On-Client-Node" class="headerlink" title="Add Ali Mirror On Client Node"></a>Add Ali Mirror On Client Node</h4><p>[root@controller1 ~]# cat &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Pike.repo </p>
+<p>[centos-openstack-pike]<br>name&#x3D;centos-openstack-pike<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/centos-openstack-pike/">http://192.168.220.200/myrepo/centos-openstack-pike/</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+<p>[centos-qemu-ev]<br>name&#x3D;centos-qemu-ev<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/centos-qemu-ev/">http://192.168.220.200/myrepo/centos-qemu-ev/</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+<p>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Pike.repo controller2:&#x2F;etc&#x2F;yum.repos.d&#x2F;<br>sending incremental file list<br>CentOS-Pike.repo<br>         247 100%    0.00kB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;0&#x2F;1)</p>
+<p>sent 195 bytes  received 31 bytes  452.00 bytes&#x2F;sec<br>total size is 247  speedup is 1.09<br>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Pike.repo controller3:&#x2F;etc&#x2F;yum.repos.d&#x2F;<br>sending incremental file list<br>CentOS-Pike.repo<br>         247 100%    0.00kB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;0&#x2F;1)</p>
+<p>sent 195 bytes  received 31 bytes  452.00 bytes&#x2F;sec<br>total size is 247  speedup is 1.09</p>
+<h3 id="Install-OpenStack-Environment-On-All-Nodes"><a href="#Install-OpenStack-Environment-On-All-Nodes" class="headerlink" title="Install OpenStack Environment On All Nodes"></a>Install OpenStack Environment On All Nodes</h3><p>[root@controller1 ~]# yum install centos-release-openstack-pike -y<br>[root@controller1 ~]# yum install python-openstackclient openstack-selinux python2-PyMySQL openstack-utils -y<br>[root@controller1 ~]# yum update -y</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/08/install-centos-configure/" data-id="cl56gcvwm00bklgch7c1g94tw" data-title="Install CentOS &amp; Configure" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/08/memcached-multiple-servers/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Memcached on Multiple Servers
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/07/create-local-ntp/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Create Local NTP</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

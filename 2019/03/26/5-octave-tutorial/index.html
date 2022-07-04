@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>5 Octave Tutorial | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Basic OperationsIf you want to build a large scale deployment of a learning algorithm, what people will often do is prototype and the language is Octave. Get your learning algorithms to work more quic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5 Octave Tutorial">
+<meta property="og:url" content="http://example.com/2019/03/26/5-octave-tutorial/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Basic OperationsIf you want to build a large scale deployment of a learning algorithm, what people will often do is prototype and the language is Octave. Get your learning algorithms to work more quic">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-26T06:35:24.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.485Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-5-octave-tutorial" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/26/5-octave-tutorial/" class="article-date">
+  <time class="dt-published" datetime="2019-03-26T06:35:24.000Z" itemprop="datePublished">2019-03-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      5 Octave Tutorial
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Basic-Operations"><a href="#Basic-Operations" class="headerlink" title="Basic Operations"></a>Basic Operations</h2><p>If you want to build a large scale deployment of a learning algorithm, what people will often do is prototype and the language is <strong>Octave</strong>. Get your learning algorithms to work more quickly in Octave. Then overall you have a huge time savings by <strong>first developing the algorithms in Octave</strong>, and then <strong>implementing and maybe C++ or Java</strong>, only after we have the ideas working. Octave is nice because open sourced.*   % : comment</p>
+<ul>
+<li>~&#x3D; : not equal</li>
+<li>; : suppresses the print output</li>
+<li>DISP : For more complex printing</li>
+</ul>
+<p>V&#x3D;1：0.1：2 % it sets V to the bunch of elements that start from 1. And increments and steps of 0.1 until you get up to 2.</p>
+<p>ones(2, 3) % generates a matrix that is a two by three matrix that is the matrix of all ones.</p>
+<p>C &#x3D; 2 * ones(2, 3) % that is all two’s.</p>
+<p>w &#x3D; zeros(1, 3) % that is all zero’s.</p>
+<p>rand(3,3)</p>
+<p>w &#x3D; rand(1, 3) % normal random variable</p>
+<p>hist % plot a histogram</p>
+<p>help</p>
+<h2 id="Moving-Data-Around"><a href="#Moving-Data-Around" class="headerlink" title="Moving Data Around"></a>Moving Data Around</h2><p>size(A) % the size of a matrix</p>
+<p>size(A, 1) % the first dimension of A, size of the first dimension of A.</p>
+<p>length(v) % the size of the longest dimension.</p>
+<p>load(‘featureX.dat’)</p>
+<p>who % the variables that Octave has in memory currently</p>
+<p>whos % the detailed view</p>
+<p>clear featuresX</p>
+<p>save hello.mat v % save the variable V into a file called hello.mat.</p>
+<p>save hello.txt v -ascii % a human readable format</p>
+<p>A(3,2)</p>
+<p>A(2,:) % fetch everything in the second row.</p>
+<p>A([1 3],:) % get all of the elements of A who’s first indexes one or three.</p>
+<p>A &#x3D; [A, [100, 101, 102]] % this will do is add another column vector to the right.</p>
+<p>A(:) % put all elements with A into a single column vector</p>
+<p>C &#x3D; [A B] % taking these two matrices and just concatenating onto each other.</p>
+<p>C &#x3D; [A; B] % The semicolon notation means that I go put the next thing at the bottom.</p>
+<p><strong>There’s no point at all to try to memorize all these commands.</strong> It’s just, but what you should do is, hopefully from this video you have gotten a sense of the sorts of things you can do.</p>
+<h2 id="Computing-on-Data"><a href="#Computing-on-Data" class="headerlink" title="Computing on Data"></a>Computing on Data</h2><p>AxC % multiply 2 of matrices</p>
+<p>A .* B % take each elements of A and multiply it by the corresponding elements of B.</p>
+<p>A .^ 2 % the element wise squaring of A</p>
+<p>1 .&#x2F; V % the element wise reciprocal of V</p>
+<p>log(v) % an element wise logarithm of v</p>
+<p>exp(v) </p>
+<p>abs(V) % the element wise absolute value of V</p>
+<p>-v % the same as -1 x V</p>
+<p>v + ones(3,1) % this increments V by one.</p>
+<p>v + 1 % another simpler way</p>
+<p>A’ % the apostrophe symbol, a transpose of A</p>
+<p>val&#x3D;max(a) % set val equals max of A</p>
+<p>[val, ind] &#x3D; max(a) % val &#x3D; the maximum value, ind &#x3D; the index</p>
+<p>a &lt; 3 % a &#x3D; [1 15 2 0.5], the result will be [1 0 1 1]</p>
+<p>find(a &lt; 3) % [1 3 4]</p>
+<p>A &#x3D; magic(3) % Returns this matrices called magic squares that all of their rows and columns and diagonals sum up to the same thing.</p>
+<p>[r,c] &#x3D; find( A&gt;&#x3D;7 ) % This finds all the elements of a that are greater than and equals to 7 and so, R C sense a row and column.</p>
+<p>sum(a) % This adds up all the elements of A.</p>
+<p>prod(a) % multiply them</p>
+<p>floor(a) % Floor A rounds down</p>
+<p>ceil(A) % rounded up</p>
+<p>type(3) % sets a 3 by 3 matrix</p>
+<p>max(A,[],1) % takes the column wise maximum</p>
+<p>max(A,[],2) % takes the per row maximum</p>
+<p>max(A) % it defaults to column</p>
+<p>max(max(A)) % the maximum element in the entire matrix A</p>
+<p>sum(A,1) % does a per column sum</p>
+<p>sum(A,2) % do the row wise sum</p>
+<p>eye(9) % nine identity matrix</p>
+<p>sum(sum(A.*eye(9)) % the sum of these diagonal elements</p>
+<p>flipup&#x2F;flipud % Flip UD stands for flip up&#x2F;down</p>
+<p>pinv(A) % a pseudo inference</p>
+<p>After running a learning algorithm, often one of the most useful things is to be able to look at your results, or to plot, or visualize your result.</p>
+<h2 id="Plotting-Data"><a href="#Plotting-Data" class="headerlink" title="Plotting Data"></a>Plotting Data</h2><p>Often, plots of the data or of all the learning algorithm outputs will also give you ideas for how to improve your learning algorithm.</p>
+<p>t &#x3D; [0:0.01:0.98]<br>y1 &#x3D; sin(2 * pi * 4 * t)<br>plot(t, y1) % plot the sine function</p>
+<p>y2 &#x3D; cos(2 * pi * 4 * 4)<br>plot(t, y2)</p>
+<p>hold on % figures on top of the old one</p>
+<p>plot(t, y2, ‘r’) % different color</p>
+<p>xlabel(‘time’) % label the X axis, or the horizontal axis<br>ylabel(‘value’)</p>
+<p>legend(‘sin’, ‘cos’) % puts this legend up on the upper right showing what the 2 lines are</p>
+<p>title(‘myplot’) % the title at the top of this figure</p>
+<p>print -dpng ‘myplot.png’ % save figure</p>
+<p>close % disappeared</p>
+<p>figure(1); plot(t, y1); % Starts up first figure, and that plots t, y1.<br>figure(2); plot(t, y2); </p>
+<p>subplot(1,2,1) % sub-divides the plot into a one-by-two grid with the first 2 parameters are<br>plot(t, y1) % fills up this first element<br>subplot(1,2,2)<br>plot(t, y2)</p>
+<p>axis([0.5 1 -1 1]) % sets the x range and y range for the figure on the right</p>
+<p>clf % clear</p>
+<p>imagesc(A) % visualize the matrix and the different colors correspond to the different values in the A matrix.<br>colormap gray % color map gray</p>
+<p>imagesc(magic(15))，colorbar，colormap gray % running three commands at a time</p>
+<h2 id="Control-Statements-for-while-if-statements"><a href="#Control-Statements-for-while-if-statements" class="headerlink" title="Control Statements_ for, while, if statements"></a>Control Statements_ for, while, if statements</h2><p>for i &#x3D; 1 : 10,<br>    v(i) &#x3D; 2 ^ i;<br>end;</p>
+<p>indices &#x3D; 1 : 10;<br>for i &#x3D; indices,<br>    disp(i);<br>end;</p>
+<p>i &#x3D; 1;<br>while i &lt;&#x3D; 5,<br>    v(i) &#x3D; 100;<br>    i &#x3D; i + 1;<br>end;</p>
+<p>i &#x3D; 1;<br>while true,<br>    v(i) &#x3D; 999;<br>    i &#x3D; i + 1;<br>    if i &#x3D;&#x3D; 6,<br>        break;<br>    end;<br>end;</p>
+<p>v(1) &#x3D; 2;<br>if v(1) &#x3D;&#x3D; 1,<br>    disp(‘The value is one’);<br>elseif v(1) &#x3D;&#x3D; 2,<br>    disp(‘The value is two’);<br>else,<br>    disp(‘The value is not one or two’);<br>end;</p>
+<p>function name (arg-list)<br>  body<br>endfunction</p>
+<p>function wakeup (message)<br>  printf (“\a%s\n”, message);<br>endfunction</p>
+<p>wakeup (“Rise and shine!”);</p>
+<p>function y &#x3D; squareThisNumber(x)</p>
+<p>addpath % add path for search dirs</p>
+<p>[a, b] &#x3D; SquareAndCubeThisNumber(5) % a &#x3D; 25, b &#x3D; 125</p>
+<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><h4 id="Unvectorized-implementation"><a href="#Unvectorized-implementation" class="headerlink" title="Unvectorized implementation"></a>Unvectorized implementation</h4><p>[latex]h_\theta (x) &#x3D; \sum _{j&#x3D;0}^{n} \theta _jx_j[&#x2F;latex]</p>
+<p>prediction &#x3D; 0.0;<br>for j &#x3D; 1 : n + 1,<br>    prediction &#x3D; prediction + theta(j) * x(j)<br>end;</p>
+<h4 id="Vectorized-implementation"><a href="#Vectorized-implementation" class="headerlink" title="Vectorized implementation"></a>Vectorized implementation</h4><p>[latex]h_\theta (x) &#x3D; \theta ^Tx[&#x2F;latex]</p>
+<p>prediction &#x3D; theta’ * x;</p>
+<p>Using a vectorized implementation, you should be able to get a much more efficient implementation of linear regression.</p>
+<h2 id="Working-on-and-Submitting-Programming-Exercises"><a href="#Working-on-and-Submitting-Programming-Exercises" class="headerlink" title="Working on and Submitting Programming Exercises"></a>Working on and Submitting Programming Exercises</h2><p>How to use the submission system which will let you verify right away that you got the right answer for your machine learning program exercise. If you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/26/5-octave-tutorial/" data-id="cl56gcvuv005xlgch4mvn4glt" data-title="5 Octave Tutorial" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/26/6-logistic-regression/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          6 Logistic Regression
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/25/4-linear-regression-with-multiple-variables/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">4 Linear Regression with Multiple Variables</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Highly available Identity API | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Installing KeyStone On Controllers[root@controller ~]# yum install openstack-keystone httpd mod_wsgi python-openstackclient openstack-utils -y Configure MemCached[root@controller ~]# sed -i ‘s&#x2F;12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Highly available Identity API">
+<meta property="og:url" content="http://example.com/2017/12/08/highly-available-identity-api/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Installing KeyStone On Controllers[root@controller ~]# yum install openstack-keystone httpd mod_wsgi python-openstackclient openstack-utils -y Configure MemCached[root@controller ~]# sed -i ‘s&#x2F;12">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-08T06:32:18.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.229Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-highly-available-identity-api" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/08/highly-available-identity-api/" class="article-date">
+  <time class="dt-published" datetime="2017-12-08T06:32:18.000Z" itemprop="datePublished">2017-12-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Highly available Identity API
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Installing-KeyStone-On-Controllers"><a href="#Installing-KeyStone-On-Controllers" class="headerlink" title="Installing KeyStone On Controllers"></a>Installing KeyStone On Controllers</h3><p>[root@controller ~]# yum install openstack-keystone httpd mod_wsgi python-openstackclient openstack-utils -y</p>
+<h3 id="Configure-MemCached"><a href="#Configure-MemCached" class="headerlink" title="Configure MemCached"></a>Configure MemCached</h3><p>[root@controller ~]# sed -i ‘s&#x2F;127.0.0.1&#x2F;0.0.0.0&#x2F;‘ &#x2F;etc&#x2F;sysconfig&#x2F;memcached<br>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;memcached<br>PORT&#x3D;”11211”<br>USER&#x3D;”memcached”<br>MAXCONN&#x3D;”1024”<br>CACHESIZE&#x3D;”64”<br>OPTIONS&#x3D;”-l 0.0.0.0,::1”</p>
+<h3 id="Start-MemCached-Service"><a href="#Start-MemCached-Service" class="headerlink" title="Start MemCached Service"></a>Start MemCached Service</h3><p>[root@controller ~]# systemctl enable memcached.service<br>Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;memcached.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;memcached.service.<br>[root@controller ~]# systemctl start memcached.service<br>[root@controller ~]# systemctl status memcached.service<br>● memcached.service - memcached daemon<br>   Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;memcached.service; enabled; vendor preset: disabled)<br>   Active: active (running) since Sun 2017-12-17 22:07:25 EST; 1s ago<br> Main PID: 7500 (memcached)<br>   CGroup: &#x2F;system.slice&#x2F;memcached.service<br>           └─7500 &#x2F;usr&#x2F;bin&#x2F;memcached -p 11211 -u memcached -m 64 -c 1024 -l 0.0.0.0,::1</p>
+<p>Dec 17 22:07:25 controller1 systemd[1]: Started memcached daemon.<br>Dec 17 22:07:25 controller1 systemd[1]: Starting memcached daemon…</p>
+<h3 id="Configure-Httpd-Service"><a href="#Configure-Httpd-Service" class="headerlink" title="Configure Httpd Service"></a>Configure Httpd Service</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;httpd.conf{,.bak}<br>[root@controller1 ~]# echo “ServerName controller1”&gt;&gt;&#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;httpd.conf<br>[root@controller2 ~]# echo “ServerName controller2”&gt;&gt;&#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;httpd.conf<br>[root@controller3 ~]# echo “ServerName controller3”&gt;&gt;&#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;httpd.conf<br>[root@controller ~]# ln -s &#x2F;usr&#x2F;share&#x2F;keystone&#x2F;wsgi-keystone.conf &#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;</p>
+<h3 id="Configure-KeyStone"><a href="#Configure-KeyStone" class="headerlink" title="Configure KeyStone"></a>Configure KeyStone</h3><p>[root@controller ~]# cp &#x2F;usr&#x2F;share&#x2F;keystone&#x2F;wsgi-keystone.conf{,.bak}<br>[root@controller ~]# sed -i ‘s&#x2F;5000&#x2F;4999&#x2F;‘ &#x2F;usr&#x2F;share&#x2F;keystone&#x2F;wsgi-keystone.conf<br>[root@controller ~]# sed -i ‘s&#x2F;35357&#x2F;35356&#x2F;‘ &#x2F;usr&#x2F;share&#x2F;keystone&#x2F;wsgi-keystone.conf</p>
+<h3 id="Start-Httpd-Service"><a href="#Start-Httpd-Service" class="headerlink" title="Start Httpd Service"></a>Start Httpd Service</h3><p>[root@controller ~]# systemctl enable httpd.service<br>Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;httpd.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;httpd.service.<br>[root@controller ~]# systemctl restart httpd.service<br>[root@controller ~]# netstat -antpegrep ‘httpd’<br>tcp6       0      0 :::80                   :::*                    LISTEN      1946&#x2F;httpd<br>tcp6       0      0 :::35356                :::*                    LISTEN      1946&#x2F;httpd<br>tcp6       0      0 :::4999                 :::*                    LISTEN      1946&#x2F;httpd          </p>
+<h3 id="Configure-HAPorxy-For-KeyStone"><a href="#Configure-HAPorxy-For-KeyStone" class="headerlink" title="Configure HAPorxy For KeyStone"></a>Configure HAPorxy For KeyStone</h3><p>[root@controller ~]# echo ‘</p>
+<blockquote>
+<p>#keystone<br>listen keystone_admin_cluster<br>bind controller:35357<br>#balance  source<br>option  tcpka<br>option  httpchk<br>option  tcplog<br>server controller1 controller1:35356 check inter 2000 rise 2 fall 5<br>server controller2 controller2:35356 check inter 2000 rise 2 fall 5<br>server controller3 controller3:35356 check inter 2000 rise 2 fall 5</p>
+<p>listen keystone_public_cluster<br>bind controller:5000<br>#balance  source<br>option  tcpka<br>option  httpchk<br>option  tcplog<br>server controller1 controller1:4999 check inter 2000 rise 2 fall 5<br>server controller2 controller2:4999 check inter 2000 rise 2 fall 5<br>server controller3 controller3:4999 check inter 2000 rise 2 fall 5<br>‘&gt;&gt;&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg<br>[root@controller ~]# ‘<br>[root@controller ~]# systemctl restart haproxy.service<br>[root@controller ~]# netstat -antpegrep ‘haproxyhttpd’<br>tcp        0      0 0.0.0.0:1080            0.0.0.0:*               LISTEN      2111&#x2F;haproxy<br>tcp        0      0 192.168.220.20:35357    0.0.0.0:*               LISTEN      2111&#x2F;haproxy<br>tcp        0      0 192.168.220.20:5000     0.0.0.0:*               LISTEN      2111&#x2F;haproxy<br>tcp        0      0 0.0.0.0:5000            0.0.0.0:*               LISTEN      2111&#x2F;haproxy<br>tcp6       0      0 :::80                   :::*                    LISTEN      1946&#x2F;httpd<br>tcp6       0      0 :::35356                :::*                    LISTEN      1946&#x2F;httpd<br>tcp6       0      0 :::4999                 :::*                    LISTEN      1946&#x2F;httpd          </p>
+</blockquote>
+<h3 id="Configure-KeyStone-1"><a href="#Configure-KeyStone-1" class="headerlink" title="Configure KeyStone"></a>Configure KeyStone</h3><p>[root@controller1 ~]# KEYSTONE_SECRET&#x3D;$(openssl rand -hex 10)<br>[root@controller1 ~]#<br>[root@controller1 ~]# cp &#x2F;etc&#x2F;keystone&#x2F;keystone.conf &#x2F;etc&#x2F;keystone&#x2F;keystone.conf.bak<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf DEFAULT admin_token $KEYSTONE_SECRET<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf DEFAULT verbose true<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf database connection mysql+pymysql:&#x2F;&#x2F;keystone:keystone@controller&#x2F;keystone<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf cache backend oslo_cache.memcache_pool<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf cache enabled true<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf cache memcache_servers controller1:11211,controller2:11211,controller3:11211<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf memcache servers controller1:11211,controller2:11211,controller3:11211<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf token driver memcache<br>[root@controller1 ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf token provider fernet</p>
+<h3 id="Synchronize-Database"><a href="#Synchronize-Database" class="headerlink" title="Synchronize Database"></a>Synchronize Database</h3><p>[root@controller1 ~]# su -s &#x2F;bin&#x2F;sh -c “keystone-manage db_sync” keystone<br>[root@controller1 ~]# keystone-manage fernet_setup –keystone-user keystone –keystone-group keystone<br>[root@controller1 ~]# keystone-manage credential_setup –keystone-user keystone –keystone-group keystone</p>
+<h3 id="Configure-Other-Controller-Nodes"><a href="#Configure-Other-Controller-Nodes" class="headerlink" title="Configure Other Controller Nodes"></a>Configure Other Controller Nodes</h3><p>[root@controller1 ~]# rsync -avzP -e ‘ssh -p 22’ &#x2F;etc&#x2F;keystone&#x2F;* controller2:&#x2F;etc&#x2F;keystone&#x2F;<br>sending incremental file list<br>keystone.conf<br>      115180 100%  108.49MB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;10&#x2F;13)<br>keystone.conf.bak<br>      114875 100%   54.78MB&#x2F;s    0:00:00 (xfer#2, to-check&#x3D;9&#x2F;13)<br>credential-keys&#x2F;<br>credential-keys&#x2F;0<br>          44 100%   21.48kB&#x2F;s    0:00:00 (xfer#3, to-check&#x3D;3&#x2F;13)<br>credential-keys&#x2F;1<br>          44 100%   21.48kB&#x2F;s    0:00:00 (xfer#4, to-check&#x3D;2&#x2F;13)<br>fernet-keys&#x2F;<br>fernet-keys&#x2F;0<br>          44 100%   21.48kB&#x2F;s    0:00:00 (xfer#5, to-check&#x3D;1&#x2F;13)<br>fernet-keys&#x2F;1<br>          44 100%   21.48kB&#x2F;s    0:00:00 (xfer#6, to-check&#x3D;0&#x2F;13)</p>
+<p>sent 2209 bytes  received 2114 bytes  2882.00 bytes&#x2F;sec<br>total size is 236741  speedup is 54.76<br>[root@controller1 ~]# rsync -avzP -e ‘ssh -p 22’ &#x2F;etc&#x2F;keystone&#x2F;* controller3:&#x2F;etc&#x2F;keystone&#x2F;<br>sending incremental file list<br>keystone.conf<br>      115180 100%  108.49MB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;10&#x2F;13)<br>keystone.conf.bak<br>      114875 100%   54.78MB&#x2F;s    0:00:00 (xfer#2, to-check&#x3D;9&#x2F;13)<br>credential-keys&#x2F;<br>credential-keys&#x2F;0<br>          44 100%   21.48kB&#x2F;s    0:00:00 (xfer#3, to-check&#x3D;3&#x2F;13)<br>credential-keys&#x2F;1<br>          44 100%   21.48kB&#x2F;s    0:00:00 (xfer#4, to-check&#x3D;2&#x2F;13)<br>fernet-keys&#x2F;<br>fernet-keys&#x2F;0<br>          44 100%   21.48kB&#x2F;s    0:00:00 (xfer#5, to-check&#x3D;1&#x2F;13)<br>fernet-keys&#x2F;1<br>          44 100%   21.48kB&#x2F;s    0:00:00 (xfer#6, to-check&#x3D;0&#x2F;13)</p>
+<p>sent 2209 bytes  received 2114 bytes  8646.00 bytes&#x2F;sec<br>total size is 236741  speedup is 54.76</p>
+<h3 id="Restart-Httpd-Service"><a href="#Restart-Httpd-Service" class="headerlink" title="Restart Httpd Service"></a>Restart Httpd Service</h3><p>[root@controller1 ~]# systemctl restart httpd.service<br>[root@controller1 ~]# ssh controller2 “systemctl restart httpd.service”<br>[root@controller1 ~]# ssh controller3 “systemctl restart httpd.service”</p>
+<h3 id="Create-Admin-Role"><a href="#Create-Admin-Role" class="headerlink" title="Create Admin Role"></a>Create Admin Role</h3><p>[root@controller1 ~]# keystone-manage bootstrap –bootstrap-password admin \</p>
+<blockquote>
+<p>–bootstrap-admin-url <a target="_blank" rel="noopener" href="http://controller:35357/v3/">http://controller:35357/v3/</a> \<br>–bootstrap-internal-url <a target="_blank" rel="noopener" href="http://controller:5000/v3/">http://controller:5000/v3/</a> \<br>–bootstrap-public-url <a target="_blank" rel="noopener" href="http://controller:5000/v3/">http://controller:5000/v3/</a> \<br>–bootstrap-region-id RegionOne</p>
+</blockquote>
+<h3 id="Configure-Admin-Resource"><a href="#Configure-Admin-Resource" class="headerlink" title="Configure Admin Resource"></a>Configure Admin Resource</h3><p>[root@controller1 ~]# echo “</p>
+<blockquote>
+<p>export OS_PROJECT_DOMAIN_NAME&#x3D;default<br>export OS_USER_DOMAIN_NAME&#x3D;default<br>export OS_PROJECT_NAME&#x3D;admin<br>export OS_USERNAME&#x3D;admin<br>export OS_PASSWORD&#x3D;admin<br>export OS_AUTH_URL&#x3D;<a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a><br>export OS_IDENTITY_API_VERSION&#x3D;3<br>export OS_IMAGE_API_VERSION&#x3D;2<br>“&gt;&#x2F;root&#x2F;admin-openrc<br>[root@controller1 ~]# “<br>[root@controller1 ~]# source &#x2F;root&#x2F;admin-openrc<br>[root@controller1 ~]# openstack token issue<br>+————+—————————————————————————————————————————————————————————————–+<br> Field       Value<br>+————+—————————————————————————————————————————————————————————————–+<br> expires     2017-12-15T11:24:26+0000<br> id          gAAAAABaM6LaRTUjdiPkk1_5ydJV38A7d8ksrrD270fHt5Rc6SZZiIqhQXD70YdFVZqzfK0wWnxqF2jpAy1yBB6Tt-_v9VGbwyGORDJ-MesmmcmychP65oL_2dY8O4N09Mb8RZZm29wkJzOjgQffiFkmmjm3H7mAjfEHqbUxS-RdNcrnFEY0sTQ<br> project_id  2291724ac1a54d65844cc5dba56f4803<br> user_id     c69e3e92d2e9485dabc42d845574d965<br>+————+—————————————————————————————————————————————————————————————–+</p>
+</blockquote>
+<h3 id="Create-OpenStack-Project"><a href="#Create-OpenStack-Project" class="headerlink" title="Create OpenStack Project"></a>Create OpenStack Project</h3><p>[root@controller1 ~]# openstack project create –domain default –description “Service Project” service<br>+————-+———————————-+<br> Field        Value<br>+————-+———————————-+<br> description  Service Project<br> domain_id    default<br> enabled      True<br> id           78757402f85a467995bcbd69b2183ba5<br> is_domain    False<br> name         service<br> parent_id    default<br>+————-+———————————-+<br>[root@controller1 ~]# openstack user create –domain default –password&#x3D;glance glance<br>+———————+———————————-+<br> Field                Value<br>+———————+———————————-+<br> domain_id            default<br> enabled              True<br> id                   1072761f1a714aa8ad31a8e3f32fdc94<br> name                 glance<br> options              {}<br> password_expires_at  None<br>+———————+———————————-+<br>[root@controller1 ~]# openstack role add –project service –user glance admin<br>[root@controller1 ~]# openstack user create –domain default –password&#x3D;nova nova<br>+———————+———————————-+<br> Field                Value<br>+———————+———————————-+<br> domain_id            default<br> enabled              True<br> id                   83ce33fed0fe4c1894b6448cc17c32f7<br> name                 nova<br> options              {}<br> password_expires_at  None<br>+———————+———————————-+<br>[root@controller1 ~]# openstack role add –project service –user nova admin<br>[root@controller1 ~]# openstack user create –domain default –password&#x3D;neutron neutron<br>+———————+———————————-+<br> Field                Value<br>+———————+———————————-+<br> domain_id            default<br> enabled              True<br> id                   d0ed457a96824cffb030d3c57b4a8218<br> name                 neutron<br> options              {}<br> password_expires_at  None<br>+———————+———————————-+<br>[root@controller1 ~]# openstack role add –project service –user neutron admin</p>
+<p>[root@controller1 ~]# openstack project create –domain default –description “Demo Project” demo<br>+————-+———————————-+<br> Field        Value<br>+————-+———————————-+<br> description  Demo Project<br> domain_id    default<br> enabled      True<br> id           3ddffab721d24934a0cbd49def5aa615<br> is_domain    False<br> name         demo<br> parent_id    default<br>+————-+———————————-+<br>[root@controller1 ~]# openstack user create –domain default –password&#x3D;demo demo<br>+———————+———————————-+<br> Field                Value<br>+———————+———————————-+<br> domain_id            default<br> enabled              True<br> id                   7884786780534d82afa0085028d2eb9b<br> name                 demo<br> options              {}<br> password_expires_at  None<br>+———————+———————————-+<br>[root@controller1 ~]# openstack role create user<br>+———–+———————————-+<br> Field      Value<br>+———–+———————————-+<br> domain_id  None<br> id         0e067a05c0334234be3e19cad51cc1b5<br> name       user<br>+———–+———————————-+<br>[root@controller1 ~]# openstack role add –project demo –user demo user</p>
+<h3 id="Add-OpenStack-Identity-resource-to-Pacemaker"><a href="#Add-OpenStack-Identity-resource-to-Pacemaker" class="headerlink" title="Add OpenStack Identity resource to Pacemaker"></a>Add OpenStack Identity resource to Pacemaker</h3><p>[root@controller1 ~]# pcs resource create openstack-keystone systemd:openstack-keystone –clone interleave&#x3D;true</p>
+<h3 id="Configure-OpenStack-Identity-service"><a href="#Configure-OpenStack-Identity-service" class="headerlink" title="Configure OpenStack Identity service"></a>Configure OpenStack Identity service</h3><p># cat keystone.conf</p>
+<p>bind_host &#x3D; 10.0.0.12<br>public_bind_host &#x3D; 10.0.0.12<br>admin_bind_host &#x3D; 10.0.0.12</p>
+<p>[catalog]<br>driver &#x3D; keystone.catalog.backends.sql.Catalog</p>
+<h1 id="…"><a href="#…" class="headerlink" title="…"></a>…</h1><p>[identity]<br>driver &#x3D; keystone.identity.backends.sql.Identity</p>
+<h1 id="…-1"><a href="#…-1" class="headerlink" title="…"></a>…</h1><h3 id="Configure-OpenStack-services-to-use-the-highly-available-OpenStack-Identity"><a href="#Configure-OpenStack-services-to-use-the-highly-available-OpenStack-Identity" class="headerlink" title="Configure OpenStack services to use the highly available OpenStack Identity"></a>Configure OpenStack services to use the highly available OpenStack Identity</h3><p># cat api-paste.ini</p>
+<p>auth_host &#x3D; 10.0.0.11</p>
+<p>$ openstack endpoint create –region $KEYSTONE_REGION $service-type public <a target="_blank" rel="noopener" href="http://public/_VIP:5000/v2.0">http://PUBLIC\_VIP:5000/v2.0</a><br>$ openstack endpoint create –region $KEYSTONE_REGION $service-type admin <a target="_blank" rel="noopener" href="http://10.0.0.11:35357/v2.0">http://10.0.0.11:35357/v2.0</a><br>$ openstack endpoint create –region $KEYSTONE_REGION $service-type internal <a target="_blank" rel="noopener" href="http://10.0.0.11:5000/v2.0">http://10.0.0.11:5000/v2.0</a></p>
+<h1 id="cat-local-settings-py"><a href="#cat-local-settings-py" class="headerlink" title="cat local_settings.py"></a>cat local_settings.py</h1><p>OPENSTACK_HOST &#x3D; 10.0.0.11</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/08/highly-available-identity-api/" data-id="cl56gcvw4009ylgch3umh504b" data-title="Highly available Identity API" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/11/highly-available-image-api/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Highly available Image API
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/08/configure-vip-haproxy/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Configure the VIP &amp; HAProxy</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

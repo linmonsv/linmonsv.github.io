@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Create Local Repository | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Configure Firewall[root@localhost ~]# systemctl stop firewalld.service[root@localhost ~]# systemctl disable firewalld.service Install Httpd &amp; Start Service[root@localhost ~]# yum install httpd -y[">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Create Local Repository">
+<meta property="og:url" content="http://example.com/2017/12/06/create-local-repository/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Configure Firewall[root@localhost ~]# systemctl stop firewalld.service[root@localhost ~]# systemctl disable firewalld.service Install Httpd &amp; Start Service[root@localhost ~]# yum install httpd -y[">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/LocalRepo-V1.png">
+<meta property="article:published_time" content="2017-12-06T09:06:41.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.206Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/LocalRepo-V1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-create-local-repository" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/06/create-local-repository/" class="article-date">
+  <time class="dt-published" datetime="2017-12-06T09:06:41.000Z" itemprop="datePublished">2017-12-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/CentOS-7/">CentOS 7</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Create Local Repository
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Configure-Firewall"><a href="#Configure-Firewall" class="headerlink" title="Configure Firewall"></a>Configure Firewall</h3><p>[root@localhost ~]# systemctl stop firewalld.service<br>[root@localhost ~]# systemctl disable firewalld.service</p>
+<h3 id="Install-Httpd-amp-Start-Service"><a href="#Install-Httpd-amp-Start-Service" class="headerlink" title="Install Httpd &amp; Start Service"></a>Install Httpd &amp; Start Service</h3><p>[root@localhost ~]# yum install httpd -y<br>[root@localhost ~]# systemctl enable httpd.service<br>[root@localhost ~]# systemctl restart httpd.service<br>[root@localhost ~]# systemctl status httpd.service</p>
+<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p><strong><a target="_blank" rel="noopener" href="http://192.168.220.200/">http://192.168.220.200</a></strong></p>
+<h3 id="Install-Reposync"><a href="#Install-Reposync" class="headerlink" title="Install Reposync"></a>Install Reposync</h3><p>[root@localhost ~]# yum install yum-utils -y</p>
+<h3 id="Create-Repo-Dir"><a href="#Create-Repo-Dir" class="headerlink" title="Create Repo Dir"></a>Create Repo Dir</h3><p>[root@localhost ~]# mkdir &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo<br>[root@localhost ~]# cd &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo</p>
+<h3 id="List-Repo"><a href="#List-Repo" class="headerlink" title="List Repo"></a>List Repo</h3><p>[root@localhost myrepo]# yum repolist<br>Loaded plugins: fastestmirror<br>Loading mirror speeds from cached hostfile<br> * base: mirrors.163.com<br> * extras: mirrors.163.com<br> * updates: mirrors.aliyun.com<br>repo id                                                 repo name                                                  status<br>base&#x2F;7&#x2F;x86_64                                           CentOS-7 - Base                                            9,591<br>extras&#x2F;7&#x2F;x86_64                                         CentOS-7 - Extras                                            284<br>updates&#x2F;7&#x2F;x86_64                                        CentOS-7 - Updates                                         1,490<br>repolist: 11,365</p>
+<h3 id="Sync-Repo"><a href="#Sync-Repo" class="headerlink" title="Sync Repo"></a>Sync Repo</h3><p>[root@localhost myrepo]# reposync –repoid&#x3D;base<br>[root@localhost myrepo]# reposync –repoid&#x3D;updates<br>[root@localhost myrepo]# reposync –repoid&#x3D;extras<br>[root@localhost myrepo]# pwd<br>&#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo<br>[root@localhost myrepo]# ls -al<br>total 0<br>drwxr-xr-x. 5 root root 47 Dec  6 20:18 .<br>drwxr-xr-x. 3 root root 20 Dec  6 03:12 ..<br>drwxr-xr-x. 3 root root 22 Dec  6 03:48 base<br>drwxr-xr-x. 3 root root 22 Dec  6 20:18 extras<br>drwxr-xr-x. 3 root root 22 Dec  6 20:06 updates</p>
+<h3 id="Install-Createrepo"><a href="#Install-Createrepo" class="headerlink" title="Install Createrepo"></a>Install Createrepo</h3><p>[root@localhost ~]# yum install createrepo -y</p>
+<h3 id="Create-Repo"><a href="#Create-Repo" class="headerlink" title="Create Repo"></a>Create Repo</h3><p>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;base<br>Spawning worker 0 with 9591 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete<br>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;updates<br>Spawning worker 0 with 1490 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete<br>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;extras<br>Spawning worker 0 with 284 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete</p>
+<h3 id="Now-Take-the-Browser-1"><a href="#Now-Take-the-Browser-1" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p><strong><a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/">http://192.168.220.200/myrepo/</a></strong> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/LocalRepo-V1.png"></p>
+<h3 id="Update-Client-Repo"><a href="#Update-Client-Repo" class="headerlink" title="Update Client Repo"></a>Update Client Repo</h3><p>[root@localhost ~]# diff &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo_bak<br>15c15<br>&lt; baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/base">http://192.168.220.200/myrepo/base</a></p>
+<hr>
+<blockquote>
+<p>mirrorlist&#x3D;<a target="_blank" rel="noopener" href="http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os&amp;infra=$infra">http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os&amp;infra=$infra</a><br>17c17<br>&lt; gpgcheck&#x3D;0</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>gpgcheck&#x3D;1<br>23c23<br>&lt; baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/updates">http://192.168.220.200/myrepo/updates</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>mirrorlist&#x3D;<a target="_blank" rel="noopener" href="http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates&amp;infra=$infra">http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates&amp;infra=$infra</a><br>25c25<br>&lt; gpgcheck&#x3D;0</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>gpgcheck&#x3D;1<br>31c31<br>&lt; baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/extras">http://192.168.220.200/myrepo/extras</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>mirrorlist&#x3D;<a target="_blank" rel="noopener" href="http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras&amp;infra=$infra">http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras&amp;infra=$infra</a><br>33c33<br>&lt; gpgcheck&#x3D;0</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>gpgcheck&#x3D;1</p>
+</blockquote>
+<h3 id="Make-Client-Cache"><a href="#Make-Client-Cache" class="headerlink" title="Make Client Cache"></a>Make Client Cache</h3><p>[root@localhost ~]# yum clean all &amp;&amp; yum makecache</p>
+<h3 id="Client-Example"><a href="#Client-Example" class="headerlink" title="Client Example"></a>Client Example</h3><p>[root@localhost ~]# yum install vim<br>Loaded plugins: fastestmirror<br>Loading mirror speeds from cached hostfile<br>Resolving Dependencies<br>–&gt; Running transaction check<br>—&gt; Package vim-enhanced.x86_64 2:7.4.160-2.el7 will be installed<br>–&gt; Processing Dependency: vim-common &#x3D; 2:7.4.160-2.el7 for package: 2:vim-enhanced-7.4.160-2.el7.x86_64<br>–&gt; Processing Dependency: perl(:MODULE_COMPAT_5.16.3) for package: 2:vim-enhanced-7.4.160-2.el7.x86_64<br>–&gt; Processing Dependency: libperl.so()(64bit) for package: 2:vim-enhanced-7.4.160-2.el7.x86_64<br>–&gt; Processing Dependency: libgpm.so.2()(64bit) for package: 2:vim-enhanced-7.4.160-2.el7.x86_64<br>–&gt; Running transaction check<br>—&gt; Package gpm-libs.x86_64 0:1.20.7-5.el7 will be installed<br>—&gt; Package perl.x86_64 4:5.16.3-292.el7 will be installed<br>–&gt; Processing Dependency: perl(Socket) &gt;&#x3D; 1.3 for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Scalar::Util) &gt;&#x3D; 1.10 for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl-macros for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(threads::shared) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(threads) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(constant) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Time::Local) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Time::HiRes) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Storable) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Socket) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Scalar::Util) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Pod::Simple::XHTML) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Pod::Simple::Search) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Getopt::Long) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Filter::Util::Call) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Temp) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Spec::Unix) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Spec::Functions) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Spec) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Path) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Exporter) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Cwd) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Carp) for package: 4:perl-5.16.3-292.el7.x86_64<br>—&gt; Package perl-libs.x86_64 4:5.16.3-292.el7 will be installed<br>—&gt; Package vim-common.x86_64 2:7.4.160-2.el7 will be installed<br>–&gt; Processing Dependency: vim-filesystem for package: 2:vim-common-7.4.160-2.el7.x86_64<br>–&gt; Running transaction check<br>—&gt; Package perl-Carp.noarch 0:1.26-244.el7 will be installed<br>—&gt; Package perl-Exporter.noarch 0:5.68-3.el7 will be installed<br>—&gt; Package perl-File-Path.noarch 0:2.09-2.el7 will be installed<br>—&gt; Package perl-File-Temp.noarch 0:0.23.01-3.el7 will be installed<br>—&gt; Package perl-Filter.x86_64 0:1.49-3.el7 will be installed<br>—&gt; Package perl-Getopt-Long.noarch 0:2.40-2.el7 will be installed<br>–&gt; Processing Dependency: perl(Pod::Usage) &gt;&#x3D; 1.14 for package: perl-Getopt-Long-2.40-2.el7.noarch<br>–&gt; Processing Dependency: perl(Text::ParseWords) for package: perl-Getopt-Long-2.40-2.el7.noarch<br>—&gt; Package perl-PathTools.x86_64 0:3.40-5.el7 will be installed<br>—&gt; Package perl-Pod-Simple.noarch 1:3.28-4.el7 will be installed<br>–&gt; Processing Dependency: perl(Pod::Escapes) &gt;&#x3D; 1.04 for package: 1:perl-Pod-Simple-3.28-4.el7.noarch<br>–&gt; Processing Dependency: perl(Encode) for package: 1:perl-Pod-Simple-3.28-4.el7.noarch<br>—&gt; Package perl-Scalar-List-Utils.x86_64 0:1.27-248.el7 will be installed<br>—&gt; Package perl-Socket.x86_64 0:2.010-4.el7 will be installed<br>—&gt; Package perl-Storable.x86_64 0:2.45-3.el7 will be installed<br>—&gt; Package perl-Time-HiRes.x86_64 4:1.9725-3.el7 will be installed<br>—&gt; Package perl-Time-Local.noarch 0:1.2300-2.el7 will be installed<br>—&gt; Package perl-constant.noarch 0:1.27-2.el7 will be installed<br>—&gt; Package perl-macros.x86_64 4:5.16.3-292.el7 will be installed<br>—&gt; Package perl-threads.x86_64 0:1.87-4.el7 will be installed<br>—&gt; Package perl-threads-shared.x86_64 0:1.43-6.el7 will be installed<br>—&gt; Package vim-filesystem.x86_64 2:7.4.160-2.el7 will be installed<br>–&gt; Running transaction check<br>—&gt; Package perl-Encode.x86_64 0:2.51-7.el7 will be installed<br>—&gt; Package perl-Pod-Escapes.noarch 1:1.04-292.el7 will be installed<br>—&gt; Package perl-Pod-Usage.noarch 0:1.63-3.el7 will be installed<br>–&gt; Processing Dependency: perl(Pod::Text) &gt;&#x3D; 3.15 for package: perl-Pod-Usage-1.63-3.el7.noarch<br>–&gt; Processing Dependency: perl-Pod-Perldoc for package: perl-Pod-Usage-1.63-3.el7.noarch<br>—&gt; Package perl-Text-ParseWords.noarch 0:3.29-4.el7 will be installed<br>–&gt; Running transaction check<br>—&gt; Package perl-Pod-Perldoc.noarch 0:3.20-4.el7 will be installed<br>–&gt; Processing Dependency: perl(parent) for package: perl-Pod-Perldoc-3.20-4.el7.noarch<br>–&gt; Processing Dependency: perl(HTTP::Tiny) for package: perl-Pod-Perldoc-3.20-4.el7.noarch<br>—&gt; Package perl-podlators.noarch 0:2.5.1-3.el7 will be installed<br>–&gt; Running transaction check<br>—&gt; Package perl-HTTP-Tiny.noarch 0:0.033-3.el7 will be installed<br>—&gt; Package perl-parent.noarch 1:0.225-244.el7 will be installed<br>–&gt; Finished Dependency Resolution</p>
+<p>Dependencies Resolved</p>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br> Package                               Arch                  Version                           Repository           Size<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>Installing:<br> vim-enhanced                          x86_64                2:7.4.160-2.el7                   base                1.0 M<br>Installing for dependencies:<br> gpm-libs                              x86_64                1.20.7-5.el7                      base                 32 k<br> perl                                  x86_64                4:5.16.3-292.el7                  base                8.0 M<br> perl-Carp                             noarch                1.26-244.el7                      base                 19 k<br> perl-Encode                           x86_64                2.51-7.el7                        base                1.5 M<br> perl-Exporter                         noarch                5.68-3.el7                        base                 28 k<br> perl-File-Path                        noarch                2.09-2.el7                        base                 26 k<br> perl-File-Temp                        noarch                0.23.01-3.el7                     base                 56 k<br> perl-Filter                           x86_64                1.49-3.el7                        base                 76 k<br> perl-Getopt-Long                      noarch                2.40-2.el7                        base                 56 k<br> perl-HTTP-Tiny                        noarch                0.033-3.el7                       base                 38 k<br> perl-PathTools                        x86_64                3.40-5.el7                        base                 82 k<br> perl-Pod-Escapes                      noarch                1:1.04-292.el7                    base                 51 k<br> perl-Pod-Perldoc                      noarch                3.20-4.el7                        base                 87 k<br> perl-Pod-Simple                       noarch                1:3.28-4.el7                      base                216 k<br> perl-Pod-Usage                        noarch                1.63-3.el7                        base                 27 k<br> perl-Scalar-List-Utils                x86_64                1.27-248.el7                      base                 36 k<br> perl-Socket                           x86_64                2.010-4.el7                       base                 49 k<br> perl-Storable                         x86_64                2.45-3.el7                        base                 77 k<br> perl-Text-ParseWords                  noarch                3.29-4.el7                        base                 14 k<br> perl-Time-HiRes                       x86_64                4:1.9725-3.el7                    base                 45 k<br> perl-Time-Local                       noarch                1.2300-2.el7                      base                 24 k<br> perl-constant                         noarch                1.27-2.el7                        base                 19 k<br> perl-libs                             x86_64                4:5.16.3-292.el7                  base                688 k<br> perl-macros                           x86_64                4:5.16.3-292.el7                  base                 43 k<br> perl-parent                           noarch                1:0.225-244.el7                   base                 12 k<br> perl-podlators                        noarch                2.5.1-3.el7                       base                112 k<br> perl-threads                          x86_64                1.87-4.el7                        base                 49 k<br> perl-threads-shared                   x86_64                1.43-6.el7                        base                 39 k<br> vim-common                            x86_64                2:7.4.160-2.el7                   base                5.9 M<br> vim-filesystem                        x86_64                2:7.4.160-2.el7                   base                9.8 k</p>
+<h1 id="Transaction-Summary"><a href="#Transaction-Summary" class="headerlink" title="Transaction Summary"></a>Transaction Summary</h1><p>Install  1 Package (+30 Dependent packages)</p>
+<p>Total download size: 18 M<br>Installed size: 60 M<br>Is this ok [y&#x2F;d&#x2F;N]: y<br>Downloading packages:<br>(1&#x2F;31): gpm-libs-1.20.7-5.el7.x86_64.rpm                                                            32 kB  00:00:00<br>(2&#x2F;31): perl-Carp-1.26-244.el7.noarch.rpm                                                           19 kB  00:00:00<br>(3&#x2F;31): perl-5.16.3-292.el7.x86_64.rpm                                                             8.0 MB  00:00:00<br>(4&#x2F;31): perl-Encode-2.51-7.el7.x86_64.rpm                                                          1.5 MB  00:00:00<br>(5&#x2F;31): perl-Exporter-5.68-3.el7.noarch.rpm                                                         28 kB  00:00:00<br>(6&#x2F;31): perl-File-Path-2.09-2.el7.noarch.rpm                                                        26 kB  00:00:00<br>(7&#x2F;31): perl-Filter-1.49-3.el7.x86_64.rpm                                                           76 kB  00:00:00<br>(8&#x2F;31): perl-Getopt-Long-2.40-2.el7.noarch.rpm                                                      56 kB  00:00:00<br>(9&#x2F;31): perl-File-Temp-0.23.01-3.el7.noarch.rpm                                                     56 kB  00:00:00<br>(10&#x2F;31): perl-HTTP-Tiny-0.033-3.el7.noarch.rpm                                                      38 kB  00:00:00<br>(11&#x2F;31): perl-Pod-Escapes-1.04-292.el7.noarch.rpm                                                   51 kB  00:00:00<br>(12&#x2F;31): perl-PathTools-3.40-5.el7.x86_64.rpm                                                       82 kB  00:00:00<br>(13&#x2F;31): perl-Pod-Perldoc-3.20-4.el7.noarch.rpm                                                     87 kB  00:00:00<br>(14&#x2F;31): perl-Pod-Usage-1.63-3.el7.noarch.rpm                                                       27 kB  00:00:00<br>(15&#x2F;31): perl-Pod-Simple-3.28-4.el7.noarch.rpm                                                     216 kB  00:00:00<br>(16&#x2F;31): perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm                                             36 kB  00:00:00<br>(17&#x2F;31): perl-Socket-2.010-4.el7.x86_64.rpm                                                         49 kB  00:00:00<br>(18&#x2F;31): perl-Storable-2.45-3.el7.x86_64.rpm                                                        77 kB  00:00:00<br>(19&#x2F;31): perl-Text-ParseWords-3.29-4.el7.noarch.rpm                                                 14 kB  00:00:00<br>(20&#x2F;31): perl-Time-HiRes-1.9725-3.el7.x86_64.rpm                                                    45 kB  00:00:00<br>(21&#x2F;31): perl-Time-Local-1.2300-2.el7.noarch.rpm                                                    24 kB  00:00:00<br>(22&#x2F;31): perl-constant-1.27-2.el7.noarch.rpm                                                        19 kB  00:00:00<br>(23&#x2F;31): perl-macros-5.16.3-292.el7.x86_64.rpm                                                      43 kB  00:00:00<br>(24&#x2F;31): perl-libs-5.16.3-292.el7.x86_64.rpm                                                       688 kB  00:00:00<br>(25&#x2F;31): perl-parent-0.225-244.el7.noarch.rpm                                                       12 kB  00:00:00<br>(26&#x2F;31): perl-threads-1.87-4.el7.x86_64.rpm                                                         49 kB  00:00:00<br>(27&#x2F;31): perl-threads-shared-1.43-6.el7.x86_64.rpm                                                  39 kB  00:00:00<br>(28&#x2F;31): perl-podlators-2.5.1-3.el7.noarch.rpm                                                     112 kB  00:00:00<br>(29&#x2F;31): vim-common-7.4.160-2.el7.x86_64.rpm                                                       5.9 MB  00:00:00<br>(30&#x2F;31): vim-filesystem-7.4.160-2.el7.x86_64.rpm                                                   9.8 kB  00:00:00<br>(31&#x2F;31): vim-enhanced-7.4.160-2.el7.x86_64.rpm                                                     1.0 MB  00:00:00     </p>
+<hr>
+<p>Total                                                                                     41 MB&#x2F;s   18 MB  00:00:00<br>Running transaction check<br>Running transaction test<br>Transaction test succeeded<br>Running transaction<br>  Installing : 1:perl-parent-0.225-244.el7.noarch                                                                   1&#x2F;31<br>  Installing : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                    2&#x2F;31<br>  Installing : perl-podlators-2.5.1-3.el7.noarch                                                                    3&#x2F;31<br>  Installing : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                   4&#x2F;31<br>  Installing : 1:perl-Pod-Escapes-1.04-292.el7.noarch                                                               5&#x2F;31<br>  Installing : perl-Text-ParseWords-3.29-4.el7.noarch                                                               6&#x2F;31<br>  Installing : perl-Encode-2.51-7.el7.x86_64                                                                        7&#x2F;31<br>  Installing : perl-Pod-Usage-1.63-3.el7.noarch                                                                     8&#x2F;31<br>  Installing : 4:perl-macros-5.16.3-292.el7.x86_64                                                                  9&#x2F;31<br>  Installing : 4:perl-libs-5.16.3-292.el7.x86_64                                                                   10&#x2F;31<br>  Installing : perl-Storable-2.45-3.el7.x86_64                                                                     11&#x2F;31<br>  Installing : perl-Exporter-5.68-3.el7.noarch                                                                     12&#x2F;31<br>  Installing : perl-constant-1.27-2.el7.noarch                                                                     13&#x2F;31<br>  Installing : perl-Time-Local-1.2300-2.el7.noarch                                                                 14&#x2F;31<br>  Installing : perl-Socket-2.010-4.el7.x86_64                                                                      15&#x2F;31<br>  Installing : perl-Carp-1.26-244.el7.noarch                                                                       16&#x2F;31<br>  Installing : perl-PathTools-3.40-5.el7.x86_64                                                                    17&#x2F;31<br>  Installing : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                          18&#x2F;31<br>  Installing : perl-File-Temp-0.23.01-3.el7.noarch                                                                 19&#x2F;31<br>  Installing : perl-File-Path-2.09-2.el7.noarch                                                                    20&#x2F;31<br>  Installing : perl-threads-shared-1.43-6.el7.x86_64                                                               21&#x2F;31<br>  Installing : perl-threads-1.87-4.el7.x86_64                                                                      22&#x2F;31<br>  Installing : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                               23&#x2F;31<br>  Installing : perl-Filter-1.49-3.el7.x86_64                                                                       24&#x2F;31<br>  Installing : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                 25&#x2F;31<br>  Installing : perl-Getopt-Long-2.40-2.el7.noarch                                                                  26&#x2F;31<br>  Installing : 4:perl-5.16.3-292.el7.x86_64                                                                        27&#x2F;31<br>  Installing : gpm-libs-1.20.7-5.el7.x86_64                                                                        28&#x2F;31<br>  Installing : 2:vim-filesystem-7.4.160-2.el7.x86_64                                                               29&#x2F;31<br>  Installing : 2:vim-common-7.4.160-2.el7.x86_64                                                                   30&#x2F;31<br>  Installing : 2:vim-enhanced-7.4.160-2.el7.x86_64                                                                 31&#x2F;31<br>  Verifying  : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                    1&#x2F;31<br>  Verifying  : perl-threads-shared-1.43-6.el7.x86_64                                                                2&#x2F;31<br>  Verifying  : perl-Storable-2.45-3.el7.x86_64                                                                      3&#x2F;31<br>  Verifying  : 2:vim-filesystem-7.4.160-2.el7.x86_64                                                                4&#x2F;31<br>  Verifying  : perl-Exporter-5.68-3.el7.noarch                                                                      5&#x2F;31<br>  Verifying  : perl-constant-1.27-2.el7.noarch                                                                      6&#x2F;31<br>  Verifying  : perl-PathTools-3.40-5.el7.x86_64                                                                     7&#x2F;31<br>  Verifying  : 4:perl-macros-5.16.3-292.el7.x86_64                                                                  8&#x2F;31<br>  Verifying  : 1:perl-parent-0.225-244.el7.noarch                                                                   9&#x2F;31<br>  Verifying  : 4:perl-5.16.3-292.el7.x86_64                                                                        10&#x2F;31<br>  Verifying  : perl-File-Temp-0.23.01-3.el7.noarch                                                                 11&#x2F;31<br>  Verifying  : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                 12&#x2F;31<br>  Verifying  : perl-Time-Local-1.2300-2.el7.noarch                                                                 13&#x2F;31<br>  Verifying  : gpm-libs-1.20.7-5.el7.x86_64                                                                        14&#x2F;31<br>  Verifying  : 4:perl-libs-5.16.3-292.el7.x86_64                                                                   15&#x2F;31<br>  Verifying  : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                  16&#x2F;31<br>  Verifying  : perl-Socket-2.010-4.el7.x86_64                                                                      17&#x2F;31<br>  Verifying  : perl-Carp-1.26-244.el7.noarch                                                                       18&#x2F;31<br>  Verifying  : 2:vim-common-7.4.160-2.el7.x86_64                                                                   19&#x2F;31<br>  Verifying  : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                          20&#x2F;31<br>  Verifying  : 1:perl-Pod-Escapes-1.04-292.el7.noarch                                                              21&#x2F;31<br>  Verifying  : perl-Pod-Usage-1.63-3.el7.noarch                                                                    22&#x2F;31<br>  Verifying  : perl-Encode-2.51-7.el7.x86_64                                                                       23&#x2F;31<br>  Verifying  : perl-podlators-2.5.1-3.el7.noarch                                                                   24&#x2F;31<br>  Verifying  : perl-Getopt-Long-2.40-2.el7.noarch                                                                  25&#x2F;31<br>  Verifying  : 2:vim-enhanced-7.4.160-2.el7.x86_64                                                                 26&#x2F;31<br>  Verifying  : perl-File-Path-2.09-2.el7.noarch                                                                    27&#x2F;31<br>  Verifying  : perl-threads-1.87-4.el7.x86_64                                                                      28&#x2F;31<br>  Verifying  : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                               29&#x2F;31<br>  Verifying  : perl-Filter-1.49-3.el7.x86_64                                                                       30&#x2F;31<br>  Verifying  : perl-Text-ParseWords-3.29-4.el7.noarch                                                              31&#x2F;31 </p>
+<p>Installed:<br>  vim-enhanced.x86_64 2:7.4.160-2.el7                                                                                    </p>
+<p>Dependency Installed:<br>  gpm-libs.x86_64 0:1.20.7-5.el7                            perl.x86_64 4:5.16.3-292.el7<br>  perl-Carp.noarch 0:1.26-244.el7                           perl-Encode.x86_64 0:2.51-7.el7<br>  perl-Exporter.noarch 0:5.68-3.el7                         perl-File-Path.noarch 0:2.09-2.el7<br>  perl-File-Temp.noarch 0:0.23.01-3.el7                     perl-Filter.x86_64 0:1.49-3.el7<br>  perl-Getopt-Long.noarch 0:2.40-2.el7                      perl-HTTP-Tiny.noarch 0:0.033-3.el7<br>  perl-PathTools.x86_64 0:3.40-5.el7                        perl-Pod-Escapes.noarch 1:1.04-292.el7<br>  perl-Pod-Perldoc.noarch 0:3.20-4.el7                      perl-Pod-Simple.noarch 1:3.28-4.el7<br>  perl-Pod-Usage.noarch 0:1.63-3.el7                        perl-Scalar-List-Utils.x86_64 0:1.27-248.el7<br>  perl-Socket.x86_64 0:2.010-4.el7                          perl-Storable.x86_64 0:2.45-3.el7<br>  perl-Text-ParseWords.noarch 0:3.29-4.el7                  perl-Time-HiRes.x86_64 4:1.9725-3.el7<br>  perl-Time-Local.noarch 0:1.2300-2.el7                     perl-constant.noarch 0:1.27-2.el7<br>  perl-libs.x86_64 4:5.16.3-292.el7                         perl-macros.x86_64 4:5.16.3-292.el7<br>  perl-parent.noarch 1:0.225-244.el7                        perl-podlators.noarch 0:2.5.1-3.el7<br>  perl-threads.x86_64 0:1.87-4.el7                          perl-threads-shared.x86_64 0:1.43-6.el7<br>  vim-common.x86_64 2:7.4.160-2.el7                         vim-filesystem.x86_64 2:7.4.160-2.el7                        </p>
+<p>Complete!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/06/create-local-repository/" data-id="cl56gcvvm008glgch4b6rbv7u" data-title="Create Local Repository" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/07/create-local-ntp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Create Local NTP
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/06/ha-prepare/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HA Prepare</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

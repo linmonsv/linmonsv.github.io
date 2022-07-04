@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>2 Deep convolutional models : case studies | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Why look at case studies?It turns out a lot of the past few years of computer vision research has been on how to put together these basic building blocks to form effective convolutional neural network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2 Deep convolutional models : case studies">
+<meta property="og:url" content="http://example.com/2019/04/19/2-deep-convolutional-models-case-studies/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Why look at case studies?It turns out a lot of the past few years of computer vision research has been on how to put together these basic building blocks to form effective convolutional neural network">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Inception_module.png">
+<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Inception_network.png">
+<meta property="article:published_time" content="2019-04-19T03:58:36.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.554Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Inception_module.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-2-deep-convolutional-models-case-studies" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/19/2-deep-convolutional-models-case-studies/" class="article-date">
+  <time class="dt-published" datetime="2019-04-19T03:58:36.000Z" itemprop="datePublished">2019-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      2 Deep convolutional models : case studies
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Why-look-at-case-studies"><a href="#Why-look-at-case-studies" class="headerlink" title="Why look at case studies?"></a>Why look at case studies?</h2><p>It turns out a lot of the past few years of computer vision research has been on how to put together these basic building blocks to form effective convolutional neural networks.  And one of the best ways for you to gain intuition yourself, is to see some of these examples.</p>
+<h4 id="After-the-next-few-chapters-you’ll-be-able-to-read-some-of-the-research-papers-from-the-field-of-computer-vision"><a href="#After-the-next-few-chapters-you’ll-be-able-to-read-some-of-the-research-papers-from-the-field-of-computer-vision" class="headerlink" title="After the next few chapters, you’ll be able to read some of the research papers from the field of computer vision."></a><strong>After the next few chapters, you’ll be able to read some of the research papers from the field of computer vision.</strong></h4><h2 id="Classic-networks"><a href="#Classic-networks" class="headerlink" title="Classic networks"></a>Classic networks</h2><ul>
+<li><h4 id="LeNet-5"><a href="#LeNet-5" class="headerlink" title="LeNet-5"></a>LeNet-5</h4></li>
+</ul>
+<p>And back then, when this paper was written, people used <strong>average pooling</strong> much more. If you’re building a modern variant, you’ll probably use mass pooling instead. So it turns out that if you read the original paper, back then people used <strong>Sigmoid and Tahn</strong> non-linearities, and people weren’t using ReLu non-linearities back then. But back then, computers were much slower. And so, to save on computation as well as on parameters, the original LeNet - 5 had <strong>some crazy complicated way where different filters look at different channels of the input block</strong>. And so, the paper talks about those details, but the more modern implementation you wouldn’t have that type of complexity these days.</p>
+<ul>
+<li><h4 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h4></li>
+</ul>
+<p>So, this neural network actually had a lot of similarities to LeNet, but it was <strong>much bigger</strong>. And the fact that they <strong>could take pretty similar basic building blocks that have a lot more hidden units and trained on a lot more data they trained on the image and the data set</strong>, Another aspect of this architecture that made it much better than LeNet was using the <strong>ReLU</strong> activation function. One is that when this paper was written, GPUs were still a little bit slower. So, it had a <strong>complicated way of training on two GPUs</strong>. The original AlexNet architecture, also had another type of a layer called a <em><strong>local response normalization</strong></em>. the basic idea of local response normalization is, if you look at one of these blocks, one of these volumes that we have on top, let’s say for the sake of argument this one,13 by 13 by 256. look at all 256 numbers and normalize them. And the motivation for this local response normalization was that for each position in this 13 by 13 image, maybe you don’t want too many neurons with a very high activation. But subsequently, many researchers have found that <em><strong>this doesn’t help that much</strong></em>. It was really this paper that convinced a lot of the computer vision community to take a serious look at deep learning, and to convince them that deep learning really works in computer vision, and then it grew on to have a huge impact, not just in computer vision but beyond computer vision as well.</p>
+<ul>
+<li><h4 id="VGG-16"><a href="#VGG-16" class="headerlink" title="VGG-16"></a>VGG-16</h4></li>
+</ul>
+<p>Instead of having so many hyper parameters, let’s use a <strong>much simpler network</strong> where you focus on just having conv layers that are <strong>just three by three filters with stride one and always use the same padding, and make all your max pooling layers two by two with a stride of two</strong>. And so, one very nice thing about the VGG network was, it really simplified these neural network architectures. But VGG-16 is a <strong>relatively deep network</strong>. The 16 in the name VGG-16, refers to the fact that this has 16 layers that have to weight. And this is a pretty large network. This network has a total of about 138 million parameters. And that’s pretty large even by modern standards. But the simplicity of the VGG-16 architecture made it <strong>quite appealing</strong>. You can tell its architecture is <strong>really quite uniform</strong>. There’s a few conv layers followed by a pooling layer, which reduces the height and width. So the pooling layers reduce the height and width. You have a few of them here. But then also, if you look at the number of filters in the conv layers, here you have 64 filters, and then you double to 128, double to 256 doubles to 512. But roughly doubling on every step, or doubling through every stack of conv layers was another <strong>simple principle used to design the architecture of this network</strong>. And so, I think the relative uniformity of this architecture made it <strong>quite attractive to researchers</strong>. <strong>The main downside was that, it was a pretty large network in terms of the number of parameters you had to train.</strong> this made this pattern of how as you go deeper, height and width goes down. It just goes down by a factor of two each time by the pooling layers, whereas the number of channels increases. And sure it roughly goes up by a factor of two every time you have a new set of conv layers.</p>
+<h2 id="ResNets-Residual-Networks"><a href="#ResNets-Residual-Networks" class="headerlink" title="ResNets (Residual Networks)"></a>ResNets (Residual Networks)</h2><p>Very, very deep neural networks are difficult to train because of vanishing and exploding gradients types of problems. skip connections which allows you to take the activation from one layer and suddenly feed it to another layer, even much deeper in the neural network.  And using that, you’re going to build ResNets which enables you to train very, very deep networks sometimes even networks of over 100 layers. <strong>ResNets</strong> are built out of something called a <strong>residual block</strong>. Plain network : [latex]\begin{matrix} z^{[l+1]} &#x3D; W^{[l+1]} a^{[l]} + b^{[l+1]} &amp; a^{[l+1]} &#x3D; g(z^{[l+1]}) \\ z^{[l+2]} &#x3D; W^{[l+2]} a^{[l+1]} + b^{[l+2]} &amp; a^{[l+2]} &#x3D; g(z^{[l+2]})\\ \end{matrix}[&#x2F;latex] Residual block : [latex]\begin{matrix} z^{[l+1]} &#x3D; W^{[l+1]} a^{[l]} + b^{[l+1]} &amp; a^{[l+1]} &#x3D; g(z^{[l+1]}) \\ z^{[l+2]} &#x3D; W^{[l+2]} a^{[l+1]} + b^{[l+2]} &amp; a^{[l+2]} &#x3D; g(z^{[l+2]} + a^{[l]})\\ \end{matrix}[&#x2F;latex] In practice, or in reality, having a plain network. So <strong>no ResNet</strong>, having plain network that’s very <strong>deep</strong> means that your optimization algorithm just has a <strong>much harder</strong> time training. And so, in reality, your training error gets worse if you pick a network that’s too deep. But what happens <strong>with ResNets</strong> is that even as the number of layers gets deeper, you <strong>can have the performance</strong> of the training error kind of keep on going down. Now, even if you train a network with over 100 layers.</p>
+<h2 id="Why-ResNets-work"><a href="#Why-ResNets-work" class="headerlink" title="Why ResNets work?"></a>Why ResNets work?</h2><p><strong>Doing well on the training set</strong> is usually a prerequisite to doing well on your hold out, or on your dev, on your test sets. So being able to at least train the ResNets to do well on a training set is a good first step toward that. <strong>Adding this residual block somewhere in the middle or to the end of this big neural network, it doesn’t hurt performance.</strong> <strong>The residual network works is that it’s so easy for these extra layers to learn the identity function Or at least is easier to go from a decent baseline of not hurting performance and then creating the same can only improve the solution from there.</strong> And then as is common in these networks, you have conv, conv, conv, pool, conv, conv, conv, pool, conv, conv, conv, pool. And then at the end, I have a fully connected layer that then makes a prediction using a softmax.</p>
+<h2 id="Network-in-Network-and-1×1-convolutions"><a href="#Network-in-Network-and-1×1-convolutions" class="headerlink" title="Network in Network and 1×1 convolutions"></a>Network in Network and 1×1 convolutions</h2><p><strong>1 x 1 filter</strong></p>
+<ul>
+<li>6 x 6 x 1 image, doesn’t seem particularly useful</li>
+<li>6 x 6 x 1 channel images, and in particular, what a 1 x 1 convolution will do is it will look at each of the 36 different positions here. And it will take the element wise product between 32 numbers on the left and the 32 numbers in the filter. And then apply a ReLU nonlinearity to it after that.</li>
+</ul>
+<p>And in fact, one way to think about the 32 numbers you have in this 1 x 1 x 32 filter(<strong>weights</strong>) So one way to think about the 1 x 1 convolution is that it is basically having a fully connected neural network that applies to each of the 32 different positions. It’s sometimes also called <strong>Network in Network.</strong> A pretty non-trivial operation that allows you to <strong>shrink</strong> the number of channels in your volumes, or <strong>keep</strong> it the same, or even <strong>increase</strong> it if you want.</p>
+<h2 id="Inception-network-motivation"><a href="#Inception-network-motivation" class="headerlink" title="Inception network motivation"></a>Inception network motivation</h2><p>When designing a layer for a CONV layer you might <strong>have to pick</strong> do you want to 1 x 3 filter, or 3 x 3, or 5 x 5. Or do you want to pooling layer? What <strong>inception network</strong> does is it says, why should you do them all. And this makes the network architecture more complicated but it also works remarkably well. The inception network or what an inception layer says is, is <strong>instead of choosing</strong> what filter size you want in a CONV layer or even do you want a convolutional layer or pooling layer. And the basic idea is that instead of you needing to pick one of these filter sizes or pooling you want and committing to that, <strong>you can do them all and just concatenate all the outputs and let the network learn whatever parameters it wants to use, what are the combinations of these filter sizes at once</strong>. There’s a <strong>problem</strong> with the inception layer as I’ve describe it here which is <strong>computational cost</strong>. A <strong>bottleneck layer</strong> is the smallest part of this network. We shrink the representation before increasing the size again. The total number of multiplications you need to do is the sum of those.</p>
+<ul>
+<li>If you are building a layer of a neural network and you <strong>don’t want to have to decide</strong> do you want a 1 x 1 or 3 x 3 or 5 x 5 of pooling layer. The <strong>inception</strong> module, let’s do them all. And let’s concatenate the results.</li>
+<li>The <strong>problem of computational cost</strong> and we just saw here was how using a 1 x 1 convolution, you can <strong>create this bottleneck layer thereby reducing the computational cost significantly</strong>.</li>
+<li>It turns out that so long as you implement this bottleneck layer within the region, you can shrink down the representation size significantly. And it doesn’t seem to hurt the performance. That saves you a lot of computation.</li>
+</ul>
+<h2 id="Inception-network"><a href="#Inception-network" class="headerlink" title="Inception network"></a>Inception network</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Inception_module.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Inception_network.png"></p>
+<h2 id="Using-open-source-implementations"><a href="#Using-open-source-implementations" class="headerlink" title="Using open-source implementations"></a>Using open-source implementations</h2><p>It turns out that a lot of these neural networks are <strong>difficult or finicky to replicate</strong>. Because a lot of details about tuning the hyperparameters. Sometimes difficult even for say, AI or deep learning Ph.D. students even at the top universities to replicate someone else’s publish work just from reading the research paper. Fortunately, a lot of deep learning researchers <strong>routinely open source their work on the internet such as on GitHub</strong>. If you see a research paper whose results you would like to build on top of, one thing you should consider doing, one thing I do quite often is just <strong>look online for an open-source implementation</strong>. <strong>The MIT license is one of the more permissive open source licenses.</strong></p>
+<ol>
+<li>If you’re developing a computer vision application, a very common workflow would be to pick an architecture that you’d like. Maybe one of the ones you’ve learned about in this course, or maybe one that you’ve heard about from a friend, or from some of the literature.</li>
+<li>And look for an open-source implementation and download it from GitHub to start building from there.</li>
+</ol>
+<p><em>One of the advantages of doing so also is that sometimes these networks take a long time to train and someone else might have used multiple GPUs and a very largely data set to pre-trained some of these networks. And that allows you to do transfer learning using these networks.</em></p>
+<h2 id="Transfer-Learning"><a href="#Transfer-Learning" class="headerlink" title="Transfer Learning"></a>Transfer Learning</h2><p><em>If you’re building a computer vision application, rather than training the weights from scratch, from random initialization, you often make much faster progress if your download weights that some else has already trained on a network architecture.</em> <em>And use that as pre-training and transfer that to a new task that you might be interested in. Use transfer learning to sort of transfer knowledge from some of these very large public data sets to your own problem.</em> Go online and download some open source implementation of a neural network. And <strong>download not just the code, but also the weights</strong>. <strong>What you can do is then get rid of the softmax layer, and create your own softmax unit by using someone else’s pre-trained weights, you’re likely to get pretty good performance on this, even with a small data set. Fortunately, a lot of deep learning frameworks support this mode of operation.</strong> And these are different ways in different deep learning programming frameworks letting you specify whether or not to train the weights associated with a particular layer. <strong>If you have a bigger a data set, then maybe of enough data, not just to train a single softmax unit. But to train some modest-sized neural network that comprises the last few layers of this final network that you end up using. And then finally, if you have a lot of data, one thing you might do is take this open source network and weights, and use the whole thing just as initialization, and train the whole network.</strong> <strong>Computer vision is one where transfer learning is somethingz that you should almost always do.</strong> Unless you actually have a very, very large, unless you have an exceptionally large data set to train everything else from scratch yourself.</p>
+<h2 id="Data-augmentation"><a href="#Data-augmentation" class="headerlink" title="Data augmentation"></a>Data augmentation</h2><p>Most computer vision tasks could <strong>use more data</strong> and so <strong>data augmentation</strong> is one of the techniques that is often used to improve the performance of computer vision systems. <strong>The majority of computer vision problems is that we just can’t get enough data.</strong> <strong>The common data augmentation methods :</strong></p>
+<ul>
+<li>mirroring on the vertical axis</li>
+<li>random cropping<ul>
+<li>Rotation Shearing local warping</li>
+</ul>
+</li>
+<li>color shifting</li>
+</ul>
+<p>One of the ways to influence color distortion uses an algorithm called <strong>PCA (Principles Components Analysis)</strong>.</p>
+<p><em>The rough idea the called PCA color augmentation, is for example, if your image is mainly purple, if it has mainly red and blue tints,</em> <em>and very little green, then PCA color augmentation will add and subtract a lot to red and blue were relatively little to green so it kind of keeps the overall color of the tint the same.</em></p>
+<p>A pretty common way of of implementing data augmentation is to really have one thread or <strong>multiple threads</strong> that is responsible for <strong>loading</strong> the data and implementing distortions, <strong>and then passing that to some other thread or some other process</strong> that then does the training and often this and this, can run in <strong>parallel</strong>. <strong>A good place to get started might be to use someone else’s open source implementation for how they use data augmentation.</strong></p>
+<h2 id="The-state-of-computer-vision"><a href="#The-state-of-computer-vision" class="headerlink" title="The state of computer vision"></a>The state of computer vision</h2><p><em>Deep learning has been successfully applied to computer vision, natural language processing, speech recognition, online advertising, logistics, many, many, many problems.</em> Image recognition was a problem of looking at a picture and telling you, is this a cat or not? Whereas object detection is look at a picture and actually, you’re putting the bounding boxes and telling you where in the picture the objects, such as the cars are, as well. And so because of <strong>the costs of getting the bounding boxes is just more expensive to label the objects and the bounding boxes</strong>, so we tend to have less data for object detection than for image recognition. <strong>On average that when you have a lot data, you tend to find people getting away with using simpler algorithms as well as less hand engineering. So there’s just less needing to carefully design features for the problem.</strong></p>
+<ul>
+<li>But instead you can have a giant neural network, even a simpler architecture and have a neural network just learn whatever it wants to learn when you have a lot of data.</li>
+<li>Whereas in contrast, when you don’t have that much data, then, on average you see people engaging in more hand engineering and</li>
+</ul>
+<p><strong>Two sources of knowledge :</strong></p>
+<ul>
+<li>labeled data</li>
+<li>hand engineering features &#x2F; network architectures &#x2F; other components of your system</li>
+</ul>
+<p>And someone that is insightful with hand engineering will get better performance. If you look at the <em>computer vision literature</em>, look at the set of ideas out there, you’ll also find that people are <em>really enthusiastic</em>. They’re <em>really into doing well on standardized benchmark data sets and on winning competitions</em>. And for computer vision researchers, if you do well on the benchmarks it’s <em>easier to get the paper published</em>. So there is just a lot of attention on doing well on these benchmarks. </p>
+<ul>
+<li>And the positive side of this is that it helps the whole community figure out what are the most effective algorithms</li>
+<li>but you also see in the papers, people do things that allow you to do well on a benchmark,</li>
+<li><strong>but that you wouldn’t really use in a production or a system that you deploy in an actual application.</strong></li>
+</ul>
+<p><strong>Tips for doing well on benchmarks &#x2F; winning competitions</strong></p>
+<ul>
+<li>Ensembling</li>
+</ul>
+<p>Train several neural networks independently and average their outputs</p>
+<p><em>But it’s almost never used in production to serve actual customers, I guess unless you have a huge computational budget and don’t mind burning a lot more of it per customer image.</em></p>
+<ul>
+<li>Multi-crop at test time</li>
+</ul>
+<p>Take the central crop. Then, take the four corners crops. Run these images through your classifier and then average the results.</p>
+<p><strong>And a neural network that works well on one vision problem often, maybe surprisingly, but it just often will work other vision problems as well. So, to build a practical system often you do well starting off with some else’s neural network architecture.</strong></p>
+<ul>
+<li>And you can use an open source implementation if possible because the open source implementation might have figured out all the finicky details.</li>
+<li>But if you have the computer resources and the inclination, don’t let me stop you from training your own networks from scratch. And, in fact, if you want to invent your own computer vision algorithm, that’s what you might have to do.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/19/2-deep-convolutional-models-case-studies/" data-id="cl56gcvu90046lgchbfwe4adj" data-title="2 Deep convolutional models : case studies" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/19/3-object-detection/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          3 Object detection
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/18/1-foundations-of-convolutional-neural-networks/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">1 Foundations of Convolutional Neural Networks</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud-Computing/">Cloud Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Vision/">Computer Vision</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Internet-Of-Things/">Internet Of Things</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Operating-System/">Operating System</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wordpress/">Wordpress</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/">cloud-computing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cloud-computing/Virtualization/">Virtualization</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/">computer-vision</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/">OpenCV</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/OpenCV/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/computer-vision/QT/">QT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/">ARM</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/">CentOS 7</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/">Ubuntu 16.04</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Apache/">Apache</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/CentOS-7/">CentOS 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/X11/">X11</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine-learning</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/MXNet/">MXNet</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/Yolo/">Yolo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Boost/">Boost</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Lua/">Lua</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/">operating-system</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/">Android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Android/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Linux/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/MacOS/">MacOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/OpenHarmony/">OpenHarmony</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/operating-system/Windows/">Windows</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/">the-internet-of-thingslot</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-6ULL/">i.MX 6ULL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/the-internet-of-thingslot/i-MX-RT/">i.MX RT</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/">Android Studio</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/">GDA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/IDA-Pro/">IDA Pro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/Visual-Studio/">Visual Studio</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E9%A9%B1%E5%8A%A8%E7%AF%87/">I.MX6ULL Linux 驱动篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E7%B3%BB%E7%BB%9F%E7%AF%87/">I.MX6ULL Linux 系统篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E8%A3%B8%E6%9C%BA%E7%AF%87/">I.MX6ULL Linux 裸机篇</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/10/i-mx6ull-linux-%E5%85%A5%E9%97%A8%E7%AF%87/">I.MX6ULL Linux 入门篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -315,6 +315,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Water"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Water</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -427,9 +429,7 @@
 
 </body>
 </html>
-{ activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
+torage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
       let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
@@ -475,6 +475,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Water"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Water</p>
   <div class="site-description" itemprop="description"></div>
 </div>

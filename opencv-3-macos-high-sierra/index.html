@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="How to Install Tesseract With All Languages How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3 Read&#x2F;Write Image and Read VideoFile&#x2F;Camera and Show It OpenCV Data Stora">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OpenCV 3 on macOS High Sierra">
+<meta property="og:url" content="http://example.com/opencv-3-macos-high-sierra/index.html">
+<meta property="og:site_name" content="Water&#39;s Home">
+<meta property="og:description" content="How to Install Tesseract With All Languages How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3 Read&#x2F;Write Image and Read VideoFile&#x2F;Camera and Show It OpenCV Data Stora">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-12T04:16:42.000Z">
+<meta property="article:modified_time" content="2022-07-04T07:26:09.119Z">
+<meta property="article:author" content="Water">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/opencv-3-macos-high-sierra/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>OpenCV 3 on macOS High Sierra | Water's Home
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Water's Home</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="en">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">OpenCV 3 on macOS High Sierra
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <ol>
+<li><h3 id="How-to-Install-Tesseract-With-All-Languages"><a href="#How-to-Install-Tesseract-With-All-Languages" class="headerlink" title="How to Install Tesseract With All Languages"></a><a href="../2018/01/21/install-tesseract-languages/">How to Install Tesseract With All Languages</a></h3></li>
+<li><h3 id="How-to-Install-OpenCV3-WITH-VTK-WITH-OPENGL-on-macOS-High-Sierra-10-13-3"><a href="#How-to-Install-OpenCV3-WITH-VTK-WITH-OPENGL-on-macOS-High-Sierra-10-13-3" class="headerlink" title="How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3"></a><a href="../2018/01/28/install-opencv3-with_vtk-with_opengl-macos-high-sierra-10-13-3/">How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3</a></h3></li>
+<li><h3 id="Read-x2F-Write-Image-and-Read-VideoFile-x2F-Camera-and-Show-It"><a href="#Read-x2F-Write-Image-and-Read-VideoFile-x2F-Camera-and-Show-It" class="headerlink" title="Read&#x2F;Write Image and Read VideoFile&#x2F;Camera and Show It"></a><a href="../2018/02/12/read-write-image-read-videofile-camera-show/">Read&#x2F;Write Image and Read VideoFile&#x2F;Camera and Show It</a></h3></li>
+<li><h3 id="OpenCV-Data-Storage"><a href="#OpenCV-Data-Storage" class="headerlink" title="OpenCV Data Storage"></a><a href="../2018/02/12/opencv-data-storage/">OpenCV Data Storage</a></h3></li>
+<li><h3 id="OpenCV-Simple-GUI-x2F-QT"><a href="#OpenCV-Simple-GUI-x2F-QT" class="headerlink" title="OpenCV Simple GUI &#x2F; QT"></a><a href="../2018/02/12/opencv-simple-gui-qt/">OpenCV Simple GUI &#x2F; QT</a></h3></li>
+<li><h3 id="Slider-amp-Button-QT-CHECKBOX-QT-RADIOBOX-QT-PUSH-BUTTON"><a href="#Slider-amp-Button-QT-CHECKBOX-QT-RADIOBOX-QT-PUSH-BUTTON" class="headerlink" title="Slider &amp; Button(QT_CHECKBOX, QT_RADIOBOX, QT_PUSH_BUTTON)"></a><a href="../2018/02/12/slider-mouse-buttonqt_checkbox-qt_radiobox-qt_push_button/">Slider &amp; Button(QT_CHECKBOX, QT_RADIOBOX, QT_PUSH_BUTTON)</a></h3></li>
+<li><h3 id="OpenGL-amp-VTK"><a href="#OpenGL-amp-VTK" class="headerlink" title="OpenGL &amp; VTK"></a><a href="../2018/02/12/opengl-vtk/">OpenGL &amp; VTK</a></h3></li>
+<li><h3 id="Show-histogram-amp-Equalize-histogram-amp-Lomography-effect-amp-Cartoonize-effect"><a href="#Show-histogram-amp-Equalize-histogram-amp-Lomography-effect-amp-Cartoonize-effect" class="headerlink" title="Show histogram &amp; Equalize histogram &amp; Lomography effect &amp; Cartoonize effect"></a><a href="../2018/02/12/show-histogram-equalize-histogram-lomography-effect-cartoonize-effect/">Show histogram &amp; Equalize histogram &amp; Lomography effect &amp; Cartoonize effect</a></h3></li>
+<li><h3 id="Noise-removal-amp-Lighting-removal-amp-Binarization"><a href="#Noise-removal-amp-Lighting-removal-amp-Binarization" class="headerlink" title="Noise removal &amp; Lighting removal &amp; Binarization"></a><a href="../2018/05/03/noise-removal-lighting-removal-binarization/">Noise removal &amp; Lighting removal &amp; Binarization</a></h3></li>
+<li><h3 id="Segmenting-image-The-connected-components-amp-The-findContours-function"><a href="#Segmenting-image-The-connected-components-amp-The-findContours-function" class="headerlink" title="Segmenting image(The connected components &amp; The findContours function)"></a><a href="../2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/">Segmenting image(The connected components &amp; The findContours function)</a></h3></li>
+<li><h3 id="Training-an-SVM-model"><a href="#Training-an-SVM-model" class="headerlink" title="Training an SVM model"></a>Training an SVM model</h3></li>
+<li><h3 id="Input-Image-Prediction"><a href="#Input-Image-Prediction" class="headerlink" title="Input Image Prediction"></a>Input Image Prediction</h3></li>
+<li><h3 id="Overlaying-A-Facemask"><a href="#Overlaying-A-Facemask" class="headerlink" title="Overlaying A Facemask"></a><a href="../2018/05/03/overlaying-a-facemask/">Overlaying A Facemask</a></h3></li>
+<li><h3 id="Tracking-Your-Ears"><a href="#Tracking-Your-Ears" class="headerlink" title="Tracking Your Ears"></a><a href="../2018/05/03/tracking-your-ears/">Tracking Your Ears</a></h3></li>
+<li><h3 id="Background-Subtraction-VS-Frame-Differencing"><a href="#Background-Subtraction-VS-Frame-Differencing" class="headerlink" title="Background Subtraction VS Frame Differencing"></a><a href="../2018/05/03/background-subtraction-vs-frame-differencing/">Background Subtraction VS Frame Differencing</a></h3></li>
+<li><h3 id="Slimming-x2F-Thickening-The-Shapes"><a href="#Slimming-x2F-Thickening-The-Shapes" class="headerlink" title="Slimming&#x2F;Thickening The Shapes"></a><a href="../2018/05/03/slimming-thickening-the-shapes/">Slimming&#x2F;Thickening The Shapes</a></h3></li>
+<li><h3 id="Other-Morphological-Operators"><a href="#Other-Morphological-Operators" class="headerlink" title="Other Morphological Operators"></a><a href="../2018/05/03/other-morphological-operators/">Other Morphological Operators</a></h3></li>
+<li><h3 id="Tracking-Specific-Color-x2F-Tracking-Object"><a href="#Tracking-Specific-Color-x2F-Tracking-Object" class="headerlink" title="Tracking Specific Color &#x2F; Tracking Object"></a><a href="../2018/02/13/tracking-specific-color-tracking-object/">Tracking Specific Color &#x2F; Tracking Object</a></h3></li>
+<li><h3 id="Harris-Corner-Detector-amp-Shi-Tomasi-Corner-Detector"><a href="#Harris-Corner-Detector-amp-Shi-Tomasi-Corner-Detector" class="headerlink" title="Harris Corner Detector &amp; Shi-Tomasi Corner Detector"></a><a href="../2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/">Harris Corner Detector &amp; Shi-Tomasi Corner Detector</a></h3></li>
+<li><h3 id="Lucas-Kanade-amp-Farneback"><a href="#Lucas-Kanade-amp-Farneback" class="headerlink" title="Lucas-Kanade &amp; Farneback"></a><a href="../2018/05/03/lucas-kanade-farneback/">Lucas-Kanade &amp; Farneback</a></h3></li>
+<li><h3 id="Text-Segmentation"><a href="#Text-Segmentation" class="headerlink" title="Text Segmentation"></a><a href="../2018/05/03/text-segmentation/">Text Segmentation</a></h3></li>
+<li><h3 id="Tesseract-OCR-API"><a href="#Tesseract-OCR-API" class="headerlink" title="Tesseract OCR API"></a><a href="../2018/05/03/tesseract-ocr-api/">Tesseract OCR API</a></h3></li>
+<li><h3 id="The-Scene-Text-Detection-amp-Extraction-amp-Recognition"><a href="#The-Scene-Text-Detection-amp-Extraction-amp-Recognition" class="headerlink" title="The Scene Text Detection &amp; Extraction &amp; Recognition"></a><a href="../2018/05/03/the-scene-text-detection-extraction-recognition/">The Scene Text Detection &amp; Extraction &amp; Recognition</a></h3></li>
+</ol>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-Install-Tesseract-With-All-Languages"><span class="nav-number">1.</span> <span class="nav-text">How to Install Tesseract With All Languages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-Install-OpenCV3-WITH-VTK-WITH-OPENGL-on-macOS-High-Sierra-10-13-3"><span class="nav-number">2.</span> <span class="nav-text">How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Read-x2F-Write-Image-and-Read-VideoFile-x2F-Camera-and-Show-It"><span class="nav-number">3.</span> <span class="nav-text">Read&#x2F;Write Image and Read VideoFile&#x2F;Camera and Show It</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenCV-Data-Storage"><span class="nav-number">4.</span> <span class="nav-text">OpenCV Data Storage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenCV-Simple-GUI-x2F-QT"><span class="nav-number">5.</span> <span class="nav-text">OpenCV Simple GUI &#x2F; QT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slider-amp-Button-QT-CHECKBOX-QT-RADIOBOX-QT-PUSH-BUTTON"><span class="nav-number">6.</span> <span class="nav-text">Slider &amp; Button(QT_CHECKBOX, QT_RADIOBOX, QT_PUSH_BUTTON)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenGL-amp-VTK"><span class="nav-number">7.</span> <span class="nav-text">OpenGL &amp; VTK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-histogram-amp-Equalize-histogram-amp-Lomography-effect-amp-Cartoonize-effect"><span class="nav-number">8.</span> <span class="nav-text">Show histogram &amp; Equalize histogram &amp; Lomography effect &amp; Cartoonize effect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Noise-removal-amp-Lighting-removal-amp-Binarization"><span class="nav-number">9.</span> <span class="nav-text">Noise removal &amp; Lighting removal &amp; Binarization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Segmenting-image-The-connected-components-amp-The-findContours-function"><span class="nav-number">10.</span> <span class="nav-text">Segmenting image(The connected components &amp; The findContours function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training-an-SVM-model"><span class="nav-number">11.</span> <span class="nav-text">Training an SVM model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-Image-Prediction"><span class="nav-number">12.</span> <span class="nav-text">Input Image Prediction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overlaying-A-Facemask"><span class="nav-number">13.</span> <span class="nav-text">Overlaying A Facemask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tracking-Your-Ears"><span class="nav-number">14.</span> <span class="nav-text">Tracking Your Ears</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Background-Subtraction-VS-Frame-Differencing"><span class="nav-number">15.</span> <span class="nav-text">Background Subtraction VS Frame Differencing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slimming-x2F-Thickening-The-Shapes"><span class="nav-number">16.</span> <span class="nav-text">Slimming&#x2F;Thickening The Shapes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Other-Morphological-Operators"><span class="nav-number">17.</span> <span class="nav-text">Other Morphological Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tracking-Specific-Color-x2F-Tracking-Object"><span class="nav-number">18.</span> <span class="nav-text">Tracking Specific Color &#x2F; Tracking Object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Harris-Corner-Detector-amp-Shi-Tomasi-Corner-Detector"><span class="nav-number">19.</span> <span class="nav-text">Harris Corner Detector &amp; Shi-Tomasi Corner Detector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lucas-Kanade-amp-Farneback"><span class="nav-number">20.</span> <span class="nav-text">Lucas-Kanade &amp; Farneback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Text-Segmentation"><span class="nav-number">21.</span> <span class="nav-text">Text Segmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tesseract-OCR-API"><span class="nav-number">22.</span> <span class="nav-text">Tesseract OCR API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Scene-Text-Detection-amp-Extraction-amp-Recognition"><span class="nav-number">23.</span> <span class="nav-text">The Scene Text Detection &amp; Extraction &amp; Recognition</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Water</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Water</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -99,6 +99,7 @@
       <h1 class="site-title">Water's Home</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
+      <p class="site-subtitle" itemprop="description">Just another Life Style</p>
   </div>
 
   <div class="site-nav-right">
@@ -115,6 +116,16 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -234,8 +245,8 @@
 <h4 id="hello-js"><a href="#hello-js" class="headerlink" title="hello.js"></a>hello.js</h4><p>&#x2F;&#x2F; hello.js<br>const addon &#x3D; require(‘.&#x2F;build&#x2F;Release&#x2F;addon’);</p>
 <p>console.log(addon.hello());<br>&#x2F;&#x2F; Prints: ‘world’</p>
 <h4 id="binding-gyp"><a href="#binding-gyp" class="headerlink" title="binding.gyp"></a>binding.gyp</h4><p>{<br>  “targets”: [<br>    {<br>      “target_name”: “addon”,<br>      “sources”: [ “hello.cc” ]<br>    }<br>  ]<br>}</p>
-<h3 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h3><p>[root@localhost test_nodejs]# node-gyp configure<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#x6e;&#x6f;&#100;&#x65;&#x2d;&#x67;&#121;&#x70;&#x40;&#51;&#46;&#54;&#x2e;&#50;">&#x6e;&#x6f;&#100;&#x65;&#x2d;&#x67;&#121;&#x70;&#x40;&#51;&#46;&#54;&#x2e;&#50;</a><br>gyp info using <a href="mailto:&#110;&#111;&#x64;&#x65;&#64;&#56;&#46;&#x31;&#49;&#46;&#49;">&#110;&#111;&#x64;&#x65;&#64;&#56;&#46;&#x31;&#49;&#46;&#49;</a>  linux  x64<br>gyp info spawn &#x2F;usr&#x2F;bin&#x2F;python2<br>gyp info spawn args [ ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;gyp&#x2F;gyp_main.py’,<br>gyp info spawn args   ‘binding.gyp’,<br>gyp info spawn args   ‘-f’,<br>gyp info spawn args   ‘make’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build&#x2F;config.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;addon.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;include&#x2F;node&#x2F;common.gypi’,<br>gyp info spawn args   ‘-Dlibrary&#x3D;shared_library’,<br>gyp info spawn args   ‘-Dvisibility&#x3D;default’,<br>gyp info spawn args   ‘-Dnode_root_dir&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1’,<br>gyp info spawn args   ‘-Dnode_gyp_dir&#x3D;&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp’,<br>gyp info spawn args   ‘-Dnode_lib_file&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;&lt;(target_arch)&#x2F;node.lib’,<br>gyp info spawn args   ‘-Dmodule_root_dir&#x3D;&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs’,<br>gyp info spawn args   ‘-Dnode_engine&#x3D;v8’,<br>gyp info spawn args   ‘–depth&#x3D;.’,<br>gyp info spawn args   ‘–no-parallel’,<br>gyp info spawn args   ‘–generator-output’,<br>gyp info spawn args   ‘build’,<br>gyp info spawn args   ‘-Goutput_dir&#x3D;.’ ]<br>gyp info ok<br>[root@localhost test_nodejs]#<br>[root@localhost test_nodejs]# ls<br>binding.gyp  build  hello.cc  hello.js<br>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile</p>
-<p>[root@localhost test_nodejs]# node-gyp build<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#x6e;&#x6f;&#x64;&#x65;&#x2d;&#x67;&#x79;&#x70;&#64;&#x33;&#x2e;&#x36;&#46;&#x32;">&#x6e;&#x6f;&#x64;&#x65;&#x2d;&#x67;&#x79;&#x70;&#64;&#x33;&#x2e;&#x36;&#46;&#x32;</a><br>gyp info using <a href="mailto:&#x6e;&#x6f;&#100;&#x65;&#64;&#56;&#x2e;&#x31;&#49;&#x2e;&#49;">&#x6e;&#x6f;&#100;&#x65;&#64;&#56;&#x2e;&#x31;&#49;&#x2e;&#49;</a>  linux  x64<br>gyp info spawn make<br>gyp info spawn args [ ‘BUILDTYPE&#x3D;Release’, ‘-C’, ‘build’ ]<br>make: Entering directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>  CXX(target) Release&#x2F;obj.target&#x2F;addon&#x2F;hello.o<br>  SOLINK_MODULE(target) Release&#x2F;obj.target&#x2F;addon.node<br>  COPY Release&#x2F;addon.node<br>make: Leaving directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>gyp info ok </p>
+<h3 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h3><p>[root@localhost test_nodejs]# node-gyp configure<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#110;&#x6f;&#100;&#101;&#45;&#x67;&#121;&#112;&#x40;&#51;&#x2e;&#54;&#46;&#50;">&#110;&#x6f;&#100;&#101;&#45;&#x67;&#121;&#112;&#x40;&#51;&#x2e;&#54;&#46;&#50;</a><br>gyp info using <a href="mailto:&#110;&#x6f;&#100;&#101;&#64;&#x38;&#46;&#49;&#x31;&#46;&#49;">&#110;&#x6f;&#100;&#101;&#64;&#x38;&#46;&#49;&#x31;&#46;&#49;</a>  linux  x64<br>gyp info spawn &#x2F;usr&#x2F;bin&#x2F;python2<br>gyp info spawn args [ ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;gyp&#x2F;gyp_main.py’,<br>gyp info spawn args   ‘binding.gyp’,<br>gyp info spawn args   ‘-f’,<br>gyp info spawn args   ‘make’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build&#x2F;config.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;addon.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;include&#x2F;node&#x2F;common.gypi’,<br>gyp info spawn args   ‘-Dlibrary&#x3D;shared_library’,<br>gyp info spawn args   ‘-Dvisibility&#x3D;default’,<br>gyp info spawn args   ‘-Dnode_root_dir&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1’,<br>gyp info spawn args   ‘-Dnode_gyp_dir&#x3D;&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp’,<br>gyp info spawn args   ‘-Dnode_lib_file&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;&lt;(target_arch)&#x2F;node.lib’,<br>gyp info spawn args   ‘-Dmodule_root_dir&#x3D;&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs’,<br>gyp info spawn args   ‘-Dnode_engine&#x3D;v8’,<br>gyp info spawn args   ‘–depth&#x3D;.’,<br>gyp info spawn args   ‘–no-parallel’,<br>gyp info spawn args   ‘–generator-output’,<br>gyp info spawn args   ‘build’,<br>gyp info spawn args   ‘-Goutput_dir&#x3D;.’ ]<br>gyp info ok<br>[root@localhost test_nodejs]#<br>[root@localhost test_nodejs]# ls<br>binding.gyp  build  hello.cc  hello.js<br>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile</p>
+<p>[root@localhost test_nodejs]# node-gyp build<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#x6e;&#111;&#x64;&#x65;&#45;&#103;&#x79;&#x70;&#x40;&#x33;&#46;&#x36;&#x2e;&#x32;">&#x6e;&#111;&#x64;&#x65;&#45;&#103;&#x79;&#x70;&#x40;&#x33;&#46;&#x36;&#x2e;&#x32;</a><br>gyp info using <a href="mailto:&#110;&#111;&#x64;&#x65;&#64;&#x38;&#46;&#49;&#49;&#x2e;&#49;">&#110;&#111;&#x64;&#x65;&#64;&#x38;&#46;&#49;&#49;&#x2e;&#49;</a>  linux  x64<br>gyp info spawn make<br>gyp info spawn args [ ‘BUILDTYPE&#x3D;Release’, ‘-C’, ‘build’ ]<br>make: Entering directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>  CXX(target) Release&#x2F;obj.target&#x2F;addon&#x2F;hello.o<br>  SOLINK_MODULE(target) Release&#x2F;obj.target&#x2F;addon.node<br>  COPY Release&#x2F;addon.node<br>make: Leaving directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>gyp info ok </p>
 <p>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile  Release<br>[root@localhost test_nodejs]# ls build&#x2F;Release&#x2F;<br>addon.node  obj.target</p>
 <p>[root@localhost test_nodejs]# node hello.js<br>world</p>
 
@@ -337,11 +348,21 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
         <span class="site-state-item-count">64</span>
-        <span class="site-state-item-name">categories</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/linmonsv" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;linmonsv" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:qin2@qq.com" title="E-Mail → mailto:qin2@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -363,7 +384,7 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2017 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>

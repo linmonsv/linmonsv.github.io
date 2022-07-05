@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-6-logistic-regression" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-mnist-caffe" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/26/6-logistic-regression/" class="article-date">
-  <time class="dt-published" datetime="2019-03-26T06:40:42.000Z" itemprop="datePublished">2019-03-26</time>
+    <a href="/2019/01/15/mnist-caffe/" class="article-date">
+  <time class="dt-published" datetime="2019-01-15T09:01:58.000Z" itemprop="datePublished">2019-01-15</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/26/6-logistic-regression/">6 Logistic Regression</a>
+      <a class="p-name article-title" href="/2019/01/15/mnist-caffe/">MNIST : Caffe</a>
     </h1>
   
 
@@ -97,24 +97,56 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>Classification : [latex]y &#x3D; [&#x2F;latex] 0 or 1 [latex]h_\theta (x)[&#x2F;latex] can be &gt; 1 or &lt; 0</p>
-<p>Logistic Regression: [latex]0 \leq h_\theta (x) \leq 1 [&#x2F;latex] Logistic regression which has the property that the output, the predictions of logistic regression are always between zero and one. Logistic Regression is actually a classification algorithm.</p>
-<h2 id="Hypothesis-Representation"><a href="#Hypothesis-Representation" class="headerlink" title="Hypothesis Representation"></a>Hypothesis Representation</h2><p><strong>Sigmoid function</strong> : [latex]g(z) &#x3D; \frac {1}{1+e^{-z}}[&#x2F;latex]</p>
-<p>import numpy as np<br>def sigmoid(z):<br>    return 1 &#x2F; (1 + np.exp(-z))</p>
-<h2 id="Decision-Boundary"><a href="#Decision-Boundary" class="headerlink" title="Decision Boundary"></a>Decision Boundary</h2><p>Much higher order polynomials, then it’s possible to show that you can get even more complex decision boundaries and logistic regression can be used to find the zero boundaries.</p>
-<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>How to fit the parameters theta for logistic regression. In particular, I’d like to define the optimization objective or the cost function that we’ll use to fit the parameters. Here’s to supervised learning problem of fitting a logistic regression model.</p>
-<h4 id="Linear-regression-the-cost-function"><a href="#Linear-regression-the-cost-function" class="headerlink" title="Linear regression the cost function"></a>Linear regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} \frac {1}{2}(h_\theta(x^{(i)}) - y^{(i)})^{2} [&#x2F;latex]</p>
-<h4 id="Logistic-regression-the-cost-function"><a href="#Logistic-regression-the-cost-function" class="headerlink" title="Logistic regression the cost function"></a>Logistic regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} Cost(h_\theta(x^{(i)}), y^{(i)}) [&#x2F;latex]</p>
-<p>[latex] Cost(h_\theta (x), y) &#x3D; \begin{cases} -log(h_\theta(x)) &amp; \text{ if } y&#x3D;1 \\ -log(1 - h_\theta(x)) &amp; \text{ if } y&#x3D;0 \end{cases} [&#x2F;latex]</p>
-<h2 id="Simplified-Cost-Function-and-Gradient-Descent"><a href="#Simplified-Cost-Function-and-Gradient-Descent" class="headerlink" title="Simplified Cost Function and Gradient Descent"></a>Simplified Cost Function and Gradient Descent</h2><p>How to implement a fully working version of logistic regression. It’s too hard to notes here , if you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a> A vectorized implementation can update, you know, all of these N plus 1 parameters all in one fell swoop. Feature scaling can help gradient descents converge faster for linear regression. The idea of feature scaling also applies to gradient descent for logistic regression.</p>
-<h2 id="Advanced-Optimization"><a href="#Advanced-Optimization" class="headerlink" title="Advanced Optimization"></a>Advanced Optimization</h2><p>For gradient descent, I guess technically you don’t actually need code to compute the cost function [latex]J_\theta[&#x2F;latex]. You only need code to compute the derivative terms. Conjugate gradient BFGS and L-BFGS are examples of more sophisticated optimization algorithms. <strong>These algorithms have a number of advantages:</strong>*   do not need to manually pick the learning rate alpha.</p>
-<p><em>It is actually entirely possible to use these algorithms successfully and apply to lots of different learning problems without actually understanding the inter-loop of what these algorithms do.</em> For these algorithms also what I would recommend you do is just <strong>use a software library</strong>. Sophisticated optimization library, it makes the just a little bit more opaque and so just maybe a little bit harder to debug. But these algorithms <strong>often run much faster</strong> than gradient descent. If you have <strong>a large machine learning problem</strong>, you can use these algorithms instead of using gradient descent.</p>
-<h2 id="Multiclass-Classification-One-vs-all"><a href="#Multiclass-Classification-One-vs-all" class="headerlink" title="Multiclass Classification_ One-vs-all"></a>Multiclass Classification_ One-vs-all</h2><p>one-versus-all classification Do the same thing for the third class and fit a third classifier H superscript 3 of X and maybe this or give us a classifier that separates the positive and negative examples like that. Basically pick the classifier, pick whichever one of the three classifiers is most confident, or most enthusistically says that it thinks it has a right class. And with this little method you can now take the logistic regression classifier and make it work on multi-class classification problems as well.</p>
+        <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>wget <a target="_blank" rel="noopener" href="http://deeplearning.net/data/mnist/mnist.pkl.gz">http://deeplearning.net/data/mnist/mnist.pkl.gz</a></p>
+<h2 id="Loading-data-from-pkl"><a href="#Loading-data-from-pkl" class="headerlink" title="Loading data from pkl"></a>Loading data from pkl</h2><p>import os<br>import pickle, gzip<br>from matplotlib import pyplot</p>
+<p>print(‘Loading data from mnist.pkl.gz …’)<br>with gzip.open(‘mnist.pkl.gz’, ‘rb’) as f:<br>    train_set, valid_set, test_set &#x3D; pickle.load(f)</p>
+<p>imgs_dir &#x3D; ‘mnist’<br>os.system(‘mkdir -p {}’.format(imgs_dir))<br>datasets &#x3D; {‘train’: train_set, ‘val’: valid_set, ‘test’: test_set}</p>
+<p>for dataname, dataset in datasets.items():<br>    print(‘Converting {} dataset …’.format(dataname))<br>    data_dir &#x3D; os.sep.join([imgs_dir, dataname])</p>
+<pre><code>os.system(&#39;mkdir -p &#123;&#125;&#39;.format(data\_dir))
+
+for i, (img, label) in enumerate(zip(\*dataset)):
+
+    filename = &#39;&#123;:0&gt;6d&#125;\_&#123;&#125;.jpg&#39;.format(i, label)
+
+    filepath = os.sep.join(\[data\_dir, filename\])
+
+    img = img.reshape((28, 28))
+
+    pyplot.imsave(filepath, img, cmap=&#39;gray&#39;)
+    if (i + 1) % 10000 == 0:
+        print(&#39;&#123;&#125; images converted!&#39;.format(i + 1))
+</code></pre>
+<h2 id="Prepare-imglist-for-Caffe"><a href="#Prepare-imglist-for-Caffe" class="headerlink" title="Prepare imglist for Caffe"></a>Prepare imglist for Caffe</h2><p>import os<br>import sys</p>
+<p>input_path &#x3D; sys.argv[1].rstrip(os.sep)</p>
+<p>output_path &#x3D; sys.argv[2]</p>
+<p>filenames &#x3D; os.listdir(input_path)<br>with open(output_path, ‘w’) as f:<br>    for filename in filenames:</p>
+<pre><code>    filepath = os.sep.join(\[input\_path, filename\])
+
+    label = filename\[: filename.rfind(&#39;.&#39;)\].split(&#39;\_&#39;)\[1\]
+
+    line = &#39;&#123;&#125; &#123;&#125;\\n&#39;.format(filepath, label)
+    f.write(line)
+</code></pre>
+<h2 id="Convert-to-LMDB"><a href="#Convert-to-LMDB" class="headerlink" title="Convert to LMDB"></a>Convert to LMDB</h2><p>python gen_caffe_imglist.py mnist&#x2F;train train.txt<br>python gen_caffe_imglist.py mnist&#x2F;val val.txt<br>python gen_caffe_imglist.py mnist&#x2F;test test.txt</p>
+<p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; train.txt train_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; val.txt val_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; test.txt test_lmdb –gray –shuffle</p>
+<h2 id="Train-LeNet-5"><a href="#Train-LeNet-5" class="headerlink" title="Train (LeNet-5)"></a>Train (LeNet-5)</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver.prototxt -log_dir .&#x2F;</p>
+<p><img src="/img/mlp_train-401x1024.png"></p>
+<h2 id="Log-Visualization"><a href="#Log-Visualization" class="headerlink" title="Log Visualization"></a>Log Visualization</h2><h3 id="loss-iters"><a href="#loss-iters" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters.png caffe.ubuntu.d.log</p>
+<p><img src="/img/loss_iters_zoom_out-300x225.png"></p>
+<h3 id="accuracy-iters"><a href="#accuracy-iters" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters.png caffe.ubuntu.d.log</p>
+<p><img src="/img/accuracy_iters_zoom_out-300x225.png"></p>
+<h2 id="Test-Model-Accuracy"><a href="#Test-Model-Accuracy" class="headerlink" title="Test Model Accuracy"></a>Test Model Accuracy</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe test -model lenet_test.prototxt -weights mnist_lenet_iter_36000.caffemodel -iterations 100</p>
+<h2 id="Test-Model-Time"><a href="#Test-Model-Time" class="headerlink" title="Test Model Time"></a>Test Model Time</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe time -model lenet.prototxt</p>
+<h2 id="Augmented-Train"><a href="#Augmented-Train" class="headerlink" title="Augmented, Train"></a>Augmented, Train</h2><h3 id="loss-iters-1"><a href="#loss-iters-1" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
+<p><img src="/img/loss_iters_aug_3-300x225.png"></p>
+<h3 id="accuracy-iters-1"><a href="#accuracy-iters-1" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
+<p><img src="/img/accuracy_iters_aug_3-300x225.png"></p>
+<h2 id="Update-solver-max-iter-Train"><a href="#Update-solver-max-iter-Train" class="headerlink" title="Update solver max_iter, Train"></a>Update solver max_iter, Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver_aug.prototxt -snapshot mnist_aug_lenet_iter_36000.solverstate -log_dir .&#x2F;</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/26/6-logistic-regression/" data-id="cl56jpslw0062asch3d1qhvrp" data-title="6 Logistic Regression" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/15/mnist-caffe/" data-id="cl56jpst800cyasch0ixy2c1j" data-title="MNIST : Caffe" class="article-share-link">Share</a>
       
       
       
@@ -126,14 +158,14 @@
 
 
   
-    <article id="post-5-octave-tutorial" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-install-nvidia-driver-cuda-ubuntu-16-04" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/26/5-octave-tutorial/" class="article-date">
-  <time class="dt-published" datetime="2019-03-26T06:35:24.000Z" itemprop="datePublished">2019-03-26</time>
+    <a href="/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/" class="article-date">
+  <time class="dt-published" datetime="2019-01-12T06:32:05.000Z" itemprop="datePublished">2019-01-12</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/Operating-System/">Operating System</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
   </div>
 
   </div>
@@ -144,7 +176,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/26/5-octave-tutorial/">5 Octave Tutorial</a>
+      <a class="p-name article-title" href="/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/">Install NVIDIA Driver &amp; CUDA : Ubuntu 16.04</a>
     </h1>
   
 
@@ -152,108 +184,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Basic-Operations"><a href="#Basic-Operations" class="headerlink" title="Basic Operations"></a>Basic Operations</h2><p>If you want to build a large scale deployment of a learning algorithm, what people will often do is prototype and the language is <strong>Octave</strong>. Get your learning algorithms to work more quickly in Octave. Then overall you have a huge time savings by <strong>first developing the algorithms in Octave</strong>, and then <strong>implementing and maybe C++ or Java</strong>, only after we have the ideas working. Octave is nice because open sourced.*   % : comment</p>
-<ul>
-<li>~&#x3D; : not equal</li>
-<li>; : suppresses the print output</li>
-<li>DISP : For more complex printing</li>
-</ul>
-<p>V&#x3D;1：0.1：2 % it sets V to the bunch of elements that start from 1. And increments and steps of 0.1 until you get up to 2.</p>
-<p>ones(2, 3) % generates a matrix that is a two by three matrix that is the matrix of all ones.</p>
-<p>C &#x3D; 2 * ones(2, 3) % that is all two’s.</p>
-<p>w &#x3D; zeros(1, 3) % that is all zero’s.</p>
-<p>rand(3,3)</p>
-<p>w &#x3D; rand(1, 3) % normal random variable</p>
-<p>hist % plot a histogram</p>
-<p>help</p>
-<h2 id="Moving-Data-Around"><a href="#Moving-Data-Around" class="headerlink" title="Moving Data Around"></a>Moving Data Around</h2><p>size(A) % the size of a matrix</p>
-<p>size(A, 1) % the first dimension of A, size of the first dimension of A.</p>
-<p>length(v) % the size of the longest dimension.</p>
-<p>load(‘featureX.dat’)</p>
-<p>who % the variables that Octave has in memory currently</p>
-<p>whos % the detailed view</p>
-<p>clear featuresX</p>
-<p>save hello.mat v % save the variable V into a file called hello.mat.</p>
-<p>save hello.txt v -ascii % a human readable format</p>
-<p>A(3,2)</p>
-<p>A(2,:) % fetch everything in the second row.</p>
-<p>A([1 3],:) % get all of the elements of A who’s first indexes one or three.</p>
-<p>A &#x3D; [A, [100, 101, 102]] % this will do is add another column vector to the right.</p>
-<p>A(:) % put all elements with A into a single column vector</p>
-<p>C &#x3D; [A B] % taking these two matrices and just concatenating onto each other.</p>
-<p>C &#x3D; [A; B] % The semicolon notation means that I go put the next thing at the bottom.</p>
-<p><strong>There’s no point at all to try to memorize all these commands.</strong> It’s just, but what you should do is, hopefully from this video you have gotten a sense of the sorts of things you can do.</p>
-<h2 id="Computing-on-Data"><a href="#Computing-on-Data" class="headerlink" title="Computing on Data"></a>Computing on Data</h2><p>AxC % multiply 2 of matrices</p>
-<p>A .* B % take each elements of A and multiply it by the corresponding elements of B.</p>
-<p>A .^ 2 % the element wise squaring of A</p>
-<p>1 .&#x2F; V % the element wise reciprocal of V</p>
-<p>log(v) % an element wise logarithm of v</p>
-<p>exp(v) </p>
-<p>abs(V) % the element wise absolute value of V</p>
-<p>-v % the same as -1 x V</p>
-<p>v + ones(3,1) % this increments V by one.</p>
-<p>v + 1 % another simpler way</p>
-<p>A’ % the apostrophe symbol, a transpose of A</p>
-<p>val&#x3D;max(a) % set val equals max of A</p>
-<p>[val, ind] &#x3D; max(a) % val &#x3D; the maximum value, ind &#x3D; the index</p>
-<p>a &lt; 3 % a &#x3D; [1 15 2 0.5], the result will be [1 0 1 1]</p>
-<p>find(a &lt; 3) % [1 3 4]</p>
-<p>A &#x3D; magic(3) % Returns this matrices called magic squares that all of their rows and columns and diagonals sum up to the same thing.</p>
-<p>[r,c] &#x3D; find( A&gt;&#x3D;7 ) % This finds all the elements of a that are greater than and equals to 7 and so, R C sense a row and column.</p>
-<p>sum(a) % This adds up all the elements of A.</p>
-<p>prod(a) % multiply them</p>
-<p>floor(a) % Floor A rounds down</p>
-<p>ceil(A) % rounded up</p>
-<p>type(3) % sets a 3 by 3 matrix</p>
-<p>max(A,[],1) % takes the column wise maximum</p>
-<p>max(A,[],2) % takes the per row maximum</p>
-<p>max(A) % it defaults to column</p>
-<p>max(max(A)) % the maximum element in the entire matrix A</p>
-<p>sum(A,1) % does a per column sum</p>
-<p>sum(A,2) % do the row wise sum</p>
-<p>eye(9) % nine identity matrix</p>
-<p>sum(sum(A.*eye(9)) % the sum of these diagonal elements</p>
-<p>flipup&#x2F;flipud % Flip UD stands for flip up&#x2F;down</p>
-<p>pinv(A) % a pseudo inference</p>
-<p>After running a learning algorithm, often one of the most useful things is to be able to look at your results, or to plot, or visualize your result.</p>
-<h2 id="Plotting-Data"><a href="#Plotting-Data" class="headerlink" title="Plotting Data"></a>Plotting Data</h2><p>Often, plots of the data or of all the learning algorithm outputs will also give you ideas for how to improve your learning algorithm.</p>
-<p>t &#x3D; [0:0.01:0.98]<br>y1 &#x3D; sin(2 * pi * 4 * t)<br>plot(t, y1) % plot the sine function</p>
-<p>y2 &#x3D; cos(2 * pi * 4 * 4)<br>plot(t, y2)</p>
-<p>hold on % figures on top of the old one</p>
-<p>plot(t, y2, ‘r’) % different color</p>
-<p>xlabel(‘time’) % label the X axis, or the horizontal axis<br>ylabel(‘value’)</p>
-<p>legend(‘sin’, ‘cos’) % puts this legend up on the upper right showing what the 2 lines are</p>
-<p>title(‘myplot’) % the title at the top of this figure</p>
-<p>print -dpng ‘myplot.png’ % save figure</p>
-<p>close % disappeared</p>
-<p>figure(1); plot(t, y1); % Starts up first figure, and that plots t, y1.<br>figure(2); plot(t, y2); </p>
-<p>subplot(1,2,1) % sub-divides the plot into a one-by-two grid with the first 2 parameters are<br>plot(t, y1) % fills up this first element<br>subplot(1,2,2)<br>plot(t, y2)</p>
-<p>axis([0.5 1 -1 1]) % sets the x range and y range for the figure on the right</p>
-<p>clf % clear</p>
-<p>imagesc(A) % visualize the matrix and the different colors correspond to the different values in the A matrix.<br>colormap gray % color map gray</p>
-<p>imagesc(magic(15))，colorbar，colormap gray % running three commands at a time</p>
-<h2 id="Control-Statements-for-while-if-statements"><a href="#Control-Statements-for-while-if-statements" class="headerlink" title="Control Statements_ for, while, if statements"></a>Control Statements_ for, while, if statements</h2><p>for i &#x3D; 1 : 10,<br>    v(i) &#x3D; 2 ^ i;<br>end;</p>
-<p>indices &#x3D; 1 : 10;<br>for i &#x3D; indices,<br>    disp(i);<br>end;</p>
-<p>i &#x3D; 1;<br>while i &lt;&#x3D; 5,<br>    v(i) &#x3D; 100;<br>    i &#x3D; i + 1;<br>end;</p>
-<p>i &#x3D; 1;<br>while true,<br>    v(i) &#x3D; 999;<br>    i &#x3D; i + 1;<br>    if i &#x3D;&#x3D; 6,<br>        break;<br>    end;<br>end;</p>
-<p>v(1) &#x3D; 2;<br>if v(1) &#x3D;&#x3D; 1,<br>    disp(‘The value is one’);<br>elseif v(1) &#x3D;&#x3D; 2,<br>    disp(‘The value is two’);<br>else,<br>    disp(‘The value is not one or two’);<br>end;</p>
-<p>function name (arg-list)<br>  body<br>endfunction</p>
-<p>function wakeup (message)<br>  printf (“\a%s\n”, message);<br>endfunction</p>
-<p>wakeup (“Rise and shine!”);</p>
-<p>function y &#x3D; squareThisNumber(x)</p>
-<p>addpath % add path for search dirs</p>
-<p>[a, b] &#x3D; SquareAndCubeThisNumber(5) % a &#x3D; 25, b &#x3D; 125</p>
-<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><h4 id="Unvectorized-implementation"><a href="#Unvectorized-implementation" class="headerlink" title="Unvectorized implementation"></a>Unvectorized implementation</h4><p>[latex]h_\theta (x) &#x3D; \sum _{j&#x3D;0}^{n} \theta _jx_j[&#x2F;latex]</p>
-<p>prediction &#x3D; 0.0;<br>for j &#x3D; 1 : n + 1,<br>    prediction &#x3D; prediction + theta(j) * x(j)<br>end;</p>
-<h4 id="Vectorized-implementation"><a href="#Vectorized-implementation" class="headerlink" title="Vectorized implementation"></a>Vectorized implementation</h4><p>[latex]h_\theta (x) &#x3D; \theta ^Tx[&#x2F;latex]</p>
-<p>prediction &#x3D; theta’ * x;</p>
-<p>Using a vectorized implementation, you should be able to get a much more efficient implementation of linear regression.</p>
-<h2 id="Working-on-and-Submitting-Programming-Exercises"><a href="#Working-on-and-Submitting-Programming-Exercises" class="headerlink" title="Working on and Submitting Programming Exercises"></a>Working on and Submitting Programming Exercises</h2><p>How to use the submission system which will let you verify right away that you got the right answer for your machine learning program exercise. If you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a></p>
+        <h2 id="Remove-Default-Driver"><a href="#Remove-Default-Driver" class="headerlink" title="Remove Default Driver"></a>Remove Default Driver</h2><p>sudo apt –purge remove xserver-xorg-video-nouveau</p>
+<h2 id="Add-NVIDIA-Respository"><a href="#Add-NVIDIA-Respository" class="headerlink" title="Add NVIDIA Respository"></a>Add NVIDIA Respository</h2><p>sudo add-apt-repository ppa:graphics-drivers&#x2F;ppa</p>
+<h2 id="Install-NVIDIA-Driver"><a href="#Install-NVIDIA-Driver" class="headerlink" title="Install NVIDIA Driver"></a>Install NVIDIA Driver</h2><p>sudo apt install nvidia-361 nvidia-settings nvidia-prime</p>
+<h2 id="Install-NVIDIA-CUDA"><a href="#Install-NVIDIA-CUDA" class="headerlink" title="Install NVIDIA CUDA"></a>Install NVIDIA CUDA</h2><p>sudo apt install nvidia-cuda-toolkit</p>
+<h2 id="Reboot"><a href="#Reboot" class="headerlink" title="Reboot"></a>Reboot</h2><p><img src="/img/nvidia-smi.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/26/5-octave-tutorial/" data-id="cl56jpslt0060asch3i1pc3vq" data-title="5 Octave Tutorial" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/" data-id="cl56jpsrz00bpasch4wndg7er" data-title="Install NVIDIA Driver &amp; CUDA : Ubuntu 16.04" class="article-share-link">Share</a>
       
       
       
@@ -265,14 +205,14 @@
 
 
   
-    <article id="post-4-linear-regression-with-multiple-variables" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-caffe-sample" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/25/4-linear-regression-with-multiple-variables/" class="article-date">
-  <time class="dt-published" datetime="2019-03-25T08:57:28.000Z" itemprop="datePublished">2019-03-25</time>
+    <a href="/2019/01/09/caffe-sample/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T09:58:25.000Z" itemprop="datePublished">2019-01-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
   </div>
 
   </div>
@@ -283,7 +223,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/25/4-linear-regression-with-multiple-variables/">4 Linear Regression with Multiple Variables</a>
+      <a class="p-name article-title" href="/2019/01/09/caffe-sample/">Caffe Sample</a>
     </h1>
   
 
@@ -291,26 +231,32 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Linear-Regression-with-Multiple-Variables"><a href="#Linear-Regression-with-Multiple-Variables" class="headerlink" title="Linear Regression with Multiple Variables"></a>Linear Regression with Multiple Variables</h2><p>[latex]x^{(i)}_j[&#x2F;latex] : refer to feature number <strong>j</strong> in the <strong>x</strong> factor.</p>
-<h2 id="Gradient-Descent-for-Multiple-Variables"><a href="#Gradient-Descent-for-Multiple-Variables" class="headerlink" title="Gradient Descent for Multiple Variables"></a>Gradient Descent for Multiple Variables</h2><p>def computeCost(X, y, theta):<br>    inner &#x3D; np.power(((X * theta.T) - y), 2)<br>    return np.sum(inner) &#x2F; (2 * len(X))</p>
-<h2 id="Gradient-Descent-in-Practice-I-Feature-Scaling"><a href="#Gradient-Descent-in-Practice-I-Feature-Scaling" class="headerlink" title="Gradient Descent in Practice I - Feature Scaling"></a>Gradient Descent in Practice I - Feature Scaling</h2><p>the different features take on similar ranges of values, then gradient descents can converge more quickly. [latex] x_n &#x3D; \frac {x_n -\mu _n}{s_n} [&#x2F;latex] [latex]\mu _n[&#x2F;latex] : the average value [latex]s_n[&#x2F;latex] : the range of values</p>
-<h2 id="Gradient-Descent-in-Practice-II-Learning-Rate"><a href="#Gradient-Descent-in-Practice-II-Learning-Rate" class="headerlink" title="Gradient Descent in Practice II - Learning Rate"></a>Gradient Descent in Practice II - Learning Rate</h2><p>Looking at figure that pluck the cost function j of theta as gradient descent runs and the x-axis here is the number of iteration of gradient descent and as gradient descent runs. Maybe [latex]\alpha &#x3D; 0.01, 0.03, 0.1, 0.3, 1, 3, 10[&#x2F;latex]</p>
-<h2 id="Features-and-Polynomial-Regression"><a href="#Features-and-Polynomial-Regression" class="headerlink" title="Features and Polynomial Regression"></a>Features and Polynomial Regression</h2><p>Look at the data and choose features. You can put polynomial functions as well and sometimes by appropriate insight into the feature simply get a much better model for your data. Feature Scaling is very necessary if you use polynomial functions.</p>
-<h2 id="Normal-Equation"><a href="#Normal-Equation" class="headerlink" title="Normal Equation"></a>Normal Equation</h2><p>The normal equation, which for some linear regression problems, will give us a much better way to solve for the optimal value of the parameters theta. [latex]\theta &#x3D; (X^{T}X)^{-1}X^{T}y[&#x2F;latex]</p>
-<h4 id="Disadvantages-of-gradient-descent"><a href="#Disadvantages-of-gradient-descent" class="headerlink" title="Disadvantages of gradient descent"></a>Disadvantages of gradient descent</h4><ul>
-<li>choose the learning rate Alpha.</li>
-<li>many more iterations</li>
-</ul>
-<h4 id="Advantages-of-gradient-descent"><a href="#Advantages-of-gradient-descent" class="headerlink" title="Advantages of gradient descent"></a>Advantages of gradient descent</h4><ul>
-<li>works pretty well even if you have millions of features</li>
-<li>many kinds of models</li>
-</ul>
-<h2 id="Normal-Equation-Noninvertibility"><a href="#Normal-Equation-Noninvertibility" class="headerlink" title="Normal Equation Noninvertibility"></a>Normal Equation Noninvertibility</h2><p>Some matrices are invertible and some matrices do not have an inverse we call those <strong>non-invertible matrices</strong>. Look at your features and see if you have redundant features or being a linear function of each other, and if you do have redundant features and if you just delete one of these features you really don’t need both of these features that will solve your <strong>non-invertibility problem</strong>.</p>
+        <h2 id="Gen-HDF5-Data"><a href="#Gen-HDF5-Data" class="headerlink" title="Gen HDF5 Data"></a>Gen HDF5 Data</h2><p>import pickle<br>import numpy as np<br>import h5py</p>
+<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)<br>sample_size &#x3D; len(labels)</p>
+<p>samples &#x3D; np.array(samples).reshape((sample_size, 2))<br>labels &#x3D; np.array(labels).reshape((sample_size, 1))</p>
+<p>h5_filename &#x3D; ‘data.h5’<br>with h5py.File(h5_filename, ‘w’) as h:<br>    h.create_dataset(‘data’, data&#x3D;samples)<br>    h.create_dataset(‘label’, data&#x3D;labels)</p>
+<p>with open(‘data_h5.txt’, ‘w’) as f:<br>    f.write(h5_filename)</p>
+<h2 id="Network-Train"><a href="#Network-Train" class="headerlink" title="Network Train"></a>Network Train</h2><p>name: “SimpleMLP”<br>layer {<br>    name:   “data”<br>    type:   “HDF5Data”<br>    top:    “data”<br>    top:    “label”<br>    include {<br>        phase:  TRAIN<br>    }<br>    hdf5_data_param {<br>        source: “data_h5.txt”<br>        batch_size: 41<br>    }<br>}<br>layer {<br>    name:   “fc1”<br>    type:   “InnerProduct”<br>    bottom: “data”<br>    top:    “fc1”<br>    inner_product_param {<br>        num_output: 2<br>        weight_filler   {<br>            type:   “uniform”<br>        }<br>    }<br>}<br>layer {<br>    name:   “sigmoid1”<br>    type:   “Sigmoid”<br>    bottom: “fc1”<br>    top:    “sigmoid1”<br>}<br>layer {<br>    name:   “fc2”<br>    type:   “InnerProduct”<br>    bottom: “sigmoid1”<br>    top:    “fc2”<br>    inner_product_param {<br>        num_output: 2<br>        weight_filler   {<br>            type:   “uniform”<br>        }<br>    }<br>}<br>layer {<br>    name:   “loss”<br>    type:   “SoftmaxWithLoss”<br>    bottom: “fc2”<br>    bottom: “label”<br>    top:    “loss”<br>}</p>
+<h2 id="Gen-Network-Picture"><a href="#Gen-Network-Picture" class="headerlink" title="Gen Network Picture"></a>Gen Network Picture</h2><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python&#x2F;draw_net.py train.prototxt mlp_train.png –rankdir BT</p>
+<p><img src="/img/Caffe_mlp_train-315x1024.png"></p>
+<h2 id="Network-Solver"><a href="#Network-Solver" class="headerlink" title="Network Solver"></a>Network Solver</h2><p>net:    “train.prototxt”<br>base_lr:    0.15<br>lr_policy:  “fixed”<br>display:    100<br>max_iter:   2000<br>momentum:   0.95<br>snapshot_prefix:    “simple_mlp”<br>solver_mode:    CPU</p>
+<h2 id="Start-Train"><a href="#Start-Train" class="headerlink" title="Start Train"></a>Start Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver solver.prototxt</p>
+<h2 id="Network-Test"><a href="#Network-Test" class="headerlink" title="Network Test"></a>Network Test</h2><p>name: “SimpleMLP”<br>input:  “data”<br>input_shape {<br>    dim:    1<br>    dim:    2<br>}<br>layer {<br>    name:   “fc1”<br>    type:   “InnerProduct”<br>    bottom: “data”<br>    top:    “fc1”<br>    inner_product_param {<br>        num_output: 2<br>    }<br>}<br>layer {<br>    name:   “sigmoid1”<br>    type:   “Sigmoid”<br>    bottom: “fc1”<br>    top:    “sigmoid1”<br>}<br>layer {<br>    name:   “fc2”<br>    type:   “InnerProduct”<br>    bottom: “sigmoid1”<br>    top:    “fc2”<br>    inner_product_param {<br>        num_output: 2<br>    }<br>}<br>layer {<br>    name:   “softmax”<br>    type:   “Softmax”<br>    bottom: “fc2”<br>    top:    “prob”<br>}</p>
+<h2 id="Start-Test"><a href="#Start-Test" class="headerlink" title="Start Test"></a>Start Test</h2><p>import sys<br>import pickle<br>import numpy as np<br>import matplotlib.pyplot as plt<br>from mpl_toolkits.mplot3d import Axes3D<br>sys.path.append(‘&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python’)<br>import caffe</p>
+<p>net &#x3D; caffe.Net(‘test.prototxt’, ‘simple_mlp_iter_2000.caffemodel’, caffe.TEST)</p>
+<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)<br>samples &#x3D; np.array(samples)<br>labels &#x3D; np.array(labels)</p>
+<p>X &#x3D; np.arange(0, 1.05, 0.05)<br>Y &#x3D; np.arange(0, 1.05, 0.05)<br>X, Y &#x3D; np.meshgrid(X, Y)</p>
+<p>grids &#x3D; np.array([[X[i][j], Y[i][j]] for i in range(X.shape[0]) for j in range(X.shape[1])])</p>
+<p>grid_probs &#x3D; []<br>for grid in grids:<br>    net.blobs[‘data’].data[…] &#x3D; grid.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    grid_probs.append(output[‘prob’][0][1])<br>grid_probs &#x3D; np.array(grid_probs).reshape(X.shape)<br>fig &#x3D; plt.figure(‘Sample Surface’)<br>ax &#x3D; fig.gca(projection&#x3D;’3d’)<br>ax.plot_surface(X, Y, grid_probs, alpha&#x3D;0.15, color&#x3D;’k’, rstride&#x3D;2, cstride&#x3D;2, lw&#x3D;0.5)</p>
+<p>samples0 &#x3D; samples[labels&#x3D;&#x3D;0]<br>samples0_probs &#x3D; []<br>for sample in samples0:<br>    net.blobs[‘data’].data[…] &#x3D; sample.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    samples0_probs.append(output[‘prob’][0][1])<br>samples1 &#x3D; samples[labels&#x3D;&#x3D;1]<br>samples1_probs &#x3D; []<br>for sample in samples1:<br>    net.blobs[‘data’].data[…] &#x3D; sample.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    samples1_probs.append(output[‘prob’][0][1])</p>
+<p>ax.scatter(samples0[:, 0], samples0[:, 1], samples0_probs, c&#x3D;’r’, marker&#x3D;’o’, s&#x3D;50)<br>ax.scatter(samples1[:, 0], samples1[:, 1], samples1_probs, c&#x3D;’b’, marker&#x3D;’^’, s&#x3D;50)</p>
+<p>plt.show()</p>
+<p><img src="/img/Caffe_Sample_Surface.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/25/4-linear-regression-with-multiple-variables/" data-id="cl56jpslr005yasch04208m6k" data-title="4 Linear Regression with Multiple Variables" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/09/caffe-sample/" data-id="cl56jpsne0071asch0opib5ap" data-title="Caffe Sample" class="article-share-link">Share</a>
       
       
       
@@ -322,14 +268,14 @@
 
 
   
-    <article id="post-3-linear-algebra-review" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-mxnet-sample" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/25/3-linear-algebra-review/" class="article-date">
-  <time class="dt-published" datetime="2019-03-25T08:03:16.000Z" itemprop="datePublished">2019-03-25</time>
+    <a href="/2019/01/09/mxnet-sample/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T08:14:37.000Z" itemprop="datePublished">2019-01-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/MXNet/">MXNet</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
   </div>
 
   </div>
@@ -340,7 +286,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/25/3-linear-algebra-review/">3 Linear Algebra Review</a>
+      <a class="p-name article-title" href="/2019/01/09/mxnet-sample/">MXNet Sample</a>
     </h1>
   
 
@@ -348,21 +294,54 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Matrices-and-Vectors"><a href="#Matrices-and-Vectors" class="headerlink" title="Matrices and Vectors"></a>Matrices and Vectors</h2><p><strong>The dimension of the matrix</strong> is going to be written as the number of row times the number of columns in the matrix. A <strong>vector</strong> turns out to be a special case of a matrix. Matrix with just one column is what we call a <strong>vector</strong>.</p>
-<h2 id="Addition-and-Scalar-Multiplication"><a href="#Addition-and-Scalar-Multiplication" class="headerlink" title="Addition and Scalar Multiplication"></a>Addition and Scalar Multiplication</h2><h4 id="Addition"><a href="#Addition" class="headerlink" title="Addition"></a>Addition</h4><p>[latex] \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} + \begin{bmatrix} 4 &amp; 0.5 \\ 2 &amp; 5 \\ 0 &amp; 1 \end{bmatrix} &#x3D; \begin{bmatrix} 5 &amp; 0.5 \\ 4 &amp; 10 \\ 3 &amp; 2 \end{bmatrix} [&#x2F;latex]</p>
-<h4 id="Scalar-Multiplication"><a href="#Scalar-Multiplication" class="headerlink" title="Scalar Multiplication"></a>Scalar Multiplication</h4><p>[latex] 3 * \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} &#x3D; \begin{bmatrix} 3 &amp; 0 \\ 6 &amp; 15 \\ 9 &amp; 3 \end{bmatrix} &#x3D; \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} * 3 [&#x2F;latex]</p>
-<h2 id="Matrix-Vector-Multiplication"><a href="#Matrix-Vector-Multiplication" class="headerlink" title="Matrix Vector Multiplication"></a>Matrix Vector Multiplication</h2><p>[latex] \begin{bmatrix} 1 &amp; 3 \\ 4 &amp; 0 \\ 2 &amp; 1 \end{bmatrix} * \begin{bmatrix} 1 \\ 5 \end{bmatrix} &#x3D; \begin{bmatrix} 16 &#x3D; 1 * 1 + 3 * 5 \\ 4 &#x3D; 4 * 1 + 0 * 5 \\ 7 &#x3D; 2 * 1 + 1 * 5 \end{bmatrix} [&#x2F;latex]</p>
-<h2 id="Matrix-Matrix-Multiplication"><a href="#Matrix-Matrix-Multiplication" class="headerlink" title="Matrix Matrix Multiplication"></a>Matrix Matrix Multiplication</h2><p>[latex] \begin{bmatrix} C0 &amp; C1 \\ C2 &amp; C3 \end{bmatrix} &#x3D; \begin{bmatrix} A0 &amp; A1 \\ A2 &amp; A3 \end{bmatrix} * \begin{bmatrix} B0 &amp; B1 \\ B2 &amp; B3 \end{bmatrix} [&#x2F;latex]</p>
-<p>[latex]C0 &#x3D; A0 * B0 + A1 * B2[&#x2F;latex] [latex]C1 &#x3D; A0 * B1 + A1 * B3[&#x2F;latex] [latex]C2 &#x3D; A2 * B0 + A3 * B2[&#x2F;latex] [latex]C3 &#x3D; A2 * B1 + A3 * B3[&#x2F;latex]</p>
-<h2 id="Matrix-Multiplication-Properties"><a href="#Matrix-Multiplication-Properties" class="headerlink" title="Matrix Multiplication Properties"></a>Matrix Multiplication Properties</h2><p>[latex]A * B \neq B * A[&#x2F;latex] [latex]A * (B * C) &#x3D; (A * B) * C[&#x2F;latex] <strong>Identity matrix</strong>, has the property that it has ones along the diagonals, right, and so on and is zero everywhere else. [latex]AA^{-1} &#x3D; A^{-1}A &#x3D; I[&#x2F;latex] [latex]AI &#x3D; IA &#x3D; A[&#x2F;latex]</p>
-<h2 id="Inverse-and-Transpose"><a href="#Inverse-and-Transpose" class="headerlink" title="Inverse and Transpose"></a>Inverse and Transpose</h2><h4 id="Inverse"><a href="#Inverse" class="headerlink" title="Inverse"></a>Inverse</h4><p>[latex]A^{-1}[&#x2F;latex]</p>
-<h4 id="Transpose"><a href="#Transpose" class="headerlink" title="Transpose"></a>Transpose</h4><p>[latex]A^{T}[&#x2F;latex]</p>
-<p>[latex] \begin{vmatrix} a &amp; b\\ c &amp; d\\ e &amp; f \end{vmatrix} ^{T} &#x3D; \begin{vmatrix} a &amp; c &amp; e\\ b &amp; d &amp; f \end{vmatrix} [&#x2F;latex]</p>
+        <h2 id="MXNet-Sample"><a href="#MXNet-Sample" class="headerlink" title="MXNet Sample"></a>MXNet Sample</h2><p><img src="/img/MXNet_simple_mlp.gv_.png"></p>
+<p>import pickle<br>import numpy as np</p>
+<p>def cos_curve(x):<br>    return 0.25 * np.sin(2 * x * np.pi + 0.5 * np.pi) + 0.5</p>
+<p>np.random.seed(123)<br>samples &#x3D; []<br>labels &#x3D; []</p>
+<p>sample_density &#x3D; 50<br>for i in range(sample_density):<br>    x1, x2 &#x3D; np.random.random(2)</p>
+<pre><code>bound = cos\_curve(x1)
+
+if bound - 0.1 &lt; x2 &lt;= bound + 0.1:
+    continue
+else:
+    samples.append((x1, x2))
+
+    if x2 &gt; bound:
+        labels.append(1)
+    else:
+        labels.append(0)
+</code></pre>
+<p>with open(‘data.pkl’, ‘wb’) as f:<br>    pickle.dump((samples, labels), f)</p>
+<p>import matplotlib.pyplot as plt</p>
+<p>for i, sample in enumerate(samples):<br>    plt.plot(sample[0], sample[1], ‘o’ if labels[i] else ‘^’,<br>             mec&#x3D;’r’ if labels[i] else ‘b’,<br>             mfc&#x3D;’none’,<br>             markersize&#x3D;10)<br>x1 &#x3D; np.linspace(0, 1)<br>plt.plot(x1, cos_curve(x1), ‘k–’)<br>plt.show()</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>import numpy as np<br>import mxnet as mx</p>
+<p>data &#x3D; mx.sym.Variable(‘data’)</p>
+<p>fc1 &#x3D; mx.sym.FullyConnected(data&#x3D;data, name&#x3D;’fc1’, num_hidden&#x3D;2)</p>
+<p>sigmoid1 &#x3D; mx.sym.Activation(data&#x3D;fc1, name&#x3D;’sigmoid1’, act_type&#x3D;’sigmoid’)</p>
+<p>fc2 &#x3D; mx.sym.FullyConnected(data&#x3D;sigmoid1, name&#x3D;’fc2’, num_hidden&#x3D;2)</p>
+<p>mlp &#x3D; mx.sym.SoftmaxOutput(data&#x3D;fc2, name&#x3D;’softmax’)</p>
+<p>shape &#x3D; {‘data’: (2,)}<br>mlp_dot &#x3D; mx.viz.plot_network(symbol&#x3D;mlp, shape&#x3D;shape)<br>mlp_dot.render(‘simple_mlp.gv’, view&#x3D;True)</p>
+<h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><p>import pickle<br>import logging</p>
+<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)</p>
+<p>logging.getLogger().setLevel(logging.DEBUG)</p>
+<p>batch_size &#x3D; len(labels)<br>samples &#x3D; np.array(samples)<br>labels &#x3D; np.array(labels)</p>
+<p>train_iter &#x3D; mx.io.NDArrayIter(samples, labels, batch_size)</p>
+<p>model &#x3D; mx.model.FeedForward.create(<br>    symbol&#x3D;mlp,<br>    X&#x3D;train_iter,<br>    num_epoch&#x3D;1000,<br>    learning_rate&#x3D;0.1,<br>    momentum&#x3D;0.99<br>)<br>‘’’<br>model &#x3D; mx.model.FeedForward(<br>    symbol&#x3D;mlp,<br>    num_epoch&#x3D;1000,<br>    learning_rate&#x3D;0.1<br>    momentum&#x3D;0.99<br>)<br>model.fit(X&#x3D;train_iter)<br>‘’’<br>print(model.predict(mx.nd.array([[0.5, 0.5]])))</p>
+<h1 id="-2"><a href="#-2" class="headerlink" title=""></a></h1><p>import matplotlib.pyplot as plt<br>from mpl_toolkits.mplot3d import Axes3D</p>
+<p>X &#x3D; np.arange(0, 1.05, 0.05)<br>Y &#x3D; np.arange(0, 1.05, 0.05)<br>X, Y &#x3D; np.meshgrid(X, Y)</p>
+<p>grids &#x3D; mx.nd.array([[X[i][j], Y[i][j]] for i in range(X.shape[0]) for j in range(X.shape[1])])</p>
+<p>grid_probs &#x3D; model.predict(grids)[:, 1].reshape(X.shape)</p>
+<p>fig &#x3D; plt.figure(‘Sample Surface’)<br>ax &#x3D; fig.gca(projection&#x3D;’3d’)</p>
+<p>ax.plot_surface(X, Y, grid_probs, alpha&#x3D;0.15, color&#x3D;’k’, rstride&#x3D;2, cstride&#x3D;2, lw&#x3D;0.5)</p>
+<p>samples0 &#x3D; samples[labels&#x3D;&#x3D;0]<br>samples0_probs &#x3D; model.predict(samples0)[:, 1]<br>samples1 &#x3D; samples[labels&#x3D;&#x3D;1]<br>samples1_probs &#x3D; model.predict(samples1)[:, 1]</p>
+<p>ax.scatter(samples0[:, 0], samples0[:, 1], samples0_probs, c&#x3D;’r’, marker&#x3D;’o’, s&#x3D;50)<br>ax.scatter(samples1[:, 0], samples1[:, 1], samples1_probs, c&#x3D;’b’, marker&#x3D;’^’, s&#x3D;50)</p>
+<p>plt.show()</p>
+<p><img src="/img/MXNet_Sample_Surface.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/25/3-linear-algebra-review/" data-id="cl56jpslg005masch7zhoc1qb" data-title="3 Linear Algebra Review" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/09/mxnet-sample/" data-id="cl56jpste00d5aschhek4eq1m" data-title="MXNet Sample" class="article-share-link">Share</a>
       
       
       
@@ -374,14 +353,14 @@
 
 
   
-    <article id="post-2-linear-regression-with-one-variable" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-matplotlib-rgb-opencv-bgr" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/25/2-linear-regression-with-one-variable/" class="article-date">
-  <time class="dt-published" datetime="2019-03-25T03:37:40.000Z" itemprop="datePublished">2019-03-25</time>
+    <a href="/2019/01/09/matplotlib-rgb-opencv-bgr/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T03:11:45.000Z" itemprop="datePublished">2019-01-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
   </div>
 
   </div>
@@ -392,7 +371,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/25/2-linear-regression-with-one-variable/">2 Linear Regression with One Variable</a>
+      <a class="p-name article-title" href="/2019/01/09/matplotlib-rgb-opencv-bgr/">Matplotlib RGB &amp; OpenCV BGR</a>
     </h1>
   
 
@@ -400,19 +379,15 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Model-Representation"><a href="#Model-Representation" class="headerlink" title="Model Representation"></a>Model Representation</h2><p>[latex]m[&#x2F;latex] : the number of training examples [latex]x[&#x2F;latex] : input variables [latex]y[&#x2F;latex] : output variables [latex](x, y)[&#x2F;latex] : a single training example [latex](x^{(i)}, y^{(i)})[&#x2F;latex] : refer to the ith training example [latex]h[&#x2F;latex] : representing the hypothesis</p>
-<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>[latex]J({\theta }_0, {\theta }_1) &#x3D; \frac {1}{2m}\sum ^{m}_{i&#x3D;1}( h_{\theta }(x^{(i)}) - y^{(i)})^2[&#x2F;latex]</p>
-<p><strong>Cost function is also called the squared error function or sometimes called the square error cost function.</strong></p>
-<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>repeat until convergence {</p>
-<p>[latex]{\theta }_j :&#x3D; {\theta }_j - {\alpha }\frac {\partial }{\partial {\theta }_j}J({\theta }_0 - {\theta }_1) [&#x2F;latex] (for j &#x3D; 0 and j &#x3D; 1)</p>
-<p>} <strong><em>when people talk about <strong>gradient descent</strong>, they always mean <strong>simultaneous update</strong>.</em></strong></p>
-<h2 id="Gradient-Descent-For-LinearRegression"><a href="#Gradient-Descent-For-LinearRegression" class="headerlink" title="Gradient Descent For LinearRegression"></a>Gradient Descent For LinearRegression</h2><p>The term batch gradient descent means that refers to the fact that, in every step of gradient descent we’re looking at <strong>all of the training examples</strong>.</p>
-<p>In case it turns out gradient descent will scale better to <strong>larger data sets</strong> than that normal equals method.</p>
+        <h2 id="Matplotlib-RGB-amp-OpenCV-BGR"><a href="#Matplotlib-RGB-amp-OpenCV-BGR" class="headerlink" title="Matplotlib RGB &amp; OpenCV BGR"></a>Matplotlib RGB &amp; OpenCV BGR</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>import cv2</p>
+<p>img &#x3D; np.array([<br>    [[255, 0, 0], [0, 255, 0], [0, 0, 255]],<br>    [[255, 255, 0], [255, 0, 255], [0, 255, 255]],<br>    [[255, 255, 255], [128, 128, 128], [0, 0, 0]],<br>], dtype&#x3D;np.uint8)</p>
+<p>plt.imsave(‘img_pyplot.png’, img)<br>cv2.imwrite(‘img_cv2.jpg’, img)</p>
+<p><img src="/img/img_cv2.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/25/2-linear-regression-with-one-variable/" data-id="cl56jpsjs0049asch5mad19tw" data-title="2 Linear Regression with One Variable" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/09/matplotlib-rgb-opencv-bgr/" data-id="cl56jpssy00cqaschggmu8m2b" data-title="Matplotlib RGB &amp; OpenCV BGR" class="article-share-link">Share</a>
       
       
       
@@ -424,14 +399,14 @@
 
 
   
-    <article id="post-1-introduction" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-matplotlib-3d-example-2-python" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/25/1-introduction/" class="article-date">
-  <time class="dt-published" datetime="2019-03-25T03:36:38.000Z" itemprop="datePublished">2019-03-25</time>
+    <a href="/2019/01/09/matplotlib-3d-example-2-python/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T02:21:07.000Z" itemprop="datePublished">2019-01-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+    <a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
   </div>
 
   </div>
@@ -442,7 +417,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/25/1-introduction/">1 Introduction</a>
+      <a class="p-name article-title" href="/2019/01/09/matplotlib-3d-example-2-python/">Matplotlib 3D Example 2 : Python</a>
     </h1>
   
 
@@ -450,30 +425,21 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Why-to-have-a-Machine-Learning"><a href="#Why-to-have-a-Machine-Learning" class="headerlink" title="Why to have a Machine Learning"></a>Why to have a Machine Learning</h2><p>For the most part <strong>we just did not know how to write AI programs to do the more</strong> interesting things such as web search or photo tagging or email anti-spam. There was a realization that the only way to do these things was to have a machine learn to do it by itself.</p>
-<h2 id="What-is-Machine-Learning"><a href="#What-is-Machine-Learning" class="headerlink" title="What is Machine Learning"></a>What is Machine Learning</h2><p>Even among machine learning practitioners there isn’t a well accepted definition of what is and what isn’t machine learning.</p>
-<ul>
-<li>Someone defined machine learning as the field of study that gives computers the ability to learn without being explicitly programmed.</li>
-<li>A computer program is said to learn from experience E, with respect to some task T, and some performance measure P, if its performance on T as measured by P improves with experience E.</li>
-</ul>
-<p><em>And if you actually tried to develop a machine learning system, how to make those best practices type decisions about the way in which you build your system.</em></p>
-<h2 id="Supervised-Learning"><a href="#Supervised-Learning" class="headerlink" title="Supervised Learning"></a>Supervised Learning</h2><ul>
-<li><strong>Supervised learning</strong> refers to the fact that we gave the algorithm a data set in which <strong>the “right answers” were given</strong>.</li>
-<li>To define with a bit more terminology this is also called a <strong>regression problem</strong> and by regression problem I mean we’re trying to predict a continuous value output.</li>
-<li><strong>Support Vector Machine</strong>, that will allow a computer to deal with an infinite number of features.</li>
-</ul>
-<h2 id="Unsupervised-Learning"><a href="#Unsupervised-Learning" class="headerlink" title="Unsupervised Learning"></a>Unsupervised Learning</h2><ul>
-<li>Given this data set, an Unsupervised Learning algorithm might decide that the data lives in two different clusters. Supervised Learning algorithm may break these data into these two separate clusters. So this is called a <strong>clustering algorithm</strong>.</li>
-<li>Because we’re not giving the algorithm the right answer for the examples in my data set, this is <strong>Unsupervised Learning</strong>.</li>
-<li><strong>Clustering</strong> is just one type of Unsupervised Learning.</li>
-<li><strong>Octave</strong>, is free open source software, and using a tool like Octave or Matlab, many learning algorithms become just a few lines of code to implement.</li>
-</ul>
-<p><em>Learn much faster if you use Octave as your programming environment, and if you <strong>use Octave as your</strong></em> <em><strong>learning tool and as your prototyping tool</strong>, it’ll let you learn and prototype learning algorithms much more quickly.</em> <em>And in fact what many people will do to in the large Silicon Valley companies is in fact, use an algorithm like Octave to first prototype the learning algorithm, and only after you’ve gotten it</em> <em>to work, then you migrate it to C++ or Java or whatever.</em></p>
+        <h2 id="3D-Example-2"><a href="#3D-Example-2" class="headerlink" title="3D Example 2"></a>3D Example 2</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>from mpl_toolkits.mplot3d import Axes3D</p>
+<p>np.random.seed(42)</p>
+<p>n_samples &#x3D; 500<br>dim &#x3D; 3</p>
+<p>samples &#x3D; np.random.multivariate_normal(<br>    np.zeros(dim),<br>    np.eye(dim),<br>    n_samples<br>)</p>
+<p>for i in range(samples.shape[0]) :<br>    r &#x3D; np.power(np.random.random(), 1.0 &#x2F; 3.0)<br>    samples[i] *&#x3D; r &#x2F; np.linalg.norm(samples[i])</p>
+<p>upper_samples &#x3D; []<br>lower_samples &#x3D; []<br>for x, y, z in samples:<br>    if z &gt; 3 * x + 2 * y - 1:<br>        upper_samples.append((x, y, z))<br>    else:<br>        lower_samples.append((x, y, z))</p>
+<p>fig &#x3D; plt.figure(‘3D scatter plot’)<br>ax &#x3D; fig.add_subplot(111, projection&#x3D;’3d’)<br>uppers &#x3D; np.array(upper_samples)<br>lowers &#x3D; np.array(lower_samples)</p>
+<p>ax.scatter(uppers[:, 0], uppers[:, 1], uppers[:, 2], c&#x3D;’r’, marker&#x3D;’o’)<br>ax.scatter(uppers[:, 0], uppers[:, 1], uppers[:, 2], c&#x3D;’g’, marker&#x3D;’^’)</p>
+<p>plt.show()</p>
+<p><img src="/img/Matplotlib_3D_2.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/25/1-introduction/" data-id="cl56jpsfp0013asch0ueh9hp8" data-title="1 Introduction" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/09/matplotlib-3d-example-2-python/" data-id="cl56jpssr00claschdr074urq" data-title="Matplotlib 3D Example 2 : Python" class="article-share-link">Share</a>
       
       
       
@@ -485,14 +451,14 @@
 
 
   
-    <article id="post-1342" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-matplotlib-3d-example-python" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/22/1342/" class="article-date">
-  <time class="dt-published" datetime="2019-03-22T13:57:24.000Z" itemprop="datePublished">2019-03-22</time>
+    <a href="/2019/01/09/matplotlib-3d-example-python/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T02:04:16.000Z" itemprop="datePublished">2019-01-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
   </div>
 
   </div>
@@ -503,7 +469,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/22/1342/">Untitled Post - 30</a>
+      <a class="p-name article-title" href="/2019/01/09/matplotlib-3d-example-python/">Matplotlib 3D Example : Python</a>
     </h1>
   
 
@@ -511,11 +477,20 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="3D-Example"><a href="#3D-Example" class="headerlink" title="3D Example"></a>3D Example</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>from mpl_toolkits.mplot3d import Axes3D</p>
+<p>np.random.seed(42)</p>
+<p>n_grids &#x3D; 51<br>c &#x3D; n_grids &#x2F; 2<br>nf &#x3D; 2</p>
+<p>x &#x3D; np.linspace(0, 1, n_grids)<br>y &#x3D; np.linspace(0, 1, n_grids)<br>X, Y &#x3D; np.meshgrid(x, y)</p>
+<p>spectrum &#x3D; np.zeros((n_grids, n_grids), dtype&#x3D;np.complex)<br>noise &#x3D; [np.complex(x, y) for x, y in np.random.uniform(-1, 1, ((2 * nf + 1) ** 2 &#x2F; 2, 2))]<br>noisy_block &#x3D; np.concatenate((noise, [0j], np.conjugate(noise[:: -1])))<br>spectrum[c - nf: c + nf + 1, c - nf: c + nf + 1] &#x3D; noisy_block.reshape((2 * nf + 1, 2 * nf + 1))<br>Z &#x3D; np.real(np.fft.ifft2(np.fft.ifftshift(spectrum)))</p>
+<p>fig &#x3D; plt.figure(‘3D surface &amp; wire’)<br>ax &#x3D; fig.add_subplot(1, 2, 1, projection&#x3D;’3d’)<br>ax.plot_surface(X, Y, Z, alpha&#x3D;0.7, cmap&#x3D;’jet’, rstride&#x3D;1, cstride&#x3D;1, lw&#x3D;0)</p>
+<p>ax &#x3D; fig.add_subplot(1, 2, 2, projection&#x3D;’3d’)<br>ax.plot_wireframe(X, Y, Z, rstride&#x3D;3, cstride&#x3D;3, lw&#x3D;0.5)</p>
+<p>plt.show()</p>
+<p><img src="/img/Matplotlib_3D.png"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/22/1342/" data-id="cl56jpsj1003jasch3bbvf5hq" data-title="Untitled Post - 30" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/09/matplotlib-3d-example-python/" data-id="cl56jpssu00coasch4m790qxw" data-title="Matplotlib 3D Example : Python" class="article-share-link">Share</a>
       
       
       
@@ -527,14 +502,14 @@
 
 
   
-    <article id="post-deep-learning-catalog-andrew-ng" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-matplotlib-2d-example-python" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/22/deep-learning-catalog-andrew-ng/" class="article-date">
-  <time class="dt-published" datetime="2019-03-22T13:38:30.000Z" itemprop="datePublished">2019-03-22</time>
+    <a href="/2019/01/09/matplotlib-2d-example-python/" class="article-date">
+  <time class="dt-published" datetime="2019-01-09T01:30:11.000Z" itemprop="datePublished">2019-01-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
+    <a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
   </div>
 
   </div>
@@ -545,7 +520,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/22/deep-learning-catalog-andrew-ng/">Deep Learning Catalog : Andrew Ng</a>
+      <a class="p-name article-title" href="/2019/01/09/matplotlib-2d-example-python/">Matplotlib 2D Example : Python</a>
     </h1>
   
 
@@ -553,12 +528,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="http://www.qinuu.com/wp-content/uploads/2019/03/Deep-Learning.png"></p>
+        <h2 id="2D-Example"><a href="#2D-Example" class="headerlink" title="2D Example"></a>2D Example</h2><p>import numpy as np<br>import matplotlib as mpl<br>import matplotlib.pyplot as plt</p>
+<p>mpl.rcParams[‘xtick.labelsize’] &#x3D; 24<br>mpl.rcParams[‘ytick.labelsize’] &#x3D; 24<br>np.random.seed(42)</p>
+<p>x &#x3D; np.linspace(0, 5, 100)<br>y &#x3D; 2 * np.sin(x) + 0.3 * x ** 2<br>y_data &#x3D; y + np.random.normal(scale&#x3D;0.3, size&#x3D;100)<br>plt.figure(‘data’)<br>plt.plot(x, y_data, ‘.’)</p>
+<p>plt.figure(‘model’)<br>plt.plot(x, y)</p>
+<p>plt.figure(‘data &amp; model’)<br>plt.plot(x, y, ‘k’, lw&#x3D;3)<br>plt.scatter(x, y_data)</p>
+<p>plt.savefig(‘result.png’)</p>
+<p>plt.show()</p>
+<p><img src="/img/numpy_2D_3.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/22/deep-learning-catalog-andrew-ng/" data-id="cl56jpspe008vasch4xar1uh0" data-title="Deep Learning Catalog : Andrew Ng" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/09/matplotlib-2d-example-python/" data-id="cl56jpsso00cjaschg2zefooo" data-title="Matplotlib 2D Example : Python" class="article-share-link">Share</a>
       
       
       
@@ -570,14 +552,14 @@
 
 
   
-    <article id="post-machine-learning-catalog-andrew-ng" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-caffe-installation-ubuntu-16-04" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/22/machine-learning-catalog-andrew-ng/" class="article-date">
-  <time class="dt-published" datetime="2019-03-22T13:37:29.000Z" itemprop="datePublished">2019-03-22</time>
+    <a href="/2019/01/07/caffe-installation-ubuntu-16-04/" class="article-date">
+  <time class="dt-published" datetime="2019-01-07T07:12:27.000Z" itemprop="datePublished">2019-01-07</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
   </div>
 
   </div>
@@ -588,7 +570,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/22/machine-learning-catalog-andrew-ng/">Machine Learning Catalog : Andrew Ng</a>
+      <a class="p-name article-title" href="/2019/01/07/caffe-installation-ubuntu-16-04/">Caffe Installation : Ubuntu 16.04</a>
     </h1>
   
 
@@ -596,12 +578,30 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="http://www.qinuu.com/wp-content/uploads/2019/03/Machine-Learning.png"></p>
+        <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>sudo apt update<br>sudo apt install build-essential git libatlas-base-dev<br>sudo apt-get install python-pip<br>pip install –upgrade pip<br>sudo apt-get install graphviz<br>sudo pip install graphviz<br>sudo apt install libprotobuf-dev libleveldb-dev libsnappy-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62 libfreeimage-dev libgoogle-glog-dev libbz2-dev libxml2-dev libxslt-dev libffi-dev libssl-dev libgflags-dev liblmdb-dev python-yaml<br>sudo apt-get install libopencv-dev python-opencv</p>
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p># git clone <a target="_blank" rel="noopener" href="https://github.com/BVLC/caffe">https://github.com/BVLC/caffe</a>. git</p>
+<h1 id="Or"><a href="#Or" class="headerlink" title="Or"></a>Or</h1><p>unzip caffe-master.zip<br>cd caffe-master&#x2F;<br>cp Makefile.config.example Makefile.config</p>
+<p>d@ubuntu:~&#x2F;Documents&#x2F;caffe$ diff Makefile.config.example Makefile.config<br>8c8<br>&lt; # CPU_ONLY :&#x3D; 1</p>
+<hr>
+<blockquote>
+<p>CPU_ONLY :&#x3D; 1<br>94c94<br>&lt; # WITH_PYTHON_LAYER :&#x3D; 1</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>WITH_PYTHON_LAYER :&#x3D; 1<br>97,98c97,98<br>&lt; INCLUDE_DIRS :&#x3D; $(PYTHON_INCLUDE) &#x2F;usr&#x2F;local&#x2F;include<br>&lt; LIBRARY_DIRS :&#x3D; $(PYTHON_LIB) &#x2F;usr&#x2F;local&#x2F;lib &#x2F;usr&#x2F;lib</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>INCLUDE_DIRS :&#x3D; $(PYTHON_INCLUDE) &#x2F;usr&#x2F;local&#x2F;include &#x2F;usr&#x2F;include&#x2F;hdf5&#x2F;serial&#x2F;<br>LIBRARY_DIRS :&#x3D; $(PYTHON_LIB) &#x2F;usr&#x2F;local&#x2F;lib &#x2F;usr&#x2F;lib &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;hdf5&#x2F;serial&#x2F;<br>d@ubuntu:~&#x2F;Documents&#x2F;caffe$ </p>
+</blockquote>
+<h2 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h2><p>export LD_LIBRARY&#x3D;$LD_LIBRARY:&#x2F;usr&#x2F;include&#x2F;hdf5<br>export PYTHONPATH&#x3D;$PYTHONPATH:&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python<br>make pycaffe -j<br>make all -j<br>make test -j<br>make runtest</p>
+<p><img src="/img/Caffe_Install_OK.png"></p>
+<h2 id="virtual-memory-exhausted"><a href="#virtual-memory-exhausted" class="headerlink" title="virtual memory exhausted"></a>virtual memory exhausted</h2><p>sudo mkdir &#x2F;opt&#x2F;images&#x2F;<br>sudo rm -rf &#x2F;opt&#x2F;images&#x2F;swap<br>sudo dd if&#x3D;&#x2F;dev&#x2F;zero of&#x3D;&#x2F;opt&#x2F;images&#x2F;swap bs&#x3D;1024 count&#x3D;10240000<br>sudo mkswap &#x2F;opt&#x2F;images&#x2F;swap<br>sudo swapon &#x2F;opt&#x2F;images&#x2F;swap</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/22/machine-learning-catalog-andrew-ng/" data-id="cl56jpssb00c6asch7bzi6gf2" data-title="Machine Learning Catalog : Andrew Ng" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/01/07/caffe-installation-ubuntu-16-04/" data-id="cl56jpsnc006yaschcrf33sw4" data-title="Caffe Installation : Ubuntu 16.04" class="article-share-link">Share</a>
       
       
       
@@ -613,14 +613,14 @@
 
 
   
-    <article id="post-cross-compile-wget-with-openssl-for-arm" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-qt-opencv-example" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/15/cross-compile-wget-with-openssl-for-arm/" class="article-date">
-  <time class="dt-published" datetime="2019-03-15T02:08:04.000Z" itemprop="datePublished">2019-03-15</time>
+    <a href="/2018/12/30/qt-opencv-example/" class="article-date">
+  <time class="dt-published" datetime="2018-12-30T06:40:40.000Z" itemprop="datePublished">2018-12-30</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/QT/">QT</a>
   </div>
 
   </div>
@@ -631,7 +631,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/15/cross-compile-wget-with-openssl-for-arm/">Cross compile wget with openssl for ARM</a>
+      <a class="p-name article-title" href="/2018/12/30/qt-opencv-example/">QT + OpenCV Example</a>
     </h1>
   
 
@@ -639,15 +639,30 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Config-OpenSSL"><a href="#Config-OpenSSL" class="headerlink" title="Config OpenSSL"></a>Config OpenSSL</h3><p>tar xvf openssl-1.1.1b.tar.gz<br>cd openssl-1.1.1b&#x2F;<br>mkdir __install<br>.&#x2F;config –prefix&#x3D;$PWD&#x2F;__install no-asm shared</p>
-<h3 id="Edit-Makefile"><a href="#Edit-Makefile" class="headerlink" title="Edit Makefile"></a>Edit Makefile</h3><p>PLATFORM&#x3D;linux-armv4<br>CROSS_COMPILE&#x3D;arm-linux-gnueabihf-<br>delete “-m32” “-m64”</p>
-<h3 id="Compile-OpenSSL"><a href="#Compile-OpenSSL" class="headerlink" title="Compile OpenSSL"></a>Compile OpenSSL</h3><p>make<br>make install</p>
-<h3 id="Config-Wget-amp-amp-Make"><a href="#Config-Wget-amp-amp-Make" class="headerlink" title="Config Wget &amp;&amp; Make"></a>Config Wget &amp;&amp; Make</h3><p>tar zxvf wget-1.20.1.tar.gz<br>cd wget-1.20.1<br>.&#x2F;configure –prefix&#x3D;$PWD&#x2F;__install –host&#x3D;arm-linux CC&#x3D;arm-linux-gnueabihf-gcc –with-ssl&#x3D;openssl –with-libssl-prefix&#x3D;&#x2F;root&#x2F;Downloads&#x2F;wget_arm&#x2F;openssl-1.1.1b&#x2F;__install –without-zlib<br>make<br>make install</p>
+        <h2 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h2><p>#include #include int main(int argc, char *argv[])<br>{<br>    &#x2F;&#x2F;QCoreApplication a(argc, argv);</p>
+<pre><code>using namespace cv;
+Mat image = imread(&quot;/Users/water/Downloads/Share.jpg&quot;);
+imshow(&quot;Output&quot;, image);
+
+waitKey(1000);
+
+return 0;
+
+//return a.exec();
+</code></pre>
+<p>} </p>
+<h2 id="pro"><a href="#pro" class="headerlink" title="pro"></a>pro</h2><p>QT -&#x3D; gui</p>
+<p>CONFIG +&#x3D; c++11 console<br>CONFIG -&#x3D; app_bundle</p>
+<h1 id="The-following-define-makes-your-compiler-emit-warnings-if-you-use"><a href="#The-following-define-makes-your-compiler-emit-warnings-if-you-use" class="headerlink" title="The following define makes your compiler emit warnings if you use"></a>The following define makes your compiler emit warnings if you use</h1><h1 id="any-Qt-feature-that-has-been-marked-deprecated-the-exact-warnings"><a href="#any-Qt-feature-that-has-been-marked-deprecated-the-exact-warnings" class="headerlink" title="any Qt feature that has been marked deprecated (the exact warnings"></a>any Qt feature that has been marked deprecated (the exact warnings</h1><h1 id="depend-on-your-compiler-Please-consult-the-documentation-of-the"><a href="#depend-on-your-compiler-Please-consult-the-documentation-of-the" class="headerlink" title="depend on your compiler). Please consult the documentation of the"></a>depend on your compiler). Please consult the documentation of the</h1><h1 id="deprecated-API-in-order-to-know-how-to-port-your-code-away-from-it"><a href="#deprecated-API-in-order-to-know-how-to-port-your-code-away-from-it" class="headerlink" title="deprecated API in order to know how to port your code away from it."></a>deprecated API in order to know how to port your code away from it.</h1><p>DEFINES +&#x3D; QT_DEPRECATED_WARNINGS</p>
+<h1 id="You-can-also-make-your-code-fail-to-compile-if-it-uses-deprecated-APIs"><a href="#You-can-also-make-your-code-fail-to-compile-if-it-uses-deprecated-APIs" class="headerlink" title="You can also make your code fail to compile if it uses deprecated APIs."></a>You can also make your code fail to compile if it uses deprecated APIs.</h1><h1 id="In-order-to-do-so-uncomment-the-following-line"><a href="#In-order-to-do-so-uncomment-the-following-line" class="headerlink" title="In order to do so, uncomment the following line."></a>In order to do so, uncomment the following line.</h1><h1 id="You-can-also-select-to-disable-deprecated-APIs-only-up-to-a-certain-version-of-Qt"><a href="#You-can-also-select-to-disable-deprecated-APIs-only-up-to-a-certain-version-of-Qt" class="headerlink" title="You can also select to disable deprecated APIs only up to a certain version of Qt."></a>You can also select to disable deprecated APIs only up to a certain version of Qt.</h1><p>#DEFINES +&#x3D; QT_DISABLE_DEPRECATED_BEFORE&#x3D;0x060000    # disables all the APIs deprecated before Qt 6.0.0</p>
+<p>SOURCES +&#x3D; \<br>        main.cpp</p>
+<h1 id="Default-rules-for-deployment"><a href="#Default-rules-for-deployment" class="headerlink" title="Default rules for deployment."></a>Default rules for deployment.</h1><p>qnx: target.path &#x3D; &#x2F;tmp&#x2F;$${TARGET}&#x2F;bin<br>else: unix:!android: target.path &#x3D; &#x2F;opt&#x2F;$${TARGET}&#x2F;bin<br>!isEmpty(target.path): INSTALLS +&#x3D; target</p>
+<p>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include<br>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include&#x2F;opencv<br>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include&#x2F;opencv2<br>LIBS +&#x3D; -L&#x2F;usr&#x2F;local&#x2F;lib \<br> -lopencv_core \<br> -lopencv_highgui \<br> -lopencv_imgproc \<br>  -lopencv_imgcodecs \</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/15/cross-compile-wget-with-openssl-for-arm/" data-id="cl56jpsp3008lasch82lnhxgi" data-title="Cross compile wget with openssl for ARM" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/12/30/qt-opencv-example/" data-id="cl56jpsuh00ebasch44j38o95" data-title="QT + OpenCV Example" class="article-share-link">Share</a>
       
       
       
@@ -663,7 +678,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/15/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/15/">Next &raquo;</a>
   </nav>
 
 </section>

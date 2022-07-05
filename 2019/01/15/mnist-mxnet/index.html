@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="MNIST Data (refer to MNIST : Caffe)Prepare imglist for MXNetimport osimport sys input_path &#x3D; sys.argv[1].rstrip(os.sep) out_path &#x3D; sys.argv[2] filenames &#x3D; os.listdir(input_path)with ope">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_epoch_mxnet.png">
+<meta property="og:image" content="http://example.com/img/accuracy_epoch_mxnet.png">
 <meta property="article:published_time" content="2019-01-15T09:11:01.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.433Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:40.923Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_epoch_mxnet.png">
+<meta name="twitter:image" content="http://example.com/img/accuracy_epoch_mxnet.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -124,7 +124,7 @@
 <p>lr_scheduler &#x3D; mx.lr_scheduler.FactorScheduler(1000, factor&#x3D;0.95)<br>optimizer_params &#x3D; {<br>    ‘learning_rate’: 0.01,<br>    ‘momentum’: 0.9,<br>    ‘wd’: 0.0005,<br>    ‘lr_scheduler’: lr_scheduler<br>}</p>
 <p>checkpoint &#x3D; mx.callback.do_checkpoint(‘mnist_lenet’, period&#x3D;5)</p>
 <p>mod.fit(train_dataiter,<br>        eval_data&#x3D;val_dataiter,<br>        optimizer_params&#x3D;optimizer_params,<br>        num_epoch&#x3D;36,<br>        epoch_end_callback&#x3D;checkpoint)</p>
-<h2 id="Log-Visualization"><a href="#Log-Visualization" class="headerlink" title="Log Visualization"></a>Log Visualization</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_epoch_mxnet.png"></p>
+<h2 id="Log-Visualization"><a href="#Log-Visualization" class="headerlink" title="Log Visualization"></a>Log Visualization</h2><p><img src="/img/accuracy_epoch_mxnet.png"></p>
 <h2 id="Test-Model-Accuracy"><a href="#Test-Model-Accuracy" class="headerlink" title="Test Model Accuracy"></a>Test Model Accuracy</h2><p>import mxnet as mx</p>
 <p>test_dataiter &#x3D; mx.io.ImageRecordIter(<br>    path_imgrec&#x3D;”test.rec”,<br>    data_shape&#x3D;(1, 28, 28),<br>    batch_size&#x3D;100,<br>    mean_r&#x3D;128,<br>    scale&#x3D;0.00390625,<br>)</p>
 <p>mod &#x3D; mx.mod.Module.load(‘mnist_lenet’, 35, context&#x3D;mx.gpu(0))</p>

@@ -13,14 +13,14 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Install VTKwater@waters-MacBook-Pro:&#x2F;Downloads&#x2F;VTK-8.1.0&#x2F;build$ cmake ..water@waters-MacBook-Pro:&#x2F;Downloads&#x2F;VTK-8.1.0&#x2F;build$ makewater@waters-MacBook-Pro:~&#x2F;Downloads">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2018/01/OpenCV_CMake.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2018/01/OpenCV_Example_VIZ.gif">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2018/01/OpenCV_Example_OpenGL-2.gif">
+<meta property="og:image" content="http://example.com/img/OpenCV_CMake.png">
+<meta property="og:image" content="http://example.com/img/OpenCV_Example_VIZ.gif">
+<meta property="og:image" content="http://example.com/img/OpenCV_Example_OpenGL-2.gif">
 <meta property="article:published_time" content="2018-01-28T08:53:28.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.271Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:40.612Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2018/01/OpenCV_CMake.png">
+<meta name="twitter:image" content="http://example.com/img/OpenCV_CMake.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -106,7 +106,7 @@
         <h3 id="Install-VTK"><a href="#Install-VTK" class="headerlink" title="Install VTK"></a>Install VTK</h3><p>water@waters-MacBook-Pro:<del>&#x2F;Downloads&#x2F;VTK-8.1.0&#x2F;build$ cmake ..<br>water@waters-MacBook-Pro:</del>&#x2F;Downloads&#x2F;VTK-8.1.0&#x2F;build$ make<br>water@waters-MacBook-Pro:~&#x2F;Downloads&#x2F;VTK-8.1.0&#x2F;build$ sudo make install</p>
 <h3 id="Install-QT5"><a href="#Install-QT5" class="headerlink" title="Install QT5"></a>Install QT5</h3><p>water@waters-MacBook-Pro:<del>&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ brew install qt5<br>water@waters-MacBook-Pro:</del>&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ export “PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;opt&#x2F;qt&#x2F;bin:$PATH”</p>
 <h3 id="Install-OpenCV-amp-OpenCV-contrib"><a href="#Install-OpenCV-amp-OpenCV-contrib" class="headerlink" title="Install OpenCV &amp; OpenCV_contrib"></a>Install OpenCV &amp; OpenCV_contrib</h3><p>water@waters-MacBook-Pro:~&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ cmake -DCMAKE_BUILD_TYPE&#x3D;Release -DWITH_OPENGL&#x3D;ON -DWITH_OPENVX&#x3D;ON -DWITH_QT&#x3D;ON -DWITH_OPENCL&#x3D;ON -DOPENCV_EXTRA_MODULES_PATH&#x3D;&#x2F;Users&#x2F;water&#x2F;Documents&#x2F;GitHub&#x2F;opencv_contrib&#x2F;modules –DWITH_VTK&#x3D;ON -DVTK_DIR&#x3D;&#x2F;Users&#x2F;water&#x2F;Downloads&#x2F;VTK-8.1.0 ..</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2018/01/OpenCV_CMake.png"></p>
+<p><img src="/img/OpenCV_CMake.png"></p>
 <p>water@waters-MacBook-Pro:<del>&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ make -j8<br>water@waters-MacBook-Pro:</del>&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ sudo make install</p>
 <h3 id="Test-VIZ"><a href="#Test-VIZ" class="headerlink" title="Test VIZ"></a>Test VIZ</h3><p>#include #include #include using namespace cv;<br>using namespace std;</p>
 <p>&#x2F;*<br> * @function main<br> *&#x2F;<br>int main()<br>{<br>    &#x2F;&#x2F;&#x2F; Create a window<br>    viz::Viz3d myWindow(“Coordinate Frame”);</p>
@@ -154,7 +154,7 @@ while(!myWindow.wasStopped())
 return 0;
 </code></pre>
 <p>} </p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2018/01/OpenCV_Example_VIZ.gif"></p>
+<p><img src="/img/OpenCV_Example_VIZ.gif"></p>
 <h3 id="Test-OpenGL"><a href="#Test-OpenGL" class="headerlink" title="Test OpenGL"></a>Test OpenGL</h3><p>#include #include #include using namespace std;</p>
 <p>&#x2F;&#x2F; OpenGL includes<br>#ifdef __APPLE__<br>#include #else<br>#include #endif</p>
 <p>&#x2F;&#x2F; OpenCV includes<br>#include “opencv2&#x2F;core.hpp”<br>#include “opencv2&#x2F;imgproc.hpp”<br>#include “opencv2&#x2F;highgui.hpp”<br>using namespace cv;</p>
@@ -194,7 +194,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
 </code></pre>
 <p>&#x2F;&#x2F; Destroy the windows<br>destroyWindow(“OpenGL Camera”);</p>
 <p>return 0;<br>} </p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2018/01/OpenCV_Example_OpenGL-2.gif"></p>
+<p><img src="/img/OpenCV_Example_OpenGL-2.gif"></p>
 
       
     </div>

@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Result Code#include #include #include #include #include voidDrawCenteredMbString(Display* dpy, Window w, XFontSet fontset, GC gc, char* str, int num_bytes, int x, int y, int width,int height) {XRectan">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/11/x11-hello.gif">
+<meta property="og:image" content="http://example.com/img/x11-hello.gif">
 <meta property="article:published_time" content="2019-11-20T01:15:32.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.611Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:42.463Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/11/x11-hello.gif">
+<meta name="twitter:image" content="http://example.com/img/x11-hello.gif">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -101,7 +101,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/11/x11-hello.gif"></p>
+        <h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><img src="/img/x11-hello.gif"></p>
 <h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>#include #include #include #include #include void<br>DrawCenteredMbString(Display* dpy, Window w, XFontSet fontset, GC gc, char* str, int num_bytes, int x, int y, int width,<br>int height) {<br>XRectangle boundingbox;<br>XRectangle dummy;<br>int originx, originy;</p>
 <p>(void)XmbTextExtents(fontset, str, num_bytes, &amp;dummy, &amp;boundingbox);</p>
 <p>originx &#x3D; x + (width - boundingbox.width) &#x2F; 2 - boundingbox.x;<br>originy &#x3D; y + (height - boundingbox.height) &#x2F; 2 - boundingbox.y;</p>

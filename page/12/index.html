@@ -71,207 +71,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-2-basics-of-neural-network-programming" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-6-logistic-regression" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/04/09/2-basics-of-neural-network-programming/" class="article-date">
-  <time class="dt-published" datetime="2019-04-09T09:45:11.000Z" itemprop="datePublished">2019-04-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/09/2-basics-of-neural-network-programming/">2 Basics of Neural Network programming</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>Logistic regression is an algorithm for binary classification.</p>
-<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>[latex]\hat{y} &#x3D; w^Tx + b[&#x2F;latex] : An algorithm that can output a prediction. More formally, you want [latex]\hat{y}[&#x2F;latex] to be the probability of the chance. And [latex]\hat{y}[&#x2F;latex] should really be between zero and one. <strong>sigmoid : [latex]\sigma (z) &#x3D; \frac {1}{1 + e^{-z}}[&#x2F;latex]</strong></p>
-<h2 id="Logistic-Regression-Cost-Function"><a href="#Logistic-Regression-Cost-Function" class="headerlink" title="Logistic Regression Cost Function"></a>Logistic Regression Cost Function</h2><p>To train the parameters W and B of the logistic regression model, we need to define a cost function. <strong>Sigmoid(z) :</strong> [latex]z^{(i)} &#x3D; w^Tx^{(i)} + b[&#x2F;latex] <strong>Loss function :</strong> [latex]L(\hat{y}, y)[&#x2F;latex] (measure how good our output [latex]\hat{y}[&#x2F;latex] is when the true label is [latex]y[&#x2F;latex]) <strong>Loss Function In Logistic Regression :</strong> [latex]L(\hat{y}, y) &#x3D; -ylog(\hat{y}) - (1-y)log(1 - \hat{y})[&#x2F;latex] (It measures how well you’re doing on a <strong>single</strong> training example) <strong>Cost Function :</strong> [latex]J(w,b) &#x3D; \frac {1}{m} \sum_{i&#x3D;1}^{m} L(\hat{y} ^{(i)}, y ^{(i)}) &#x3D;\frac {1}{m} \sum_{i&#x3D;1}^{m} (-y ^{(i)}log\hat{y} ^{(i)} - (1-y ^{(i)})log(1 - \hat{y} ^{(i)}))[&#x2F;latex] (It measures how well you’re doing an <strong>entire</strong> training set)</p>
-<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p><strong>Cost function J is a convex function</strong></p>
-<ol>
-<li>Random initialization</li>
-<li>takes a step in the steepest downhill direction repeatedly [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex]</li>
-<li>converge to this global optimum or get to something close to the global optimum</li>
-</ol>
-<h2 id="Derivatives"><a href="#Derivatives" class="headerlink" title="Derivatives"></a>Derivatives</h2><p>Really all you need is an intuitive understanding of this in order to build and successfully apply these algorithms. Watch the videos and then if you could do the homework and complete the programming homework successfully then you can <strong>apply</strong> deep learning.</p>
-<h2 id="More-Derivative-Examples"><a href="#More-Derivative-Examples" class="headerlink" title="More Derivative Examples"></a>More Derivative Examples</h2><ul>
-<li>the derivative of the function just means the slope of a function and the slope of a function can be different at different points on the function</li>
-<li>if you want to look up the derivative of a function you can flip open your calculus textbook or look at Wikipedia and often get a formula for the slope of these functions at different points</li>
-</ul>
-<h2 id="Computation-Graph"><a href="#Computation-Graph" class="headerlink" title="Computation Graph"></a>Computation Graph</h2><p>In order to compute derivatives Opa right to left pass like this kind of going in the opposite direction as the blue arrows that would be most natural for computing the derivatives so the recap the computation graph organizes a computation with this blue arrow left to right computation.</p>
-<h2 id="Derivatives-with-a-Computation-Graph"><a href="#Derivatives-with-a-Computation-Graph" class="headerlink" title="Derivatives with a Computation Graph"></a>Derivatives with a Computation Graph</h2><p>If you want to compute the derivative of this final output variable which uses variable you care most about, with respect to v, then we’re done sort of one step of backpropagation so the called one step backwards in this graph. By changing a you end up increasing v. Well, how much does v increase? It is increased by an amount that’s determined by dv&#x2F;da and then the change in v will cause the value of J to also increase. So, in Calculus this is actually called the chain rule. A computation graph and how there’s a forward or left to right calculation to compute the cost functions. Do you might want to optimize. And a backwards or a right to left calculation to compute derivatives.</p>
-<h2 id="Logistic-Regression-Gradient-Descent"><a href="#Logistic-Regression-Gradient-Descent" class="headerlink" title="Logistic Regression Gradient Descent"></a>Logistic Regression Gradient Descent</h2><p>How to compute derivatives for you to implement gradient descent for logistic regression. [latex]\frac{\mathrm{d} J}{\mathrm{d} u} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} v} \frac{\mathrm{d} v}{\mathrm{d} u} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} b} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} b} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} a} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} a} [&#x2F;latex]   Get you familiar with these ideas so that hopefully you’ll make a bit more sense when we talk about full fledged neural networks. <strong>Logistic Regression [latex]\left\{\begin{matrix} Lost \ Function : &amp; L(\hat y^{(i)}, y^{(i)}) &#x3D; -y^{(i)}log\hat y^{(i)} - (1-y^{(i)})log(1-\hat y^{(i)}) \\ Cost \ Function : &amp; J(w,b) &#x3D; \frac {1}{m} \sum _{i}^{m} L(\hat y^{(i)}, y^{(i)}) \end{matrix}\right.[&#x2F;latex]</strong> <strong>Gredient Descent :</strong> [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex] <strong>Calculus :</strong> [latex]\frac{\mathrm{d} L(a,y)}{\mathrm{d} a} &#x3D; -y&#x2F;a + (1-y)&#x2F;(1-a)[&#x2F;latex] [latex]\left\{\begin{matrix} \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} a} \frac {\mathrm{d} a}{\mathrm{d} z} \\ \frac {\mathrm{d} a}{\mathrm{d} z} &#x3D; a \cdot (1-a) \\ \frac{\mathrm{d} L}{\mathrm{d} a} &#x3D; -\frac{y}{a} + \frac{(1-y)}{(1-a)} \end{matrix}\right.[&#x2F;latex]   [latex]{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L}{\mathrm{d} z} &#x3D; (\frac {\mathrm{d} L}{\mathrm{d} a}) \cdot (\frac {\mathrm{d} a}{\mathrm{d} z} ) &#x3D; (-\frac{y}{a} + \frac{(1-y)}{(1-a)}) \cdot a(1-a) &#x3D; a - y[&#x2F;latex] [latex]\left\{\begin{matrix} {\mathrm{d} w_1} &#x3D; \frac {1}{m} \sum _i^m x_1^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} w_2} &#x3D; \frac {1}{m} \sum _i^m x_2^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} b} &#x3D; \frac {1}{m} \sum _i^m (a^{(i)} - y^{(i)}) \end{matrix}\right.[&#x2F;latex]</p>
-<h2 id="Gradient-Descent-on-m-Examples"><a href="#Gradient-Descent-on-m-Examples" class="headerlink" title="Gradient Descent on m Examples"></a>Gradient Descent on m Examples</h2><p>[latex]J(w,b) &#x3D; \frac {1}{m}\sum _{i&#x3D;1}^m L (a^{(i)}, y^{(i)})[&#x2F;latex]  </p>
-<p>J&#x3D;0;dw1&#x3D;0;dw2&#x3D;0;db&#x3D;0;<br>    for i &#x3D; 1 to m<br>        z(i) &#x3D; wx(i)+b;<br>        a(i) &#x3D; sigmoid(z(i));<br>        J +&#x3D; -[y(i)log(a(i))+(1-y(i)）log(1-a(i));<br>        dz(i) &#x3D; a(i)-y(i);<br>        dw1 +&#x3D; x1(i)dz(i);<br>        dw2 +&#x3D; x2(i)dz(i);<br>        db +&#x3D; dz(i);<br>J&#x2F;&#x3D; m;<br>dw1&#x2F;&#x3D; m;<br>dw2&#x2F;&#x3D; m;<br>db&#x2F;&#x3D; m;<br>w&#x3D;w-alpha*dw<br>b&#x3D;b-alpha*db</p>
-<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><p>Vectorization is basically the art of getting rid of explicit for loops in your code. non-vectorized implementation :</p>
-<p>z&#x3D;0<br>for i in range(n_x)<br>    z+&#x3D;w[i]*x[i]<br>z+&#x3D;b</p>
-<p>vectorized implementation :</p>
-<p>z&#x3D;np.dot(w,x)+b</p>
-<p><em>They’re sometimes called SIMD instructions. This stands for a single instruction multiple data.</em> <strong>The rule of thumb to remember is whenever possible, avoid using explicit four loops.</strong></p>
-<h2 id="More-Examples-of-Vectorization"><a href="#More-Examples-of-Vectorization" class="headerlink" title="More Examples of Vectorization"></a>More Examples of Vectorization</h2><p>It’s not always possible to never use a for-loop, but when you can use a built in function or find some other way to compute whatever you need, you’ll often go faster than if you have an explicit for-loop.</p>
-<h2 id="Vectorizing-Logistic-Regression"><a href="#Vectorizing-Logistic-Regression" class="headerlink" title="Vectorizing Logistic Regression"></a>Vectorizing Logistic Regression</h2><p>How you can vectorize the implementation of logistic regression [latex]\left\{\begin{matrix} z^{(1)} &#x3D; w^Tx^{(1)} + b \\ a^{(1)} &#x3D; \sigma (z^{(1)}) \\ \hat y \end{matrix}\right.[&#x2F;latex]  </p>
-<p>Z&#x3D;np.dot(w.T, X)+b</p>
-<p>It turns out, you can also use vectorization very efficiently to compute the backward propagation, to compute the gradients.</p>
-<h2 id="Vectorizing-Logistic-Regression’s-Gradient"><a href="#Vectorizing-Logistic-Regression’s-Gradient" class="headerlink" title="Vectorizing Logistic Regression’s Gradient"></a>Vectorizing Logistic Regression’s Gradient</h2><p>How you can use vectorization to also perform the gradient computations for all m training samples. [latex]\begin{matrix} Z &#x3D; w^TX + b &#x3D; np.dot(w.T, X) + b\\ A &#x3D; \sigma (Z)\\ {\mathrm{d} Z} &#x3D; A - Y\\ {\mathrm{d} w} &#x3D; \frac {1}{m} * X * {\mathrm{d} z} ^T\\ {\mathrm{d} b} &#x3D; \frac {1}{m} * np.sum({\mathrm{d} Z})\\ w :&#x3D; w - a * {\mathrm{d} w}\\ b :&#x3D; b - a * {\mathrm{d} b} \end{matrix} [&#x2F;latex]  </p>
-<h2 id="Broadcasting-in-Python"><a href="#Broadcasting-in-Python" class="headerlink" title="Broadcasting in Python"></a>Broadcasting in Python</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Broadcasting-in-Python.png"></p>
-<h2 id="A-note-on-python-or-numpy-vectors"><a href="#A-note-on-python-or-numpy-vectors" class="headerlink" title="A note on python or numpy vectors"></a>A note on python or numpy vectors</h2><ul>
-<li>Because with broadcasting and this great amount of flexibility, sometimes it’s possible you can introduce very subtle bugs very strange looking bugs.</li>
-<li>When you’re coding neural networks, that you just not use data structures where the shape is 5, or n, rank 1 array.</li>
-<li>Don’t hesitate to throw in assertion statements like this whenever you feel like it.</li>
-<li>Do not use these rank 1 arrays, you can reshape this.</li>
-</ul>
-<h2 id="Quick-tour-of-Jupyter-x2F-iPython-Notebooks"><a href="#Quick-tour-of-Jupyter-x2F-iPython-Notebooks" class="headerlink" title="Quick tour of Jupyter&#x2F;iPython Notebooks"></a>Quick tour of Jupyter&#x2F;iPython Notebooks</h2><p>It’s so simple that nothing need to say.</p>
-<h2 id="Explanation-of-logistic-regression-cost-function"><a href="#Explanation-of-logistic-regression-cost-function" class="headerlink" title="Explanation of logistic regression cost function"></a>Explanation of logistic regression cost function</h2><p>A quick justification for why we like to use that cost function for logistic regression. [latex]\begin{matrix} \hat y &#x3D; \sigma (w^Tx + b)\\ \sigma (z) &#x3D; \sigma (w^Tx + b) &#x3D; \frac {1}{1+e^{-z}}\\ \hat y &#x3D; p(y &#x3D; 1 x) \end{matrix}[&#x2F;latex]   [latex]\left.\begin{matrix} If \ y &#x3D; 1 \ : &amp; p(yx) &#x3D; \hat y\\ If \ y &#x3D; 0 \ : &amp; p(yx) &#x3D; 1 - \hat y \end{matrix}\right\} p(yx) &#x3D; \hat y(1 - \hat y)^{(1-y)}[&#x2F;latex]   [latex]ylog\hat y + (1-y)log(1-\hat y)[&#x2F;latex]   In statistics, there’s a principle called the <strong>principle of maximum likelihood estimation</strong>, which just means to choose the parameters that maximizes this thing. Or in other words, that maximizes this thing. [latex]P(labels\ in\ training\ set) &#x3D; \prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)})[&#x2F;latex]   [latex]logP(labels\ in\ training\ set) &#x3D; log\prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m}log P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m} -L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]   [latex]J(w,b) &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/09/2-basics-of-neural-network-programming/" data-id="cl56jpsjp0044aschcrhzgosd" data-title="2 Basics of Neural Network programming" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-1-introduction-to-deep-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/04/09/1-introduction-to-deep-learning/" class="article-date">
-  <time class="dt-published" datetime="2019-04-09T05:55:12.000Z" itemprop="datePublished">2019-04-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/09/1-introduction-to-deep-learning/">1 Introduction to Deep Learning</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome"></a>Welcome</h2><p>Deep Learning has aready transformed the traditional internet businesses</p>
-<h2 id="What-is-a-Neural-Network"><a href="#What-is-a-Neural-Network" class="headerlink" title="What is a Neural Network"></a>What is a Neural Network</h2><p>You probably find them to be most useful, most powerful, in supervised learning settings. Meaning that you’re trying to take an input x and map it some output y,</p>
-<h2 id="Supervised-Learning-with-Neural-Networks"><a href="#Supervised-Learning-with-Neural-Networks" class="headerlink" title="Supervised Learning with Neural Networks"></a>Supervised Learning with Neural Networks</h2><p><strong>It turns out that so far, almost all the economic value created by neural networks has been through one type of machine learning, called supervised learning.</strong> Possibly the single most lucrative application of deep learning today is online advertising.</p>
-<ul>
-<li>Computer Vision</li>
-<li>Speech Recognition</li>
-<li>Autonomous Driving</li>
-</ul>
-<p>It turns out that slightly different types of neural networks are useful for different applications. <strong>CNN (Convolutional Neural Network)</strong> <strong>RNN (Recurrent Neural Network)</strong></p>
-<ul>
-<li>Structured Data means basically databases of data.</li>
-<li>In contrast, unstructured data refers to things like audio, raw audio, or images where you might want to recognize what’s in the image or text. Historically, it has been much harder for computers to make sense of unstructured data compared to structured data.</li>
-</ul>
-<p><strong>It turns out that a lot of short term economic value that neural networks are creating has also been on structured data</strong>, such as much better advertising systems, much better profit recommendations, and just a much better ability to process the giant databases that many companies have to make accurate predictions from them.</p>
-<h2 id="Why-is-Deep-Learning-taking-off"><a href="#Why-is-Deep-Learning-taking-off" class="headerlink" title="Why is Deep Learning taking off?"></a>Why is Deep Learning taking off?</h2><p>Go over some of the main drivers behind the rise of deep learning because I think this will help you better spot the best opportunities within your own organization to apply these to. More and more and more data have been collected so over the last 20 years for a lot of applications we just accumulate a lot more data more than traditional learning algorithms were able to effectively take advantage of. <strong>Hit very high level of performance :</strong> </p>
-<ol>
-<li>Train a big enough neural network</li>
-<li>Throw more data</li>
-</ol>
-<p><strong>If you don’t have a lot of training data is often up to your skill at hand engineering features that determines the performance.</strong> The performance depends much more on your skill at hand engineer features and other normal details of the algorithms and there’s only in this some big data regions very large training sets very large M regions in the right that we more consistently see largely neural nets dominating the other approaches and so</p>
-<ul>
-<li><strong>Data</strong></li>
-<li><strong>Computation</strong></li>
-<li><strong>Algorithmic Innovation</strong></li>
-</ul>
-<p>One of the huge breakthroughs in neural networks has been switching from a sigmoid function which looks like this to a ReLU function.</p>
-<ul>
-<li>Ultimately the impact of this algorithmic innovation was it really help computation so there remains quite a lot of examples like this of where we change the algorithm because it allows that code to <strong>run much faster</strong> and this allows us to <strong>train bigger neural networks</strong> or to do so <strong>within reasonable amount of time</strong> even when we have a large network with a lot of data.</li>
-<li>It turns out the process of training your network it is very intuitive often. you have an idea for a neural network architecture and so you implement your idea and code. Implementing your idea then lets you run an experiment which tells you how well your neural network does and then by looking at it you go back to change the details of your neural network and then you go around this circle over and over and when your neural network takes a long time to train it just takes a long time to go around this cycle and there’s a huge difference in your productivity building effective neural networks.</li>
-</ul>
-<p><strong>Faster Computation —&gt; Iterate Much Faster —&gt; Improve Ideas Much Faster</strong></p>
-<h2 id="About-this-Course"><a href="#About-this-Course" class="headerlink" title="About this Course"></a>About this Course</h2><p><strong>Just use the multiple choice questions to check your understanding. And dont’ review, you can try again and again until you get them all right.</strong></p>
-<h2 id="Course-Resources"><a href="#Course-Resources" class="headerlink" title="Course Resources"></a>Course Resources</h2><p>If you have any questions or you want to discuss anything with the classmates or … the best place to do that is <strong>the discussion forum</strong>.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/09/1-introduction-to-deep-learning/" data-id="cl56jpsfb0011asch6boaalj5" data-title="1 Introduction to Deep Learning" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-1762" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/04/08/1762/" class="article-date">
-  <time class="dt-published" datetime="2019-04-08T08:04:09.000Z" itemprop="datePublished">2019-04-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/08/1762/">Untitled Post - 31</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/1762/" data-id="cl56jpsjl003yasch55athyoq" data-title="Untitled Post - 31" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-18-application-example-photo-ocr" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/04/08/18-application-example-photo-ocr/" class="article-date">
-  <time class="dt-published" datetime="2019-04-08T07:56:52.000Z" itemprop="datePublished">2019-04-08</time>
+    <a href="/2019/03/26/6-logistic-regression/" class="article-date">
+  <time class="dt-published" datetime="2019-03-26T06:40:42.000Z" itemprop="datePublished">2019-03-26</time>
 </a>
     
   <div class="article-category">
@@ -286,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/08/18-application-example-photo-ocr/">18 Application Example: Photo OCR</a>
+      <a class="p-name article-title" href="/2019/03/26/6-logistic-regression/">6 Logistic Regression</a>
     </h1>
   
 
@@ -294,29 +97,24 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Problem-Description-and-Pipeline"><a href="#Problem-Description-and-Pipeline" class="headerlink" title="Problem Description and Pipeline"></a>Problem Description and Pipeline</h2><ol>
-<li>Text detection</li>
-<li>Character segmentation</li>
-<li>Character classification</li>
-</ol>
-<h2 id="Sliding-Windows"><a href="#Sliding-Windows" class="headerlink" title="Sliding Windows"></a>Sliding Windows</h2><p>Go out and collect large training sets of positive and negative examples. Take that green rectangle and we slide it over a bit and then run that new image patch through our classifier to decide if there’s a pedestrian there.</p>
-<h2 id="Getting-Lots-of-Data-and-Artificial-Data"><a href="#Getting-Lots-of-Data-and-Artificial-Data" class="headerlink" title="Getting Lots of Data and Artificial Data"></a>Getting Lots of Data and Artificial Data</h2><ol>
-<li>artificial data synthesis</li>
-<li>just collect the data and you label it yourself</li>
-<li>crowd sourcing</li>
-</ol>
-<h2 id="Ceiling-Analysis-What-Part-of-the-Pipeline-to-Work-on-Next"><a href="#Ceiling-Analysis-What-Part-of-the-Pipeline-to-Work-on-Next" class="headerlink" title="Ceiling Analysis What Part of the Pipeline to Work on Next"></a>Ceiling Analysis What Part of the Pipeline to Work on Next</h2><p>Where should you allocate resources? Which of these boxes is most worth your efforts, trying to improve the performance of.</p>
-<ol>
-<li>choose one module</li>
-<li>provide it the correct text detection outputs</li>
-<li>And then, use the same evaluation metric as before, to measure what is the overall accuracy of the entire system</li>
-<li>go to step 1, but choose another one</li>
-</ol>
+        <h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>Classification : [latex]y &#x3D; [&#x2F;latex] 0 or 1 [latex]h_\theta (x)[&#x2F;latex] can be &gt; 1 or &lt; 0</p>
+<p>Logistic Regression: [latex]0 \leq h_\theta (x) \leq 1 [&#x2F;latex] Logistic regression which has the property that the output, the predictions of logistic regression are always between zero and one. Logistic Regression is actually a classification algorithm.</p>
+<h2 id="Hypothesis-Representation"><a href="#Hypothesis-Representation" class="headerlink" title="Hypothesis Representation"></a>Hypothesis Representation</h2><p><strong>Sigmoid function</strong> : [latex]g(z) &#x3D; \frac {1}{1+e^{-z}}[&#x2F;latex]</p>
+<p>import numpy as np<br>def sigmoid(z):<br>    return 1 &#x2F; (1 + np.exp(-z))</p>
+<h2 id="Decision-Boundary"><a href="#Decision-Boundary" class="headerlink" title="Decision Boundary"></a>Decision Boundary</h2><p>Much higher order polynomials, then it’s possible to show that you can get even more complex decision boundaries and logistic regression can be used to find the zero boundaries.</p>
+<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>How to fit the parameters theta for logistic regression. In particular, I’d like to define the optimization objective or the cost function that we’ll use to fit the parameters. Here’s to supervised learning problem of fitting a logistic regression model.</p>
+<h4 id="Linear-regression-the-cost-function"><a href="#Linear-regression-the-cost-function" class="headerlink" title="Linear regression the cost function"></a>Linear regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} \frac {1}{2}(h_\theta(x^{(i)}) - y^{(i)})^{2} [&#x2F;latex]</p>
+<h4 id="Logistic-regression-the-cost-function"><a href="#Logistic-regression-the-cost-function" class="headerlink" title="Logistic regression the cost function"></a>Logistic regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} Cost(h_\theta(x^{(i)}), y^{(i)}) [&#x2F;latex]</p>
+<p>[latex] Cost(h_\theta (x), y) &#x3D; \begin{cases} -log(h_\theta(x)) &amp; \text{ if } y&#x3D;1 \\ -log(1 - h_\theta(x)) &amp; \text{ if } y&#x3D;0 \end{cases} [&#x2F;latex]</p>
+<h2 id="Simplified-Cost-Function-and-Gradient-Descent"><a href="#Simplified-Cost-Function-and-Gradient-Descent" class="headerlink" title="Simplified Cost Function and Gradient Descent"></a>Simplified Cost Function and Gradient Descent</h2><p>How to implement a fully working version of logistic regression. It’s too hard to notes here , if you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a> A vectorized implementation can update, you know, all of these N plus 1 parameters all in one fell swoop. Feature scaling can help gradient descents converge faster for linear regression. The idea of feature scaling also applies to gradient descent for logistic regression.</p>
+<h2 id="Advanced-Optimization"><a href="#Advanced-Optimization" class="headerlink" title="Advanced Optimization"></a>Advanced Optimization</h2><p>For gradient descent, I guess technically you don’t actually need code to compute the cost function [latex]J_\theta[&#x2F;latex]. You only need code to compute the derivative terms. Conjugate gradient BFGS and L-BFGS are examples of more sophisticated optimization algorithms. <strong>These algorithms have a number of advantages:</strong>*   do not need to manually pick the learning rate alpha.</p>
+<p><em>It is actually entirely possible to use these algorithms successfully and apply to lots of different learning problems without actually understanding the inter-loop of what these algorithms do.</em> For these algorithms also what I would recommend you do is just <strong>use a software library</strong>. Sophisticated optimization library, it makes the just a little bit more opaque and so just maybe a little bit harder to debug. But these algorithms <strong>often run much faster</strong> than gradient descent. If you have <strong>a large machine learning problem</strong>, you can use these algorithms instead of using gradient descent.</p>
+<h2 id="Multiclass-Classification-One-vs-all"><a href="#Multiclass-Classification-One-vs-all" class="headerlink" title="Multiclass Classification_ One-vs-all"></a>Multiclass Classification_ One-vs-all</h2><p>one-versus-all classification Do the same thing for the third class and fit a third classifier H superscript 3 of X and maybe this or give us a classifier that separates the positive and negative examples like that. Basically pick the classifier, pick whichever one of the three classifiers is most confident, or most enthusistically says that it thinks it has a right class. And with this little method you can now take the logistic regression classifier and make it work on multi-class classification problems as well.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/18-application-example-photo-ocr/" data-id="cl56jpsjk003wasch509v9e6x" data-title="18 Application Example: Photo OCR" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/26/6-logistic-regression/" data-id="cl56jpslw0062asch3d1qhvrp" data-title="6 Logistic Regression" class="article-share-link">Share</a>
       
       
       
@@ -328,10 +126,10 @@
 
 
   
-    <article id="post-17-large-scale-machine-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-5-octave-tutorial" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/04/08/17-large-scale-machine-learning/" class="article-date">
-  <time class="dt-published" datetime="2019-04-08T07:32:45.000Z" itemprop="datePublished">2019-04-08</time>
+    <a href="/2019/03/26/5-octave-tutorial/" class="article-date">
+  <time class="dt-published" datetime="2019-03-26T06:35:24.000Z" itemprop="datePublished">2019-03-26</time>
 </a>
     
   <div class="article-category">
@@ -346,7 +144,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/08/17-large-scale-machine-learning/">17 Large Scale Machine Learning</a>
+      <a class="p-name article-title" href="/2019/03/26/5-octave-tutorial/">5 Octave Tutorial</a>
     </h1>
   
 
@@ -354,29 +152,108 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Learning-With-Large-Datasets"><a href="#Learning-With-Large-Datasets" class="headerlink" title="Learning With Large Datasets"></a>Learning With Large Datasets</h2><p>Draw a learning curve and determine if more data needs to be collected.</p>
-<h2 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h2><p><strong>Cost Function in SGD :</strong> [latex]cost(\theta, (x^{(i)}, y^{(i)})) &#x3D; \frac {1}{2}(h_{\theta}(x^{(i)})-y^{(i)})^2[&#x2F;latex]</p>
-<ol>
-<li>randomly shuffle the data set</li>
-<li>a little gradient descent step using just one single training example</li>
-<li>maybe head in a bad direction, generally move the parameters in the direction of the global minimum, but not always</li>
-<li>it ends up doing is wandering around continuously in some region that’s in some region close to the global minimum</li>
-</ol>
-<h2 id="Mini-Batch-Gradient-Descent"><a href="#Mini-Batch-Gradient-Descent" class="headerlink" title="Mini-Batch Gradient Descent"></a>Mini-Batch Gradient Descent</h2><p>In <strong>Batch gradient descent</strong> we will use <strong>all m examples</strong> in each generation. Whereas in <strong>Stochastic gradient descent</strong> we will use a <strong>single example</strong> in each generation. What <strong>Mini-batch gradient descent</strong> does is somewhere <strong>in between</strong>.</p>
-<h2 id="Stochastic-Gradient-Descent-Convergence"><a href="#Stochastic-Gradient-Descent-Convergence" class="headerlink" title="Stochastic Gradient Descent Convergence"></a>Stochastic Gradient Descent Convergence</h2><p>[latex]\alpha &#x3D; \frac {const1}{iterationNumber + const2}[&#x2F;latex] We can <strong>compute the cost function on the last 1000 examples or so</strong>. And we can use this method both to make sure the stochastic gradient descent is okay and is converging or to use it to tune the learning rate alpha.</p>
-<h2 id="Online-Learning"><a href="#Online-Learning" class="headerlink" title="Online Learning"></a>Online Learning</h2><p>The online learning setting allows us to model problems where we have <strong>a continuous flood or a continuous stream of data coming in</strong> and we would like an algorithm to learn from that. We learn using that example like so <strong>and then we throw that example away</strong>. If you really have a continuous stream of data, then an online learning algorithm can be very effective. If you have <strong>a changing pool of users</strong>, or if the things you’re trying to <strong>predict are slowly changing</strong> like your user taste is slowly changing, the online learning algorithm can slowly adapt your learned hypothesis to whatever the latest sets of user behaviors are like as well.</p>
-<h2 id="Map-Reduce-and-Data-Parallelism"><a href="#Map-Reduce-and-Data-Parallelism" class="headerlink" title="Map Reduce and Data Parallelism"></a>Map Reduce and Data Parallelism</h2><p>In the MapReduce idea, one way to do, is split this training set in to different subsets and use many different machines.</p>
+        <h2 id="Basic-Operations"><a href="#Basic-Operations" class="headerlink" title="Basic Operations"></a>Basic Operations</h2><p>If you want to build a large scale deployment of a learning algorithm, what people will often do is prototype and the language is <strong>Octave</strong>. Get your learning algorithms to work more quickly in Octave. Then overall you have a huge time savings by <strong>first developing the algorithms in Octave</strong>, and then <strong>implementing and maybe C++ or Java</strong>, only after we have the ideas working. Octave is nice because open sourced.*   % : comment</p>
 <ul>
-<li>multi-core machine</li>
-<li>multiple machines</li>
-<li>numerical linear algebra libraries</li>
-<li>like Hadoop</li>
+<li>~&#x3D; : not equal</li>
+<li>; : suppresses the print output</li>
+<li>DISP : For more complex printing</li>
 </ul>
+<p>V&#x3D;1：0.1：2 % it sets V to the bunch of elements that start from 1. And increments and steps of 0.1 until you get up to 2.</p>
+<p>ones(2, 3) % generates a matrix that is a two by three matrix that is the matrix of all ones.</p>
+<p>C &#x3D; 2 * ones(2, 3) % that is all two’s.</p>
+<p>w &#x3D; zeros(1, 3) % that is all zero’s.</p>
+<p>rand(3,3)</p>
+<p>w &#x3D; rand(1, 3) % normal random variable</p>
+<p>hist % plot a histogram</p>
+<p>help</p>
+<h2 id="Moving-Data-Around"><a href="#Moving-Data-Around" class="headerlink" title="Moving Data Around"></a>Moving Data Around</h2><p>size(A) % the size of a matrix</p>
+<p>size(A, 1) % the first dimension of A, size of the first dimension of A.</p>
+<p>length(v) % the size of the longest dimension.</p>
+<p>load(‘featureX.dat’)</p>
+<p>who % the variables that Octave has in memory currently</p>
+<p>whos % the detailed view</p>
+<p>clear featuresX</p>
+<p>save hello.mat v % save the variable V into a file called hello.mat.</p>
+<p>save hello.txt v -ascii % a human readable format</p>
+<p>A(3,2)</p>
+<p>A(2,:) % fetch everything in the second row.</p>
+<p>A([1 3],:) % get all of the elements of A who’s first indexes one or three.</p>
+<p>A &#x3D; [A, [100, 101, 102]] % this will do is add another column vector to the right.</p>
+<p>A(:) % put all elements with A into a single column vector</p>
+<p>C &#x3D; [A B] % taking these two matrices and just concatenating onto each other.</p>
+<p>C &#x3D; [A; B] % The semicolon notation means that I go put the next thing at the bottom.</p>
+<p><strong>There’s no point at all to try to memorize all these commands.</strong> It’s just, but what you should do is, hopefully from this video you have gotten a sense of the sorts of things you can do.</p>
+<h2 id="Computing-on-Data"><a href="#Computing-on-Data" class="headerlink" title="Computing on Data"></a>Computing on Data</h2><p>AxC % multiply 2 of matrices</p>
+<p>A .* B % take each elements of A and multiply it by the corresponding elements of B.</p>
+<p>A .^ 2 % the element wise squaring of A</p>
+<p>1 .&#x2F; V % the element wise reciprocal of V</p>
+<p>log(v) % an element wise logarithm of v</p>
+<p>exp(v) </p>
+<p>abs(V) % the element wise absolute value of V</p>
+<p>-v % the same as -1 x V</p>
+<p>v + ones(3,1) % this increments V by one.</p>
+<p>v + 1 % another simpler way</p>
+<p>A’ % the apostrophe symbol, a transpose of A</p>
+<p>val&#x3D;max(a) % set val equals max of A</p>
+<p>[val, ind] &#x3D; max(a) % val &#x3D; the maximum value, ind &#x3D; the index</p>
+<p>a &lt; 3 % a &#x3D; [1 15 2 0.5], the result will be [1 0 1 1]</p>
+<p>find(a &lt; 3) % [1 3 4]</p>
+<p>A &#x3D; magic(3) % Returns this matrices called magic squares that all of their rows and columns and diagonals sum up to the same thing.</p>
+<p>[r,c] &#x3D; find( A&gt;&#x3D;7 ) % This finds all the elements of a that are greater than and equals to 7 and so, R C sense a row and column.</p>
+<p>sum(a) % This adds up all the elements of A.</p>
+<p>prod(a) % multiply them</p>
+<p>floor(a) % Floor A rounds down</p>
+<p>ceil(A) % rounded up</p>
+<p>type(3) % sets a 3 by 3 matrix</p>
+<p>max(A,[],1) % takes the column wise maximum</p>
+<p>max(A,[],2) % takes the per row maximum</p>
+<p>max(A) % it defaults to column</p>
+<p>max(max(A)) % the maximum element in the entire matrix A</p>
+<p>sum(A,1) % does a per column sum</p>
+<p>sum(A,2) % do the row wise sum</p>
+<p>eye(9) % nine identity matrix</p>
+<p>sum(sum(A.*eye(9)) % the sum of these diagonal elements</p>
+<p>flipup&#x2F;flipud % Flip UD stands for flip up&#x2F;down</p>
+<p>pinv(A) % a pseudo inference</p>
+<p>After running a learning algorithm, often one of the most useful things is to be able to look at your results, or to plot, or visualize your result.</p>
+<h2 id="Plotting-Data"><a href="#Plotting-Data" class="headerlink" title="Plotting Data"></a>Plotting Data</h2><p>Often, plots of the data or of all the learning algorithm outputs will also give you ideas for how to improve your learning algorithm.</p>
+<p>t &#x3D; [0:0.01:0.98]<br>y1 &#x3D; sin(2 * pi * 4 * t)<br>plot(t, y1) % plot the sine function</p>
+<p>y2 &#x3D; cos(2 * pi * 4 * 4)<br>plot(t, y2)</p>
+<p>hold on % figures on top of the old one</p>
+<p>plot(t, y2, ‘r’) % different color</p>
+<p>xlabel(‘time’) % label the X axis, or the horizontal axis<br>ylabel(‘value’)</p>
+<p>legend(‘sin’, ‘cos’) % puts this legend up on the upper right showing what the 2 lines are</p>
+<p>title(‘myplot’) % the title at the top of this figure</p>
+<p>print -dpng ‘myplot.png’ % save figure</p>
+<p>close % disappeared</p>
+<p>figure(1); plot(t, y1); % Starts up first figure, and that plots t, y1.<br>figure(2); plot(t, y2); </p>
+<p>subplot(1,2,1) % sub-divides the plot into a one-by-two grid with the first 2 parameters are<br>plot(t, y1) % fills up this first element<br>subplot(1,2,2)<br>plot(t, y2)</p>
+<p>axis([0.5 1 -1 1]) % sets the x range and y range for the figure on the right</p>
+<p>clf % clear</p>
+<p>imagesc(A) % visualize the matrix and the different colors correspond to the different values in the A matrix.<br>colormap gray % color map gray</p>
+<p>imagesc(magic(15))，colorbar，colormap gray % running three commands at a time</p>
+<h2 id="Control-Statements-for-while-if-statements"><a href="#Control-Statements-for-while-if-statements" class="headerlink" title="Control Statements_ for, while, if statements"></a>Control Statements_ for, while, if statements</h2><p>for i &#x3D; 1 : 10,<br>    v(i) &#x3D; 2 ^ i;<br>end;</p>
+<p>indices &#x3D; 1 : 10;<br>for i &#x3D; indices,<br>    disp(i);<br>end;</p>
+<p>i &#x3D; 1;<br>while i &lt;&#x3D; 5,<br>    v(i) &#x3D; 100;<br>    i &#x3D; i + 1;<br>end;</p>
+<p>i &#x3D; 1;<br>while true,<br>    v(i) &#x3D; 999;<br>    i &#x3D; i + 1;<br>    if i &#x3D;&#x3D; 6,<br>        break;<br>    end;<br>end;</p>
+<p>v(1) &#x3D; 2;<br>if v(1) &#x3D;&#x3D; 1,<br>    disp(‘The value is one’);<br>elseif v(1) &#x3D;&#x3D; 2,<br>    disp(‘The value is two’);<br>else,<br>    disp(‘The value is not one or two’);<br>end;</p>
+<p>function name (arg-list)<br>  body<br>endfunction</p>
+<p>function wakeup (message)<br>  printf (“\a%s\n”, message);<br>endfunction</p>
+<p>wakeup (“Rise and shine!”);</p>
+<p>function y &#x3D; squareThisNumber(x)</p>
+<p>addpath % add path for search dirs</p>
+<p>[a, b] &#x3D; SquareAndCubeThisNumber(5) % a &#x3D; 25, b &#x3D; 125</p>
+<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><h4 id="Unvectorized-implementation"><a href="#Unvectorized-implementation" class="headerlink" title="Unvectorized implementation"></a>Unvectorized implementation</h4><p>[latex]h_\theta (x) &#x3D; \sum _{j&#x3D;0}^{n} \theta _jx_j[&#x2F;latex]</p>
+<p>prediction &#x3D; 0.0;<br>for j &#x3D; 1 : n + 1,<br>    prediction &#x3D; prediction + theta(j) * x(j)<br>end;</p>
+<h4 id="Vectorized-implementation"><a href="#Vectorized-implementation" class="headerlink" title="Vectorized implementation"></a>Vectorized implementation</h4><p>[latex]h_\theta (x) &#x3D; \theta ^Tx[&#x2F;latex]</p>
+<p>prediction &#x3D; theta’ * x;</p>
+<p>Using a vectorized implementation, you should be able to get a much more efficient implementation of linear regression.</p>
+<h2 id="Working-on-and-Submitting-Programming-Exercises"><a href="#Working-on-and-Submitting-Programming-Exercises" class="headerlink" title="Working on and Submitting Programming Exercises"></a>Working on and Submitting Programming Exercises</h2><p>How to use the submission system which will let you verify right away that you got the right answer for your machine learning program exercise. If you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/17-large-scale-machine-learning/" data-id="cl56jpsjc003tasch1yayeipg" data-title="17 Large Scale Machine Learning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/26/5-octave-tutorial/" data-id="cl56jpslt0060asch3i1pc3vq" data-title="5 Octave Tutorial" class="article-share-link">Share</a>
       
       
       
@@ -388,10 +265,10 @@
 
 
   
-    <article id="post-16-recommender-systems" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-4-linear-regression-with-multiple-variables" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/04/08/16-recommender-systems/" class="article-date">
-  <time class="dt-published" datetime="2019-04-08T06:48:38.000Z" itemprop="datePublished">2019-04-08</time>
+    <a href="/2019/03/25/4-linear-regression-with-multiple-variables/" class="article-date">
+  <time class="dt-published" datetime="2019-03-25T08:57:28.000Z" itemprop="datePublished">2019-03-25</time>
 </a>
     
   <div class="article-category">
@@ -406,7 +283,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/08/16-recommender-systems/">16 Recommender Systems</a>
+      <a class="p-name article-title" href="/2019/03/25/4-linear-regression-with-multiple-variables/">4 Linear Regression with Multiple Variables</a>
     </h1>
   
 
@@ -414,24 +291,26 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Problem-Formulation"><a href="#Problem-Formulation" class="headerlink" title="Problem Formulation"></a>Problem Formulation</h2><ol>
-<li>an important application of machine learning</li>
-<li>this idea of learning the features</li>
-</ol>
-<h2 id="Content-Based-Recommendations"><a href="#Content-Based-Recommendations" class="headerlink" title="Content Based Recommendations"></a>Content Based Recommendations</h2><p><strong>user j ‘s parameter vector :</strong> [latex]\theta^{(j)}[&#x2F;latex] <strong>movie i’s feature vector :</strong> [latex]x^{(i)}[&#x2F;latex] <strong>Predicting rating:</strong> [latex](\theta^{(j)})^Tx^{(i)}[&#x2F;latex] <strong>user [latex]j[&#x2F;latex] ‘s cost function :</strong> [latex]\underset {\theta ^{(j)}}{min} \frac {1}{2} \sum _{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+ \frac {\lambda}{2}(\theta_k^{(j)})^2[&#x2F;latex] <strong>all user’s cost function :</strong> [latex]\underset {\theta ^{(j)}, \cdots , \theta ^{(n_u)}}{min} \frac {1}{2} \sum _{j&#x3D;1}^{n_u} \sum _{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+ \frac {\lambda}{2} \sum_{j&#x3D;1}^{n_u} \sum_{k&#x3D;1}^{n} (\theta_k^{(j)})^2[&#x2F;latex] **Gradient descent : ** [latex]\left\{\begin{matrix} \theta_k^{(j)} :&#x3D; \theta_k^{(j)} - \alpha \sum_{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)} - y^{(i,j)})x_{k}^{(i)} &amp; \ (for \ k \ &#x3D; \ 0) \\ \theta_k^{(j)} :&#x3D; \theta_k^{(j)} - \alpha (\sum_{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)} - y^{(i,j)})x_{k}^{(i)} + \lambda \theta_{k}^{(j)}) &amp; \ (for \ k \ \neq \ 0) \end{matrix}\right.[&#x2F;latex]  </p>
-<h2 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h2><p><strong>No User’s Parameter and No Movie’s Features, you can do this.</strong> <em>The term <strong>collaborative filtering</strong> refers to the observation that when you run this algorithm with a large set of users, what all of these users are effectively doing are sort of collaboratively or collaborating to get better movie ratings for everyone because with every user rating some subset with the movies, every user is helping the algorithm a little bit to learn better features, and then by helping– by rating a few movies myself, I will be helping the system learn better features and then these features can be used by the system to make better movie predictions for everyone else. And so there is a sense of collaboration where every user is helping the system learn better features for the common good. This is this collaborative filtering.</em></p>
-<h2 id="Collaborative-Filtering-Algorithm"><a href="#Collaborative-Filtering-Algorithm" class="headerlink" title="Collaborative Filtering Algorithm"></a>Collaborative Filtering Algorithm</h2><ol>
-<li>Initialize x and theta to small random values</li>
-<li>minimize the cost function using great intercepts or one of the advance optimization algorithms</li>
-<li>predict</li>
-</ol>
-<h2 id="Vectorization-Low-Rank-Matrix-Factorization"><a href="#Vectorization-Low-Rank-Matrix-Factorization" class="headerlink" title="Vectorization Low Rank Matrix Factorization"></a>Vectorization Low Rank Matrix Factorization</h2><p>A user has recently been looking at one product. Are there <strong>other related products</strong> that you could <strong>recommend</strong> to this user? If you can find a different movie i, j, so that the distance between [latex]x^{(i)}[&#x2F;latex] and [latex]x^{(j)}[&#x2F;latex] is small, then this is a pretty strong indication that, you know, movies j and i are somehow similar Use learned features to find what might be movies and what might be products that aren’t related to each other.</p>
-<h2 id="Implementational-Detail-Mean-Normalization"><a href="#Implementational-Detail-Mean-Normalization" class="headerlink" title="Implementational Detail Mean Normalization"></a>Implementational Detail Mean Normalization</h2><p><strong>If a user has not evaluated any movies, which movie should we recommend?</strong> The idea of mean normalization will let us fix this problem.</p>
+        <h2 id="Linear-Regression-with-Multiple-Variables"><a href="#Linear-Regression-with-Multiple-Variables" class="headerlink" title="Linear Regression with Multiple Variables"></a>Linear Regression with Multiple Variables</h2><p>[latex]x^{(i)}_j[&#x2F;latex] : refer to feature number <strong>j</strong> in the <strong>x</strong> factor.</p>
+<h2 id="Gradient-Descent-for-Multiple-Variables"><a href="#Gradient-Descent-for-Multiple-Variables" class="headerlink" title="Gradient Descent for Multiple Variables"></a>Gradient Descent for Multiple Variables</h2><p>def computeCost(X, y, theta):<br>    inner &#x3D; np.power(((X * theta.T) - y), 2)<br>    return np.sum(inner) &#x2F; (2 * len(X))</p>
+<h2 id="Gradient-Descent-in-Practice-I-Feature-Scaling"><a href="#Gradient-Descent-in-Practice-I-Feature-Scaling" class="headerlink" title="Gradient Descent in Practice I - Feature Scaling"></a>Gradient Descent in Practice I - Feature Scaling</h2><p>the different features take on similar ranges of values, then gradient descents can converge more quickly. [latex] x_n &#x3D; \frac {x_n -\mu _n}{s_n} [&#x2F;latex] [latex]\mu _n[&#x2F;latex] : the average value [latex]s_n[&#x2F;latex] : the range of values</p>
+<h2 id="Gradient-Descent-in-Practice-II-Learning-Rate"><a href="#Gradient-Descent-in-Practice-II-Learning-Rate" class="headerlink" title="Gradient Descent in Practice II - Learning Rate"></a>Gradient Descent in Practice II - Learning Rate</h2><p>Looking at figure that pluck the cost function j of theta as gradient descent runs and the x-axis here is the number of iteration of gradient descent and as gradient descent runs. Maybe [latex]\alpha &#x3D; 0.01, 0.03, 0.1, 0.3, 1, 3, 10[&#x2F;latex]</p>
+<h2 id="Features-and-Polynomial-Regression"><a href="#Features-and-Polynomial-Regression" class="headerlink" title="Features and Polynomial Regression"></a>Features and Polynomial Regression</h2><p>Look at the data and choose features. You can put polynomial functions as well and sometimes by appropriate insight into the feature simply get a much better model for your data. Feature Scaling is very necessary if you use polynomial functions.</p>
+<h2 id="Normal-Equation"><a href="#Normal-Equation" class="headerlink" title="Normal Equation"></a>Normal Equation</h2><p>The normal equation, which for some linear regression problems, will give us a much better way to solve for the optimal value of the parameters theta. [latex]\theta &#x3D; (X^{T}X)^{-1}X^{T}y[&#x2F;latex]</p>
+<h4 id="Disadvantages-of-gradient-descent"><a href="#Disadvantages-of-gradient-descent" class="headerlink" title="Disadvantages of gradient descent"></a>Disadvantages of gradient descent</h4><ul>
+<li>choose the learning rate Alpha.</li>
+<li>many more iterations</li>
+</ul>
+<h4 id="Advantages-of-gradient-descent"><a href="#Advantages-of-gradient-descent" class="headerlink" title="Advantages of gradient descent"></a>Advantages of gradient descent</h4><ul>
+<li>works pretty well even if you have millions of features</li>
+<li>many kinds of models</li>
+</ul>
+<h2 id="Normal-Equation-Noninvertibility"><a href="#Normal-Equation-Noninvertibility" class="headerlink" title="Normal Equation Noninvertibility"></a>Normal Equation Noninvertibility</h2><p>Some matrices are invertible and some matrices do not have an inverse we call those <strong>non-invertible matrices</strong>. Look at your features and see if you have redundant features or being a linear function of each other, and if you do have redundant features and if you just delete one of these features you really don’t need both of these features that will solve your <strong>non-invertibility problem</strong>.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/16-recommender-systems/" data-id="cl56jpsj8003raschawlrbhlx" data-title="16 Recommender Systems" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/25/4-linear-regression-with-multiple-variables/" data-id="cl56jpslr005yasch04208m6k" data-title="4 Linear Regression with Multiple Variables" class="article-share-link">Share</a>
       
       
       
@@ -443,10 +322,10 @@
 
 
   
-    <article id="post-15-anomaly-detection" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-3-linear-algebra-review" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/04/08/15-anomaly-detection/" class="article-date">
-  <time class="dt-published" datetime="2019-04-08T03:52:31.000Z" itemprop="datePublished">2019-04-08</time>
+    <a href="/2019/03/25/3-linear-algebra-review/" class="article-date">
+  <time class="dt-published" datetime="2019-03-25T08:03:16.000Z" itemprop="datePublished">2019-03-25</time>
 </a>
     
   <div class="article-category">
@@ -461,7 +340,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/08/15-anomaly-detection/">15 Anomaly Detection</a>
+      <a class="p-name article-title" href="/2019/03/25/3-linear-algebra-review/">3 Linear Algebra Review</a>
     </h1>
   
 
@@ -469,35 +348,132 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Problem-Motivation"><a href="#Problem-Motivation" class="headerlink" title="Problem Motivation"></a>Problem Motivation</h2><p>It’s mainly for unsupervised problem, that there’s some aspects of it that are also very similar to sort of the supervised learning problem. <strong>some examples :</strong> </p>
+        <h2 id="Matrices-and-Vectors"><a href="#Matrices-and-Vectors" class="headerlink" title="Matrices and Vectors"></a>Matrices and Vectors</h2><p><strong>The dimension of the matrix</strong> is going to be written as the number of row times the number of columns in the matrix. A <strong>vector</strong> turns out to be a special case of a matrix. Matrix with just one column is what we call a <strong>vector</strong>.</p>
+<h2 id="Addition-and-Scalar-Multiplication"><a href="#Addition-and-Scalar-Multiplication" class="headerlink" title="Addition and Scalar Multiplication"></a>Addition and Scalar Multiplication</h2><h4 id="Addition"><a href="#Addition" class="headerlink" title="Addition"></a>Addition</h4><p>[latex] \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} + \begin{bmatrix} 4 &amp; 0.5 \\ 2 &amp; 5 \\ 0 &amp; 1 \end{bmatrix} &#x3D; \begin{bmatrix} 5 &amp; 0.5 \\ 4 &amp; 10 \\ 3 &amp; 2 \end{bmatrix} [&#x2F;latex]</p>
+<h4 id="Scalar-Multiplication"><a href="#Scalar-Multiplication" class="headerlink" title="Scalar Multiplication"></a>Scalar Multiplication</h4><p>[latex] 3 * \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} &#x3D; \begin{bmatrix} 3 &amp; 0 \\ 6 &amp; 15 \\ 9 &amp; 3 \end{bmatrix} &#x3D; \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} * 3 [&#x2F;latex]</p>
+<h2 id="Matrix-Vector-Multiplication"><a href="#Matrix-Vector-Multiplication" class="headerlink" title="Matrix Vector Multiplication"></a>Matrix Vector Multiplication</h2><p>[latex] \begin{bmatrix} 1 &amp; 3 \\ 4 &amp; 0 \\ 2 &amp; 1 \end{bmatrix} * \begin{bmatrix} 1 \\ 5 \end{bmatrix} &#x3D; \begin{bmatrix} 16 &#x3D; 1 * 1 + 3 * 5 \\ 4 &#x3D; 4 * 1 + 0 * 5 \\ 7 &#x3D; 2 * 1 + 1 * 5 \end{bmatrix} [&#x2F;latex]</p>
+<h2 id="Matrix-Matrix-Multiplication"><a href="#Matrix-Matrix-Multiplication" class="headerlink" title="Matrix Matrix Multiplication"></a>Matrix Matrix Multiplication</h2><p>[latex] \begin{bmatrix} C0 &amp; C1 \\ C2 &amp; C3 \end{bmatrix} &#x3D; \begin{bmatrix} A0 &amp; A1 \\ A2 &amp; A3 \end{bmatrix} * \begin{bmatrix} B0 &amp; B1 \\ B2 &amp; B3 \end{bmatrix} [&#x2F;latex]</p>
+<p>[latex]C0 &#x3D; A0 * B0 + A1 * B2[&#x2F;latex] [latex]C1 &#x3D; A0 * B1 + A1 * B3[&#x2F;latex] [latex]C2 &#x3D; A2 * B0 + A3 * B2[&#x2F;latex] [latex]C3 &#x3D; A2 * B1 + A3 * B3[&#x2F;latex]</p>
+<h2 id="Matrix-Multiplication-Properties"><a href="#Matrix-Multiplication-Properties" class="headerlink" title="Matrix Multiplication Properties"></a>Matrix Multiplication Properties</h2><p>[latex]A * B \neq B * A[&#x2F;latex] [latex]A * (B * C) &#x3D; (A * B) * C[&#x2F;latex] <strong>Identity matrix</strong>, has the property that it has ones along the diagonals, right, and so on and is zero everywhere else. [latex]AA^{-1} &#x3D; A^{-1}A &#x3D; I[&#x2F;latex] [latex]AI &#x3D; IA &#x3D; A[&#x2F;latex]</p>
+<h2 id="Inverse-and-Transpose"><a href="#Inverse-and-Transpose" class="headerlink" title="Inverse and Transpose"></a>Inverse and Transpose</h2><h4 id="Inverse"><a href="#Inverse" class="headerlink" title="Inverse"></a>Inverse</h4><p>[latex]A^{-1}[&#x2F;latex]</p>
+<h4 id="Transpose"><a href="#Transpose" class="headerlink" title="Transpose"></a>Transpose</h4><p>[latex]A^{T}[&#x2F;latex]</p>
+<p>[latex] \begin{vmatrix} a &amp; b\\ c &amp; d\\ e &amp; f \end{vmatrix} ^{T} &#x3D; \begin{vmatrix} a &amp; c &amp; e\\ b &amp; d &amp; f \end{vmatrix} [&#x2F;latex]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/25/3-linear-algebra-review/" data-id="cl56jpslg005masch7zhoc1qb" data-title="3 Linear Algebra Review" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-2-linear-regression-with-one-variable" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/25/2-linear-regression-with-one-variable/" class="article-date">
+  <time class="dt-published" datetime="2019-03-25T03:37:40.000Z" itemprop="datePublished">2019-03-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/25/2-linear-regression-with-one-variable/">2 Linear Regression with One Variable</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Model-Representation"><a href="#Model-Representation" class="headerlink" title="Model Representation"></a>Model Representation</h2><p>[latex]m[&#x2F;latex] : the number of training examples [latex]x[&#x2F;latex] : input variables [latex]y[&#x2F;latex] : output variables [latex](x, y)[&#x2F;latex] : a single training example [latex](x^{(i)}, y^{(i)})[&#x2F;latex] : refer to the ith training example [latex]h[&#x2F;latex] : representing the hypothesis</p>
+<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>[latex]J({\theta }_0, {\theta }_1) &#x3D; \frac {1}{2m}\sum ^{m}_{i&#x3D;1}( h_{\theta }(x^{(i)}) - y^{(i)})^2[&#x2F;latex]</p>
+<p><strong>Cost function is also called the squared error function or sometimes called the square error cost function.</strong></p>
+<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>repeat until convergence {</p>
+<p>[latex]{\theta }_j :&#x3D; {\theta }_j - {\alpha }\frac {\partial }{\partial {\theta }_j}J({\theta }_0 - {\theta }_1) [&#x2F;latex] (for j &#x3D; 0 and j &#x3D; 1)</p>
+<p>} <strong><em>when people talk about <strong>gradient descent</strong>, they always mean <strong>simultaneous update</strong>.</em></strong></p>
+<h2 id="Gradient-Descent-For-LinearRegression"><a href="#Gradient-Descent-For-LinearRegression" class="headerlink" title="Gradient Descent For LinearRegression"></a>Gradient Descent For LinearRegression</h2><p>The term batch gradient descent means that refers to the fact that, in every step of gradient descent we’re looking at <strong>all of the training examples</strong>.</p>
+<p>In case it turns out gradient descent will scale better to <strong>larger data sets</strong> than that normal equals method.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/25/2-linear-regression-with-one-variable/" data-id="cl56jpsjs0049asch5mad19tw" data-title="2 Linear Regression with One Variable" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-1-introduction" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/25/1-introduction/" class="article-date">
+  <time class="dt-published" datetime="2019-03-25T03:36:38.000Z" itemprop="datePublished">2019-03-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/25/1-introduction/">1 Introduction</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Why-to-have-a-Machine-Learning"><a href="#Why-to-have-a-Machine-Learning" class="headerlink" title="Why to have a Machine Learning"></a>Why to have a Machine Learning</h2><p>For the most part <strong>we just did not know how to write AI programs to do the more</strong> interesting things such as web search or photo tagging or email anti-spam. There was a realization that the only way to do these things was to have a machine learn to do it by itself.</p>
+<h2 id="What-is-Machine-Learning"><a href="#What-is-Machine-Learning" class="headerlink" title="What is Machine Learning"></a>What is Machine Learning</h2><p>Even among machine learning practitioners there isn’t a well accepted definition of what is and what isn’t machine learning.</p>
 <ul>
-<li>detect strange behavior or fraudulent behavior</li>
-<li>manufacturing</li>
-<li>monitoring computers in a data center</li>
+<li>Someone defined machine learning as the field of study that gives computers the ability to learn without being explicitly programmed.</li>
+<li>A computer program is said to learn from experience E, with respect to some task T, and some performance measure P, if its performance on T as measured by P improves with experience E.</li>
 </ul>
-<h2 id="Gaussian-Distribution"><a href="#Gaussian-Distribution" class="headerlink" title="Gaussian Distribution"></a>Gaussian Distribution</h2><h4 id="Gaussian-distribution"><a href="#Gaussian-distribution" class="headerlink" title="Gaussian distribution"></a>Gaussian distribution</h4><p>[latex]x\sim N(\mu , \sigma ^2)[&#x2F;latex]  </p>
-<h4 id="Gaussian-probability-density"><a href="#Gaussian-probability-density" class="headerlink" title="Gaussian probability density"></a>Gaussian probability density</h4><p>[latex]p(x, \mu , \sigma ^2) &#x3D; \frac {1}{\sqrt{2\pi }\sigma } exp(-\frac {(x - \mu)^2}{2 \sigma ^2})[&#x2F;latex]  </p>
-<h4 id="The-location-of-the-center-of-this-bell-shaped-curve"><a href="#The-location-of-the-center-of-this-bell-shaped-curve" class="headerlink" title="The location of the center of this bell-shaped curve"></a>The location of the center of this bell-shaped curve</h4><p>[latex]\mu &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)}[&#x2F;latex]  </p>
-<h4 id="The-width-of-this-bell-shaped-curve"><a href="#The-width-of-this-bell-shaped-curve" class="headerlink" title="The width of this bell-shaped curve"></a>The width of this bell-shaped curve</h4><p>[latex]\sigma ^ 2 &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} (x^{(i)} - \mu) ^2[&#x2F;latex]   <strong>Notice :</strong> The formula here  we use [latex]m[&#x2F;latex] instead of [latex]m - 1[&#x2F;latex] which is used in a statistics.</p>
-<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>Address anomaly detection : [latex]\mu _j &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)} _j[&#x2F;latex]   [latex]\sigma ^ 2 _j &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} (x^{(i)}_j - \mu _j) ^2[&#x2F;latex]   [latex]p(x) &#x3D; \prod _{j&#x3D;1}^{n}p(x_j; \mu _j, \sigma ^2_j) &#x3D; \prod _{j&#x3D;1}^{1}\frac {1}{\sqrt{2\pi } \sigma _j} exp(-\frac {(x_j - \mu_j)^2}{2 \sigma ^2_j})[&#x2F;latex]   <strong>If [latex]p(x) &lt; \varepsilon [&#x2F;latex], it’s anomaly.</strong></p>
-<h2 id="Developing-and-Evaluating-an-Anomaly-Detection-System"><a href="#Developing-and-Evaluating-an-Anomaly-Detection-System" class="headerlink" title="Developing and Evaluating an Anomaly Detection System"></a>Developing and Evaluating an Anomaly Detection System</h2><p><strong>How to develop and evaluate an algorithm ?</strong></p>
-<ol>
-<li>Take the training sets and fit the model [latex]p(x)[&#x2F;latex]</li>
-<li>On the cross validation of the test set, try to use different [latex]\varepsilon[&#x2F;latex], and then compute the F1 score</li>
-<li>After choosed [latex]\varepsilon[&#x2F;latex], evaluation of the algorithm on the test sets</li>
-</ol>
-<h2 id="Anomaly-Detection-vs-Supervised-Learning"><a href="#Anomaly-Detection-vs-Supervised-Learning" class="headerlink" title="Anomaly Detection vs. Supervised Learning"></a>Anomaly Detection vs. Supervised Learning</h2><p>[table id&#x3D;3 &#x2F;]</p>
-<h2 id="Choosing-What-Features-to-Use"><a href="#Choosing-What-Features-to-Use" class="headerlink" title="Choosing What Features to Use"></a>Choosing What Features to Use</h2><ol>
-<li>model the features using this sort of Gaussian distribution (play with different transformations of the data in order to make it look more Gaussian)</li>
-<li>do an error analysis procedure to come up with features for an anomaly detection algorithm</li>
-<li>create new features by combining me features</li>
-</ol>
-<h2 id="Multivariate-Gaussian-Distribution"><a href="#Multivariate-Gaussian-Distribution" class="headerlink" title="Multivariate Gaussian Distribution"></a>Multivariate Gaussian Distribution</h2><p>[latex]p(x) &#x3D; \prod _{j&#x3D;1}^{n}p(x_j; \mu, \sigma ^2_j) &#x3D; \prod _{j&#x3D;1}^{n}\frac {1}{\sqrt{2\pi } \sigma _j} exp(-\frac {(x_j - \mu_j)^2}{2 \sigma ^2_j})[&#x2F;latex]   [latex]\mu &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)}[&#x2F;latex]   [latex]\sum &#x3D; \frac {1}{m} \sum_{i&#x3D;1}^{m} (x^{(i)} - \mu )(x^{(i)} - \mu )^T &#x3D; \frac {1}{m} (X - \mu)^T(X - \mu)[&#x2F;latex]   [latex]p(x) &#x3D; \frac {1}{(2 \pi)^{\frac {n}{2}}\left \sum \right ^{\frac {1}{2}}} exp(-\frac {1}{2} (x-\mu)^T\sum ^{-1}(x-\mu))[&#x2F;latex]   [table id&#x3D;4 &#x2F;]</p>
+<p><em>And if you actually tried to develop a machine learning system, how to make those best practices type decisions about the way in which you build your system.</em></p>
+<h2 id="Supervised-Learning"><a href="#Supervised-Learning" class="headerlink" title="Supervised Learning"></a>Supervised Learning</h2><ul>
+<li><strong>Supervised learning</strong> refers to the fact that we gave the algorithm a data set in which <strong>the “right answers” were given</strong>.</li>
+<li>To define with a bit more terminology this is also called a <strong>regression problem</strong> and by regression problem I mean we’re trying to predict a continuous value output.</li>
+<li><strong>Support Vector Machine</strong>, that will allow a computer to deal with an infinite number of features.</li>
+</ul>
+<h2 id="Unsupervised-Learning"><a href="#Unsupervised-Learning" class="headerlink" title="Unsupervised Learning"></a>Unsupervised Learning</h2><ul>
+<li>Given this data set, an Unsupervised Learning algorithm might decide that the data lives in two different clusters. Supervised Learning algorithm may break these data into these two separate clusters. So this is called a <strong>clustering algorithm</strong>.</li>
+<li>Because we’re not giving the algorithm the right answer for the examples in my data set, this is <strong>Unsupervised Learning</strong>.</li>
+<li><strong>Clustering</strong> is just one type of Unsupervised Learning.</li>
+<li><strong>Octave</strong>, is free open source software, and using a tool like Octave or Matlab, many learning algorithms become just a few lines of code to implement.</li>
+</ul>
+<p><em>Learn much faster if you use Octave as your programming environment, and if you <strong>use Octave as your</strong></em> <em><strong>learning tool and as your prototyping tool</strong>, it’ll let you learn and prototype learning algorithms much more quickly.</em> <em>And in fact what many people will do to in the large Silicon Valley companies is in fact, use an algorithm like Octave to first prototype the learning algorithm, and only after you’ve gotten it</em> <em>to work, then you migrate it to C++ or Java or whatever.</em></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/15-anomaly-detection/" data-id="cl56jpsj5003oaschbq36bqps" data-title="15 Anomaly Detection" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/25/1-introduction/" data-id="cl56jpsfp0013asch0ueh9hp8" data-title="1 Introduction" class="article-share-link">Share</a>
       
       
       
@@ -509,14 +485,14 @@
 
 
   
-    <article id="post-gaussian-distribution-vs-multivariate-gaussian-distribution" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-deep-learning-catalog-andrew-ng" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/" class="article-date">
-  <time class="dt-published" datetime="2019-04-08T03:34:31.000Z" itemprop="datePublished">2019-04-08</time>
+    <a href="/2019/03/22/deep-learning-catalog-andrew-ng/" class="article-date">
+  <time class="dt-published" datetime="2019-03-22T13:38:30.000Z" itemprop="datePublished">2019-03-22</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/deep-learning/">deep-learning</a>►<a class="article-category-link" href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/">Deep Learning Specialization Offered By deeplearning.ai</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Deep-Learning/">Deep Learning</a>
   </div>
 
   </div>
@@ -527,7 +503,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/">Gaussian Distribution vs Multivariate Gaussian Distribution</a>
+      <a class="p-name article-title" href="/2019/03/22/deep-learning-catalog-andrew-ng/">Deep Learning Catalog : Andrew Ng</a>
     </h1>
   
 
@@ -535,12 +511,12 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>[[“Gaussian Distribution “,”Multivariate Gaussian Distribution”],[“Manually create features to capture anomalies”,”Automatically captures correlations between features”],[“Computationally cheaper”,””],[“”,”Must have m &gt; 10n or else sum is non-invertible”]]</p>
+        <p><img src="/img/Deep-Learning.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/" data-id="cl56jpsq5009aasch4hhjdra7" data-title="Gaussian Distribution vs Multivariate Gaussian Distribution" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/22/deep-learning-catalog-andrew-ng/" data-id="cl56jpspe008vasch4xar1uh0" data-title="Deep Learning Catalog : Andrew Ng" class="article-share-link">Share</a>
       
       
       
@@ -552,14 +528,14 @@
 
 
   
-    <article id="post-anomaly-detection-vs-supervised-learning-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-machine-learning-catalog-andrew-ng" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/04/08/anomaly-detection-vs-supervised-learning-2/" class="article-date">
-  <time class="dt-published" datetime="2019-04-08T03:00:34.000Z" itemprop="datePublished">2019-04-08</time>
+    <a href="/2019/03/22/machine-learning-catalog-andrew-ng/" class="article-date">
+  <time class="dt-published" datetime="2019-03-22T13:37:29.000Z" itemprop="datePublished">2019-03-22</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/">Machine Learning Offered By Stanford University</a>
   </div>
 
   </div>
@@ -570,7 +546,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/08/anomaly-detection-vs-supervised-learning-2/">Anomaly Detection vs. Supervised Learning</a>
+      <a class="p-name article-title" href="/2019/03/22/machine-learning-catalog-andrew-ng/">Machine Learning Catalog : Andrew Ng</a>
     </h1>
   
 
@@ -578,12 +554,12 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>[[“Anomaly Detection”,”Supervised Learning”],[“very small number of positive, and a relatively large number of negative examples”,”a reasonably large number of both positive and negative examples”],[“many different types of anomalies”,”have enough positive examples for an algorithm to get a sense of what the positive examples are like”],[“future anomalies may look nothing like the ones you’ve seen so far”,””],[“fraud detection, manufacturing, data center”,”SPAM email, weather prediction, classifying cancers”]]</p>
+        <p><img src="/img/Machine-Learning.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/08/anomaly-detection-vs-supervised-learning-2/" data-id="cl56jpsna006tasch682m6xwx" data-title="Anomaly Detection vs. Supervised Learning" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/22/machine-learning-catalog-andrew-ng/" data-id="cl56jpssb00c6asch7bzi6gf2" data-title="Machine Learning Catalog : Andrew Ng" class="article-share-link">Share</a>
       
       
       
@@ -595,14 +571,14 @@
 
 
   
-    <article id="post-upgrade-to-visual-studio-2019-build-problems" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-cross-compile-wget-with-openssl-for-arm" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/04/04/upgrade-to-visual-studio-2019-build-problems/" class="article-date">
-  <time class="dt-published" datetime="2019-04-04T03:09:13.000Z" itemprop="datePublished">2019-04-04</time>
+    <a href="/2019/03/15/cross-compile-wget-with-openssl-for-arm/" class="article-date">
+  <time class="dt-published" datetime="2019-03-15T02:08:04.000Z" itemprop="datePublished">2019-03-15</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>►<a class="article-category-link" href="/categories/windows/">windows</a>►<a class="article-category-link" href="/categories/windows/Visual-Studio/">Visual Studio</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
   </div>
 
   </div>
@@ -613,7 +589,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/04/04/upgrade-to-visual-studio-2019-build-problems/">Upgrade to Visual Studio 2019 : Build Problems</a>
+      <a class="p-name article-title" href="/2019/03/15/cross-compile-wget-with-openssl-for-arm/">Cross compile wget with openssl for ARM</a>
     </h1>
   
 
@@ -621,14 +597,59 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="1-std-toupper-—-gt-toupper"><a href="#1-std-toupper-—-gt-toupper" class="headerlink" title="1. std::toupper —&gt; ::toupper"></a>1. std::toupper —&gt; ::toupper</h2><h4 id="Original-Code-It’s-OKay-in-VS2017"><a href="#Original-Code-It’s-OKay-in-VS2017" class="headerlink" title="Original Code (It’s OKay in VS2017) :"></a>Original Code (It’s OKay in VS2017) :</h4><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/VS2019_toupper_1.png">      </p>
-<h4 id="VS-Upgraded"><a href="#VS-Upgraded" class="headerlink" title="VS Upgraded :"></a>VS Upgraded :</h4><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/VS2019_toupper_2.png">  </p>
-<h4 id="Code-Updated-It’s-OKay-in-VS2019"><a href="#Code-Updated-It’s-OKay-in-VS2019" class="headerlink" title="Code Updated (It’s OKay in VS2019) :"></a>Code Updated (It’s OKay in VS2019) :</h4><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/VS2019_toupper_OK.png"></p>
+        <h3 id="Config-OpenSSL"><a href="#Config-OpenSSL" class="headerlink" title="Config OpenSSL"></a>Config OpenSSL</h3><p>tar xvf openssl-1.1.1b.tar.gz<br>cd openssl-1.1.1b&#x2F;<br>mkdir __install<br>.&#x2F;config –prefix&#x3D;$PWD&#x2F;__install no-asm shared</p>
+<h3 id="Edit-Makefile"><a href="#Edit-Makefile" class="headerlink" title="Edit Makefile"></a>Edit Makefile</h3><p>PLATFORM&#x3D;linux-armv4<br>CROSS_COMPILE&#x3D;arm-linux-gnueabihf-<br>delete “-m32” “-m64”</p>
+<h3 id="Compile-OpenSSL"><a href="#Compile-OpenSSL" class="headerlink" title="Compile OpenSSL"></a>Compile OpenSSL</h3><p>make<br>make install</p>
+<h3 id="Config-Wget-amp-amp-Make"><a href="#Config-Wget-amp-amp-Make" class="headerlink" title="Config Wget &amp;&amp; Make"></a>Config Wget &amp;&amp; Make</h3><p>tar zxvf wget-1.20.1.tar.gz<br>cd wget-1.20.1<br>.&#x2F;configure –prefix&#x3D;$PWD&#x2F;__install –host&#x3D;arm-linux CC&#x3D;arm-linux-gnueabihf-gcc –with-ssl&#x3D;openssl –with-libssl-prefix&#x3D;&#x2F;root&#x2F;Downloads&#x2F;wget_arm&#x2F;openssl-1.1.1b&#x2F;__install –without-zlib<br>make<br>make install</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/04/04/upgrade-to-visual-studio-2019-build-problems/" data-id="cl56jpsy100i2aschfgdnbsr8" data-title="Upgrade to Visual Studio 2019 : Build Problems" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/03/15/cross-compile-wget-with-openssl-for-arm/" data-id="cl56jpsp3008lasch82lnhxgi" data-title="Cross compile wget with openssl for ARM" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/" class="article-date">
+  <time class="dt-published" datetime="2019-03-15T02:03:40.000Z" itemprop="datePublished">2019-03-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/">./xxx: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.22&#39; not found (required by ./xxx)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1"><a href="#Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1" class="headerlink" title="Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)"></a>Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)</h3><p>cd &#x2F;usr&#x2F;lib<br>mv libstdc++.so.6 libstdc++.so.6.bak<br>ln -s libstdc++.so.6.0.24 libstdc++.so.6<br>chmod 777 libstdc++.so.6</p>
+<h3 id="Now-it-will-be-like-this"><a href="#Now-it-will-be-like-this" class="headerlink" title="Now, it will be like this !"></a>Now, it will be like this !</h3><p>root@imx6ul7d:&#x2F;usr&#x2F;lib# ls -al libstdc++.so.6*<br>lrwxrwxrwx 1 root root      19 Sep 16 23:03 libstdc++.so.6 -&gt; libstdc++.so.6.0.24<br>-rwxr-xr-x 1 root root 1240644 Sep  9 02:04 libstdc++.so.6.0.21<br>-rwxrwxrwx 1 root root 9459568 Sep 16 23:35 libstdc++.so.6.0.24<br>lrwxrwxrwx 1 root root      19 Jan  1  1970 libstdc++.so.6.bak -&gt; libstdc++.so.6.0.21<br>-rwxr-xr-x 1 root root 9459568 Sep 16 23:11 libstdc++.so.6.bak_24</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/" data-id="cl56jpsyf00ilascha6pu5i07" data-title="./xxx: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.22&#39; not found (required by ./xxx)" class="article-share-link">Share</a>
       
       
       
@@ -644,7 +665,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
   </nav>
 
 </section>

@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Object localizationObject detection is one of the areas of computer vision that’s just exploding. Object localization which means not only do you have to label this as say a car, but the algorithm als">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Anchor_box_example.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/YOLO_Outputting_the_non-max_supressed_outputs.png">
+<meta property="og:image" content="http://example.com/img/Anchor_box_example.png">
+<meta property="og:image" content="http://example.com/img/YOLO_Outputting_the_non-max_supressed_outputs.png">
 <meta property="article:published_time" content="2019-04-19T11:39:45.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.556Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:39.479Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Anchor_box_example.png">
+<meta name="twitter:image" content="http://example.com/img/Anchor_box_example.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -138,7 +138,7 @@
 <li>and find the one with the highest probability the highest</li>
 </ul>
 <p><strong>Non max</strong> means that you’re going to output your maximal probabilities classifications but suppress it close by ones that are non maximal so that’s as a name non max suppression.</p>
-<h2 id="Anchor-Boxes"><a href="#Anchor-Boxes" class="headerlink" title="Anchor Boxes"></a>Anchor Boxes</h2><p>One of the problems with object detection as you’ve seen it so far is that each of the grid cells can detect only one object What if a grid cell wants to <strong>detect multiple objects</strong> here’s what you can do you can use the idea of anchor boxes. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Anchor_box_example.png">   The idea of anchor boxes what you’re going to do is predefined two different shapes called anchor boxes or anchor boxes shapes and what you’re going to do is now be able to associate two predictions with the two anchor boxes and in general you might use more anchor boxes maybe five or even more. <strong>Anchor box algorithm :</strong></p>
+<h2 id="Anchor-Boxes"><a href="#Anchor-Boxes" class="headerlink" title="Anchor Boxes"></a>Anchor Boxes</h2><p>One of the problems with object detection as you’ve seen it so far is that each of the grid cells can detect only one object What if a grid cell wants to <strong>detect multiple objects</strong> here’s what you can do you can use the idea of anchor boxes. <img src="/img/Anchor_box_example.png">   The idea of anchor boxes what you’re going to do is predefined two different shapes called anchor boxes or anchor boxes shapes and what you’re going to do is now be able to associate two predictions with the two anchor boxes and in general you might use more anchor boxes maybe five or even more. <strong>Anchor box algorithm :</strong></p>
 <ul>
 <li>Previously :</li>
 </ul>
@@ -152,7 +152,7 @@
 <li>People used to just choose them by hand you choose maybe five or ten anchor box shapes that spans a variety of shapes that see to cover the types of objects you seem to detect.</li>
 <li>One of the later YOLO research papers is to use a k-means algorithm to group together two types of object shapes you tend to get and if we use that to select a set of anchor boxes that this most stereotypically representative of the may be multiple there may be dozens of object classes you’re trying to detect but that’s a more advanced way to automatically choose the anchor boxes.</li>
 </ul>
-<h2 id="Putting-it-together-YOLO-algorithm"><a href="#Putting-it-together-YOLO-algorithm" class="headerlink" title="Putting it together: YOLO algorithm"></a>Putting it together: YOLO algorithm</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/YOLO_Outputting_the_non-max_supressed_outputs.png">  </p>
+<h2 id="Putting-it-together-YOLO-algorithm"><a href="#Putting-it-together-YOLO-algorithm" class="headerlink" title="Putting it together: YOLO algorithm"></a>Putting it together: YOLO algorithm</h2><p><img src="/img/YOLO_Outputting_the_non-max_supressed_outputs.png">  </p>
 <p><strong>One of the most effective object detection algorithms that</strong></p>
 <p><strong>also encompasses many of the best ideas across the entire computer vision literature that relate to object detection.</strong></p>
 <h2 id="Region-proposals-Optional"><a href="#Region-proposals-Optional" class="headerlink" title="Region proposals (Optional)"></a>Region proposals (Optional)</h2><p><em><strong>Algorithm convolutionally but one downside that the algorithm is it just classifies a lot of regions where there’s clearly no object.</strong></em> <strong>Faster algorithms :</strong> </p>

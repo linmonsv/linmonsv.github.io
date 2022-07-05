@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Gen HDF5 Dataimport pickleimport numpy as npimport h5py with open(‘data.pkl’, ‘rb’) as f:    samples, labels &#x3D; pickle.load(f)sample_size &#x3D; len(labels) samples &#x3D; np.array(samples).reshap">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/Caffe_mlp_train-315x1024.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/Caffe_Sample_Surface.png">
+<meta property="og:image" content="http://example.com/img/Caffe_mlp_train-315x1024.png">
+<meta property="og:image" content="http://example.com/img/Caffe_Sample_Surface.png">
 <meta property="article:published_time" content="2019-01-09T09:58:25.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.425Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:39.622Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/Caffe_mlp_train-315x1024.png">
+<meta name="twitter:image" content="http://example.com/img/Caffe_mlp_train-315x1024.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -109,7 +109,7 @@
 <p>with open(‘data_h5.txt’, ‘w’) as f:<br>    f.write(h5_filename)</p>
 <h2 id="Network-Train"><a href="#Network-Train" class="headerlink" title="Network Train"></a>Network Train</h2><p>name: “SimpleMLP”<br>layer {<br>    name:   “data”<br>    type:   “HDF5Data”<br>    top:    “data”<br>    top:    “label”<br>    include {<br>        phase:  TRAIN<br>    }<br>    hdf5_data_param {<br>        source: “data_h5.txt”<br>        batch_size: 41<br>    }<br>}<br>layer {<br>    name:   “fc1”<br>    type:   “InnerProduct”<br>    bottom: “data”<br>    top:    “fc1”<br>    inner_product_param {<br>        num_output: 2<br>        weight_filler   {<br>            type:   “uniform”<br>        }<br>    }<br>}<br>layer {<br>    name:   “sigmoid1”<br>    type:   “Sigmoid”<br>    bottom: “fc1”<br>    top:    “sigmoid1”<br>}<br>layer {<br>    name:   “fc2”<br>    type:   “InnerProduct”<br>    bottom: “sigmoid1”<br>    top:    “fc2”<br>    inner_product_param {<br>        num_output: 2<br>        weight_filler   {<br>            type:   “uniform”<br>        }<br>    }<br>}<br>layer {<br>    name:   “loss”<br>    type:   “SoftmaxWithLoss”<br>    bottom: “fc2”<br>    bottom: “label”<br>    top:    “loss”<br>}</p>
 <h2 id="Gen-Network-Picture"><a href="#Gen-Network-Picture" class="headerlink" title="Gen Network Picture"></a>Gen Network Picture</h2><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python&#x2F;draw_net.py train.prototxt mlp_train.png –rankdir BT</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Caffe_mlp_train-315x1024.png"></p>
+<p><img src="/img/Caffe_mlp_train-315x1024.png"></p>
 <h2 id="Network-Solver"><a href="#Network-Solver" class="headerlink" title="Network Solver"></a>Network Solver</h2><p>net:    “train.prototxt”<br>base_lr:    0.15<br>lr_policy:  “fixed”<br>display:    100<br>max_iter:   2000<br>momentum:   0.95<br>snapshot_prefix:    “simple_mlp”<br>solver_mode:    CPU</p>
 <h2 id="Start-Train"><a href="#Start-Train" class="headerlink" title="Start Train"></a>Start Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver solver.prototxt</p>
 <h2 id="Network-Test"><a href="#Network-Test" class="headerlink" title="Network Test"></a>Network Test</h2><p>name: “SimpleMLP”<br>input:  “data”<br>input_shape {<br>    dim:    1<br>    dim:    2<br>}<br>layer {<br>    name:   “fc1”<br>    type:   “InnerProduct”<br>    bottom: “data”<br>    top:    “fc1”<br>    inner_product_param {<br>        num_output: 2<br>    }<br>}<br>layer {<br>    name:   “sigmoid1”<br>    type:   “Sigmoid”<br>    bottom: “fc1”<br>    top:    “sigmoid1”<br>}<br>layer {<br>    name:   “fc2”<br>    type:   “InnerProduct”<br>    bottom: “sigmoid1”<br>    top:    “fc2”<br>    inner_product_param {<br>        num_output: 2<br>    }<br>}<br>layer {<br>    name:   “softmax”<br>    type:   “Softmax”<br>    bottom: “fc2”<br>    top:    “prob”<br>}</p>
@@ -122,7 +122,7 @@
 <p>samples0 &#x3D; samples[labels&#x3D;&#x3D;0]<br>samples0_probs &#x3D; []<br>for sample in samples0:<br>    net.blobs[‘data’].data[…] &#x3D; sample.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    samples0_probs.append(output[‘prob’][0][1])<br>samples1 &#x3D; samples[labels&#x3D;&#x3D;1]<br>samples1_probs &#x3D; []<br>for sample in samples1:<br>    net.blobs[‘data’].data[…] &#x3D; sample.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    samples1_probs.append(output[‘prob’][0][1])</p>
 <p>ax.scatter(samples0[:, 0], samples0[:, 1], samples0_probs, c&#x3D;’r’, marker&#x3D;’o’, s&#x3D;50)<br>ax.scatter(samples1[:, 0], samples1[:, 1], samples1_probs, c&#x3D;’b’, marker&#x3D;’^’, s&#x3D;50)</p>
 <p>plt.show()</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Caffe_Sample_Surface.png"></p>
+<p><img src="/img/Caffe_Sample_Surface.png"></p>
 
       
     </div>

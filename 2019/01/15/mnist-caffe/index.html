@@ -13,23 +13,16 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Preparewget http:&#x2F;&#x2F;deeplearning.net&#x2F;data&#x2F;mnist&#x2F;mnist.pkl.gz Loading data from pklimport osimport pickle, gzipfrom matplotlib import pyplot print(‘Loading data from mnist.pkl.gz …’)with gzip.open(‘mnis">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/mlp_train-401x1024.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_zoom_out-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_zoom_out-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_1-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_2-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_3-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug-300x225.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_2-300x165.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_3-300x225.png">
+<meta property="og:image" content="http://example.com/img/mlp_train-401x1024.png">
+<meta property="og:image" content="http://example.com/img/loss_iters_zoom_out-300x225.png">
+<meta property="og:image" content="http://example.com/img/accuracy_iters_zoom_out-300x225.png">
+<meta property="og:image" content="http://example.com/img/loss_iters_aug_3-300x225.png">
+<meta property="og:image" content="http://example.com/img/accuracy_iters_aug_3-300x225.png">
 <meta property="article:published_time" content="2019-01-15T09:01:58.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.430Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:40.895Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/01/mlp_train-401x1024.png">
+<meta name="twitter:image" content="http://example.com/img/mlp_train-401x1024.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -145,17 +138,17 @@ for i, (img, label) in enumerate(zip(\*dataset)):
 <h2 id="Convert-to-LMDB"><a href="#Convert-to-LMDB" class="headerlink" title="Convert to LMDB"></a>Convert to LMDB</h2><p>python gen_caffe_imglist.py mnist&#x2F;train train.txt<br>python gen_caffe_imglist.py mnist&#x2F;val val.txt<br>python gen_caffe_imglist.py mnist&#x2F;test test.txt</p>
 <p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; train.txt train_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; val.txt val_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; test.txt test_lmdb –gray –shuffle</p>
 <h2 id="Train-LeNet-5"><a href="#Train-LeNet-5" class="headerlink" title="Train (LeNet-5)"></a>Train (LeNet-5)</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver.prototxt -log_dir .&#x2F;</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/mlp_train-401x1024.png"></p>
+<p><img src="/img/mlp_train-401x1024.png"></p>
 <h2 id="Log-Visualization"><a href="#Log-Visualization" class="headerlink" title="Log Visualization"></a>Log Visualization</h2><h3 id="loss-iters"><a href="#loss-iters" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters.png caffe.ubuntu.d.log</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_zoom_out-300x225.png"></p>
+<p><img src="/img/loss_iters_zoom_out-300x225.png"></p>
 <h3 id="accuracy-iters"><a href="#accuracy-iters" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters.png caffe.ubuntu.d.log</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_zoom_out-300x225.png"></p>
+<p><img src="/img/accuracy_iters_zoom_out-300x225.png"></p>
 <h2 id="Test-Model-Accuracy"><a href="#Test-Model-Accuracy" class="headerlink" title="Test Model Accuracy"></a>Test Model Accuracy</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe test -model lenet_test.prototxt -weights mnist_lenet_iter_36000.caffemodel -iterations 100</p>
 <h2 id="Test-Model-Time"><a href="#Test-Model-Time" class="headerlink" title="Test Model Time"></a>Test Model Time</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe time -model lenet.prototxt</p>
 <h2 id="Augmented-Train"><a href="#Augmented-Train" class="headerlink" title="Augmented, Train"></a>Augmented, Train</h2><h3 id="loss-iters-1"><a href="#loss-iters-1" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_1-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_2-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/loss_iters_aug_3-300x225.png"></p>
+<p><img src="/img/loss_iters_aug_3-300x225.png"></p>
 <h3 id="accuracy-iters-1"><a href="#accuracy-iters-1" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug-300x225.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_2-300x165.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/accuracy_iters_aug_3-300x225.png"></p>
+<p><img src="/img/accuracy_iters_aug_3-300x225.png"></p>
 <h2 id="Update-solver-max-iter-Train"><a href="#Update-solver-max-iter-Train" class="headerlink" title="Update solver max_iter, Train"></a>Update solver max_iter, Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver_aug.prototxt -snapshot mnist_aug_lenet_iter_36000.solverstate -log_dir .&#x2F;</p>
 
       

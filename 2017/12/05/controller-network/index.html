@@ -13,30 +13,26 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Create Provider[root@controller ~]# openstack network create provider –share –external –provider-network-type flat –provider-physical-network provide  Create Provider Sub-Net[root@controller ~]# opens">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-V1.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-V2.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-Private.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-PrivateSubNet.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-PrivateOffice.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-OfficeNet.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-PrivateSale.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-SaleNet.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-PrivateTechnology.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-TechnologyNet.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-List.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-CreateRouter.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-Router.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-CreateRouter2.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-RouterAddInterface.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-RouterAddInterface2.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-RouterAddInterface3.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-Topology.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-AgentList.png">
+<meta property="og:image" content="http://example.com/img/Network-V1.png">
+<meta property="og:image" content="http://example.com/img/Network-V2.png">
+<meta property="og:image" content="http://example.com/img/Network-Private.png">
+<meta property="og:image" content="http://example.com/img/Network-PrivateSubNet.png">
+<meta property="og:image" content="http://example.com/img/Network-PrivateOffice.png">
+<meta property="og:image" content="http://example.com/img/Network-OfficeNet.png">
+<meta property="og:image" content="http://example.com/img/Network-PrivateSale.png">
+<meta property="og:image" content="http://example.com/img/Network-SaleNet.png">
+<meta property="og:image" content="http://example.com/img/Network-PrivateTechnology.png">
+<meta property="og:image" content="http://example.com/img/Network-TechnologyNet.png">
+<meta property="og:image" content="http://example.com/img/Dashboard-CreateRouter.png">
+<meta property="og:image" content="http://example.com/img/Dashboard-CreateRouter2.png">
+<meta property="og:image" content="http://example.com/img/Dashboard-RouterAddInterface.png">
+<meta property="og:image" content="http://example.com/img/Network-Topology.png">
+<meta property="og:image" content="http://example.com/img/Network-AgentList.png">
 <meta property="article:published_time" content="2017-12-05T06:54:39.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.196Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:39.881Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/Network-V1.png">
+<meta name="twitter:image" content="http://example.com/img/Network-V1.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -120,35 +116,35 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h3 id="Create-Provider"><a href="#Create-Provider" class="headerlink" title="Create Provider"></a>Create Provider</h3><p>[root@controller ~]# openstack network create provider –share –external –provider-network-type flat –provider-physical-network provide</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-V1.png"></p>
+<p><img src="/img/Network-V1.png"></p>
 <h3 id="Create-Provider-Sub-Net"><a href="#Create-Provider-Sub-Net" class="headerlink" title="Create Provider Sub-Net"></a>Create Provider Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network provider –allocation-pool start&#x3D;9.1.1.50,end&#x3D;9.1.1.90 –dns-nameserver 8.8.8.8 –gateway 9.1.1.1 –subnet-range 9.1.1.0&#x2F;24 provider-sub</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-V2.png"></p>
+<p><img src="/img/Network-V2.png"></p>
 <h3 id="Create-Private-Network"><a href="#Create-Private-Network" class="headerlink" title="Create Private Network"></a>Create Private Network</h3><p>[root@controller ~]# openstack network create private –provider-network-type vxlan –share –interna</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-Private.png"></p>
+<p><img src="/img/Network-Private.png"></p>
 <h3 id="Create-Private-Sub-Net"><a href="#Create-Private-Sub-Net" class="headerlink" title="Create Private Sub-Net"></a>Create Private Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private –gateway 192.168.1.1 –subnet-range 192.168.1.0&#x2F;24 private-subnet</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-PrivateSubNet.png"></p>
+<p><img src="/img/Network-PrivateSubNet.png"></p>
 <h3 id="Create-Private-Office-Network"><a href="#Create-Private-Office-Network" class="headerlink" title="Create Private-Office Network"></a>Create Private-Office Network</h3><p>[root@controller ~]# openstack network create private-office –provider-network-type vxlan –share –internal</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-PrivateOffice.png"></p>
+<p><img src="/img/Network-PrivateOffice.png"></p>
 <h3 id="Create-Private-Office-Sub-Net"><a href="#Create-Private-Office-Sub-Net" class="headerlink" title="Create Private-Office Sub-Net"></a>Create Private-Office Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-office –gateway 192.168.2.1 –subnet-range 192.168.2.0&#x2F;24 office-net</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-OfficeNet.png"></p>
+<p><img src="/img/Network-OfficeNet.png"></p>
 <h3 id="Create-Private-Sale-Network"><a href="#Create-Private-Sale-Network" class="headerlink" title="Create Private-Sale Network"></a>Create Private-Sale Network</h3><p>[root@controller ~]# openstack network create private-sale –provider-network-type vxlan –share –internal</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-PrivateSale.png"></p>
+<p><img src="/img/Network-PrivateSale.png"></p>
 <h3 id="Create-Private-Sale-Sub-Net"><a href="#Create-Private-Sale-Sub-Net" class="headerlink" title="Create Private-Sale Sub-Net"></a>Create Private-Sale Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-sale –gateway 192.168.3.1 –subnet-range 192.168.3.0&#x2F;24 sale-net</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-SaleNet.png"></p>
+<p><img src="/img/Network-SaleNet.png"></p>
 <h3 id="Create-Private-Technology-Network"><a href="#Create-Private-Technology-Network" class="headerlink" title="Create Private-Technology Network"></a>Create Private-Technology Network</h3><p>[root@controller ~]# openstack network create private-technology –provider-network-type vxlan –share –internal</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-PrivateTechnology.png"></p>
+<p><img src="/img/Network-PrivateTechnology.png"></p>
 <h3 id="Create-Private-Technology-Sub-Net"><a href="#Create-Private-Technology-Sub-Net" class="headerlink" title="Create Private-Technology Sub-Net"></a>Create Private-Technology Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-technology –gateway 192.168.4.1 –subnet-range 192.168.4.0&#x2F;24 technology-net</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-TechnologyNet.png"></p>
+<p><img src="/img/Network-TechnologyNet.png"></p>
 <h3 id="List-Network"><a href="#List-Network" class="headerlink" title="List Network"></a>List Network</h3><p>[root@controller ~]# openstack network list</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-List.png"> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-CreateRouter.png"></p>
+<p><img src="/img/Dashboard-CreateRouter.png"></p>
 <h3 id="Create-Provider-Router"><a href="#Create-Provider-Router" class="headerlink" title="Create Provider Router"></a>Create Provider Router</h3><p>[root@controller ~]# openstack router create route</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-Router.png"> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-CreateRouter2.png"></p>
+<p><img src="/img/Dashboard-CreateRouter2.png"></p>
 <h3 id="Set-External-Gateway"><a href="#Set-External-Gateway" class="headerlink" title="Set External-Gateway"></a>Set External-Gateway</h3><p>[root@controller ~]# openstack router set –external-gateway provider router</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-RouterAddInterface.png"></p>
+<p><img src="/img/Dashboard-RouterAddInterface.png"></p>
 <h3 id="Add-Route-Interface"><a href="#Add-Route-Interface" class="headerlink" title="Add Route Interface"></a>Add Route Interface</h3><p>[root@controller ~]# openstack router add subnet router private-subnet</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-RouterAddInterface2.png"> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/Dashboard-RouterAddInterface3.png"> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-Topology.png"></p>
+<p><img src="/img/Network-Topology.png"></p>
 <h3 id="List-Network-Agent"><a href="#List-Network-Agent" class="headerlink" title="List Network Agent"></a>List Network Agent</h3><p>[root@controller ~]# openstack network agent list</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/Network-AgentList.png"></p>
+<p><img src="/img/Network-AgentList.png"></p>
 
       
     </div>

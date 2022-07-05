@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Binary ClassificationLogistic regression is an algorithm for binary classification. Logistic Regression[latex]\hat{y} &#x3D; w^Tx + b[&#x2F;latex] : An algorithm that can output a prediction. More for">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Broadcasting-in-Python.png">
+<meta property="og:image" content="http://example.com/img/Broadcasting-in-Python.png">
 <meta property="article:published_time" content="2019-04-09T09:45:11.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.532Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:39.395Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Broadcasting-in-Python.png">
+<meta name="twitter:image" content="http://example.com/img/Broadcasting-in-Python.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -130,7 +130,7 @@
 <p>Z&#x3D;np.dot(w.T, X)+b</p>
 <p>It turns out, you can also use vectorization very efficiently to compute the backward propagation, to compute the gradients.</p>
 <h2 id="Vectorizing-Logistic-Regression’s-Gradient"><a href="#Vectorizing-Logistic-Regression’s-Gradient" class="headerlink" title="Vectorizing Logistic Regression’s Gradient"></a>Vectorizing Logistic Regression’s Gradient</h2><p>How you can use vectorization to also perform the gradient computations for all m training samples. [latex]\begin{matrix} Z &#x3D; w^TX + b &#x3D; np.dot(w.T, X) + b\\ A &#x3D; \sigma (Z)\\ {\mathrm{d} Z} &#x3D; A - Y\\ {\mathrm{d} w} &#x3D; \frac {1}{m} * X * {\mathrm{d} z} ^T\\ {\mathrm{d} b} &#x3D; \frac {1}{m} * np.sum({\mathrm{d} Z})\\ w :&#x3D; w - a * {\mathrm{d} w}\\ b :&#x3D; b - a * {\mathrm{d} b} \end{matrix} [&#x2F;latex]  </p>
-<h2 id="Broadcasting-in-Python"><a href="#Broadcasting-in-Python" class="headerlink" title="Broadcasting in Python"></a>Broadcasting in Python</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Broadcasting-in-Python.png"></p>
+<h2 id="Broadcasting-in-Python"><a href="#Broadcasting-in-Python" class="headerlink" title="Broadcasting in Python"></a>Broadcasting in Python</h2><p><img src="/img/Broadcasting-in-Python.png"></p>
 <h2 id="A-note-on-python-or-numpy-vectors"><a href="#A-note-on-python-or-numpy-vectors" class="headerlink" title="A note on python or numpy vectors"></a>A note on python or numpy vectors</h2><ul>
 <li>Because with broadcasting and this great amount of flexibility, sometimes it’s possible you can introduce very subtle bugs very strange looking bugs.</li>
 <li>When you’re coding neural networks, that you just not use data structures where the shape is 5, or n, rank 1 array.</li>

@@ -13,16 +13,16 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="The Original Show histogramvoid showHistoCallback(int state, void* userData){    &#x2F;&#x2F; Separate image in BRG    vector bgr;    split( img, bgr ); &#x2F;&#x2F; Create the histogram for 256 bins &#x2F;&#x2F; The num">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-00.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-01.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-02.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-03.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-04.png">
+<meta property="og:image" content="http://example.com/img/OpenCV-C4-00.png">
+<meta property="og:image" content="http://example.com/img/OpenCV-C4-01.png">
+<meta property="og:image" content="http://example.com/img/OpenCV-C4-02.png">
+<meta property="og:image" content="http://example.com/img/OpenCV-C4-03.png">
+<meta property="og:image" content="http://example.com/img/OpenCV-C4-04.png">
 <meta property="article:published_time" content="2018-02-12T12:59:50.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.289Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:42.089Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-00.png">
+<meta name="twitter:image" content="http://example.com/img/OpenCV-C4-00.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -105,7 +105,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="The-Original"><a href="#The-Original" class="headerlink" title="The Original"></a>The Original</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-00.png"></p>
+        <h3 id="The-Original"><a href="#The-Original" class="headerlink" title="The Original"></a>The Original</h3><p><img src="/img/OpenCV-C4-00.png"></p>
 <h3 id="Show-histogram"><a href="#Show-histogram" class="headerlink" title="Show histogram"></a>Show histogram</h3><p>void showHistoCallback(int state, void* userData)<br>{<br>    &#x2F;&#x2F; Separate image in BRG<br>    vector bgr;<br>    split( img, bgr );</p>
 <pre><code>// Create the histogram for 256 bins
 // The number of possibles values
@@ -156,7 +156,7 @@ for( int i=1; i&lt; numbins; i++)
 imshow(&quot;Histogram&quot;, histImage);
 </code></pre>
 <p>} </p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-01.png"></p>
+<p><img src="/img/OpenCV-C4-01.png"></p>
 <h3 id="Equalize-histogram"><a href="#Equalize-histogram" class="headerlink" title="Equalize histogram"></a>Equalize histogram</h3><p>void equalizeCallback(int state, void* userData)<br>{<br>    Mat result;<br>    &#x2F;&#x2F; Convert BGR image to YCbCr<br>    Mat ycrcb;<br>    cvtColor( img, ycrcb, COLOR_BGR2YCrCb);</p>
 <pre><code>// Split image into channels
 vector channels;
@@ -175,7 +175,7 @@ cvtColor( ycrcb, result, COLOR\_YCrCb2BGR );
 imshow(&quot;Equalized&quot;, result);
 </code></pre>
 <p>} </p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-02.png"></p>
+<p><img src="/img/OpenCV-C4-02.png"></p>
 <h3 id="Lomography-effect"><a href="#Lomography-effect" class="headerlink" title="Lomography effect"></a>Lomography effect</h3><p>void lomoCallback(int state, void* userData)<br>{<br>    Mat result;</p>
 <pre><code>const double E = std::exp(1.0);
 // Create Lookup table for color curve effect
@@ -221,7 +221,7 @@ bgr\[1\].release();
 bgr\[2\].release();
 </code></pre>
 <p>} </p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-03.png"></p>
+<p><img src="/img/OpenCV-C4-03.png"></p>
 <h3 id="Cartoonize-effect"><a href="#Cartoonize-effect" class="headerlink" title="Cartoonize effect"></a>Cartoonize effect</h3><p>void cartoonCallback(int state, void* userData)<br>{<br>    &#x2F;** EDGES **&#x2F;<br>    &#x2F;&#x2F; Apply median filter to remove possible noise<br>    Mat imgMedian;<br>    medianBlur(img, imgMedian, 7);</p>
 <pre><code>// Detect edges with canny
 Mat imgCanny;
@@ -271,7 +271,7 @@ resultf.convertTo(result, CV\_8UC3);
 imshow(&quot;Result&quot;, result);
 </code></pre>
 <p>}</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2018/02/OpenCV-C4-04.png"></p>
+<p><img src="/img/OpenCV-C4-04.png"></p>
 
       
     </div>

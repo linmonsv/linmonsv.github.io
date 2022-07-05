@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Download FRP Server &amp; ClientModify frps.ini[root@VM_0_5_centos frp_0.25.3_linux_amd64]# cat frps.ini[common]bind_port &#x3D; xxxxxxdashboard_port &#x3D; xxxxxxdashboard_user &#x3D; xxxxxxxxxxxxxxx">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/frp_dashboard.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/frp_putty.png">
+<meta property="og:image" content="http://example.com/img/frp_dashboard.png">
+<meta property="og:image" content="http://example.com/img/frp_putty.png">
 <meta property="article:published_time" content="2019-04-03T02:29:26.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.521Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:40.304Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/frp_dashboard.png">
+<meta name="twitter:image" content="http://example.com/img/frp_dashboard.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -104,10 +104,10 @@
       
         <h3 id="Download-FRP-Server-amp-Client"><a href="#Download-FRP-Server-amp-Client" class="headerlink" title="Download FRP Server &amp; Client"></a><a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases">Download FRP Server &amp; Client</a></h3><h3 id="Modify-frps-ini"><a href="#Modify-frps-ini" class="headerlink" title="Modify frps.ini"></a>Modify frps.ini</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# cat frps.ini<br>[common]<br>bind_port &#x3D; xxxxxx<br>dashboard_port &#x3D; xxxxxx<br>dashboard_user &#x3D; xxxxxxxxxxxxxxxx<br>dashboard_pwd &#x3D; xxxxxxxxxxxxxxxx<br>allow_ports &#x3D; xxxxx-xxxxx<br>token &#x3D; xxxxxxxxxxxxxxxx<br>max_pool_count &#x3D; 10<br>pool_count &#x3D; 3</p>
 <h3 id="Start-frps"><a href="#Start-frps" class="headerlink" title="Start frps"></a>Start frps</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# .&#x2F;frps -c .&#x2F;frps.ini</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/frp_dashboard.png"></p>
+<p><img src="/img/frp_dashboard.png"></p>
 <h3 id="Modify-frpc-ini"><a href="#Modify-frpc-ini" class="headerlink" title="Modify frpc.ini"></a>Modify frpc.ini</h3><p>root@imx6ul7d:~&#x2F;frp# cat frpc.ini<br>[common]<br>server_addr &#x3D; qinuu.com<br>server_port &#x3D; xxxxxx<br>token &#x3D; xxxxxxxxxxxxxxxx<br>[ssh]<br>type &#x3D; tcp<br>local_ip &#x3D; 127.0.0.1<br>local_port &#x3D; 22<br>remote_port &#x3D; xxxxxx</p>
 <h3 id="Start-frpc"><a href="#Start-frpc" class="headerlink" title="Start frpc"></a>Start frpc</h3><p>root@imx6ul7d:~&#x2F;frp# .&#x2F;frpc -c .&#x2F;frpc.ini</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/frp_putty.png"></p>
+<p><img src="/img/frp_putty.png"></p>
 <h3 id="Start-a-systemd-service"><a href="#Start-a-systemd-service" class="headerlink" title="Start a systemd service"></a>Start a systemd service</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# cat &#x2F;lib&#x2F;systemd&#x2F;system&#x2F;frps.service<br>[Unit]<br>Description&#x3D;Frp Server Service<br>After&#x3D;network.target</p>
 <p>[Service]<br>Type&#x3D;simple<br>User&#x3D;nobody<br>Restart&#x3D;on-failure<br>RestartSec&#x3D;5s<br>ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;frp&#x2F;frp_0.25.3_linux_amd64&#x2F;frps -c &#x2F;usr&#x2F;local&#x2F;frp&#x2F;frp_0.25.3_linux_amd64&#x2F;frps.ini</p>
 <p>[Install]<br>WantedBy&#x3D;multi-user.targethis</p>

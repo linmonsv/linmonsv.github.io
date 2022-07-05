@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-google-protobuf-c-example" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-ha-prepare" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/12/google-protobuf-c-example/" class="article-date">
-  <time class="dt-published" datetime="2018-05-12T08:49:31.000Z" itemprop="datePublished">2018-05-12</time>
+    <a href="/2017/12/06/ha-prepare/" class="article-date">
+  <time class="dt-published" datetime="2017-12-06T06:04:33.000Z" itemprop="datePublished">2017-12-06</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/MacOS/">MacOS</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-High-Availability/">OpenStack High Availability</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/12/google-protobuf-c-example/">Google ProtoBuf C++ Example</a>
+      <a class="p-name article-title" href="/2017/12/06/ha-prepare/">HA Prepare</a>
     </h1>
   
 
@@ -97,44 +97,18 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="SerializeToString-amp-SerializeToArray"><a href="#SerializeToString-amp-SerializeToArray" class="headerlink" title="SerializeToString &amp; SerializeToArray"></a>SerializeToString &amp; SerializeToArray</h3><p>syntax &#x3D; “proto3”;</p>
-<p>package test;</p>
-<p>message People {<br>  string name &#x3D; 1;<br>  int32 age &#x3D; 2;<br>  int32 steps &#x3D; 3;<br>}</p>
-<h5 id="protoc-Usage"><a href="#protoc-Usage" class="headerlink" title="protoc Usage :"></a>protoc Usage :</h5><p>water@waters-MacBook-Pro:<del>&#x2F;Documents&#x2F;GitHub&#x2F;CppQt5&#x2F;TestProtobuf$ protoc –cpp_out&#x3D;. people.proto<br>water@waters-MacBook-Pro:</del>&#x2F;Documents&#x2F;GitHub&#x2F;CppQt5&#x2F;TestProtobuf$ ls people.p*<br>people.pb.cc people.pb.h  people.proto</p>
-<p>#include #include “people.pb.h”</p>
-<p>int main(int argc, char *argv[])<br>{<br>    test::People pep;<br>    pep.set_name(“heheda”);<br>    pep.set_age(5);<br>    pep.set_steps(1304);</p>
-<pre><code>std::string buff;
-pep.SerializeToString(&amp;buff);
-
-test::People pep2;
-pep2.ParseFromString(buff);
-
-std::cout &lt;&lt; pep2.name() &lt;&lt; std::endl;
-std::cout &lt;&lt; pep2.age() &lt;&lt; std::endl;
-std::cout &lt;&lt; pep2.steps() &lt;&lt; std::endl;
-
-int data\_len = pep.ByteSize();
-unsigned char data\[1024\] = &quot;\\0&quot;;
-pep.SerializeToArray(data, data\_len);
-for(auto i = 0; i &lt; data\_len; i ++)
-    printf(&quot;%02X &quot;, data\[i\]);
-printf(&quot;\\n&quot;);
-
-test::People pep3;
-pep3.ParseFromArray(data, data\_len);
-
-std::cout &lt;&lt; pep3.name() &lt;&lt; std::endl;
-std::cout &lt;&lt; pep3.age() &lt;&lt; std::endl;
-std::cout &lt;&lt; pep3.steps() &lt;&lt; std::endl;
-
-return 0;
-</code></pre>
-<p>}</p>
+        <h3 id="Basic-Environment"><a href="#Basic-Environment" class="headerlink" title="Basic Environment"></a>Basic Environment</h3><p>Intel Core i7 processor</p>
+<p>32GB memory</p>
+<p>512GB SSD + 2TB storage</p>
+<h4 id="For-example："><a href="#For-example：" class="headerlink" title="For example："></a>For example：</h4><p>Dell OptiPlex 7050 Intel® Core i7 7700 32GB (2x16GB) DDR4-2400 512GB Solid State Drive SATA hard drive 2TB SATA hard drive (7200RPM)</p>
+<h3 id="VMware-For-OpenStack-Requirement"><a href="#VMware-For-OpenStack-Requirement" class="headerlink" title="VMware For OpenStack Requirement"></a>VMware For OpenStack Requirement</h3><p><img src="/img/VMware-Virtual-NetWork.png"></p>
+<h4 id="3-Controller"><a href="#3-Controller" class="headerlink" title="3 * Controller"></a>3 * Controller</h4><p>1 CPU (2 Core) 4GB RAM 100 GB Storage 4 NIC(NAT + NAT + HostOnly + HostOnly) Virtualize Intel VT-x&#x2F;EPT or AMD-V&#x2F;RVI <img src="/img/VMware-Controller.png"></p>
+<h4 id="2-Compute"><a href="#2-Compute" class="headerlink" title="2 * Compute"></a>2 * Compute</h4><p>1 CPU (2 Core) 4GB RAM 100 GB Storage 2 NIC(NAT + HostOnly) Virtualize Intel VT-x&#x2F;EPT or AMD-V&#x2F;RVI <img src="/img/VMware-Compute-1.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/google-protobuf-c-example/" data-id="cl56jpsqh009kasch762t4i7u" data-title="Google ProtoBuf C++ Example" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/06/ha-prepare/" data-id="cl56jpsqj009masch8yrke7oq" data-title="HA Prepare" class="article-share-link">Share</a>
       
       
       
@@ -146,14 +120,14 @@ return 0;
 
 
   
-    <article id="post-how-to-build-googles-protobuf-in-macos" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-network" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/12/how-to-build-googles-protobuf-in-macos/" class="article-date">
-  <time class="dt-published" datetime="2018-05-12T07:59:29.000Z" itemprop="datePublished">2018-05-12</time>
+    <a href="/2017/12/05/controller-network/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T06:54:39.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/MacOS/">MacOS</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -164,7 +138,7 @@ return 0;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/12/how-to-build-googles-protobuf-in-macos/">How to build Google’s protobuf in MacOS</a>
+      <a class="p-name article-title" href="/2017/12/05/controller-network/">Controller --- Network</a>
     </h1>
   
 
@@ -172,12 +146,41 @@ return 0;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h3><p>water@waters-MacBook-Pro:<del>&#x2F;Downloads&#x2F;protobuf-3.5.1$ .&#x2F;autogen.sh<br>water@waters-MacBook-Pro:</del>&#x2F;Downloads&#x2F;protobuf-3.5.1$ .&#x2F;configure<br>water@waters-MacBook-Pro:<del>&#x2F;Downloads&#x2F;protobuf-3.5.1$ make<br>water@waters-MacBook-Pro:</del>&#x2F;Downloads&#x2F;protobuf-3.5.1$ make install<br>water@waters-MacBook-Pro:~&#x2F;Downloads&#x2F;protobuf-3.5.1$ protoc –version<br>libprotoc 3.5.1</p>
+        <h3 id="Create-Provider"><a href="#Create-Provider" class="headerlink" title="Create Provider"></a>Create Provider</h3><p>[root@controller ~]# openstack network create provider –share –external –provider-network-type flat –provider-physical-network provide</p>
+<p><img src="/img/Network-V1.png"></p>
+<h3 id="Create-Provider-Sub-Net"><a href="#Create-Provider-Sub-Net" class="headerlink" title="Create Provider Sub-Net"></a>Create Provider Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network provider –allocation-pool start&#x3D;9.1.1.50,end&#x3D;9.1.1.90 –dns-nameserver 8.8.8.8 –gateway 9.1.1.1 –subnet-range 9.1.1.0&#x2F;24 provider-sub</p>
+<p><img src="/img/Network-V2.png"></p>
+<h3 id="Create-Private-Network"><a href="#Create-Private-Network" class="headerlink" title="Create Private Network"></a>Create Private Network</h3><p>[root@controller ~]# openstack network create private –provider-network-type vxlan –share –interna</p>
+<p><img src="/img/Network-Private.png"></p>
+<h3 id="Create-Private-Sub-Net"><a href="#Create-Private-Sub-Net" class="headerlink" title="Create Private Sub-Net"></a>Create Private Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private –gateway 192.168.1.1 –subnet-range 192.168.1.0&#x2F;24 private-subnet</p>
+<p><img src="/img/Network-PrivateSubNet.png"></p>
+<h3 id="Create-Private-Office-Network"><a href="#Create-Private-Office-Network" class="headerlink" title="Create Private-Office Network"></a>Create Private-Office Network</h3><p>[root@controller ~]# openstack network create private-office –provider-network-type vxlan –share –internal</p>
+<p><img src="/img/Network-PrivateOffice.png"></p>
+<h3 id="Create-Private-Office-Sub-Net"><a href="#Create-Private-Office-Sub-Net" class="headerlink" title="Create Private-Office Sub-Net"></a>Create Private-Office Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-office –gateway 192.168.2.1 –subnet-range 192.168.2.0&#x2F;24 office-net</p>
+<p><img src="/img/Network-OfficeNet.png"></p>
+<h3 id="Create-Private-Sale-Network"><a href="#Create-Private-Sale-Network" class="headerlink" title="Create Private-Sale Network"></a>Create Private-Sale Network</h3><p>[root@controller ~]# openstack network create private-sale –provider-network-type vxlan –share –internal</p>
+<p><img src="/img/Network-PrivateSale.png"></p>
+<h3 id="Create-Private-Sale-Sub-Net"><a href="#Create-Private-Sale-Sub-Net" class="headerlink" title="Create Private-Sale Sub-Net"></a>Create Private-Sale Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-sale –gateway 192.168.3.1 –subnet-range 192.168.3.0&#x2F;24 sale-net</p>
+<p><img src="/img/Network-SaleNet.png"></p>
+<h3 id="Create-Private-Technology-Network"><a href="#Create-Private-Technology-Network" class="headerlink" title="Create Private-Technology Network"></a>Create Private-Technology Network</h3><p>[root@controller ~]# openstack network create private-technology –provider-network-type vxlan –share –internal</p>
+<p><img src="/img/Network-PrivateTechnology.png"></p>
+<h3 id="Create-Private-Technology-Sub-Net"><a href="#Create-Private-Technology-Sub-Net" class="headerlink" title="Create Private-Technology Sub-Net"></a>Create Private-Technology Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-technology –gateway 192.168.4.1 –subnet-range 192.168.4.0&#x2F;24 technology-net</p>
+<p><img src="/img/Network-TechnologyNet.png"></p>
+<h3 id="List-Network"><a href="#List-Network" class="headerlink" title="List Network"></a>List Network</h3><p>[root@controller ~]# openstack network list</p>
+<p><img src="/img/Dashboard-CreateRouter.png"></p>
+<h3 id="Create-Provider-Router"><a href="#Create-Provider-Router" class="headerlink" title="Create Provider Router"></a>Create Provider Router</h3><p>[root@controller ~]# openstack router create route</p>
+<p><img src="/img/Dashboard-CreateRouter2.png"></p>
+<h3 id="Set-External-Gateway"><a href="#Set-External-Gateway" class="headerlink" title="Set External-Gateway"></a>Set External-Gateway</h3><p>[root@controller ~]# openstack router set –external-gateway provider router</p>
+<p><img src="/img/Dashboard-RouterAddInterface.png"></p>
+<h3 id="Add-Route-Interface"><a href="#Add-Route-Interface" class="headerlink" title="Add Route Interface"></a>Add Route Interface</h3><p>[root@controller ~]# openstack router add subnet router private-subnet</p>
+<p><img src="/img/Network-Topology.png"></p>
+<h3 id="List-Network-Agent"><a href="#List-Network-Agent" class="headerlink" title="List Network Agent"></a>List Network Agent</h3><p>[root@controller ~]# openstack network agent list</p>
+<p><img src="/img/Network-AgentList.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/how-to-build-googles-protobuf-in-macos/" data-id="cl56jpsr500aeasch3l7l9amm" data-title="How to build Google’s protobuf in MacOS" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-network/" data-id="cl56jpsow0089asch7cgwhx5a" data-title="Controller --- Network" class="article-share-link">Share</a>
       
       
       
@@ -189,14 +192,14 @@ return 0;
 
 
   
-    <article id="post-how-to-build-googles-protobuf-in-windows-using-mingw" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-flavor" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/12/how-to-build-googles-protobuf-in-windows-using-mingw/" class="article-date">
-  <time class="dt-published" datetime="2018-05-12T07:24:57.000Z" itemprop="datePublished">2018-05-12</time>
+    <a href="/2017/12/05/controller-flavor/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T06:09:09.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -207,7 +210,7 @@ return 0;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/12/how-to-build-googles-protobuf-in-windows-using-mingw/">How to build Google&#39;s protobuf in Windows using MinGW</a>
+      <a class="p-name article-title" href="/2017/12/05/controller-flavor/">Controller --- Flavor</a>
     </h1>
   
 
@@ -215,14 +218,14 @@ return 0;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="CMAKE-Config"><a href="#CMAKE-Config" class="headerlink" title="CMAKE Config"></a>CMAKE Config</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2018/05/PROTOBUF-CMAKE-1.png"> <img src="http://www.qinuu.com/wp-content/uploads/2018/05/PROTOBUF-CMAKE-2.png"></p>
-<h3 id="mingw32-make-amp-install"><a href="#mingw32-make-amp-install" class="headerlink" title="mingw32-make &amp; install"></a>mingw32-make &amp; install</h3><p>c:\protobuf-3.5.1build&gt;mingw32-make<br>Scanning dependencies of target libprotobuf-lite<br>[  0%] Building CXX object CMakeFiles&#x2F;libprotobuf-lite.dir&#x2F;C_&#x2F;protobuf-3.5.1&#x2F;src&#x2F;google&#x2F;protobuf&#x2F;arena.cc.obj<br>[  1%] Building CXX object CMakeFiles&#x2F;libprotobuf-lite.dir&#x2F;C_&#x2F;protobuf-3.5.1&#x2F;src&#x2F;google&#x2F;protobuf&#x2F;arenastring.cc.obj<br>[  1%] Building CXX object CMakeFiles&#x2F;libprotobuf-lite.dir&#x2F;C_&#x2F;protobuf-3.5.1&#x2F;src&#x2F;google&#x2F;protobuf&#x2F;extension_set.cc.obj<br>[  2%] Building CXX object CMakeFiles&#x2F;libprotobuf-lite.dir&#x2F;C_&#x2F;protobuf-3.5.1&#x2F;src&#x2F;google&#x2F;protobuf&#x2F;generated_message_table_driven_lite.cc.obj<br>……</p>
-<p>c:\protobuf-3.5.1build&gt;mingw32-make install<br>[ 12%] Built target libprotobuf-lite<br>[ 52%] Built target libprotobuf<br>[ 52%] Built target js_embed<br>[ 99%] Built target libprotoc<br>[100%] Built target protoc<br>Install the project…<br>– Install configuration: “”<br>– Installing: C:&#x2F;protobuf-3.5.1-qt5.9&#x2F;lib&#x2F;libprotobuf-lite.a<br>– Installing: C:&#x2F;protobuf-3.5.1-qt5.9&#x2F;lib&#x2F;libprotobuf.a<br>– Installing: C:&#x2F;protobuf-3.5.1-qt5.9&#x2F;lib&#x2F;libprotoc.a<br>– Installing: C:&#x2F;protobuf-3.5.1-qt5.9&#x2F;bin&#x2F;protoc.exe<br>……</p>
+        <h3 id="Create-Flavor"><a href="#Create-Flavor" class="headerlink" title="Create Flavor"></a>Create Flavor</h3><p>[root@compute ~]# openstack flavor create m1.tiny –id 1 –ram 512 –disk 1 –vcpus 1<br>[root@compute ~]# openstack flavor create m1.small –id 2 –ram 2048 –disk 20 –vcpus 1</p>
+<h3 id="List-Flavor"><a href="#List-Flavor" class="headerlink" title="List Flavor"></a>List Flavor</h3><p>[root@compute ~]# openstack flavor list</p>
+<p><img src="/img/Flavor-V1.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/how-to-build-googles-protobuf-in-windows-using-mingw/" data-id="cl56jpsr300abasch8ncha49r" data-title="How to build Google&#39;s protobuf in Windows using MinGW" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-flavor/" data-id="cl56jpsof007xaschc6y50lat" data-title="Controller --- Flavor" class="article-share-link">Share</a>
       
       
       
@@ -234,14 +237,14 @@ return 0;
 
 
   
-    <article id="post-cross-compile-with-node-js-c-addons-to-arm" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-compute-neutron" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/10/cross-compile-with-node-js-c-addons-to-arm/" class="article-date">
-  <time class="dt-published" datetime="2018-05-10T08:47:03.000Z" itemprop="datePublished">2018-05-10</time>
+    <a href="/2017/12/05/compute-neutron/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T01:59:30.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -252,7 +255,7 @@ return 0;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/10/cross-compile-with-node-js-c-addons-to-arm/">Cross compile with Node.js C++ Addons to ARM</a>
+      <a class="p-name article-title" href="/2017/12/05/compute-neutron/">Compute --- Neutron</a>
     </h1>
   
 
@@ -260,22 +263,16 @@ return 0;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Set-ENV"><a href="#Set-ENV" class="headerlink" title="Set ENV"></a>Set ENV</h3><p>export HOST&#x3D;arm-linux-gnueabihf<br>export CPP&#x3D;”${HOST}-gcc -E”<br>export STRIP&#x3D;”${HOST}-strip”<br>export OBJCOPY&#x3D;”${HOST}-objcopy”<br>export AR&#x3D;”${HOST}-ar”<br>export RANLIB&#x3D;”${HOST}-ranlib”<br>export LD&#x3D;”${HOST}-ld”<br>export OBJDUMP&#x3D;”${HOST}-objdump”<br>export CC&#x3D;”${HOST}-gcc”<br>export CXX&#x3D;”${HOST}-g++”<br>export NM&#x3D;”${HOST}-nm”<br>export AS&#x3D;”${HOST}-as”<br>export LD&#x3D;”$CXX”<br>export LINK&#x3D;”$CXX”<br>export GYP_DEFINES&#x3D;”armv7&#x3D;0”</p>
-<h3 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h3><p>node-gyp –arch arm configure build</p>
-<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><p>root@imx6ul7d:~# node hello.js<br>world</p>
-<h3 id="TIP-0"><a href="#TIP-0" class="headerlink" title="TIP 0"></a>TIP 0</h3><p>{<br>  “targets”: [<br>    {<br>      “target_name”: “addon”,<br>      “sources”: [ “test_api.cc” ],<br>  “include_dirs” : [“sdk&#x2F;inc”],<br>  “link_settings”: {“libraries”: [ “-L&#x2F;mnt&#x2F;hgfs&#x2F;tmp0511&#x2F;sdk&#x2F;lib”] },<br>  “libraries”: [ “-lpos”, “-lpthread”, “-lrt”, “-lpng”, “-liconv”, “-lfreetype”, “-lz” ],<br>    }<br>  ]<br>}</p>
-<h3 id="TIP-1"><a href="#TIP-1" class="headerlink" title="TIP 1"></a>TIP 1</h3><p>using v8::FunctionCallbackInfo;<br>using v8::Isolate;<br>using v8::Local;<br>using v8::Object;<br>using v8::String;<br>using v8::Value;<br>using v8::Number;<br>using v8::Exception;</p>
-<p>void js_Exchange(const FunctionCallbackInfo&amp; args) {<br>  Isolate* isolate &#x3D; args.GetIsolate();</p>
-<p>  int slot &#x3D; args[0]-&gt;NumberValue();</p>
-<p>  String::Utf8Value param1(args[1]-&gt;ToString());<br>  char *szApdu &#x3D; *param1;  </p>
-<p>  uint8_t apdu[300] &#x3D; “\0”;<br>  MyAHex((uint8_t *)szApdu, apdu, strlen(szApdu));</p>
-<p>  uint8_t rpdu[300] &#x3D; “\0”;<br>  uint32_t rpdu_len &#x3D; 0;<br>  char szResult[300] &#x3D; “\0”;</p>
-<p>  int ret &#x3D; Exchange(slot, apdu, strlen(szApdu) &#x2F; 2, rpdu, &amp;rpdu_len);<br>  if(0 &#x3D;&#x3D; ret) {<br>    MyHexA(rpdu, (uint8_t *)szResult, rpdu_len);<br>    args.GetReturnValue().Set(String::NewFromUtf8(isolate, szResult));<br>  } else {<br>    args.GetReturnValue().Set(String::NewFromUtf8(isolate, “”));<br>  }<br>}</p>
+        <h3 id="Install-Neutron"><a href="#Install-Neutron" class="headerlink" title="Install Neutron"></a>Install Neutron</h3><p>[root@compute ~]# yum install openstack-neutron-linuxbridge ebtables ipset -y</p>
+<h3 id="Configure-Neutron"><a href="#Configure-Neutron" class="headerlink" title="Configure Neutron"></a>Configure Neutron</h3><p>[root@compute ~]# cp &#x2F;etc&#x2F;neutron&#x2F;neutron.conf &#x2F;etc&#x2F;neutron&#x2F;neutron.conf.bak<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT auth_strategy keystone<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT advertise_mtu True<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT dhcp_agents_per_network 2<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT control_exchange neutron<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT nova_url <a target="_blank" rel="noopener" href="http://controller:8774/v2">http://controller:8774/v2</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT transport_url rabbit:&#x2F;&#x2F;openstack:password@controller<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken auth_uri <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken memcached_servers controller:11211<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken auth_type password<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken project_domain_name default<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken user_domain_name default<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken project_name service<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken username neutron<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken password password<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf oslo_concurrency lock_path &#x2F;var&#x2F;lib&#x2F;neutron&#x2F;tmp</p>
+<h3 id="Configure-LinuxBridge-Agent"><a href="#Configure-LinuxBridge-Agent" class="headerlink" title="Configure LinuxBridge Agent"></a>Configure LinuxBridge Agent</h3><p>[root@compute ~]# cp &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini.bak<br>[root@compute ~]# &gt;&#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini DEFAULT debug false<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini DEFAULT verbose true<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini vxlan enable_vxlan True<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini vxlan local_ip 10.2.2.62<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini vxlan l2_population True<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini securitygroup enable_security_group True<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini securitygroup firewall_driver neutron.agent.linux.iptables_firewall.IptablesFirewallDriver</p>
+<h3 id="Configure-Nova"><a href="#Configure-Nova" class="headerlink" title="Configure Nova"></a>Configure Nova</h3><p>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron url <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron auth_type password<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron project_domain_name default<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron user_domain_name default<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron region_name RegionOne<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron project_name service<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron username neutron<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron password password</p>
+<h3 id="Restart-Nova-amp-Neutron"><a href="#Restart-Nova-amp-Neutron" class="headerlink" title="Restart Nova &amp; Neutron"></a>Restart Nova &amp; Neutron</h3><p>[root@compute ~]# systemctl restart openstack-nova-compute.service<br>[root@compute ~]# systemctl enable neutron-linuxbridge-agent.service<br>[root@compute ~]# systemctl restart neutron-linuxbridge-agent.service<br>[root@compute ~]# systemctl status openstack-nova-compute.service neutron-linuxbridge-agent.service</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/10/cross-compile-with-node-js-c-addons-to-arm/" data-id="cl56jpspa008oasch4717doel" data-title="Cross compile with Node.js C++ Addons to ARM" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/compute-neutron/" data-id="cl56jpsnr007naschevdtbm5w" data-title="Compute --- Neutron" class="article-share-link">Share</a>
       
       
       
@@ -287,14 +284,14 @@ return 0;
 
 
   
-    <article id="post-node-js-c-addons" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-compute-nova" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/10/node-js-c-addons/" class="article-date">
-  <time class="dt-published" datetime="2018-05-10T05:33:36.000Z" itemprop="datePublished">2018-05-10</time>
+    <a href="/2017/12/05/compute-nova/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T01:57:16.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/CentOS-7/">CentOS 7</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -305,7 +302,7 @@ return 0;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/10/node-js-c-addons/">Node.js C++ Addons</a>
+      <a class="p-name article-title" href="/2017/12/05/compute-nova/">Compute --- Nova</a>
     </h1>
   
 
@@ -313,26 +310,16 @@ return 0;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Install-node-gyp"><a href="#Install-node-gyp" class="headerlink" title="Install node-gyp"></a>Install node-gyp</h3><p>npm install -g node-gyp</p>
-<h3 id="Prepare-SourceCode"><a href="#Prepare-SourceCode" class="headerlink" title="Prepare SourceCode"></a>Prepare SourceCode</h3><p>[root@localhost test_nodejs]# ls<br>binding.gyp  hello.cc  hello.js</p>
-<h4 id="hello-cc"><a href="#hello-cc" class="headerlink" title="hello.cc"></a>hello.cc</h4><p>#include namespace demo {</p>
-<p>using v8::FunctionCallbackInfo;<br>using v8::Isolate;<br>using v8::Local;<br>using v8::Object;<br>using v8::String;<br>using v8::Value;</p>
-<p>void Method(const FunctionCallbackInfo&amp; args) {<br>  Isolate* isolate &#x3D; args.GetIsolate();<br>  args.GetReturnValue().Set(String::NewFromUtf8(isolate, “world”));<br>}</p>
-<p>void init(Local exports) {<br>  NODE_SET_METHOD(exports, “hello”, Method);<br>}</p>
-<p>NODE_MODULE(NODE_GYP_MODULE_NAME, init)</p>
-<p>}  &#x2F;&#x2F; namespace demo</p>
-<h4 id="hello-js"><a href="#hello-js" class="headerlink" title="hello.js"></a>hello.js</h4><p>&#x2F;&#x2F; hello.js<br>const addon &#x3D; require(‘.&#x2F;build&#x2F;Release&#x2F;addon’);</p>
-<p>console.log(addon.hello());<br>&#x2F;&#x2F; Prints: ‘world’</p>
-<h4 id="binding-gyp"><a href="#binding-gyp" class="headerlink" title="binding.gyp"></a>binding.gyp</h4><p>{<br>  “targets”: [<br>    {<br>      “target_name”: “addon”,<br>      “sources”: [ “hello.cc” ]<br>    }<br>  ]<br>}</p>
-<h3 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h3><p>[root@localhost test_nodejs]# node-gyp configure<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#x6e;&#111;&#x64;&#x65;&#45;&#103;&#x79;&#x70;&#64;&#51;&#46;&#x36;&#46;&#x32;">&#x6e;&#111;&#x64;&#x65;&#45;&#103;&#x79;&#x70;&#64;&#51;&#46;&#x36;&#46;&#x32;</a><br>gyp info using <a href="mailto:&#110;&#111;&#x64;&#x65;&#x40;&#x38;&#46;&#49;&#x31;&#46;&#x31;">&#110;&#111;&#x64;&#x65;&#x40;&#x38;&#46;&#49;&#x31;&#46;&#x31;</a>  linux  x64<br>gyp info spawn &#x2F;usr&#x2F;bin&#x2F;python2<br>gyp info spawn args [ ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;gyp&#x2F;gyp_main.py’,<br>gyp info spawn args   ‘binding.gyp’,<br>gyp info spawn args   ‘-f’,<br>gyp info spawn args   ‘make’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build&#x2F;config.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;addon.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;include&#x2F;node&#x2F;common.gypi’,<br>gyp info spawn args   ‘-Dlibrary&#x3D;shared_library’,<br>gyp info spawn args   ‘-Dvisibility&#x3D;default’,<br>gyp info spawn args   ‘-Dnode_root_dir&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1’,<br>gyp info spawn args   ‘-Dnode_gyp_dir&#x3D;&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp’,<br>gyp info spawn args   ‘-Dnode_lib_file&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;&lt;(target_arch)&#x2F;node.lib’,<br>gyp info spawn args   ‘-Dmodule_root_dir&#x3D;&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs’,<br>gyp info spawn args   ‘-Dnode_engine&#x3D;v8’,<br>gyp info spawn args   ‘–depth&#x3D;.’,<br>gyp info spawn args   ‘–no-parallel’,<br>gyp info spawn args   ‘–generator-output’,<br>gyp info spawn args   ‘build’,<br>gyp info spawn args   ‘-Goutput_dir&#x3D;.’ ]<br>gyp info ok<br>[root@localhost test_nodejs]#<br>[root@localhost test_nodejs]# ls<br>binding.gyp  build  hello.cc  hello.js<br>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile</p>
-<p>[root@localhost test_nodejs]# node-gyp build<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#110;&#111;&#x64;&#x65;&#x2d;&#103;&#121;&#112;&#64;&#51;&#x2e;&#54;&#x2e;&#x32;">&#110;&#111;&#x64;&#x65;&#x2d;&#103;&#121;&#112;&#64;&#51;&#x2e;&#54;&#x2e;&#x32;</a><br>gyp info using <a href="mailto:&#x6e;&#111;&#x64;&#x65;&#x40;&#56;&#x2e;&#x31;&#49;&#46;&#x31;">&#x6e;&#111;&#x64;&#x65;&#x40;&#56;&#x2e;&#x31;&#49;&#46;&#x31;</a>  linux  x64<br>gyp info spawn make<br>gyp info spawn args [ ‘BUILDTYPE&#x3D;Release’, ‘-C’, ‘build’ ]<br>make: Entering directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>  CXX(target) Release&#x2F;obj.target&#x2F;addon&#x2F;hello.o<br>  SOLINK_MODULE(target) Release&#x2F;obj.target&#x2F;addon.node<br>  COPY Release&#x2F;addon.node<br>make: Leaving directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>gyp info ok </p>
-<p>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile  Release<br>[root@localhost test_nodejs]# ls build&#x2F;Release&#x2F;<br>addon.node  obj.target</p>
-<p>[root@localhost test_nodejs]# node hello.js<br>world</p>
+        <h3 id="Install-Compute"><a href="#Install-Compute" class="headerlink" title="Install Compute"></a>Install Compute</h3><p>[root@compute ~]# yum install openstack-selinux python-openstackclient yum-plugin-priorities openstack-nova-compute openstack-utils -y</p>
+<h3 id="Configure-Nova"><a href="#Configure-Nova" class="headerlink" title="Configure Nova"></a>Configure Nova</h3><p>[root@compute ~]# cp &#x2F;etc&#x2F;nova&#x2F;nova.conf &#x2F;etc&#x2F;nova&#x2F;nova.conf.bak<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT auth_strategy keystone<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT my_ip 10.1.1.62<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT use_neutron True<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT firewall_driver nova.virt.firewall.NoopFirewallDriver<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT transport_url rabbit:&#x2F;&#x2F;openstack:password@controller<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_uri <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken memcached_servers controller:11211<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_type password<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken project_domain_name default<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken user_domain_name default<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken project_name service<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken username nova<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken password password<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement auth_uri <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement memcached_servers controller:11211<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement auth_type password<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement project_domain_name default<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement user_domain_name default<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement project_name service<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement username placement<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement password password<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement os_region_name RegionOne<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc enabled True<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc keymap en-us<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc vncserver_listen 0.0.0.0<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc vncserver_proxyclient_address 10.1.1.62<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc novncproxy_base_url <a target="_blank" rel="noopener" href="http://9.1.1.61:6080/vnc/_auto.html">http://9.1.1.61:6080/vnc\_auto.html</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf glance api_servers <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf oslo_concurrency lock_path &#x2F;var&#x2F;lib&#x2F;nova&#x2F;tmp<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf libvirt virt_type qemu<br>[root@compute ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf libvirt cpu_mode none</p>
+<h3 id="Start-Compute-Service"><a href="#Start-Compute-Service" class="headerlink" title="Start Compute Service"></a>Start Compute Service</h3><p>[root@compute ~]# systemctl enable libvirtd.service openstack-nova-compute.service<br>[root@compute ~]# systemctl restart libvirtd.service openstack-nova-compute.service<br>[root@compute ~]# systemctl status libvirtd.service openstack-nova-compute.service</p>
+<h3 id="List-Compute-Service-Do-it-on-Controller"><a href="#List-Compute-Service-Do-it-on-Controller" class="headerlink" title="List Compute Service(Do it on Controller)"></a>List Compute Service(Do it on Controller)</h3><p>[root@controller ~]# source &#x2F;root&#x2F;admin-openrc<br>[root@controller ~]# openstack compute service list</p>
+<p><img src="/img/Compute-V1.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/10/node-js-c-addons/" data-id="cl56jpstd00d3aschetkz0n1h" data-title="Node.js C++ Addons" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/compute-nova/" data-id="cl56jpsnn007iasch0gvw4en1" data-title="Compute --- Nova" class="article-share-link">Share</a>
       
       
       
@@ -344,14 +331,14 @@ return 0;
 
 
   
-    <article id="post-how-to-install-node-js-on-centos-7" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-dashboard" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/10/how-to-install-node-js-on-centos-7/" class="article-date">
-  <time class="dt-published" datetime="2018-05-10T05:32:39.000Z" itemprop="datePublished">2018-05-10</time>
+    <a href="/2017/12/05/controller-dashboard/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T01:54:40.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/CentOS-7/">CentOS 7</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/JavaScript/">JavaScript</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -362,7 +349,7 @@ return 0;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/10/how-to-install-node-js-on-centos-7/">How to Install Node.js On CentOS 7</a>
+      <a class="p-name article-title" href="/2017/12/05/controller-dashboard/">Controller --- Dashboard</a>
     </h1>
   
 
@@ -370,14 +357,15 @@ return 0;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Unpack-node-xxx-tar-xxx"><a href="#Unpack-node-xxx-tar-xxx" class="headerlink" title="Unpack node.xxx.tar.xxx"></a>Unpack node.xxx.tar.xxx</h3><p>cp node-v8.11.1-linux-x64.tar.gz &#x2F;usr&#x2F;local&#x2F;<br>cd &#x2F;usr&#x2F;local&#x2F;<br>tar zxvf node-v8.11.1-linux-x64.tar.gz</p>
-<h3 id="Add-Node-Path"><a href="#Add-Node-Path" class="headerlink" title="Add Node Path"></a>Add Node Path</h3><p>vim &#x2F;etc&#x2F;profile<br>export NODE_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64<br>export PATH&#x3D;$NODE_HOME&#x2F;bin:$PATH</p>
-<p>source &#x2F;etc&#x2F;profile</p>
+        <h3 id="Install-Dashboard"><a href="#Install-Dashboard" class="headerlink" title="Install Dashboard"></a>Install Dashboard</h3><p>[root@controller ~]# yum install openstack-dashboard -y</p>
+<h3 id="Update-File-“local-settings”"><a href="#Update-File-“local-settings”" class="headerlink" title="Update File “local_settings”"></a>Update File “local_settings”</h3><p>[root@controller ~]# cat &#x2F;etc&#x2F;openstack-dashboard&#x2F;local_settings</p>
+<h3 id="Restart-Httpd-amp-Memcached"><a href="#Restart-Httpd-amp-Memcached" class="headerlink" title="Restart Httpd &amp; Memcached"></a>Restart Httpd &amp; Memcached</h3><p>[root@controller ~]# systemctl restart httpd.service memcached.service<br>[root@controller ~]# systemctl status httpd.service memcached.service</p>
+<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p>img&#x2F;Dashboard-V2-2.png)</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/10/how-to-install-node-js-on-centos-7/" data-id="cl56jpsrn00b3asch05mvg2kc" data-title="How to Install Node.js On CentOS 7" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-dashboard/" data-id="cl56jpso2007uaschaewt324w" data-title="Controller --- Dashboard" class="article-share-link">Share</a>
       
       
       
@@ -389,14 +377,14 @@ return 0;
 
 
   
-    <article id="post-vs2017-arm-boost-x64-compile-test-source-code" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-neutron" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/vs2017-arm-boost-x64-compile-test-source-code/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T08:09:37.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/12/05/controller-neutron/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T01:50:58.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -407,7 +395,7 @@ return 0;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/vs2017-arm-boost-x64-compile-test-source-code/">OpenCV3 On ARM</a>
+      <a class="p-name article-title" href="/2017/12/05/controller-neutron/">Controller --- Neutron</a>
     </h1>
   
 
@@ -415,19 +403,29 @@ return 0;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Source-Code-Dir"><a href="#Source-Code-Dir" class="headerlink" title="Source Code Dir"></a>Source Code Dir</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2018/05/ARM-OpenCV-Dir.png"></p>
-<h3 id="CMake-GUI-Configure"><a href="#CMake-GUI-Configure" class="headerlink" title="CMake-GUI Configure"></a>CMake-GUI Configure</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2018/05/ARM-OpenCV-CMake-GUI-Config.png"></p>
-<h4 id="Configure-x2F-Generate"><a href="#Configure-x2F-Generate" class="headerlink" title="Configure&#x2F;Generate"></a>Configure&#x2F;Generate</h4><p>Unix Makefiles Specify options for cross-compiling <img src="http://www.qinuu.com/wp-content/uploads/2018/05/ARM-OpenCV-CMake-GUI-Configure.png"></p>
-<h4 id="Choose-ARM-LINUX"><a href="#Choose-ARM-LINUX" class="headerlink" title="Choose ARM - LINUX"></a>Choose ARM - LINUX</h4><p>Operating System : arm-linux C Compilers : C++ Compilers : Target Root : The Cross Compiler BIN Directory <img src="http://www.qinuu.com/wp-content/uploads/2018/05/ARM-OpenCV-CMake-GUI-Configure-2.png"></p>
-<h4 id="CMAKE-INSTALL-PREFIX"><a href="#CMAKE-INSTALL-PREFIX" class="headerlink" title="CMAKE_INSTALL_PREFIX"></a>CMAKE_INSTALL_PREFIX</h4><p><img src="http://www.qinuu.com/wp-content/uploads/2018/05/ARM-OpenCV-CMake-GUI-Configure-3.png"></p>
-<h3 id="make-amp-make-install"><a href="#make-amp-make-install" class="headerlink" title="make &amp; make install"></a>make &amp; make install</h3><p>make<br>make install</p>
-<h4 id="Maybe-Need-It"><a href="#Maybe-Need-It" class="headerlink" title="Maybe Need It !"></a>Maybe Need It !</h4><p><img src="http://www.qinuu.com/wp-content/uploads/2018/05/ARM-OpenCV-CMakeCache.png"> &lt;&gt;</p>
-<h3 id="The-END"><a href="#The-END" class="headerlink" title="The END"></a>The END</h3><p>tar jcvf opencv-arm.tar.bz2 opencv-arm&#x2F;</p>
+        <h3 id="Create-Neutron-User"><a href="#Create-Neutron-User" class="headerlink" title="Create Neutron User"></a>Create Neutron User</h3><p>[root@controller ~]# source &#x2F;root&#x2F;admin-openrc<br>[root@controller ~]# openstack user create –domain default neutron –password password<br>[root@controller ~]# openstack role add –project service –user neutron admin</p>
+<h3 id="Create-Neutron-Service"><a href="#Create-Neutron-Service" class="headerlink" title="Create Neutron Service"></a>Create Neutron Service</h3><p>[root@controller ~]# openstack service create –name neutron –description “OpenStack Networking” network</p>
+<h3 id="Create-Endpoint"><a href="#Create-Endpoint" class="headerlink" title="Create Endpoint"></a>Create Endpoint</h3><p>[root@controller ~]# openstack endpoint create –region RegionOne network public <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>[root@controller ~]# openstack endpoint create –region RegionOne network internal <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>[root@controller ~]# openstack endpoint create –region RegionOne network admin <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a></p>
+<h3 id="Install-Neutron"><a href="#Install-Neutron" class="headerlink" title="Install Neutron"></a>Install Neutron</h3><p>[root@controller ~]# yum install openstack-neutron openstack-neutron-ml2 openstack-neutron-linuxbridge ebtables -y</p>
+<h3 id="Configure-Neutron"><a href="#Configure-Neutron" class="headerlink" title="Configure Neutron"></a>Configure Neutron</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;neutron&#x2F;neutron.conf &#x2F;etc&#x2F;neutron&#x2F;neutron.conf.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT core_plugin ml2<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT service_plugins router<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT allow_overlapping_ips True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT auth_strategy keystone<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT transport_url rabbit:&#x2F;&#x2F;openstack:password@controller<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT notify_nova_on_port_status_changes True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf DEFAULT notify_nova_on_port_data_changes True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken auth_uri <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken memcached_servers controller:11211<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken auth_type password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken project_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken user_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken project_name service<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken username neutron<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf keystone_authtoken password password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf database connection mysql+pymysql:&#x2F;&#x2F;neutron:password@controller&#x2F;neutron<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf nova auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf nova auth_type password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf nova project_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf nova user_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf nova region_name RegionOne<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf nova project_name service<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf nova username nova<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf nova password password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;neutron.conf oslo_concurrency lock_path &#x2F;var&#x2F;lib&#x2F;neutron&#x2F;tmp</p>
+<h3 id="Configure-ML2"><a href="#Configure-ML2" class="headerlink" title="Configure ML2"></a>Configure ML2</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 type_drivers flat,vlan,vxlan<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 mechanism_drivers linuxbridge,l2population<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 extension_drivers port_security<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 tenant_network_types vxlan<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2 path_mtu 1500<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2_type_flat flat_networks provider<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini ml2_type_vxlan vni_ranges 1:1000<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini securitygroup enable_ipset True</p>
+<h3 id="Configure-LinuxBridge-Agent"><a href="#Configure-LinuxBridge-Agent" class="headerlink" title="Configure LinuxBridge Agent"></a>Configure LinuxBridge Agent</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini DEFAULT debug false<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini linux_bridge physical_interface_mappings provider:<strong>enp0s3</strong><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini vxlan enable_vxlan True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini vxlan local_ip 10.2.2.61<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini vxlan l2_population True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini agent prevent_arp_spoofing True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini securitygroup enable_security_group True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;linuxbridge_agent.ini securitygroup firewall_driver neutron.agent.linux.iptables_firewall.IptablesFirewallDriver</p>
+<h3 id="Configure-L3-Agent"><a href="#Configure-L3-Agent" class="headerlink" title="Configure L3 Agent"></a>Configure L3 Agent</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT interface_driver neutron.agent.linux.interface.BridgeInterfaceDriver<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT external_network_bridge<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;l3_agent.ini DEFAULT debug false</p>
+<h3 id="Configure-DHCP-Agent"><a href="#Configure-DHCP-Agent" class="headerlink" title="Configure DHCP Agent"></a>Configure DHCP Agent</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini &#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini DEFAULT interface_driver neutron.agent.linux.interface.BridgeInterfaceDriver<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini DEFAULT dhcp_driver neutron.agent.linux.dhcp.Dnsmasq<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini DEFAULT enable_isolated_metadata True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini DEFAULT verbose True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;dhcp_agent.ini DEFAULT debug false</p>
+<h3 id="Configure-Neutron-For-Nova-Service"><a href="#Configure-Neutron-For-Nova-Service" class="headerlink" title="Configure Neutron For Nova Service"></a>Configure Neutron For Nova Service</h3><p>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron url <a target="_blank" rel="noopener" href="http://controller:9696/">http://controller:9696</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron auth_plugin password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron project_domain_id default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron user_domain_id default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron region_name RegionOne<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron project_name service<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron username neutron<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron password password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron service_metadata_proxy True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf neutron metadata_proxy_shared_secret password</p>
+<h3 id="Configure-DHCP-Option"><a href="#Configure-DHCP-Option" class="headerlink" title="Configure DHCP Option"></a>Configure DHCP Option</h3><p>[root@controller ~]# echo “dhcp-option-force&#x3D;26,1450” &gt;&#x2F;etc&#x2F;neutron&#x2F;dnsmasq-neutron.conf</p>
+<h3 id="Configure-Metadata-Agent"><a href="#Configure-Metadata-Agent" class="headerlink" title="Configure Metadata Agent"></a>Configure Metadata Agent</h3><p>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;metadata_agent.ini DEFAULT nova_metadata_ip controller<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;metadata_agent.ini DEFAULT metadata_proxy_shared_secret password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;metadata_agent.ini DEFAULT metadata_workers 4<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;metadata_agent.ini DEFAULT verbose True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;metadata_agent.ini DEFAULT debug false<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;neutron&#x2F;metadata_agent.ini DEFAULT nova_metadata_protocol http</p>
+<h3 id="Configure-Neutron-For-ML2"><a href="#Configure-Neutron-For-ML2" class="headerlink" title="Configure Neutron For ML2"></a>Configure Neutron For ML2</h3><p>[root@controller ~]# ln -s &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini &#x2F;etc&#x2F;neutron&#x2F;plugin.ini</p>
+<h3 id="Synchronize-Database"><a href="#Synchronize-Database" class="headerlink" title="Synchronize Database"></a>Synchronize Database</h3><p>[root@controller ~]# su -s &#x2F;bin&#x2F;sh -c “neutron-db-manage –config-file &#x2F;etc&#x2F;neutron&#x2F;neutron.conf –config-file &#x2F;etc&#x2F;neutron&#x2F;plugins&#x2F;ml2&#x2F;ml2_conf.ini upgrade head” neutron</p>
+<h3 id="Restart-Nova-Service"><a href="#Restart-Nova-Service" class="headerlink" title="Restart Nova Service"></a>Restart Nova Service</h3><p>[root@controller ~]# systemctl restart openstack-nova-api.service<br>[root@controller ~]# systemctl status openstack-nova-api.service</p>
+<h3 id="Start-Neutron-L3-Service"><a href="#Start-Neutron-L3-Service" class="headerlink" title="Start Neutron L3 Service"></a>Start Neutron L3 Service</h3><p>[root@controller ~]# systemctl enable neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service neutron-l3-agent.service<br>[root@controller ~]# systemctl restart neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service neutron-l3-agent.service<br>[root@controller ~]# systemctl status neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service neutron-l3-agent.service</p>
+<h3 id="List-Neutron-Agent"><a href="#List-Neutron-Agent" class="headerlink" title="List Neutron Agent"></a>List Neutron Agent</h3><p>[root@controller ~]# openstack network agent list</p>
+<p><img src="/img/Neutron-V1.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/vs2017-arm-boost-x64-compile-test-source-code/" data-id="cl56jpsyb00igasch5ldo4rkg" data-title="OpenCV3 On ARM" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-neutron/" data-id="cl56jpsou0087asch1h9batbh" data-title="Controller --- Neutron" class="article-share-link">Share</a>
       
       
       
@@ -439,14 +437,14 @@ return 0;
 
 
   
-    <article id="post-lucas-kanade-farneback" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-nova" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/lucas-kanade-farneback/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T07:05:54.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/12/05/controller-nova/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T01:39:06.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -457,7 +455,7 @@ return 0;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/lucas-kanade-farneback/">Lucas-Kanade &amp; Farneback</a>
+      <a class="p-name article-title" href="/2017/12/05/controller-nova/">Controller --- Nova</a>
     </h1>
   
 
@@ -465,100 +463,33 @@ return 0;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="LucasKanade-Tracker"><a href="#LucasKanade-Tracker" class="headerlink" title="LucasKanade Tracker"></a>LucasKanade Tracker</h3><pre><code>    // Check if there are points to track
-    if(!trackingPoints\[0\].empty())
-    &#123;
-        // Status vector to indicate whether the flow for the corresponding features has been found
-        vector statusVector;
-        
-        // Error vector to indicate the error for the corresponding feature
-        vector errorVector;
-        
-        // Check if previous image is empty
-        if(prevGrayImage.empty())
-        &#123;
-            curGrayImage.copyTo(prevGrayImage);
-        &#125;
-        
-        // Calculate the optical flow using Lucas-Kanade algorithm
-        calcOpticalFlowPyrLK(prevGrayImage, curGrayImage, trackingPoints\[0\], trackingPoints\[1\], statusVector, errorVector, windowSize, 3, terminationCriteria, 0, 0.001);
-
-        int count = 0;
-        
-        // Minimum distance between any two tracking points
-        int minDist = 7;
-        
-        for(int i=0; i &lt; trackingPoints\[1\].size(); i++)
-        &#123;
-            if(pointTrackingFlag)
-            &#123;
-                // If the new point is within &#39;minDist&#39; distance from an existing point, it will not be tracked
-                if(norm(currentPoint - trackingPoints\[1\]\[i\]) &lt;= minDist)
-                &#123;
-                    pointTrackingFlag = false;
-                    continue;
-                &#125;
-            &#125;
-            
-            // Check if the status vector is good
-            if(!statusVector\[i\])
-                continue;
-            
-            trackingPoints\[1\]\[count++\] = trackingPoints\[1\]\[i\];
-
-            // Draw a filled circle for each of the tracking points
-            int radius = 8;
-            int thickness = 2;
-            int lineType = 8;
-            circle(image, trackingPoints\[1\]\[i\], radius, Scalar(0,255,0), thickness, lineType);
-        &#125;
-        
-        trackingPoints\[1\].resize(count);
-    &#125;
-    
-    // Refining the location of the feature points
-    if(pointTrackingFlag &amp;&amp; trackingPoints\[1\].size() &lt; maxNumPoints)
-    &#123;
-        vector tempPoints;
-        tempPoints.push\_back(currentPoint);
-        
-        // Function to refine the location of the corners to subpixel accuracy.
-        // Here, &#39;pixel&#39; refers to the image patch of size &#39;windowSize&#39; and not the actual image pixel
-        cornerSubPix(curGrayImage, tempPoints, windowSize, cvSize(-1,-1), terminationCriteria);
-        
-        trackingPoints\[1\].push\_back(tempPoints\[0\]);
-        pointTrackingFlag = false;
-    &#125; 
-</code></pre>
-<h3 id="Farneback-Tracker"><a href="#Farneback-Tracker" class="headerlink" title="Farneback Tracker"></a>Farneback Tracker</h3><pre><code>    // Check if the image is valid
-    if(prevGray.data)
-    &#123;
-        // Initialize parameters for the optical flow algorithm
-        float pyrScale = 0.5;
-        int numLevels = 3;
-        int windowSize = 15;
-        int numIterations = 3;
-        int neighborhoodSize = 5;
-        float stdDeviation = 1.2;
-        
-        // Calculate optical flow map using Farneback algorithm
-        calcOpticalFlowFarneback(prevGray, curGray, flowImage, pyrScale, numLevels, windowSize, numIterations, neighborhoodSize, stdDeviation, OPTFLOW\_USE\_INITIAL\_FLOW);
-        
-        // Convert to 3-channel RGB
-        cvtColor(prevGray, flowImageGray, COLOR\_GRAY2BGR);
-        
-        // Draw the optical flow map
-        drawOpticalFlow(flowImage, flowImageGray);
-        
-        // Display the output image
-        imshow(windowName, flowImageGray);
-    &#125;
-</code></pre>
+        <h3 id="Create-User-For-Nova"><a href="#Create-User-For-Nova" class="headerlink" title="Create User For Nova"></a>Create User For Nova</h3><p>[root@controller ~]# source &#x2F;root&#x2F;admin-openrc<br>[root@controller ~]# openstack user create –domain default nova –password password<br>[root@controller ~]# openstack role add –project service –user nova admin</p>
+<h3 id="Create-Compute-Service"><a href="#Create-Compute-Service" class="headerlink" title="Create Compute Service"></a>Create Compute Service</h3><p>[root@controller ~]# openstack service create –name nova –description “OpenStack Compute” compute</p>
+<h3 id="Create-Nova-Endpoint"><a href="#Create-Nova-Endpoint" class="headerlink" title="Create Nova Endpoint"></a>Create Nova Endpoint</h3><p>[root@controller ~]# openstack endpoint create –region RegionOne compute public <a target="_blank" rel="noopener" href="http://controller:8774/v2.1/%//(tenant/_id//)s">http://controller:8774/v2.1/%\\(tenant\_id\\)s</a><br>[root@controller ~]# openstack endpoint create –region RegionOne compute internal <a target="_blank" rel="noopener" href="http://controller:8774/v2.1/%//(tenant/_id//)s">http://controller:8774/v2.1/%\\(tenant\_id\\)s</a><br>[root@controller ~]# openstack endpoint create –region RegionOne compute admin <a target="_blank" rel="noopener" href="http://controller:8774/v2.1/%//(tenant/_id//)s">http://controller:8774/v2.1/%\\(tenant\_id\\)s</a></p>
+<h3 id="Create-Placement"><a href="#Create-Placement" class="headerlink" title="Create Placement"></a>Create Placement</h3><p>[root@controller ~]# openstack user create –domain default placement –password password<br>[root@controller ~]# openstack role add –project service –user placement admin<br>[root@controller ~]# openstack service create –name placement –description “Placement API” placement</p>
+<h3 id="Create-Placement-Endpoint"><a href="#Create-Placement-Endpoint" class="headerlink" title="Create Placement Endpoint"></a>Create Placement Endpoint</h3><p>[root@controller ~]# openstack endpoint create –region RegionOne placement public <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>[root@controller ~]# openstack endpoint create –region RegionOne placement admin <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a><br>[root@controller ~]# openstack endpoint create –region RegionOne placement internal <a target="_blank" rel="noopener" href="http://controller:8778/">http://controller:8778</a></p>
+<h3 id="Install-Nova"><a href="#Install-Nova" class="headerlink" title="Install Nova"></a>Install Nova</h3><p>[root@controller ~]# yum install openstack-nova-api openstack-nova-conductor openstack-nova-cert openstack-nova-console openstack-nova-novncproxy openstack-nova-scheduler openstack-nova-placement-api -y</p>
+<h3 id="Configure-Nova"><a href="#Configure-Nova" class="headerlink" title="Configure Nova"></a>Configure Nova</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;nova&#x2F;nova.conf &#x2F;etc&#x2F;nova&#x2F;nova.conf.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT enabled_apis osapi_compute,metadata<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT auth_strategy keystone<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT my_ip 10.1.1.61<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT use_neutron True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT firewall_driver nova.virt.firewall.NoopFirewallDriver<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf DEFAULT transport_url rabbit:&#x2F;&#x2F;openstack:password@controller<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf database connection mysql+pymysql:&#x2F;&#x2F;nova:password@controller&#x2F;nova<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf api_database connection mysql+pymysql:&#x2F;&#x2F;nova:password@controller&#x2F;nova_api<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf scheduler discover_hosts_in_cells_interval -1<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_uri <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken memcached_servers controller:11211<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken auth_type password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken project_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken user_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken project_name service<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken username nova<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken password password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf keystone_authtoken service_token_roles_required True<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement memcached_servers controller:11211<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement auth_type password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement project_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement user_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement project_name service<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement username placement<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement password password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf placement os_region_name RegionOne<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc vncserver_listen 10.1.1.61<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf vnc vncserver_proxyclient_address 10.1.1.61<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf glance api_servers <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;nova&#x2F;nova.conf oslo_concurrency lock_path &#x2F;var&#x2F;lib&#x2F;nova&#x2F;tmp</p>
+<h3 id="Configure-Nova-Placement"><a href="#Configure-Nova-Placement" class="headerlink" title="Configure Nova-Placement"></a>Configure Nova-Placement</h3><p>[root@controller ~]# cat &#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;00-nova-placement-api.conf</p>
+<p><img src="/img/Nova-V1.png"></p>
+<p> = 2.4&gt;<br>            Require all granted<br>      Order allow,deny<br>            Allow from all </p>
+<h3 id="Restart-Httpd"><a href="#Restart-Httpd" class="headerlink" title="Restart Httpd"></a>Restart Httpd</h3><p>[root@controller ~]# systemctl restart httpd</p>
+<h3 id="Synchronize-Database"><a href="#Synchronize-Database" class="headerlink" title="Synchronize Database"></a>Synchronize Database</h3><p>[root@controller ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage api_db sync” nova<br>[root@controller ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage cell_v2 map_cell0” nova<br>[root@controller ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage cell_v2 create_cell –name&#x3D;cell1 –verbose” nova<br>[root@controller ~]# su -s &#x2F;bin&#x2F;sh -c “nova-manage db sync” nova</p>
+<h3 id="List-Nova-Cell"><a href="#List-Nova-Cell" class="headerlink" title="List Nova Cell"></a>List Nova Cell</h3><p>[root@controller ~]# nova-manage cell_v2 list_cells</p>
+<p><img src="/img/Nova-V5.png"></p>
+<h3 id="Start-Nova-Service"><a href="#Start-Nova-Service" class="headerlink" title="Start Nova Service"></a>Start Nova Service</h3><p>[root@controller ~]# systemctl enable openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service<br>[root@controller ~]# systemctl restart openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service<br>[root@controller ~]# systemctl status openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service</p>
+<h3 id="List-Nova-Status"><a href="#List-Nova-Status" class="headerlink" title="List Nova Status"></a>List Nova Status</h3><p>[root@controller ~]# systemctl list-unit-files grep openstack-nova-*<br>openstack-nova-api.service enabled<br>openstack-nova-conductor.service enabled<br>openstack-nova-console.service disabled<br>openstack-nova-consoleauth.service enabled<br>openstack-nova-metadata-api.service disabled<br>openstack-nova-novncproxy.service enabled<br>openstack-nova-os-compute-api.service disabled<br>openstack-nova-scheduler.service enabled<br>openstack-nova-xvpvncproxy.service disabled</p>
+<h3 id="Check-Nova-Status"><a href="#Check-Nova-Status" class="headerlink" title="Check Nova Status"></a>Check Nova Status</h3><p>[root@controller ~]# nova-status upgrade check</p>
+<p><img src="/img/Nova-V2.png"></p>
+<h3 id="List-Nova-Service"><a href="#List-Nova-Service" class="headerlink" title="List Nova Service"></a>List Nova Service</h3><p>[root@controller ~]# nova service-list</p>
+<p><img src="/img/Nova-V3.png"></p>
+<h3 id="List-Nova-Endpoint"><a href="#List-Nova-Endpoint" class="headerlink" title="List Nova Endpoint"></a>List Nova Endpoint</h3><p>[root@controller ~]# openstack endpoint list</p>
+<p><img src="/img/Nova-V4.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/lucas-kanade-farneback/" data-id="cl56jpssd00c9asch568r5sms" data-title="Lucas-Kanade &amp; Farneback" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-nova/" data-id="cl56jpsox008caschf3bp4ki2" data-title="Controller --- Nova" class="article-share-link">Share</a>
       
       
       
@@ -570,14 +501,14 @@ return 0;
 
 
   
-    <article id="post-other-morphological-operators" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-glance" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/other-morphological-operators/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T06:44:01.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/12/05/controller-glance/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T01:35:35.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -588,7 +519,7 @@ return 0;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/other-morphological-operators/">Other Morphological Operators</a>
+      <a class="p-name article-title" href="/2017/12/05/controller-glance/">Controller --- Glance</a>
     </h1>
   
 
@@ -596,114 +527,25 @@ return 0;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Opening"><a href="#Opening" class="headerlink" title="Opening"></a>Opening</h3><p>Mat performOpening(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply morphological opening to the image using the structuring element
-erode(inputImage, tempImage, element);
-dilate(tempImage, outputImage, element);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-<h3 id="Closing"><a href="#Closing" class="headerlink" title="Closing"></a>Closing</h3><p>Mat performClosing(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply morphological opening to the image using the structuring element
-dilate(inputImage, tempImage, element);
-erode(tempImage, outputImage, element);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-<h3 id="Morphological-Gradient"><a href="#Morphological-Gradient" class="headerlink" title="Morphological Gradient"></a>Morphological Gradient</h3><p>Mat performMorphologicalGradient(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage1, tempImage2;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply morphological gradient to the image using the structuring element
-dilate(inputImage, tempImage1, element);
-erode(inputImage, tempImage2, element);
-
-// Return the output image
-return tempImage1 - tempImage2;
-</code></pre>
-<p>}</p>
-<h3 id="TopHat"><a href="#TopHat" class="headerlink" title="TopHat"></a>TopHat</h3><p>Mat performTopHat(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply top hat operation to the image using the structuring element
-outputImage = inputImage - performOpening(inputImage, morphologyElement, morphologySize);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-<h3 id="BlackHat"><a href="#BlackHat" class="headerlink" title="BlackHat"></a>BlackHat</h3><p>Mat performBlackHat(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply black hat operation to the image using the structuring element
-outputImage = performClosing(inputImage, morphologyElement, morphologySize) - inputImage;
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
+        <h3 id="Create-Glance-User-Role"><a href="#Create-Glance-User-Role" class="headerlink" title="Create Glance User Role"></a>Create Glance User Role</h3><p>[root@controller ~]# source &#x2F;root&#x2F;admin-openrc<br>[root@controller ~]# openstack user create –domain default glance –password password<br>[root@controller ~]# openstack role add –project service –user glance admin</p>
+<h3 id="Create-Glance-Service"><a href="#Create-Glance-Service" class="headerlink" title="Create Glance Service"></a>Create Glance Service</h3><p>[root@controller ~]# openstack service create –name glance –description “OpenStack Image service” image</p>
+<h3 id="Create-Endpoint"><a href="#Create-Endpoint" class="headerlink" title="Create Endpoint"></a>Create Endpoint</h3><p>[root@controller ~]# openstack endpoint create –region RegionOne image public <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>[root@controller ~]# openstack endpoint create –region RegionOne image internal <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a><br>[root@controller ~]# openstack endpoint create –region RegionOne image admin <a target="_blank" rel="noopener" href="http://controller:9292/">http://controller:9292</a></p>
+<h3 id="Install-Glance"><a href="#Install-Glance" class="headerlink" title="Install Glance"></a>Install Glance</h3><p>[root@controller ~]# yum install openstack-glance -y</p>
+<h3 id="Configure-Glance-API"><a href="#Configure-Glance-API" class="headerlink" title="Configure Glance-API"></a>Configure Glance-API</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;glance&#x2F;glance-api.conf &#x2F;etc&#x2F;glance&#x2F;glance-api.conf.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf DEFAULT transport_url rabbit:&#x2F;&#x2F;openstack:password@controller<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf database connection mysql+pymysql:&#x2F;&#x2F;glance:password@controller&#x2F;glance<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken auth_uri <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken memcached_servers controller:11211<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken auth_type password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken project_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken user_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken username glance<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken password password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf keystone_authtoken project_name service<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf paste_deploy flavor keystone<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf glance_store stores file,http<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf glance_store default_store file<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-api.conf glance_store filesystem_store_datadir &#x2F;var&#x2F;lib&#x2F;glance&#x2F;images&#x2F;</p>
+<h3 id="Configure-Glance-Registry"><a href="#Configure-Glance-Registry" class="headerlink" title="Configure Glance-Registry"></a>Configure Glance-Registry</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf DEFAULT transport_url rabbit:&#x2F;&#x2F;openstack:password@controller<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf database connection mysql+pymysql:&#x2F;&#x2F;glance:password@controller&#x2F;glance<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken auth_uri <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken auth_url <a target="_blank" rel="noopener" href="http://controller:35357/">http://controller:35357</a><br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken memcached_serverscontroller:11211<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken auth_type password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken project_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken user_domain_name default<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken project_name service<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken username glance<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf keystone_authtoken password password<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;glance&#x2F;glance-registry.conf paste_deploy flavor keystone</p>
+<h3 id="Synchronize-Database"><a href="#Synchronize-Database" class="headerlink" title="Synchronize Database"></a>Synchronize Database</h3><p>[root@controller ~]# su -s &#x2F;bin&#x2F;sh -c “glance-manage db_sync” glance</p>
+<h3 id="Start-Glance-Service"><a href="#Start-Glance-Service" class="headerlink" title="Start Glance Service"></a>Start Glance Service</h3><p>[root@controller ~]# systemctl enable openstack-glance-api.service openstack-glance-registry.service<br>[root@controller ~]# systemctl restart openstack-glance-api.service openstack-glance-registry.service<br>[root@controller ~]# systemctl status openstack-glance-api.service openstack-glance-registry.service</p>
+<h3 id="Download-Cirros-Img"><a href="#Download-Cirros-Img" class="headerlink" title="Download Cirros Img"></a>Download Cirros Img</h3><p>[root@controller ~]# wget <a target="_blank" rel="noopener" href="http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86/_64-disk.img">http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86\_64-disk.img</a></p>
+<h3 id="Create-Glance-Image"><a href="#Create-Glance-Image" class="headerlink" title="Create Glance Image"></a>Create Glance Image</h3><p>[root@controller ~]# glance image-create –name “cirros-0.3.5-x86_64” –file cirros-0.3.5-x86_64-disk.img –disk-format qcow2 –container-format bare –visibility public –progress</p>
+<h3 id="Download-CentOS-Cloud-Img"><a href="#Download-CentOS-Cloud-Img" class="headerlink" title="Download CentOS Cloud Img"></a>Download CentOS Cloud Img</h3><p>[root@controller ~]# wget <a target="_blank" rel="noopener" href="http://cloud.centos.org/centos/7/images/CentOS-7-x86/_64-GenericCloud-1708.qcow2">http://cloud.centos.org/centos/7/images/CentOS-7-x86\_64-GenericCloud-1708.qcow2</a></p>
+<h3 id="Create-Glance-Image-1"><a href="#Create-Glance-Image-1" class="headerlink" title="Create Glance Image"></a>Create Glance Image</h3><p>[root@controller ~]# glance image-create –name “CentOS-7-x86_64” –file CentOS-7-x86_64-GenericCloud-1708.qcow2 –disk-format qcow2 –container-format bare –visibility public –progress</p>
+<h3 id="List-Glance-Image"><a href="#List-Glance-Image" class="headerlink" title="List Glance Image"></a>List Glance Image</h3><p>[root@controller ~]# glance image-list</p>
+<p><img src="/img/Glance-V1.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/other-morphological-operators/" data-id="cl56jpsu000drasch7iq8eoep" data-title="Other Morphological Operators" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-glance/" data-id="cl56jpsol007zaschbwsabpg5" data-title="Controller --- Glance" class="article-share-link">Share</a>
       
       
       
@@ -715,14 +557,14 @@ return outputImage;
 
 
   
-    <article id="post-slimming-thickening-the-shapes" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-keystone" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/slimming-thickening-the-shapes/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T06:33:01.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/12/05/controller-keystone/" class="article-date">
+  <time class="dt-published" datetime="2017-12-05T01:26:37.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -733,7 +575,7 @@ return outputImage;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/slimming-thickening-the-shapes/">Slimming/Thickening The Shapes</a>
+      <a class="p-name article-title" href="/2017/12/05/controller-keystone/">Controller --- KeyStone</a>
     </h1>
   
 
@@ -741,51 +583,27 @@ return outputImage;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Erosion"><a href="#Erosion" class="headerlink" title="Erosion"></a>Erosion</h3><p>Mat performErosion(Mat inputImage, int erosionElement, int erosionSize)<br>{<br>    Mat outputImage;<br>    int erosionType;</p>
-<pre><code>if(erosionElement == 0)
-    erosionType = MORPH\_RECT;
-
-else if(erosionElement == 1)
-    erosionType = MORPH\_CROSS;
-
-else if(erosionElement == 2)
-    erosionType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(erosionType, Size(2\*erosionSize + 1, 2\*erosionSize + 1), Point(erosionSize, erosionSize));
-
-// Erode the image using the structuring element
-erode(inputImage, outputImage, element);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-<h3 id="Dilation"><a href="#Dilation" class="headerlink" title="Dilation"></a>Dilation</h3><p>Mat performDilation(Mat inputImage, int dilationElement, int dilationSize)<br>{<br>    Mat outputImage;<br>    int dilationType;</p>
-<pre><code>if(dilationElement == 0)
-    dilationType = MORPH\_RECT;
-
-else if(dilationElement == 1)
-    dilationType = MORPH\_CROSS;
-
-else if(dilationElement == 2)
-    dilationType = MORPH\_ELLIPSE;
-
-// Create the structuring element for dilation
-Mat element = getStructuringElement(dilationType, Size(2\*dilationSize + 1, 2\*dilationSize + 1), Point(dilationSize, dilationSize));
-
-// Dilate the image using the structuring element
-dilate(inputImage, outputImage, element);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
+        <h3 id="Install-KeyStone"><a href="#Install-KeyStone" class="headerlink" title="Install KeyStone"></a>Install KeyStone</h3><p>[root@controller ~]# yum install openstack-keystone httpd mod_wsgi python-openstackclient memcached python-memcached openstack-utils -y</p>
+<h3 id="Start-Memcached-Service"><a href="#Start-Memcached-Service" class="headerlink" title="Start Memcached Service"></a>Start Memcached Service</h3><p>[root@controller ~]# systemctl enable memcached.service<br>[root@controller ~]# systemctl restart memcached.service<br>[root@controller ~]# systemctl status memcached.service</p>
+<h3 id="Configure-KeyStone"><a href="#Configure-KeyStone" class="headerlink" title="Configure KeyStone"></a>Configure KeyStone</h3><p>[root@controller ~]# cp &#x2F;etc&#x2F;keystone&#x2F;keystone.conf &#x2F;etc&#x2F;keystone&#x2F;keystone.conf.bak<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf DEFAULT transport_url rabbit:&#x2F;&#x2F;openstack:password@controller<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf database connection mysql:&#x2F;&#x2F;keystone:password@controller&#x2F;keystone<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf cache backend oslo_cache.memcache_pool<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf cache enabled true<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf cache memcache_servers controller:11211<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf memcache servers controller:11211<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf token expiration 3600<br>[root@controller ~]# openstack-config –set &#x2F;etc&#x2F;keystone&#x2F;keystone.conf token provider fernet</p>
+<h3 id="Configure-Httpd"><a href="#Configure-Httpd" class="headerlink" title="Configure Httpd"></a>Configure Httpd</h3><p>[root@controller ~]# sed -i “s&#x2F;#ServerName <a target="_blank" rel="noopener" href="http://www.example.com/ServerName">www.example.com:80/ServerName</a> controller&#x2F;“ &#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;httpd.conf<br>[root@controller ~]# sed -i ‘s&#x2F;OPTIONS*.*&#x2F;OPTIONS&#x3D;”-l 127.0.0.1,::1,10.1.1.61”&#x2F;‘ &#x2F;etc&#x2F;sysconfig&#x2F;memcached<br>[root@controller ~]# ln -s &#x2F;usr&#x2F;share&#x2F;keystone&#x2F;wsgi-keystone.conf &#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;</p>
+<h3 id="Synchronize-Database"><a href="#Synchronize-Database" class="headerlink" title="Synchronize Database"></a>Synchronize Database</h3><p>[root@controller ~]# su -s &#x2F;bin&#x2F;sh -c “keystone-manage db_sync” keystone</p>
+<h3 id="Setup-KeyStone"><a href="#Setup-KeyStone" class="headerlink" title="Setup KeyStone"></a>Setup KeyStone</h3><p>[root@controller ~]# keystone-manage fernet_setup –keystone-user keystone –keystone-group keystone<br>[root@controller ~]# keystone-manage credential_setup –keystone-user keystone –keystone-group keystone</p>
+<h3 id="Start-Httpd-Service"><a href="#Start-Httpd-Service" class="headerlink" title="Start Httpd Service"></a>Start Httpd Service</h3><p>[root@controller ~]# systemctl enable httpd.service<br>[root@controller ~]# systemctl restart httpd.service<br>[root@controller ~]# systemctl status httpd.service</p>
+<h3 id="List-Httpd-Service"><a href="#List-Httpd-Service" class="headerlink" title="List Httpd Service"></a>List Httpd Service</h3><p>[root@controller ~]# systemctl list-unit-files grep httpd.service<br><strong>httpd.service enabled</strong> </p>
+<h3 id="Create-Admin-Role"><a href="#Create-Admin-Role" class="headerlink" title="Create Admin Role"></a>Create Admin Role</h3><p>[root@controller ~]# keystone-manage bootstrap \<br>–bootstrap-password password \<br>–bootstrap-username admin \<br>–bootstrap-project-name admin \<br>–bootstrap-role-name admin \<br>–bootstrap-service-name keystone \<br>–bootstrap-region-id RegionOne \<br>–bootstrap-admin-url <a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a> \<br>–bootstrap-internal-url <a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a> \<br>–bootstrap-public-url <a target="_blank" rel="noopener" href="http://controller:5000/v3">http://controller:5000/v3</a></p>
+<h3 id="List-OpenStack-Project"><a href="#List-OpenStack-Project" class="headerlink" title="List OpenStack Project"></a>List OpenStack Project</h3><p>[root@controller ~]# openstack project list –os-username admin –os-project-name admin –os-user-domain-id default –os-project-domain-id default –os-identity-api-version 3 –os-auth-url <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a> –os-password password</p>
+<p><img src="/img/KeyStone-V1-1.png"></p>
+<h3 id="Configure-Admin-Resource"><a href="#Configure-Admin-Resource" class="headerlink" title="Configure Admin Resource"></a>Configure Admin Resource</h3><p>[root@controller ~]# cat &#x2F;root&#x2F;admin-openrc<br>export OS_USER_DOMAIN_ID&#x3D;default<br>export OS_PROJECT_DOMAIN_ID&#x3D;default<br>export OS_USERNAME&#x3D;admin<br>export OS_PROJECT_NAME&#x3D;admin<br>export OS_PASSWORD&#x3D;password<br>export OS_IDENTITY_API_VERSION&#x3D;3<br>export OS_IMAGE_API_VERSION&#x3D;2<br>export OS_AUTH_URL&#x3D;<a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a></p>
+<h3 id="Create-OpenStack-Project"><a href="#Create-OpenStack-Project" class="headerlink" title="Create OpenStack Project"></a>Create OpenStack Project</h3><p>[root@controller ~]# source &#x2F;root&#x2F;admin-openrc</p>
+<p>[root@controller ~]# openstack project create –domain default –description “Service Project” service<br>[root@controller ~]# openstack project create –domain default –description “Demo Project” demo<br>[root@controller ~]# openstack user create –domain default demo –password password</p>
+<p>[root@controller ~]# openstack role create user<br>[root@controller ~]# openstack role add –project demo –user demo user</p>
+<p>[root@controller ~]# unset OS_TOKEN OS_URL<br>[root@controller ~]# openstack –os-auth-url <a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a> –os-project-domain-name default –os-user-domain-name default –os-project-name admin –os-username admin token issue –os-password password<br>[root@controller ~]# openstack –os-auth-url <a target="_blank" rel="noopener" href="http://controller:5000/v3">http://controller:5000/v3</a> –os-project-domain-name default –os-user-domain-name default –os-project-name demo –os-username demo token issue –os-password password</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/slimming-thickening-the-shapes/" data-id="cl56jpsx500h5aschcq3s3lu7" data-title="Slimming/Thickening The Shapes" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/05/controller-keystone/" data-id="cl56jpson0082aschbu894j8d" data-title="Controller --- KeyStone" class="article-share-link">Share</a>
       
       
       
@@ -801,7 +619,7 @@ return outputImage;
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/20/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/22/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/20/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/22/">Next &raquo;</a>
   </nav>
 
 </section>

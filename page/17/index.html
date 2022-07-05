@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-matplotlib-rgb-opencv-bgr" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-background-subtraction-vs-frame-differencing" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/09/matplotlib-rgb-opencv-bgr/" class="article-date">
-  <time class="dt-published" datetime="2019-01-09T03:11:45.000Z" itemprop="datePublished">2019-01-09</time>
+    <a href="/2018/05/03/background-subtraction-vs-frame-differencing/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T06:28:38.000Z" itemprop="datePublished">2018-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/09/matplotlib-rgb-opencv-bgr/">Matplotlib RGB &amp; OpenCV BGR</a>
+      <a class="p-name article-title" href="/2018/05/03/background-subtraction-vs-frame-differencing/">Background Subtraction VS Frame Differencing</a>
     </h1>
   
 
@@ -97,15 +97,51 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Matplotlib-RGB-amp-OpenCV-BGR"><a href="#Matplotlib-RGB-amp-OpenCV-BGR" class="headerlink" title="Matplotlib RGB &amp; OpenCV BGR"></a>Matplotlib RGB &amp; OpenCV BGR</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>import cv2</p>
-<p>img &#x3D; np.array([<br>    [[255, 0, 0], [0, 255, 0], [0, 0, 255]],<br>    [[255, 255, 0], [255, 0, 255], [0, 255, 255]],<br>    [[255, 255, 255], [128, 128, 128], [0, 0, 0]],<br>], dtype&#x3D;np.uint8)</p>
-<p>plt.imsave(‘img_pyplot.png’, img)<br>cv2.imwrite(‘img_cv2.jpg’, img)</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/img_pyplot.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/img_cv2.png"></p>
+        <h3 id="Background-Subtraction"><a href="#Background-Subtraction" class="headerlink" title="Background Subtraction"></a>Background Subtraction</h3><pre><code>// Create MOG Background Subtractor object
+pMOG= cv::bgsegm::createBackgroundSubtractorMOG();//new BackgroundSubtractorMOG();
+
+// Create MOG2 Background Subtractor object
+pMOG2 = createBackgroundSubtractorMOG2(20, 16, true);//new BackgroundSubtractorMOG2();
+
+    // Capture the current frame
+    cap &gt;&gt; frame;
+    
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+    
+    // Update the MOG background model based on the current frame
+    pMOG-&gt;apply(frame, fgMaskMOG);
+    
+    // Update the MOG2 background model based on the current frame
+    pMOG2-&gt;apply(frame, fgMaskMOG2);
+    
+    // Show the current frame
+    //imshow(&quot;Frame&quot;, frame);
+    
+    // Show the MOG foreground mask
+    //imshow(&quot;FG Mask MOG&quot;, fgMaskMOG);
+
+    // Show the MOG2 foreground mask
+    imshow(&quot;FG Mask MOG 2&quot;, fgMaskMOG2);
+</code></pre>
+<h3 id="Frame-Differencing"><a href="#Frame-Differencing" class="headerlink" title="Frame Differencing"></a>Frame Differencing</h3><p>Mat frameDiff(Mat prevFrame, Mat curFrame, Mat nextFrame)<br>{<br>    Mat diffFrames1, diffFrames2, output;</p>
+<pre><code>// Compute absolute difference between current frame and the next frame
+absdiff(nextFrame, curFrame, diffFrames1);
+
+// Compute absolute difference between current frame and the previous frame
+absdiff(curFrame, prevFrame, diffFrames2);
+
+// Bitwise &quot;AND&quot; operation between the above two diff images
+bitwise\_and(diffFrames1, diffFrames2, output);
+
+return output;
+</code></pre>
+<p>}</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/09/matplotlib-rgb-opencv-bgr/" data-id="cl56jpssy00cqaschggmu8m2b" data-title="Matplotlib RGB &amp; OpenCV BGR" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/background-subtraction-vs-frame-differencing/" data-id="cl56jpsn6006oasch83a25mnf" data-title="Background Subtraction VS Frame Differencing" class="article-share-link">Share</a>
       
       
       
@@ -117,14 +153,14 @@
 
 
   
-    <article id="post-matplotlib-3d-example-2-python" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-tracking-your-ears" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/09/matplotlib-3d-example-2-python/" class="article-date">
-  <time class="dt-published" datetime="2019-01-09T02:21:07.000Z" itemprop="datePublished">2019-01-09</time>
+    <a href="/2018/05/03/tracking-your-ears/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T06:16:59.000Z" itemprop="datePublished">2018-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -135,7 +171,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/09/matplotlib-3d-example-2-python/">Matplotlib 3D Example 2 : Python</a>
+      <a class="p-name article-title" href="/2018/05/03/tracking-your-ears/">Tracking Your Ears</a>
     </h1>
   
 
@@ -143,21 +179,43 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="3D-Example-2"><a href="#3D-Example-2" class="headerlink" title="3D Example 2"></a>3D Example 2</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>from mpl_toolkits.mplot3d import Axes3D</p>
-<p>np.random.seed(42)</p>
-<p>n_samples &#x3D; 500<br>dim &#x3D; 3</p>
-<p>samples &#x3D; np.random.multivariate_normal(<br>    np.zeros(dim),<br>    np.eye(dim),<br>    n_samples<br>)</p>
-<p>for i in range(samples.shape[0]) :<br>    r &#x3D; np.power(np.random.random(), 1.0 &#x2F; 3.0)<br>    samples[i] *&#x3D; r &#x2F; np.linalg.norm(samples[i])</p>
-<p>upper_samples &#x3D; []<br>lower_samples &#x3D; []<br>for x, y, z in samples:<br>    if z &gt; 3 * x + 2 * y - 1:<br>        upper_samples.append((x, y, z))<br>    else:<br>        lower_samples.append((x, y, z))</p>
-<p>fig &#x3D; plt.figure(‘3D scatter plot’)<br>ax &#x3D; fig.add_subplot(111, projection&#x3D;’3d’)<br>uppers &#x3D; np.array(upper_samples)<br>lowers &#x3D; np.array(lower_samples)</p>
-<p>ax.scatter(uppers[:, 0], uppers[:, 1], uppers[:, 2], c&#x3D;’r’, marker&#x3D;’o’)<br>ax.scatter(uppers[:, 0], uppers[:, 1], uppers[:, 2], c&#x3D;’g’, marker&#x3D;’^’)</p>
-<p>plt.show()</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Matplotlib_3D_2.png"></p>
+        <h3 id="Tracking-Your-Ears-Two-Ears-o-x2F"><a href="#Tracking-Your-Ears-Two-Ears-o-x2F" class="headerlink" title="Tracking Your Ears (Two Ears, \(^o^)&#x2F;~)"></a>Tracking Your Ears (Two Ears, \(^o^)&#x2F;~)</h3><pre><code>    // Capture the current frame
+    cap &gt;&gt; frame;
+    
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+    
+    // Convert to grayscale
+    cvtColor(frame, frameGray, CV\_BGR2GRAY);
+    
+    // Equalize the histogram
+    equalizeHist(frameGray, frameGray);
+    
+    // Detect left ear
+    leftEarCascade.detectMultiScale(frameGray, leftEars, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
+    
+    // Detect right ear
+    rightEarCascade.detectMultiScale(frameGray, rightEars, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
+    
+    // Draw green rectangle around the left ear
+    for(int i = 0; i &lt; leftEars.size(); i++)
+    &#123;
+        Rect leftEarRect(leftEars\[i\].x, leftEars\[i\].y, leftEars\[i\].width, leftEars\[i\].height);
+        rectangle(frame, leftEarRect, Scalar(0,255,0), 4);
+    &#125;
+    
+    // Draw green rectangle around the right ear
+    for(int i = 0; i &lt; rightEars.size(); i++)
+    &#123;
+        Rect rightEarRect(rightEars\[i\].x, rightEars\[i\].y, rightEars\[i\].width, rightEars\[i\].height);
+        rectangle(frame, rightEarRect, Scalar(0,255,0), 4);
+    &#125;
+</code></pre>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/09/matplotlib-3d-example-2-python/" data-id="cl56jpssr00claschdr074urq" data-title="Matplotlib 3D Example 2 : Python" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/tracking-your-ears/" data-id="cl56jpsxx00hxaschats7fkv3" data-title="Tracking Your Ears" class="article-share-link">Share</a>
       
       
       
@@ -169,14 +227,14 @@
 
 
   
-    <article id="post-matplotlib-3d-example-python" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-overlaying-a-facemask" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/09/matplotlib-3d-example-python/" class="article-date">
-  <time class="dt-published" datetime="2019-01-09T02:04:16.000Z" itemprop="datePublished">2019-01-09</time>
+    <a href="/2018/05/03/overlaying-a-facemask/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T06:10:08.000Z" itemprop="datePublished">2018-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -187,7 +245,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/09/matplotlib-3d-example-python/">Matplotlib 3D Example : Python</a>
+      <a class="p-name article-title" href="/2018/05/03/overlaying-a-facemask/">Overlaying A Facemask</a>
     </h1>
   
 
@@ -195,20 +253,62 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="3D-Example"><a href="#3D-Example" class="headerlink" title="3D Example"></a>3D Example</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>from mpl_toolkits.mplot3d import Axes3D</p>
-<p>np.random.seed(42)</p>
-<p>n_grids &#x3D; 51<br>c &#x3D; n_grids &#x2F; 2<br>nf &#x3D; 2</p>
-<p>x &#x3D; np.linspace(0, 1, n_grids)<br>y &#x3D; np.linspace(0, 1, n_grids)<br>X, Y &#x3D; np.meshgrid(x, y)</p>
-<p>spectrum &#x3D; np.zeros((n_grids, n_grids), dtype&#x3D;np.complex)<br>noise &#x3D; [np.complex(x, y) for x, y in np.random.uniform(-1, 1, ((2 * nf + 1) ** 2 &#x2F; 2, 2))]<br>noisy_block &#x3D; np.concatenate((noise, [0j], np.conjugate(noise[:: -1])))<br>spectrum[c - nf: c + nf + 1, c - nf: c + nf + 1] &#x3D; noisy_block.reshape((2 * nf + 1, 2 * nf + 1))<br>Z &#x3D; np.real(np.fft.ifft2(np.fft.ifftshift(spectrum)))</p>
-<p>fig &#x3D; plt.figure(‘3D surface &amp; wire’)<br>ax &#x3D; fig.add_subplot(1, 2, 1, projection&#x3D;’3d’)<br>ax.plot_surface(X, Y, Z, alpha&#x3D;0.7, cmap&#x3D;’jet’, rstride&#x3D;1, cstride&#x3D;1, lw&#x3D;0)</p>
-<p>ax &#x3D; fig.add_subplot(1, 2, 2, projection&#x3D;’3d’)<br>ax.plot_wireframe(X, Y, Z, rstride&#x3D;3, cstride&#x3D;3, lw&#x3D;0.5)</p>
-<p>plt.show()</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Matplotlib_3D.png"></p>
+        <h3 id="Detect-Faces"><a href="#Detect-Faces" class="headerlink" title="Detect Faces"></a>Detect Faces</h3><pre><code>    // Capture the current frame
+    cap &gt;&gt; frame;
+
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+
+    // Convert to grayscale
+    cvtColor(frame, frameGray, CV\_BGR2GRAY);
+
+    // Equalize the histogram
+    equalizeHist(frameGray, frameGray);
+
+    // Detect faces
+    faceCascade.detectMultiScale(frameGray, faces, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
+</code></pre>
+<h3 id="Add-Mask-Image"><a href="#Add-Mask-Image" class="headerlink" title="Add Mask Image"></a>Add Mask Image</h3><pre><code>    // Draw green rectangle around the face
+    for(int i = 0; i &lt; faces.size(); i++)
+    &#123;
+        //Rect faceRect(faces\[i\].x, faces\[i\].y, faces\[i\].width, faces\[i\].height);
+
+        // Custom parameters to make the mask fit your face. You may have to play around with them to make sure it works.
+        int x = faces\[i\].x - int(0.1\*faces\[i\].width);
+        int y = faces\[i\].y - int(0.1\*faces\[i\].height); // 0.0\*faces\[i\].height
+        int w = int(1.1 \* faces\[i\].width);
+        int h = int(1.3 \* faces\[i\].height);
+
+        // Extract region of interest (ROI) covering your face
+        frameROI = frame(Rect(x,y,w,h));
+
+        // Resize the face mask image based on the dimensions of the above ROI
+        resize(faceMask, faceMaskSmall, Size(w,h));
+
+        // Convert the above image to grayscale
+        cvtColor(faceMaskSmall, grayMaskSmall, CV\_BGR2GRAY);
+
+        // Threshold the above image to isolate the pixels associated only with the face mask
+        threshold(grayMaskSmall, grayMaskSmallThresh, 230, 255, CV\_THRESH\_BINARY\_INV);
+
+        // Create mask by inverting the above image (because we don&#39;t want the background to affect the overlay)
+        bitwise\_not(grayMaskSmallThresh, grayMaskSmallThreshInv);
+
+        // Use bitwise &quot;AND&quot; operator to extract precise boundary of face mask
+        bitwise\_and(faceMaskSmall, faceMaskSmall, maskedFace, grayMaskSmallThresh);
+
+        // Use bitwise &quot;AND&quot; operator to overlay face mask
+        bitwise\_and(frameROI, frameROI, maskedFrame, grayMaskSmallThreshInv);
+
+        // Add the above masked images and place it in the original frame ROI to create the final image
+        add(maskedFace, maskedFrame, frame(Rect(x,y,w,h)));
+    &#125;
+</code></pre>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/09/matplotlib-3d-example-python/" data-id="cl56jpssu00coasch4m790qxw" data-title="Matplotlib 3D Example : Python" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/overlaying-a-facemask/" data-id="cl56jpsu300duaschfrnd386p" data-title="Overlaying A Facemask" class="article-share-link">Share</a>
       
       
       
@@ -220,14 +320,14 @@
 
 
   
-    <article id="post-matplotlib-2d-example-python" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-noise-removal-lighting-removal-binarization" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/09/matplotlib-2d-example-python/" class="article-date">
-  <time class="dt-published" datetime="2019-01-09T01:30:11.000Z" itemprop="datePublished">2019-01-09</time>
+    <a href="/2018/05/03/noise-removal-lighting-removal-binarization/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T05:51:00.000Z" itemprop="datePublished">2018-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Multiple-Programming-Languages/">Multiple Programming Languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -238,7 +338,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/09/matplotlib-2d-example-python/">Matplotlib 2D Example : Python</a>
+      <a class="p-name article-title" href="/2018/05/03/noise-removal-lighting-removal-binarization/">Noise removal &amp; Lighting removal &amp; Binarization</a>
     </h1>
   
 
@@ -246,19 +346,15 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="2D-Example"><a href="#2D-Example" class="headerlink" title="2D Example"></a>2D Example</h2><p>import numpy as np<br>import matplotlib as mpl<br>import matplotlib.pyplot as plt</p>
-<p>mpl.rcParams[‘xtick.labelsize’] &#x3D; 24<br>mpl.rcParams[‘ytick.labelsize’] &#x3D; 24<br>np.random.seed(42)</p>
-<p>x &#x3D; np.linspace(0, 5, 100)<br>y &#x3D; 2 * np.sin(x) + 0.3 * x ** 2<br>y_data &#x3D; y + np.random.normal(scale&#x3D;0.3, size&#x3D;100)<br>plt.figure(‘data’)<br>plt.plot(x, y_data, ‘.’)</p>
-<p>plt.figure(‘model’)<br>plt.plot(x, y)</p>
-<p>plt.figure(‘data &amp; model’)<br>plt.plot(x, y, ‘k’, lw&#x3D;3)<br>plt.scatter(x, y_data)</p>
-<p>plt.savefig(‘result.png’)</p>
-<p>plt.show()</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/numpy_2D_1.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/numpy_2D_2.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/numpy_2D_3.png"></p>
+        <h3 id="Remove-Noise"><a href="#Remove-Noise" class="headerlink" title="Remove Noise"></a>Remove Noise</h3><p>  Mat img_noise, img_box_smooth;<br>  medianBlur(img, img_noise, 3);<br>  blur(img, img_box_smooth, Size(3,3));</p>
+<h3 id="Remove-Light"><a href="#Remove-Light" class="headerlink" title="Remove Light"></a>Remove Light</h3><p>  &#x2F;&#x2F; Load image to process<br>  Mat light_pattern&#x3D; imread(light_pattern_file, 0);<br>  if(light_pattern.data&#x3D;&#x3D;NULL){<br>    &#x2F;&#x2F; Calculate light pattern<br>    light_pattern&#x3D; calculateLightPattern(img_noise);<br>  }<br>  medianBlur(light_pattern, light_pattern, 3);</p>
+<p>  &#x2F;&#x2F;Apply the light pattern<br>  Mat img_no_light;<br>  img_noise.copyTo(img_no_light);<br>  if(method_light!&#x3D;2){<br>  img_no_light&#x3D; removeLight(img_noise, light_pattern, method_light);<br>  }</p>
+<h3 id="Binarize"><a href="#Binarize" class="headerlink" title="Binarize"></a>Binarize</h3><p>  &#x2F;&#x2F; Binarize image for segment<br>  Mat img_thr;<br>  if(method_light!&#x3D;2){<br>  threshold(img_no_light, img_thr, 30, 255, THRESH_BINARY);<br>  }else{<br>  threshold(img_no_light, img_thr, 140, 255, THRESH_BINARY_INV);<br>  }</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/09/matplotlib-2d-example-python/" data-id="cl56jpsso00cjaschg2zefooo" data-title="Matplotlib 2D Example : Python" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/noise-removal-lighting-removal-binarization/" data-id="cl56jpsth00d8aschgavl7kwr" data-title="Noise removal &amp; Lighting removal &amp; Binarization" class="article-share-link">Share</a>
       
       
       
@@ -270,14 +366,14 @@
 
 
   
-    <article id="post-caffe-installation-ubuntu-16-04" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-segmenting-imagethe-connected-components-the-findcontours-function" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/07/caffe-installation-ubuntu-16-04/" class="article-date">
-  <time class="dt-published" datetime="2019-01-07T07:12:27.000Z" itemprop="datePublished">2019-01-07</time>
+    <a href="/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T05:47:35.000Z" itemprop="datePublished">2018-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -288,7 +384,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/07/caffe-installation-ubuntu-16-04/">Caffe Installation : Ubuntu 16.04</a>
+      <a class="p-name article-title" href="/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/">Segmenting image(The connected components &amp; The findContours function)</a>
     </h1>
   
 
@@ -296,30 +392,22 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>sudo apt update<br>sudo apt install build-essential git libatlas-base-dev<br>sudo apt-get install python-pip<br>pip install –upgrade pip<br>sudo apt-get install graphviz<br>sudo pip install graphviz<br>sudo apt install libprotobuf-dev libleveldb-dev libsnappy-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62 libfreeimage-dev libgoogle-glog-dev libbz2-dev libxml2-dev libxslt-dev libffi-dev libssl-dev libgflags-dev liblmdb-dev python-yaml<br>sudo apt-get install libopencv-dev python-opencv</p>
-<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p># git clone <a target="_blank" rel="noopener" href="https://github.com/BVLC/caffe">https://github.com/BVLC/caffe</a>. git</p>
-<h1 id="Or"><a href="#Or" class="headerlink" title="Or"></a>Or</h1><p>unzip caffe-master.zip<br>cd caffe-master&#x2F;<br>cp Makefile.config.example Makefile.config</p>
-<p>d@ubuntu:~&#x2F;Documents&#x2F;caffe$ diff Makefile.config.example Makefile.config<br>8c8<br>&lt; # CPU_ONLY :&#x3D; 1</p>
-<hr>
-<blockquote>
-<p>CPU_ONLY :&#x3D; 1<br>94c94<br>&lt; # WITH_PYTHON_LAYER :&#x3D; 1</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>WITH_PYTHON_LAYER :&#x3D; 1<br>97,98c97,98<br>&lt; INCLUDE_DIRS :&#x3D; $(PYTHON_INCLUDE) &#x2F;usr&#x2F;local&#x2F;include<br>&lt; LIBRARY_DIRS :&#x3D; $(PYTHON_LIB) &#x2F;usr&#x2F;local&#x2F;lib &#x2F;usr&#x2F;lib</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>INCLUDE_DIRS :&#x3D; $(PYTHON_INCLUDE) &#x2F;usr&#x2F;local&#x2F;include &#x2F;usr&#x2F;include&#x2F;hdf5&#x2F;serial&#x2F;<br>LIBRARY_DIRS :&#x3D; $(PYTHON_LIB) &#x2F;usr&#x2F;local&#x2F;lib &#x2F;usr&#x2F;lib &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;hdf5&#x2F;serial&#x2F;<br>d@ubuntu:~&#x2F;Documents&#x2F;caffe$ </p>
-</blockquote>
-<h2 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h2><p>export LD_LIBRARY&#x3D;$LD_LIBRARY:&#x2F;usr&#x2F;include&#x2F;hdf5<br>export PYTHONPATH&#x3D;$PYTHONPATH:&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python<br>make pycaffe -j<br>make all -j<br>make test -j<br>make runtest</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Caffe_Install_OK.png"></p>
-<h2 id="virtual-memory-exhausted"><a href="#virtual-memory-exhausted" class="headerlink" title="virtual memory exhausted"></a>virtual memory exhausted</h2><p>sudo mkdir &#x2F;opt&#x2F;images&#x2F;<br>sudo rm -rf &#x2F;opt&#x2F;images&#x2F;swap<br>sudo dd if&#x3D;&#x2F;dev&#x2F;zero of&#x3D;&#x2F;opt&#x2F;images&#x2F;swap bs&#x3D;1024 count&#x3D;10240000<br>sudo mkswap &#x2F;opt&#x2F;images&#x2F;swap<br>sudo swapon &#x2F;opt&#x2F;images&#x2F;swap</p>
+        <h3 id="Connected-Components"><a href="#Connected-Components" class="headerlink" title="Connected Components"></a>Connected Components</h3><p>void ConnectedComponents(Mat img)<br>{<br>  &#x2F;&#x2F; Use connected components to divide our possibles parts of images<br>  Mat labels;<br>  int num_objects&#x3D; connectedComponents(img, labels);<br>  &#x2F;&#x2F; Check the number of objects detected<br>  if(num_objects &lt; 2 ){<br>    cout &lt;&lt; “No objects detected” &lt;&lt; endl;<br>    return;<br>  }else{<br>    cout &lt;&lt; “Number of objects detected: “ &lt;&lt; num_objects - 1 &lt;&lt; endl;<br>  }<br>  &#x2F;&#x2F; Create output image coloring the objects<br>  Mat output&#x3D; Mat::zeros(img.rows,img.cols, CV_8UC3);<br>  RNG rng( 0xFFFFFFFF );<br>  for(int i&#x3D;1; iaddImage(“Result”, output);<br>}</p>
+<p>void ConnectedComponentsStats(Mat img)<br>{<br>  &#x2F;&#x2F; Use connected components with stats<br>  Mat labels, stats, centroids;<br>  int num_objects&#x3D; connectedComponentsWithStats(img, labels, stats, centroids);<br>  &#x2F;&#x2F; Check the number of objects detected<br>  if(num_objects &lt; 2 ){<br>    cout &lt;&lt; “No objects detected” &lt;&lt; endl;<br>    return;<br>  }else{<br>    cout &lt;&lt; “Number of objects detected: “ &lt;&lt; num_objects - 1 &lt;&lt; endl;<br>  }<br>  &#x2F;&#x2F; Create output image coloring the objects and show area<br>  Mat output&#x3D; Mat::zeros(img.rows,img.cols, CV_8UC3);<br>  RNG rng( 0xFFFFFFFF );<br>  for(int i&#x3D;1; i(i) &lt;&lt; “ with area “ &lt;&lt; stats.at(i, CC_STAT_AREA) &lt;&lt; endl;<br>    Mat mask&#x3D; labels&#x3D;&#x3D;i;<br>    output.setTo(randomColor(rng), mask);<br>    &#x2F;&#x2F; draw text with area<br>    stringstream ss;<br>    ss &lt;&lt; “area: “ &lt;&lt; stats.at(i, CC_STAT_AREA);</p>
+<pre><code>putText(output, 
+  ss.str(), 
+  centroids.at(i), 
+  FONT\_HERSHEY\_SIMPLEX, 
+  0.4, 
+  Scalar(255,255,255));
+</code></pre>
+<p>  }<br>  imshow(“Result”, output);<br>  miw-&gt;addImage(“Result”, output);<br>} </p>
+<h3 id="Find-Contours-Basic"><a href="#Find-Contours-Basic" class="headerlink" title="Find Contours Basic"></a>Find Contours Basic</h3><p>void FindContoursBasic(Mat img)<br>{<br>  vector &gt; contours;<br>  findContours(img, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);<br>  Mat output&#x3D; Mat::zeros(img.rows,img.cols, CV_8UC3);<br>  &#x2F;&#x2F; Check the number of objects detected<br>  if(contours.size() &#x3D;&#x3D; 0 ){<br>    cout &lt;&lt; “No objects detected” &lt;&lt; endl;<br>    return;<br>  }else{<br>    cout &lt;&lt; “Number of objects detected: “ &lt;&lt; contours.size() &lt;&lt; endl;<br>  }<br>  RNG rng( 0xFFFFFFFF );<br>  for(int i&#x3D;0; iaddImage(“Result”, output);<br>}</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/07/caffe-installation-ubuntu-16-04/" data-id="cl56jpsnc006yaschcrf33sw4" data-title="Caffe Installation : Ubuntu 16.04" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/" data-id="cl56jpswx00gtasch34gq01jz" data-title="Segmenting image(The connected components &amp; The findContours function)" class="article-share-link">Share</a>
       
       
       
@@ -331,14 +419,14 @@
 
 
   
-    <article id="post-1054" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-the-scene-text-detection-extraction-recognition" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/01/1054/" class="article-date">
-  <time class="dt-published" datetime="2019-01-01T11:13:45.000Z" itemprop="datePublished">2019-01-01</time>
+    <a href="/2018/05/03/the-scene-text-detection-extraction-recognition/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T03:49:12.000Z" itemprop="datePublished">2018-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -349,7 +437,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/01/1054/">Untitled Post - 6</a>
+      <a class="p-name article-title" href="/2018/05/03/the-scene-text-detection-extraction-recognition/">The Scene Text Detection &amp; Extraction &amp; Recognition</a>
     </h1>
   
 
@@ -357,11 +445,98 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="Separate-Channels"><a href="#Separate-Channels" class="headerlink" title="Separate Channels"></a>Separate Channels</h3><p>vector separateChannels(Mat&amp; src)<br>{<br>vector channels;<br>&#x2F;&#x2F;Grayscale images<br>if (src.type() &#x3D;&#x3D; CV_8U  src.type() &#x3D;&#x3D; CV_8UC1) {<br>channels.push_back(src);<br>channels.push_back(255-src);<br>return channels;<br>}</p>
+<p>&#x2F;&#x2F;Colored images<br>if (src.type() &#x3D;&#x3D; CV_8UC3) {<br>computeNMChannels(src, channels);<br>int size &#x3D; static_cast(channels.size())-1;<br>for (int c &#x3D; 0; c &lt; size; c++)<br>channels.push_back(255-channels[c]);<br>return channels;<br>}</p>
+<p>&#x2F;&#x2F;Other types<br>cout &lt;&lt; “Invalid image format!” &lt;&lt; endl;<br>exit(-1);<br>} </p>
+<h3 id="Detection-amp-Draw-Groups-Boxes"><a href="#Detection-amp-Draw-Groups-Boxes" class="headerlink" title="Detection &amp; Draw Groups Boxes"></a>Detection &amp; Draw Groups Boxes</h3><pre><code>//Convert the input image to grayscale.
+//Just do Mat processed = input; to work with colors.
+Mat processed;
+cvtColor(input, processed, CV\_RGB2GRAY);
+
+auto channels = separateChannels(processed);
+
+// Create ERFilter objects with the 1st and 2nd stage classifiers
+auto filter1 = createERFilterNM1(loadClassifierNM1(&quot;trained\_classifierNM1.xml&quot;),15,0.00015f,0.13f,0.2f,true,0.1f);
+auto filter2 = createERFilterNM2(loadClassifierNM2(&quot;trained\_classifierNM2.xml&quot;),0.5);
+
+//Extract text regions using Newmann &amp; Matas algorithm
+cout &lt;&lt; &quot;Processing &quot; &lt;&lt; channels.size() &lt;&lt; &quot; channels...&quot; &lt;&lt; endl;
+vector &gt; regions(channels.size());
+for (int c=0; c &lt; channels.size(); c++)
+&#123;
+    cout &lt;&lt; &quot;    Channel &quot; &lt;&lt; (c+1) &lt;&lt; endl;
+    filter1-&gt;run(channels\[c\], regions\[c\]);
+    filter2-&gt;run(channels\[c\], regions\[c\]);
+&#125;
+filter1.release();
+filter2.release();
+
+//Separate character groups from regions
+vector&lt; vector &gt; groups;
+vector groupRects;
+erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_HORIZ);
+//erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_ANY, &quot;trained\_classifier\_erGrouping.xml&quot;, 0.5);
+
+// draw groups boxes
+for (auto rect : groupRects)
+    rectangle(input, rect, Scalar(0, 255, 0), 3); 
+</code></pre>
+<h3 id="Get-Extremal-Region"><a href="#Get-Extremal-Region" class="headerlink" title="Get Extremal Region"></a>Get Extremal Region</h3><p>Mat drawER(const vector &amp;channels, const vector &gt; ®ions, const vector&amp; group, const Rect&amp; rect)<br>{<br>    Mat out &#x3D; Mat::zeros(channels[0].rows+2, channels[0].cols+2, CV_8UC1);</p>
+<pre><code>int flags = 4//4 neighbors
+            + (255 &lt;&lt; 8)//paint mask in white (255)
+</code></pre>
+<ul>
+<li><p>FLOODFILL_FIXED_RANGE&#x2F;&#x2F;fixed range</p>
+</li>
+<li><p>FLOODFILL_MASK_ONLY;&#x2F;&#x2F;Paint just the mask</p>
+<p>  for (int g&#x3D;0; g &lt; group.size(); g++)<br>  {<br>  int idx &#x3D; group[g][0];<br>  ERStat er &#x3D; regions[idx][group[g][1]];<br><br>  &#x2F;&#x2F;Ignore root region<br>  if (er.parent &#x3D;&#x3D; NULL)<br>      continue;<br>  &#x2F;&#x2F;Transform the linear pixel value to row and col<br>  int px &#x3D; er.pixel % channels[idx].cols;<br>  int py &#x3D; er.pixel &#x2F; channels[idx].cols;</p>
+<p>  &#x2F;&#x2F;Create the point and adds it to the list.<br>  Point p(px, py);</p>
+<p>  &#x2F;&#x2F;Draw the extremal region<br>  floodFill(<br>          channels[idx], out,&#x2F;&#x2F;Image and mask<br>          p, Scalar(255),&#x2F;&#x2F;Seed and color<br>          nullptr,&#x2F;&#x2F;No rect<br>          Scalar(er.level),Scalar(0),&#x2F;&#x2F;LoDiff and upDiff<br>          flags&#x2F;&#x2F;Flags<br>      );<br>  }</p>
+<p>  &#x2F;&#x2F;Crop just the text area and find it’s points<br>  out &#x3D; out(rect);</p>
+<p>  vector points;<br>  findNonZero(out, points);<br>  &#x2F;&#x2F;Use deskew and crop to crop it perfectly<br>  return deskewAndCrop(out, minAreaRect(points));</p>
+</li>
+</ul>
+<p>} </p>
+<h3 id="Create-ERFilter"><a href="#Create-ERFilter" class="headerlink" title="Create ERFilter"></a>Create ERFilter</h3><pre><code>// Create ERFilter objects with the 1st and 2nd stage classifiers
+auto filter1 = createERFilterNM1(loadClassifierNM1(&quot;trained\_classifierNM1.xml&quot;),15,0.00015f,0.13f,0.2f,true,0.1f);
+auto filter2 = createERFilterNM2(loadClassifierNM2(&quot;trained\_classifierNM2.xml&quot;),0.5);
+
+//Extract text regions using Newmann &amp; Matas algorithm
+cout &lt;&lt; &quot;Processing &quot; &lt;&lt; channels.size() &lt;&lt; &quot; channels...&quot; &lt;&lt; endl;
+vector &gt; regions(channels.size());
+for (int c=0; c &lt; channels.size(); c++)
+&#123;
+    cout &lt;&lt; &quot;    Channel &quot; &lt;&lt; (c+1) &lt;&lt; endl;
+    filter1-&gt;run(channels\[c\], regions\[c\]);
+    filter2-&gt;run(channels\[c\], regions\[c\]);
+&#125;
+filter1.release();
+filter2.release(); 
+</code></pre>
+<h3 id="Separate-Characters-amp-OCR-gt-Run"><a href="#Separate-Characters-amp-OCR-gt-Run" class="headerlink" title="Separate Characters &amp; OCR-&gt;Run"></a>Separate Characters &amp; OCR-&gt;Run</h3><pre><code>//Separate character groups from regions
+vector&lt; vector &gt; groups;
+vector groupRects;
+erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_HORIZ);
+//erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_ANY, &quot;trained\_classifier\_erGrouping.xml&quot;, 0.5);
+
+// text detection
+cout &lt;&lt; endl &lt;&lt; &quot;Detected text:&quot; &lt;&lt; endl;
+cout &lt;&lt; &quot;-------------&quot; &lt;&lt; endl;
+auto ocr = initOCR(&quot;tesseract&quot;);
+for (int i = 0; i &lt; groups.size(); i++)
+&#123;
+    Mat wordImage = drawER(channels, regions, groups\[i\], groupRects\[i\]);
+
+    string word;
+    ocr-&gt;run(wordImage, word);
+    cout &lt;&lt; word &lt;&lt; endl;
+&#125;
+</code></pre>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/01/1054/" data-id="cl56jpshx002sasch4v4mhcny" data-title="Untitled Post - 6" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/the-scene-text-detection-extraction-recognition/" data-id="cl56jpsxt00hsasch9rmne6o7" data-title="The Scene Text Detection &amp; Extraction &amp; Recognition" class="article-share-link">Share</a>
       
       
       
@@ -373,14 +548,14 @@
 
 
   
-    <article id="post-1055" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-tesseract-ocr-api" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/01/1055/" class="article-date">
-  <time class="dt-published" datetime="2019-01-01T11:13:45.000Z" itemprop="datePublished">2019-01-01</time>
+    <a href="/2018/05/03/tesseract-ocr-api/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T02:52:59.000Z" itemprop="datePublished">2018-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -391,7 +566,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/01/1055/">Untitled Post - 7</a>
+      <a class="p-name article-title" href="/2018/05/03/tesseract-ocr-api/">Tesseract OCR API</a>
     </h1>
   
 
@@ -399,11 +574,15 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="Tesseract-API-—-OCR"><a href="#Tesseract-API-—-OCR" class="headerlink" title="Tesseract API — OCR"></a>Tesseract API — OCR</h3><p>tesseract::TessBaseAPI ocr;</p>
+<p>char* identifyText(Mat input, char* language &#x3D; “eng”)<br>{<br>ocr.Init(NULL, language, tesseract::OEM_TESSERACT_ONLY);<br>ocr.SetVariable(“tessedit_write_images”, “1”);<br>ocr.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);<br>ocr.SetImage(input.data, input.cols, input.rows, input.elemSize(), input.cols);</p>
+<p>char* text &#x3D; ocr.GetUTF8Text();<br>cout &lt;&lt; “Text:” &lt;&lt; endl;<br>cout &lt;&lt; text &lt;&lt; endl;<br>cout &lt;&lt; “Confidence: “ &lt;&lt; ocr.MeanTextConf() &lt;&lt; endl &lt;&lt; endl;</p>
+<p>&#x2F;&#x2F; Get the text<br>return text;<br>}</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/01/1055/" data-id="cl56jpshz002uasch0depfwvi" data-title="Untitled Post - 7" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/tesseract-ocr-api/" data-id="cl56jpsxi00hiaschaxxjhgdn" data-title="Tesseract OCR API" class="article-share-link">Share</a>
       
       
       
@@ -415,14 +594,14 @@
 
 
   
-    <article id="post-1056" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-text-segmentation" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/01/1056/" class="article-date">
-  <time class="dt-published" datetime="2019-01-01T11:13:45.000Z" itemprop="datePublished">2019-01-01</time>
+    <a href="/2018/05/03/text-segmentation/" class="article-date">
+  <time class="dt-published" datetime="2018-05-03T02:40:42.000Z" itemprop="datePublished">2018-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -433,7 +612,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/01/1056/">Untitled Post - 8</a>
+      <a class="p-name article-title" href="/2018/05/03/text-segmentation/">Text Segmentation</a>
     </h1>
   
 
@@ -441,11 +620,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="Binarize"><a href="#Binarize" class="headerlink" title="Binarize"></a>Binarize</h3><p>Mat binarize(Mat input)<br>{<br>&#x2F;&#x2F;Uses otsu to threshold the input image<br>Mat binaryImage;<br>cvtColor(input, input, CV_BGR2GRAY);<br>threshold(input, binaryImage, 0, 255, THRESH_OTSU);</p>
+<p>&#x2F;&#x2F;Count the number of black and white pixels<br>int white &#x3D; countNonZero(binaryImage);<br>int black &#x3D; binaryImage.size().area() - white;</p>
+<p>&#x2F;&#x2F;If the image is mostly white (white background), invert it<br>return white &lt; black ? binaryImage : ~binaryImage;<br>}</p>
+<h3 id="Dilate-amp-Find-Contours"><a href="#Dilate-amp-Find-Contours" class="headerlink" title="Dilate &amp; Find Contours"></a>Dilate &amp; Find Contours</h3><p>vector findTextAreas(Mat input) {<br>&#x2F;&#x2F;Dilate the image<br>Mat kernel &#x3D; getStructuringElement(MORPH_CROSS, Size(3,3));<br>Mat dilated;<br>dilate(input, dilated, kernel, cv::Point(-1, -1), 5);</p>
+<p>&#x2F;&#x2F;Find all image contours<br>vector &gt; contours;<br>findContours(dilated, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);</p>
+<p>&#x2F;&#x2F;For each contour<br>vector areas;<br>for (auto contour : contours)<br>{<br>&#x2F;&#x2F;Find it’s rotated rect<br>auto box &#x3D; minAreaRect(contour);</p>
+<p>&#x2F;&#x2F;Discard very small boxes<br>if (box.size.width &lt; 20  box.size.height &lt; 20)<br>continue;</p>
+<p>&#x2F;&#x2F;Discard squares shaped boxes and boxes<br>&#x2F;&#x2F;higher than larger<br>double proportion &#x3D; box.angle &lt; -45.0 ?<br>box.size.height &#x2F; box.size.width :<br>box.size.width &#x2F; box.size.height;</p>
+<p>if (proportion &lt; 2)<br>continue;</p>
+<p>&#x2F;&#x2F;Add the box<br>areas.push_back(box);<br>}<br>return areas;<br>} </p>
+<h3 id="Crop"><a href="#Crop" class="headerlink" title="Crop"></a>Crop</h3><p>Mat deskewAndCrop(Mat input, const RotatedRect&amp; box)<br>{<br>double angle &#x3D; box.angle;<br>Size2f size &#x3D; box.size;</p>
+<p>&#x2F;&#x2F;Adjust the box angle<br>   if (angle &lt; -45.0)<br>{<br>        angle +&#x3D; 90.0;<br>        std::swap(size.width, size.height);<br>}</p>
+<p>&#x2F;&#x2F;Rotate the text according to the angle<br>Mat transform &#x3D; getRotationMatrix2D(box.center, angle, 1.0);<br>Mat rotated;<br>warpAffine(input, rotated, transform, input.size(), INTER_CUBIC);</p>
+<p>&#x2F;&#x2F;Crop the result<br>Mat cropped;<br>getRectSubPix(rotated, size, box.center, cropped);<br>copyMakeBorder(cropped,cropped,10,10,10,10,BORDER_CONSTANT,Scalar(0));<br>return cropped;<br>}</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/01/1056/" data-id="cl56jpsi1002xaschc17vbtim" data-title="Untitled Post - 8" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/05/03/text-segmentation/" data-id="cl56jpsxl00hnaschg6z0aauz" data-title="Text Segmentation" class="article-share-link">Share</a>
       
       
       
@@ -457,14 +650,14 @@
 
 
   
-    <article id="post-1030" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-vs2017-openssl-x64-compile-test-source-code" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/01/1030/" class="article-date">
-  <time class="dt-published" datetime="2019-01-01T11:11:55.000Z" itemprop="datePublished">2019-01-01</time>
+    <a href="/2018/04/12/vs2017-openssl-x64-compile-test-source-code/" class="article-date">
+  <time class="dt-published" datetime="2018-04-12T09:06:02.000Z" itemprop="datePublished">2018-04-12</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a>
   </div>
 
   </div>
@@ -475,7 +668,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/01/1030/">Untitled Post - 1</a>
+      <a class="p-name article-title" href="/2018/04/12/vs2017-openssl-x64-compile-test-source-code/">VS2017 OpenSSL x64 Compile &amp; Test Source Code</a>
     </h1>
   
 
@@ -483,11 +676,35 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>Windows 10 Pro 1709 Visual Studio 2017 openssl-1.1.0h.tar.gz ActivePerl-5.26.1.2601-MSWin32-x64-404865.exe</p>
+<h3 id="Install-dmake"><a href="#Install-dmake" class="headerlink" title="Install dmake"></a>Install dmake</h3><p>ppm install dmake</p>
+<h3 id="Compile-OpenSSL-x64-Release-DLL"><a href="#Compile-OpenSSL-x64-Release-DLL" class="headerlink" title="Compile OpenSSL x64 Release DLL"></a>Compile OpenSSL x64 Release DLL</h3><p>C:\&gt;cd openssl-1.1.0h<br>C:\openssl-1.1.0h&gt;perl Configure VC-WIN64A no-asm –prefix&#x3D;C:&#x2F;openssl –openssldir&#x3D;C:&#x2F;openssl&#x2F;ssl<br>C:\openssl-1.1.0h&gt;nmake<br>C:\openssl-1.1.0h&gt;nmake test<br>C:\openssl-1.1.0h&gt;nmake install<br>C:\openssl-1.1.0h&gt;nmake clean</p>
+<h3 id="Have-A-Look"><a href="#Have-A-Look" class="headerlink" title="Have A Look"></a>Have A Look</h3><p>C:\openssl&gt; . ├─bin │ libcrypto-1_1-x64.dll │ libssl-1_1-x64.dll │ ├─include │ └─openssl │ *.h │ ├─lib │ │ libcrypto.lib │ │ libssl.lib</p>
+<h3 id="VS2017-Project-Properties"><a href="#VS2017-Project-Properties" class="headerlink" title="VS2017 Project Properties"></a>VS2017 Project Properties</h3><p><img src="/img/VS2017_OpenSSL_Lib.png"></p>
+<h3 id="Test-Source-Code"><a href="#Test-Source-Code" class="headerlink" title="Test Source Code"></a>Test Source Code</h3><p>#include #include #include #include #include const int RECV_SIZE &#x3D; 8192;</p>
+<p>&#x2F;&#x2F;Delete the UnionPay Merchant Information</p>
+<p>int main()<br>{<br>WSADATA wsadData;<br>WSAStartup(MAKEWORD(2, 2), &amp;wsadData);</p>
+<p>ADDRINFOT aiHints;<br>ZeroMemory(&amp;aiHints, sizeof(ADDRINFOT));<br>aiHints.ai_family &#x3D; AF_INET;<br>aiHints.ai_flags &#x3D; AI_PASSIVE;<br>aiHints.ai_protocol &#x3D; 0;<br>aiHints.ai_socktype &#x3D; SOCK_STREAM;</p>
+<p>PADDRINFOT paiResult;<br>GetAddrInfo(wstrHost.c_str(), NULL, &amp;aiHints, &amp;paiResult);</p>
+<p>SOCKET sSocket &#x3D; socket(AF_INET, SOCK_STREAM, 0);<br>if (sSocket &#x3D;&#x3D; SOCKET_ERROR)<br>{<br>std::wcout &lt;&lt; “Error socket” &lt;&lt; std::endl;<br>return -1;<br>}</p>
+<p>struct sockaddr_in sinHost;<br>sinHost.sin_addr.s_addr &#x3D; inet_addr(ip);<br>sinHost.sin_family &#x3D; AF_INET;<br>sinHost.sin_port &#x3D; htons(port);<br>if (connect(sSocket, (LPSOCKADDR)&amp;sinHost, sizeof(SOCKADDR_IN)) &#x3D;&#x3D; SOCKET_ERROR)<br>{<br>std::wcout &lt;&lt; “Error connect” &lt;&lt; std::endl;<br>return -1;<br>}</p>
+<p>SSL_library_init();<br>SSLeay_add_ssl_algorithms();<br>SSL_load_error_strings();</p>
+<p>SSL_CTX *pctxSSL &#x3D; SSL_CTX_new(TLSv1_2_client_method());<br>if (pctxSSL &#x3D;&#x3D; NULL)<br>{<br>std::wcout &lt;&lt; “Error SSL_CTX_new” &lt;&lt; std::endl;<br>return -1;<br>}</p>
+<p>if (SSL_CTX_use_certificate_file(pctxSSL, “.&#x2F;o(*￣︶￣*)o.pem”, SSL_FILETYPE_PEM) &lt;&#x3D; 0)<br>{<br>exit(1);<br>}</p>
+<p>SSL *psslSSL &#x3D; SSL_new(pctxSSL);<br>if (psslSSL &#x3D;&#x3D; NULL)<br>{<br>std::wcout &lt;&lt; “Error SSL_new” &lt;&lt; std::endl;<br>return -1;<br>}<br>SSL_set_fd(psslSSL, sSocket);<br>INT iErrorConnect &#x3D; SSL_connect(psslSSL);<br>if (iErrorConnect &lt; 0)<br>{<br>std::wcout &lt;&lt; “Error SSL_connect, iErrorConnect&#x3D;” &lt;&lt; iErrorConnect &lt;&lt; std::endl;<br>return -1;<br>}<br>std::wcout &lt;&lt; “SSL connection using “ &lt;&lt; SSL_get_cipher(psslSSL) &lt;&lt; std::endl;</p>
+<p>&#x2F;&#x2F;Delete the HTTP Header</p>
+<p>INT iErrorWrite &#x3D; SSL_write(psslSSL, req, req_len) &lt; 0;<br>if (iErrorWrite &lt; 0)<br>{<br>std::wcout &lt;&lt; “Error SSL_write” &lt;&lt; std::endl;<br>return -1;<br>}</p>
+<p>LPSTR lpszRead &#x3D; new CHAR[RECV_SIZE];<br>INT iLength &#x3D; 1;<br>&#x2F;&#x2F;while (iLength &gt;&#x3D; 1)<br>{<br>iLength &#x3D; SSL_read(psslSSL, lpszRead, RECV_SIZE - 1);<br>if (iLength &lt; 0)<br>{<br>std::wcout &lt;&lt; “Error SSL_read” &lt;&lt; std::endl;<br>delete[] lpszRead;<br>return -1;<br>}<br>lpszRead[iLength] &#x3D; TEXT(‘\0’);<br>std::wcout &lt;&lt; lpszRead;</p>
+<p>{<br>char *token &#x3D; strtok(lpszRead, “\n”);<br>char *p_Length &#x3D; NULL;<br>while (token !&#x3D; NULL) {<br>printf(“%s\n”, token);<br>if (p_Length &#x3D; strstr(token, “Content-Length: “)) {<br>recv_len &#x3D; atoi(&amp;p_Length[strlen(“Content-Length: “)]);<br>memcpy(recv_data, &amp;lpszRead[iLength - recv_len], recv_len);<br>break;<br>}<br>token &#x3D; strtok(NULL, “\n”);<br>}<br>}</p>
+<p>{<br>int i;<br>printf(“&lt;— (%d): \n”, recv_len);<br>for (i &#x3D; 0; i &lt; recv_len; i++) {<br>printf(“%02X “, recv_data[i]);<br>}<br>printf(“\n”);<br>}</p>
+<p>}<br>delete[] lpszRead;</p>
+<p>return 0;<br>} </p>
+<h3 id="Test-Code"><a href="#Test-Code" class="headerlink" title="Test Code"></a>Test Code</h3><p><img src="/img/VS2017_OpenSSL_Exe_Result.png"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/01/1030/" data-id="cl56jpsgb001daschfv6qdo85" data-title="Untitled Post - 1" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/04/12/vs2017-openssl-x64-compile-test-source-code/" data-id="cl57i42lj0000rwchhmt7am9h" data-title="VS2017 OpenSSL x64 Compile &amp; Test Source Code" class="article-share-link">Share</a>
       
       
       
@@ -499,14 +716,14 @@
 
 
   
-    <article id="post-1034" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-harris-corner-detector-shi-tomasi-corner-detector" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/01/1034/" class="article-date">
-  <time class="dt-published" datetime="2019-01-01T11:11:55.000Z" itemprop="datePublished">2019-01-01</time>
+    <a href="/2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/" class="article-date">
+  <time class="dt-published" datetime="2018-02-13T13:05:42.000Z" itemprop="datePublished">2018-02-13</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
   </div>
 
   </div>
@@ -517,7 +734,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/01/1034/">Untitled Post - 3</a>
+      <a class="p-name article-title" href="/2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/">Harris Corner Detector &amp; Shi-Tomasi Corner Detector</a>
     </h1>
   
 
@@ -525,11 +742,77 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="Harris-Corner"><a href="#Harris-Corner" class="headerlink" title="Harris Corner"></a>Harris Corner</h3><pre><code>    // Capture the current frame
+    cap &gt;&gt; frame;
+    
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+    
+    dst = Mat::zeros(frame.size(), CV\_32FC1);
+    
+    // Convert to grayscale
+    cvtColor(frame, frameGray, COLOR\_BGR2GRAY );
+    
+    // Detecting corners
+    cornerHarris(frameGray, dst, blockSize, apertureSize, k, BORDER\_DEFAULT);
+    
+    // Normalizing
+    normalize(dst, dst\_norm, 0, 255, NORM\_MINMAX, CV\_32FC1, Mat());
+    convertScaleAbs(dst\_norm, dst\_norm\_scaled);
+    
+    // Drawing a circle around corners
+    for(int j = 0; j &lt; dst\_norm.rows ; j++)
+    &#123;
+        for(int i = 0; i &lt; dst\_norm.cols; i++)
+        &#123;
+            if((int)dst\_norm.at(j,i) &gt; thresh)
+            &#123;
+                circle(frame, Point(i, j), 8,  Scalar(0,255,0), 2, 8, 0);
+            &#125;
+        &#125;
+    &#125; 
+</code></pre>
+<h3 id="Good-Features-To-Track-Shi-Tomasi"><a href="#Good-Features-To-Track-Shi-Tomasi" class="headerlink" title="Good Features To Track (Shi-Tomasi)"></a>Good Features To Track (Shi-Tomasi)</h3><pre><code>    // Capture the current frame
+    cap &gt;&gt; frame;
+    
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+    
+    // Convert to grayscale
+    cvtColor(frame, frameGray, COLOR\_BGR2GRAY );
+    
+    // Initialize the parameters for Shi-Tomasi algorithm
+    vector corners;
+    double qualityThreshold = 0.02;
+    double minDist = 15;
+    int blockSize = 5;
+    bool useHarrisDetector = false;
+    double k = 0.07;
+    
+    // Clone the input frame
+    Mat frameCopy;
+    frameCopy = frame.clone();
+    
+    // Apply corner detection
+    goodFeaturesToTrack(frameGray, corners, numCorners, qualityThreshold, minDist, Mat(), blockSize, useHarrisDetector, k);
+    
+    // Parameters for the circles to display the corners
+    int radius = 8;      // radius of the cirles
+    int thickness = 2;   // thickness of the circles
+    int lineType = 8;
+    
+    // Draw the detected corners using circles
+    for(size\_t i = 0; i &lt; corners.size(); i++)
+    &#123;
+        Scalar color = Scalar(rng.uniform(0,255), rng.uniform(0,255), rng.uniform(0,255));
+        circle(frameCopy, corners\[i\], radius, color, thickness, lineType, 0);
+    &#125;
+</code></pre>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/01/1034/" data-id="cl56jpsgc001gasch0b165q25" data-title="Untitled Post - 3" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/" data-id="cl56jpsqo009uasch78e8cgq5" data-title="Harris Corner Detector &amp; Shi-Tomasi Corner Detector" class="article-share-link">Share</a>
       
       
       
@@ -545,7 +828,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/18/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/18/">Next &raquo;</a>
   </nav>
 
 </section>

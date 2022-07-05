@@ -13,12 +13,10 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Configure Firewall[root@localhost ~]# systemctl stop firewalld.service[root@localhost ~]# systemctl disable firewalld.service Install Httpd &amp; Start Service[root@localhost ~]# yum install httpd -y[">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/LocalRepo-V1.png">
 <meta property="article:published_time" content="2017-12-06T09:06:41.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.206Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:39.977Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/LocalRepo-V1.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -110,7 +108,7 @@
 <h3 id="Sync-Repo"><a href="#Sync-Repo" class="headerlink" title="Sync Repo"></a>Sync Repo</h3><p>[root@localhost myrepo]# reposync –repoid&#x3D;base<br>[root@localhost myrepo]# reposync –repoid&#x3D;updates<br>[root@localhost myrepo]# reposync –repoid&#x3D;extras<br>[root@localhost myrepo]# pwd<br>&#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo<br>[root@localhost myrepo]# ls -al<br>total 0<br>drwxr-xr-x. 5 root root 47 Dec  6 20:18 .<br>drwxr-xr-x. 3 root root 20 Dec  6 03:12 ..<br>drwxr-xr-x. 3 root root 22 Dec  6 03:48 base<br>drwxr-xr-x. 3 root root 22 Dec  6 20:18 extras<br>drwxr-xr-x. 3 root root 22 Dec  6 20:06 updates</p>
 <h3 id="Install-Createrepo"><a href="#Install-Createrepo" class="headerlink" title="Install Createrepo"></a>Install Createrepo</h3><p>[root@localhost ~]# yum install createrepo -y</p>
 <h3 id="Create-Repo"><a href="#Create-Repo" class="headerlink" title="Create Repo"></a>Create Repo</h3><p>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;base<br>Spawning worker 0 with 9591 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete<br>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;updates<br>Spawning worker 0 with 1490 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete<br>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;extras<br>Spawning worker 0 with 284 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete</p>
-<h3 id="Now-Take-the-Browser-1"><a href="#Now-Take-the-Browser-1" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p><strong><a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/">http://192.168.220.200/myrepo/</a></strong> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/LocalRepo-V1.png"></p>
+<h3 id="Now-Take-the-Browser-1"><a href="#Now-Take-the-Browser-1" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p>**img&#x2F;LocalRepo-V1.png)</p>
 <h3 id="Update-Client-Repo"><a href="#Update-Client-Repo" class="headerlink" title="Update Client Repo"></a>Update Client Repo</h3><p>[root@localhost ~]# diff &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo_bak<br>15c15<br>&lt; baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/base">http://192.168.220.200/myrepo/base</a></p>
 <hr>
 <blockquote>

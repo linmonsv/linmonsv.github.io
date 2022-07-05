@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-frp-dashboard" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-using-x11-for-gui" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/03/05/frp-dashboard/" class="article-date">
-  <time class="dt-published" datetime="2020-03-05T03:11:48.000Z" itemprop="datePublished">2020-03-05</time>
+    <a href="/2019/11/20/using-x11-for-gui/" class="article-date">
+  <time class="dt-published" datetime="2019-11-20T01:15:32.000Z" itemprop="datePublished">2019-11-20</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/X11/">X11</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/05/frp-dashboard/">FRP dashboard</a>
+      <a class="p-name article-title" href="/2019/11/20/using-x11-for-gui/">Using X11 for GUI</a>
     </h1>
   
 
@@ -97,12 +97,36 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="http://www.qinuu.com/wp-content/uploads/2020/08/FRP_dashboard.png"> <img src="http://www.qinuu.com/wp-content/uploads/2020/08/FRP_dashboard_2.png"></p>
+        <h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><img src="/img/x11-hello.gif"></p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>#include #include #include #include #include void<br>DrawCenteredMbString(Display* dpy, Window w, XFontSet fontset, GC gc, char* str, int num_bytes, int x, int y, int width,<br>int height) {<br>XRectangle boundingbox;<br>XRectangle dummy;<br>int originx, originy;</p>
+<p>(void)XmbTextExtents(fontset, str, num_bytes, &amp;dummy, &amp;boundingbox);</p>
+<p>originx &#x3D; x + (width - boundingbox.width) &#x2F; 2 - boundingbox.x;<br>originy &#x3D; y + (height - boundingbox.height) &#x2F; 2 - boundingbox.y;</p>
+<p>XmbDrawString(dpy, w, fontset, gc, originx, originy, str, num_bytes);<br>}</p>
+<p>int main(void) {<br>Display* d;<br>Window w;<br>GC gc;<br>XGCValues values;<br>XEvent e;<br>XFontStruct* fs, * fs16;<br>char** fonts;<br>int font_count;<br>XFontSet fontset;<br>char** missing_charsets;<br>int num_missing_charsets;<br>char* default_string;</p>
+<p>char* msg &#x3D; “Hello, World!”;<br>char* msg2 &#x3D; “啊，世界，啊啊啊”;<br>int s;</p>
+<p>if (setlocale(LC_ALL, “”) &#x3D;&#x3D; NULL) {<br>printf(“cannot set locale \n”);<br>exit(1);<br>}</p>
+<p>if (!XSupportsLocale()) {<br>printf(“X does not support locale %s\n”, setlocale(LC_ALL, NULL));<br>exit(1);<br>}</p>
+<p>if (XSetLocaleModifiers(“”) &#x3D;&#x3D; NULL) {<br>printf(“Warning: cannot set locale modifiers\n”);<br>}</p>
+<p>d &#x3D; XOpenDisplay(NULL);<br>if (d &#x3D;&#x3D; NULL) {<br>fprintf(stderr, “Cannot open display\n”);<br>exit(1);<br>}</p>
+<p>fonts &#x3D; XListFonts(d, “*hanzi*“, 10000, &amp;font_count);<br>for (int i &#x3D; 0; i &lt; font_count; i++)<br>printf(“%s\n”, fonts[i]);<br>XFreeFontNames(fonts);</p>
+<p>if ((fs16 &#x3D; XLoadQueryFont(d, “hanzigb16st”)) &#x3D;&#x3D; NULL) {<br>printf(“Cannot load font\n”);<br>exit(1);<br>}</p>
+<p>s &#x3D; DefaultScreen(d);<br>w &#x3D; XCreateSimpleWindow(d, RootWindow(d, s), 100, 100, 500, 500, 1,<br>777215, 111111);<br>printf(“BlackPixel(d, s) is %d\n”, (int)BlackPixel(d, s));<br>printf(“WhitePixel(d, s) is %d\n”, (int)WhitePixel(d, s));</p>
+<p>fontset &#x3D; XCreateFontSet(<br>d, “-*-*-*-*-*-*-16-*-*-*-*-*-*-*“,<br>&amp;missing_charsets, &amp;num_missing_charsets,<br>&amp;default_string);<br>if (num_missing_charsets &gt; 0) {<br>printf(“The following charsets are missing\n”);<br>for (int i &#x3D; 0; i &lt; num_missing_charsets; i++) {<br>printf(“%s \n”, missing_charsets);<br>printf(“The string is %s \n”, default_string);<br>printf(“of any characters from those sets\n”);<br>}<br>XFreeStringList(missing_charsets);<br>}<br>XSetLineAttributes(d, gc, 5, LineSolid, CapRound, JoinRound);</p>
+<p>XSelectInput(d, w, ExposureMask  KeyPressMask);<br>gc &#x3D; XCreateGC(d, w, 0, &amp;values);<br>XMapWindow(d, w);</p>
+<p>int y &#x3D; 50;<br>for (int i &#x3D; 0; i &lt; 10; i++) {</p>
+<p>&#x2F;&#x2F;XFillRectangle(d, w, DefaultGC(d, s), 20, 20, 10, 10);<br>XDrawString(d, w, DefaultGC(d, s), 10, y + i * 20, msg, strlen(msg));</p>
+<p>&#x2F;&#x2F;XSetFont(d, gc, fs16-&gt;fid);<br>&#x2F;&#x2F;XDrawString16(d, w, gc, 100, y + i * 20, (XChar2b *) msg2, strlen(msg2) &#x2F; 2);</p>
+<p>int msg_len &#x3D; strlen(msg2);</p>
+<p>DrawCenteredMbString(<br>d, w, fontset, gc,<br>msg2,<br>msg_len, 50, y + i * 20, 100, 50);</p>
+<p>XFlush(d);<br>sleep(1);</p>
+<p>}</p>
+<p>&#x2F;*while(1) {<br>XNextEvent(d, &amp;e);<br>if (e.type &#x3D;&#x3D; KeyPress)<br>  break;<br>}*&#x2F;</p>
+<p>XCloseDisplay(d);<br>return 0;<br>}</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/05/frp-dashboard/" data-id="cl56jpsq20097aschewbadcu4" data-title="FRP dashboard" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/11/20/using-x11-for-gui/" data-id="cl56jpsy900ieasch9e2o6ab4" data-title="Using X11 for GUI" class="article-share-link">Share</a>
       
       
       
@@ -114,14 +138,14 @@
 
 
   
-    <article id="post-how-to-fix-wordpress-error-404" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-how-to-enable-case-sensitive-file-and-folder-names-on-windows-10" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/02/28/how-to-fix-wordpress-error-404/" class="article-date">
-  <time class="dt-published" datetime="2020-02-28T02:40:36.000Z" itemprop="datePublished">2020-02-28</time>
+    <a href="/2019/10/11/how-to-enable-case-sensitive-file-and-folder-names-on-windows-10/" class="article-date">
+  <time class="dt-published" datetime="2019-10-11T08:05:36.000Z" itemprop="datePublished">2019-10-11</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Wordpress/">Wordpress</a>
+    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>
   </div>
 
   </div>
@@ -132,7 +156,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/02/28/how-to-fix-wordpress-error-404/">How to Fix Wordpress Error 404</a>
+      <a class="p-name article-title" href="/2019/10/11/how-to-enable-case-sensitive-file-and-folder-names-on-windows-10/">How to Enable Case Sensitive File and Folder Names on Windows 10</a>
     </h1>
   
 
@@ -140,12 +164,14 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="http://www.qinuu.com/wp-content/uploads/2020/08/WP-Apache2.conf_.png"> <img src="http://www.qinuu.com/wp-content/uploads/2020/08/WP-Apache2.conf_-1.png"> <img src="http://www.qinuu.com/wp-content/uploads/2020/08/WP-htaccess.png"></p>
-
+        <h2 id="Enable-Windows-Subsystem-Linux"><a href="#Enable-Windows-Subsystem-Linux" class="headerlink" title="Enable Windows Subsystem Linux"></a>Enable Windows Subsystem Linux</h2><p><code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</code></p>
+<h2 id="setCaseSensitiveInfo-enable-x2F-disable"><a href="#setCaseSensitiveInfo-enable-x2F-disable" class="headerlink" title="setCaseSensitiveInfo enable&#x2F;disable"></a>setCaseSensitiveInfo enable&#x2F;disable</h2><p><code>fsutil.exe file setCaseSensitiveInfo linux\netfilter_ipv4 enable</code></p>
+<h2 id="queryCaseCaseSensitiveInfo"><a href="#queryCaseCaseSensitiveInfo" class="headerlink" title="queryCaseCaseSensitiveInfo"></a>queryCaseCaseSensitiveInfo</h2><p><code>fsutil.exe file queryCaseCaseSensitiveInfo D:\linux-3.0.35\include\linux\netfilter</code></p>
+<h2 id="This-Doesn’t-Affect-Subfolders"><a href="#This-Doesn’t-Affect-Subfolders" class="headerlink" title="This Doesn’t Affect Subfolders"></a><strong>This Doesn’t Affect Subfolders</strong></h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/02/28/how-to-fix-wordpress-error-404/" data-id="cl56jpsrk00ayaschbwpwhdsd" data-title="How to Fix Wordpress Error 404" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/10/11/how-to-enable-case-sensitive-file-and-folder-names-on-windows-10/" data-id="cl56jpsre00aqasch927z2wk3" data-title="How to Enable Case Sensitive File and Folder Names on Windows 10" class="article-share-link">Share</a>
       
       
       
@@ -157,14 +183,14 @@
 
 
   
-    <article id="post-devops-introduction-and-practice-jp-notes" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-generate-an-incremental-ota" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/01/19/devops-introduction-and-practice-jp-notes/" class="article-date">
-  <time class="dt-published" datetime="2020-01-19T07:26:56.000Z" itemprop="datePublished">2020-01-19</time>
+    <a href="/2019/09/26/generate-an-incremental-ota/" class="article-date">
+  <time class="dt-published" datetime="2019-09-26T06:51:22.000Z" itemprop="datePublished">2019-09-26</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Android/">Android</a>
   </div>
 
   </div>
@@ -175,7 +201,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/01/19/devops-introduction-and-practice-jp-notes/">DevOps - Introduction and practice [Jp] Notes</a>
+      <a class="p-name article-title" href="/2019/09/26/generate-an-incremental-ota/">Generate an incremental OTA</a>
     </h1>
   
 
@@ -183,12 +209,13 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="http://www.qinuu.com/wp-content/uploads/2020/01/DevOps-Introduction-and-practice-Jp.png"></p>
+        <h2 id="Generate-an-OTA"><a href="#Generate-an-OTA" class="headerlink" title="Generate an OTA"></a>Generate an OTA</h2><p>make -j8<br>make otapackage</p>
+<h2 id="Generate-an-incremental-OTA"><a href="#Generate-an-incremental-OTA" class="headerlink" title="Generate an incremental OTA"></a>Generate an incremental OTA</h2><p>.&#x2F;build&#x2F;tools&#x2F;releasetools&#x2F;ota_from_target_files -i .&#x2F;OTA&#x2F;base.zip .&#x2F;OTA&#x2F;target_files.zip .&#x2F;OTA&#x2F;update.zip</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/19/devops-introduction-and-practice-jp-notes/" data-id="cl56jpspm008yaschho162pto" data-title="DevOps - Introduction and practice [Jp] Notes" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/09/26/generate-an-incremental-ota/" data-id="cl56jpsq7009casch2gax9lus" data-title="Generate an incremental OTA" class="article-share-link">Share</a>
       
       
       
@@ -200,14 +227,14 @@
 
 
   
-    <article id="post-2229" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-android-adb-shell-commands-notes" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/11/28/2229/" class="article-date">
-  <time class="dt-published" datetime="2019-11-28T01:20:26.000Z" itemprop="datePublished">2019-11-28</time>
+    <a href="/2019/09/26/android-adb-shell-commands-notes/" class="article-date">
+  <time class="dt-published" datetime="2019-09-26T06:35:54.000Z" itemprop="datePublished">2019-09-26</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Android/">Android</a>
   </div>
 
   </div>
@@ -218,7 +245,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/28/2229/">Untitled Post - 40</a>
+      <a class="p-name article-title" href="/2019/09/26/android-adb-shell-commands-notes/">Android ADB Shell Commands Notes</a>
     </h1>
   
 
@@ -226,11 +253,17 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Prints-a-list-of-all-attached-emulator-x2F-device"><a href="#Prints-a-list-of-all-attached-emulator-x2F-device" class="headerlink" title="Prints a list of all attached emulator&#x2F;device"></a>Prints a list of all attached emulator&#x2F;device</h2><p>&gt;adb devices<br>List of devices attached<br>xxxxxxxxxx      device</p>
+<h2 id="Forward-socket-connections"><a href="#Forward-socket-connections" class="headerlink" title="Forward socket connections"></a>Forward socket connections</h2><p>&gt;adb forward tcp:10172 tcp:9999</p>
+<h2 id="Restarts-the-adbd-daemon-with-Root-permissions"><a href="#Restarts-the-adbd-daemon-with-Root-permissions" class="headerlink" title="Restarts the adbd daemon with Root permissions"></a>Restarts the adbd daemon with Root permissions</h2><p>&gt;adb root</p>
+<h2 id="Put-x2F-system-partition-in-Writable-mode"><a href="#Put-x2F-system-partition-in-Writable-mode" class="headerlink" title="Put &#x2F;system partition in Writable mode"></a>Put &#x2F;system partition in Writable mode</h2><p>&gt;adb remount remount succeeded</p>
+<h2 id="Upload-a-specified-file-from-your-computer-to-an-emulator-x2F-device"><a href="#Upload-a-specified-file-from-your-computer-to-an-emulator-x2F-device" class="headerlink" title="Upload a specified file from your computer to an emulator&#x2F;device"></a>Upload a specified file from your computer to an emulator&#x2F;device</h2><p>&gt;adb -s xxxxxxxxxx push term_emv_clc2 &#x2F;system&#x2F;tmp</p>
+<h2 id="Shell-command-mode"><a href="#Shell-command-mode" class="headerlink" title="Shell command mode"></a>Shell command mode</h2><p>&gt;adb shell</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/28/2229/" data-id="cl56jpskv004waschaiecar2v" data-title="Untitled Post - 40" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/09/26/android-adb-shell-commands-notes/" data-id="cl56jpsmr006fasch2c11g14u" data-title="Android ADB Shell Commands Notes" class="article-share-link">Share</a>
       
       
       
@@ -242,14 +275,14 @@
 
 
   
-    <article id="post-2230" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-how-to-compile-lua-for-android" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/11/28/2230/" class="article-date">
-  <time class="dt-published" datetime="2019-11-28T01:20:26.000Z" itemprop="datePublished">2019-11-28</time>
+    <a href="/2019/09/19/how-to-compile-lua-for-android/" class="article-date">
+  <time class="dt-published" datetime="2019-09-19T09:46:02.000Z" itemprop="datePublished">2019-09-19</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Android/">Android</a>
   </div>
 
   </div>
@@ -260,7 +293,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/28/2230/">Untitled Post - 41</a>
+      <a class="p-name article-title" href="/2019/09/19/how-to-compile-lua-for-android/">How to compile Lua for Android</a>
     </h1>
   
 
@@ -268,11 +301,24 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Update-lmathlib-c"><a href="#Update-lmathlib-c" class="headerlink" title="Update lmathlib.c"></a>Update lmathlib.c</h2><h1 id="Index-lmathlib-c"><a href="#Index-lmathlib-c" class="headerlink" title="Index: lmathlib.c"></a>Index: lmathlib.c</h1><p>— lmathlib.c(revision 4050)<br>+++ lmathlib.c(revision 4051)<br>@@ -183,10 +183,10 @@<br>     res &#x3D; l_mathop(log)(x);<br>   else {<br>     lua_Number base &#x3D; luaL_checknumber(L, 2);<br>-#if !defined(LUA_USE_C89)</p>
+<ul>
+<li>if (base &#x3D;&#x3D; l_mathop(2.0))</li>
+<li><pre><code> res = l\_mathop(log2)(x); else
+</code></pre>
+-#endif<br>+&#x2F;&#x2F;#if !defined(LUA_USE_C89)<br>+&#x2F;&#x2F;    if (base &#x3D;&#x3D; l_mathop(2.0))<br>+&#x2F;&#x2F;      res &#x3D; l_mathop(log2)(x); else<br>+&#x2F;&#x2F;#endif<br>   if (base &#x3D;&#x3D; l_mathop(10.0))<br> res &#x3D; l_mathop(log10)(x);<br>   else</li>
+</ul>
+<h2 id="Update-luaconf-h"><a href="#Update-luaconf-h" class="headerlink" title="Update luaconf.h"></a>Update luaconf.h</h2><h1 id="Index-luaconf-h"><a href="#Index-luaconf-h" class="headerlink" title="Index: luaconf.h"></a>Index: luaconf.h</h1><p>— luaconf.h(revision 4050)<br>+++ luaconf.h(revision 4051)<br>@@ -677,7 +677,7 @@<br> ** macro must include header ‘locale.h’.)<br> *&#x2F;<br> #if !defined(lua_getlocaledecpoint)<br>-#define lua_getlocaledecpoint()(localeconv()-&gt;decimal_point[0])<br>+#define lua_getlocaledecpoint()(‘.’)<br> #endif</p>
+<p> &#x2F;* }&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; *&#x2F;</p>
+<h2 id="Android-mk"><a href="#Android-mk" class="headerlink" title="Android.mk"></a>Android.mk</h2><h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="Android-mk-1"><a href="#Android-mk-1" class="headerlink" title="Android.mk"></a>Android.mk</h1><h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><h1 id="Lua"><a href="#Lua" class="headerlink" title="Lua"></a>Lua</h1><h1 id="-2"><a href="#-2" class="headerlink" title=""></a></h1><p>LOCAL_PATH :&#x3D; $(call my-dir)&#x2F;..&#x2F;src</p>
+<p>include $(CLEAR_VARS)</p>
+<p>LOCAL_MODULE     :&#x3D; Lua<br>LOCAL_CPPFLAGS   :&#x3D; -std&#x3D;c++17<br>LOCAL_SRC_FILES :&#x3D; \<br>    $(LOCAL_PATH)&#x2F;lapi.c \<br>    $(LOCAL_PATH)&#x2F;lauxlib.c \<br>    $(LOCAL_PATH)&#x2F;lbaselib.c \<br>    $(LOCAL_PATH)&#x2F;lbitlib.c \<br>    $(LOCAL_PATH)&#x2F;lcode.c \<br>    $(LOCAL_PATH)&#x2F;lcorolib.c \<br>    $(LOCAL_PATH)&#x2F;lctype.c \<br>    $(LOCAL_PATH)&#x2F;ldblib.c \<br>    $(LOCAL_PATH)&#x2F;ldebug.c \<br>    $(LOCAL_PATH)&#x2F;ldo.c \<br>    $(LOCAL_PATH)&#x2F;ldump.c \<br>    $(LOCAL_PATH)&#x2F;lfunc.c \<br>    $(LOCAL_PATH)&#x2F;lgc.c \<br>    $(LOCAL_PATH)&#x2F;linit.c \<br>    $(LOCAL_PATH)&#x2F;liolib.c \<br>    $(LOCAL_PATH)&#x2F;llex.c \<br>    $(LOCAL_PATH)&#x2F;lmathlib.c \<br>    $(LOCAL_PATH)&#x2F;lmem.c \<br>    $(LOCAL_PATH)&#x2F;loadlib.c \<br>    $(LOCAL_PATH)&#x2F;lobject.c \<br>    $(LOCAL_PATH)&#x2F;lopcodes.c \<br>    $(LOCAL_PATH)&#x2F;loslib.c \<br>    $(LOCAL_PATH)&#x2F;lparser.c \<br>    $(LOCAL_PATH)&#x2F;lstate.c \<br>    $(LOCAL_PATH)&#x2F;lstring.c \<br>    $(LOCAL_PATH)&#x2F;lstrlib.c \<br>    $(LOCAL_PATH)&#x2F;ltable.c \<br>    $(LOCAL_PATH)&#x2F;ltablib.c \<br>    $(LOCAL_PATH)&#x2F;ltm.c \<br>    $(LOCAL_PATH)&#x2F;lua.c \<br>    $(LOCAL_PATH)&#x2F;luac.c \<br>    $(LOCAL_PATH)&#x2F;lundump.c \<br>    $(LOCAL_PATH)&#x2F;lutf8lib.c \<br>    $(LOCAL_PATH)&#x2F;lvm.c \<br>    $(LOCAL_PATH)&#x2F;lzio.c</p>
+<p>include $(BUILD_STATIC_LIBRARY)</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/28/2230/" data-id="cl56jpskw004yasch4bts34a4" data-title="Untitled Post - 41" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/09/19/how-to-compile-lua-for-android/" data-id="cl56jpsr800ajaschgs8840x0" data-title="How to compile Lua for Android" class="article-share-link">Share</a>
       
       
       
@@ -284,14 +330,14 @@
 
 
   
-    <article id="post-2231" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-android-ndk-c17-support" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/11/28/2231/" class="article-date">
-  <time class="dt-published" datetime="2019-11-28T01:20:26.000Z" itemprop="datePublished">2019-11-28</time>
+    <a href="/2019/09/19/android-ndk-c17-support/" class="article-date">
+  <time class="dt-published" datetime="2019-09-19T08:56:25.000Z" itemprop="datePublished">2019-09-19</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Android/">Android</a>
   </div>
 
   </div>
@@ -302,7 +348,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/28/2231/">Untitled Post - 42</a>
+      <a class="p-name article-title" href="/2019/09/19/android-ndk-c17-support/">Android NDK C++17 Support</a>
     </h1>
   
 
@@ -310,11 +356,14 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="build-gradle"><a href="#build-gradle" class="headerlink" title="build.gradle"></a>build.gradle</h2><p>apply plugin: ‘com.android.application’</p>
+<p>android {<br>    compileSdkVersion 29<br>    buildToolsVersion “29.0.2”<br>    defaultConfig {<br>        applicationId “com.example.myapplication”<br>        minSdkVersion 15<br>        targetSdkVersion 29<br>        versionCode 1<br>        versionName “1.0”<br>        testInstrumentationRunner “androidx.test.runner.AndroidJUnitRunner”<br>        externalNativeBuild {<br>            cmake {<br>                cppFlags “-std&#x3D;c++17”<br>            }<br>        }<br>    }<br>    buildTypes {<br>        release {<br>            minifyEnabled false<br>            proguardFiles getDefaultProguardFile(‘proguard-android-optimize.txt’), ‘proguard-rules.pro’<br>        }<br>    }<br>    externalNativeBuild {<br>        cmake {<br>            path “src&#x2F;main&#x2F;cpp&#x2F;CMakeLists.txt”<br>            version “3.10.2”<br>        }<br>    }<br>}</p>
+<p>dependencies {<br>    implementation fileTree(dir: ‘libs’, include: [‘*.jar’])<br>    implementation ‘androidx.appcompat:appcompat:1.0.2’<br>    implementation ‘androidx.constraintlayout:constraintlayout:1.1.3’<br>    testImplementation ‘junit:junit:4.12’<br>    androidTestImplementation ‘androidx.test:runner:1.1.1’<br>    androidTestImplementation ‘androidx.test.espresso:espresso-core:3.1.1’<br>}</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/28/2231/" data-id="cl56jpskz0052aschfwubfpp4" data-title="Untitled Post - 42" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/09/19/android-ndk-c17-support/" data-id="cl56jpsmv006jasch3mhy1aiz" data-title="Android NDK C++17 Support" class="article-share-link">Share</a>
       
       
       
@@ -326,14 +375,14 @@
 
 
   
-    <article id="post-2232" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-android-emulator-server-pc-client" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/11/28/2232/" class="article-date">
-  <time class="dt-published" datetime="2019-11-28T01:20:26.000Z" itemprop="datePublished">2019-11-28</time>
+    <a href="/2019/09/19/android-emulator-server-pc-client/" class="article-date">
+  <time class="dt-published" datetime="2019-09-19T08:51:32.000Z" itemprop="datePublished">2019-09-19</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Android/">Android</a>
   </div>
 
   </div>
@@ -344,7 +393,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/28/2232/">Untitled Post - 43</a>
+      <a class="p-name article-title" href="/2019/09/19/android-emulator-server-pc-client/">Android Emulator-Server / PC-Client</a>
     </h1>
   
 
@@ -352,11 +401,14 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p><code>&gt;adb devices List of devices attached emulator-5554 device</code> <code>&gt;adb -s emulator-5554 forward tcp:6100 tcp:7100 6100</code></p>
+<h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><p>127.0.0.1:6100</p>
+<h2 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h2><p>7100</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/28/2232/" data-id="cl56jpsl00054aschhp2m89p0" data-title="Untitled Post - 43" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/09/19/android-emulator-server-pc-client/" data-id="cl56jpsms006haschgmbc1sae" data-title="Android Emulator-Server / PC-Client" class="article-share-link">Share</a>
       
       
       
@@ -368,14 +420,14 @@
 
 
   
-    <article id="post-2233" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-calling-a-c-function-from-lua" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/11/28/2233/" class="article-date">
-  <time class="dt-published" datetime="2019-11-28T01:20:26.000Z" itemprop="datePublished">2019-11-28</time>
+    <a href="/2019/08/16/calling-a-c-function-from-lua/" class="article-date">
+  <time class="dt-published" datetime="2019-08-16T08:38:55.000Z" itemprop="datePublished">2019-08-16</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/CentOS-7/">CentOS 7</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Lua/">Lua</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
   </div>
 
   </div>
@@ -386,7 +438,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/28/2233/">Untitled Post - 44</a>
+      <a class="p-name article-title" href="/2019/08/16/calling-a-c-function-from-lua/">Calling a C Function From Lua</a>
     </h1>
   
 
@@ -394,11 +446,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Prepare-So"><a href="#Prepare-So" class="headerlink" title="Prepare So"></a>Prepare So</h2><p>#include #include #include #include static int my_sum(lua_State *L){<br>    int d1 &#x3D; luaL_checknumber(L, 1);<br>    int d2 &#x3D; luaL_checknumber(L, 2);<br>    lua_pushnumber(L, d1+d2);<br>    return 1;<br>}</p>
+<p>static int my_info(lua_State *L){<br>    lua_pushstring(L, “qinuu”);<br>    return 1;<br>}</p>
+<p>static const struct luaL_Reg test_lib[] &#x3D; {<br>    {“my_sum” , my_sum},<br>    {“my_info” , my_info},<br>    {NULL, NULL}<br>};</p>
+<p>int luaopen_test_lib(lua_State *L){<br>    &#x2F;&#x2F;luaL_newlib(L, test_lib); &#x2F;&#x2F; 5.2<br>    luaL_register(L, “test_lib”,test_lib); &#x2F;&#x2F; lua 5.1<br>    return 1;<br>} </p>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>local my_lib &#x3D; require “test_lib”</p>
+<p>print(type(test_lib))</p>
+<p>print(test_lib.my_sum(23,17))</p>
+<p>print(test_lib.my_info())</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/28/2233/" data-id="cl56jpsl20056asch0n4zeqt9" data-title="Untitled Post - 44" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/08/16/calling-a-c-function-from-lua/" data-id="cl56jpsnh0078asch6yzi37ay" data-title="Calling a C Function From Lua" class="article-share-link">Share</a>
       
       
       
@@ -410,14 +470,14 @@
 
 
   
-    <article id="post-some-differences-between-jeb-and-gda" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-how-to-connect-internal-and-external-networks-at-the-same-time-windows" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/11/28/some-differences-between-jeb-and-gda/" class="article-date">
-  <time class="dt-published" datetime="2019-11-28T01:13:09.000Z" itemprop="datePublished">2019-11-28</time>
+    <a href="/2019/08/16/how-to-connect-internal-and-external-networks-at-the-same-time-windows/" class="article-date">
+  <time class="dt-published" datetime="2019-08-16T08:38:14.000Z" itemprop="datePublished">2019-08-16</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Assembly/">Assembly</a>►<a class="article-category-link" href="/categories/windows/">windows</a>►<a class="article-category-link" href="/categories/windows/Android-Studio/">Android Studio</a>►<a class="article-category-link" href="/categories/windows/Android-Studio/GDA/">GDA</a>►<a class="article-category-link" href="/categories/windows/Android-Studio/GDA/JEB/">JEB</a>
+    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>
   </div>
 
   </div>
@@ -428,7 +488,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/28/some-differences-between-jeb-and-gda/">Some differences between JEB and GDA</a>
+      <a class="p-name article-title" href="/2019/08/16/how-to-connect-internal-and-external-networks-at-the-same-time-windows/">How to Connect Internal and External Networks at the same time : Windows</a>
     </h1>
   
 
@@ -436,17 +496,15 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Android-Studio-3-5-2"><a href="#Android-Studio-3-5-2" class="headerlink" title="Android Studio 3.5.2"></a>Android Studio 3.5.2</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/11/AS-JEB-GDA-00.png"></p>
-<h2 id="JEB-3"><a href="#JEB-3" class="headerlink" title="JEB 3"></a>JEB 3</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/11/AS-JEB-GDA-01.png"></p>
-<h2 id="GDA-3-66"><a href="#GDA-3-66" class="headerlink" title="GDA 3.66"></a>GDA 3.66</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/11/AS-JEB-GDA-02.jpg"></p>
-<h2 id="Android-Studio-3-5-2-1"><a href="#Android-Studio-3-5-2-1" class="headerlink" title="Android Studio 3.5.2"></a>Android Studio 3.5.2</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/11/AS-JEB-GDA-10.png"></p>
-<h2 id="JEB-3-1"><a href="#JEB-3-1" class="headerlink" title="JEB 3"></a>JEB 3</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/11/AS-JEB-GDA-11.png"></p>
-<h2 id="GDA-3-66-1"><a href="#GDA-3-66-1" class="headerlink" title="GDA 3.66"></a>GDA 3.66</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/11/AS-JEB-GDA-12.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/11/AS-JEB-GDA-13.png"></p>
+        <h2 id="Delete-Default-Route"><a href="#Delete-Default-Route" class="headerlink" title="Delete Default Route"></a>Delete Default Route</h2><p><code>route delete 0.0.0.0</code></p>
+<h2 id="Add-Gateway-Internal"><a href="#Add-Gateway-Internal" class="headerlink" title="Add Gateway : Internal"></a>Add Gateway : Internal</h2><p><code>route add 192.168.10.0 mask 255.255.255.0 192.168.10.1 -p</code></p>
+<h2 id="Add-Gateway-External"><a href="#Add-Gateway-External" class="headerlink" title="Add Gateway : External"></a>Add Gateway : External</h2><p><code>route add 0.0.0.0 mask 0.0.0.0 192.168.20.1 -p</code></p>
+<h2 id="Check-It"><a href="#Check-It" class="headerlink" title="Check It!"></a>Check It!</h2><p><code>route print</code> IPv4 Route Table &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Active Routes: Network Destination Netmask Gateway Interface Metric 0.0.0.0 0.0.0.0 192.168.20.254 192.168.20.151 55 0.0.0.0 0.0.0.0 192.168.1.1 192.168.1.103 45 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Persistent Routes: Network Address Netmask Gateway Address Metric 192.168.1.0 255.255.255.0 192.168.1.1 1 192.168.3.0 255.255.255.0 192.168.3.1 1</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/28/some-differences-between-jeb-and-gda/" data-id="cl56jpsx300h3ascheql3ettn" data-title="Some differences between JEB and GDA" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/08/16/how-to-connect-internal-and-external-networks-at-the-same-time-windows/" data-id="cl56jpsrb00aoasch7sucarzc" data-title="How to Connect Internal and External Networks at the same time : Windows" class="article-share-link">Share</a>
       
       
       
@@ -458,14 +516,14 @@
 
 
   
-    <article id="post-android-keystore-jks-pk8-x509-pem" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-profile-linux-png" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/11/27/android-keystore-jks-pk8-x509-pem/" class="article-date">
-  <time class="dt-published" datetime="2019-11-27T02:02:46.000Z" itemprop="datePublished">2019-11-27</time>
+    <a href="/2019/07/11/profile-linux-png/" class="article-date">
+  <time class="dt-published" datetime="2019-07-11T02:07:58.000Z" itemprop="datePublished">2019-07-11</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Android/">Android</a>►<a class="article-category-link" href="/categories/operating-system/Android/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/C/">C++</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
   </div>
 
   </div>
@@ -476,7 +534,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/27/android-keystore-jks-pk8-x509-pem/">Android keystore jks pk8 x509.pem</a>
+      <a class="p-name article-title" href="/2019/07/11/profile-linux-png/">Profile : Linux -&gt; PNG</a>
     </h1>
   
 
@@ -484,16 +542,12 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Lists-entries-in-a-keystore"><a href="#Lists-entries-in-a-keystore" class="headerlink" title="Lists entries in a keystore"></a>Lists entries in a keystore</h2><p>keytool -list -v -keystore platform.keystore</p>
-<h2 id="Generate-Signed-APK-Using-jarsigner"><a href="#Generate-Signed-APK-Using-jarsigner" class="headerlink" title="Generate Signed APK Using jarsigner"></a>Generate Signed APK Using jarsigner</h2><p>jarsigner -verbose -keystore platform.keystore -signedjar app-debug-signed.apk app-debug.apk alias-name</p>
-<h2 id="pk8-amp-x509-pem-gt-keystore"><a href="#pk8-amp-x509-pem-gt-keystore" class="headerlink" title="pk8 &amp; x509.pem -&gt; keystore"></a>pk8 &amp; x509.pem -&gt; keystore</h2><p>.&#x2F;keytool-importkeypair -k .&#x2F;oldplatform.keystore -p password -pk8 ..&#x2F;platform.pk8 -cert ..&#x2F;platform.x509.pem -alias alias-name</p>
-<h2 id="keystore-gt-p12-gt-jks"><a href="#keystore-gt-p12-gt-jks" class="headerlink" title="keystore -&gt; p12 -&gt; jks"></a>keystore -&gt; p12 -&gt; jks</h2><p>keytool -importkeystore -srckeystore platform.keystore -srcstoretype JKS -deststoretype PKCS12 -destkeystore platform.keystore.p12<br>keytool -v -importkeystore -srckeystore platform.keystore.p12 -srcstoretype PKCS12 -destkeystore platform.keystore.jks -deststoretype JKS</p>
-<h2 id="Generate-Signed-APK-Using-Android-Studio"><a href="#Generate-Signed-APK-Using-Android-Studio" class="headerlink" title="Generate Signed APK Using Android Studio"></a>Generate Signed APK Using Android Studio</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/11/Android-Studio-Generate-Signed-Bundle-or-APK.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/11/Android-Studio-Generate-Signed-Bundle-or-APK-2.png"></p>
+        <p><code>gprof -b emv_clc2 &gt; report.txt gprof2dot.py report.txt &gt; call_graph.dot dot -Tpng call_graph.dot -o call_graph.png</code> <img src="/img/gprof2dot_1.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/27/android-keystore-jks-pk8-x509-pem/" data-id="cl56jpsnb006waschfi6v6eu3" data-title="Android keystore jks pk8 x509.pem" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/07/11/profile-linux-png/" data-id="cl56jpsub00e4asch43hw7bs5" data-title="Profile : Linux -&gt; PNG" class="article-share-link">Share</a>
       
       
       
@@ -509,7 +563,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
   </nav>
 
 </section>

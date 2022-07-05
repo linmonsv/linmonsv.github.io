@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-how-to-mount-an-nfs-share-in-windows-10" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/" class="article-date">
-  <time class="dt-published" datetime="2019-03-15T02:03:40.000Z" itemprop="datePublished">2019-03-15</time>
+    <a href="/2018/12/28/how-to-mount-an-nfs-share-in-windows-10/" class="article-date">
+  <time class="dt-published" datetime="2018-12-28T09:35:10.000Z" itemprop="datePublished">2018-12-28</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Linux/">Linux</a>►<a class="article-category-link" href="/categories/operating-system/Linux/Windows/">Windows</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/">./xxx: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.22&#39; not found (required by ./xxx)</a>
+      <a class="p-name article-title" href="/2018/12/28/how-to-mount-an-nfs-share-in-windows-10/">How to mount an NFS share in Windows 10</a>
     </h1>
   
 
@@ -97,13 +97,14 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1"><a href="#Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1" class="headerlink" title="Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)"></a>Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)</h3><p>cd &#x2F;usr&#x2F;lib<br>mv libstdc++.so.6 libstdc++.so.6.bak<br>ln -s libstdc++.so.6.0.24 libstdc++.so.6<br>chmod 777 libstdc++.so.6</p>
-<h3 id="Now-it-will-be-like-this"><a href="#Now-it-will-be-like-this" class="headerlink" title="Now, it will be like this !"></a>Now, it will be like this !</h3><p>root@imx6ul7d:&#x2F;usr&#x2F;lib# ls -al libstdc++.so.6*<br>lrwxrwxrwx 1 root root      19 Sep 16 23:03 libstdc++.so.6 -&gt; libstdc++.so.6.0.24<br>-rwxr-xr-x 1 root root 1240644 Sep  9 02:04 libstdc++.so.6.0.21<br>-rwxrwxrwx 1 root root 9459568 Sep 16 23:35 libstdc++.so.6.0.24<br>lrwxrwxrwx 1 root root      19 Jan  1  1970 libstdc++.so.6.bak -&gt; libstdc++.so.6.0.21<br>-rwxr-xr-x 1 root root 9459568 Sep 16 23:11 libstdc++.so.6.bak_24</p>
+        <h3 id="haneWIN-NFS-Server"><a href="#haneWIN-NFS-Server" class="headerlink" title="haneWIN NFS Server"></a>haneWIN NFS Server</h3><h2 id="Run-as-administrator"><a href="#Run-as-administrator" class="headerlink" title="Run as administrator"></a><strong>Run as administrator</strong></h2><h3 id=""><a href="#" class="headerlink" title=""></a><img src="/img/haneWIN_1.png"></h3><h2 id="Edit-Exports-then-choose-the-checkbox-“Set-excute-bit-for-all-files”-if-you-need-to-run"><a href="#Edit-Exports-then-choose-the-checkbox-“Set-excute-bit-for-all-files”-if-you-need-to-run" class="headerlink" title="Edit Exports, then choose the checkbox “Set excute bit for all files” if you need to run"></a>Edit Exports, then choose the checkbox “Set excute bit for all files” if you need to run</h2><p><img src="/img/haneWIN_2.png"></p>
+<h2 id="Open-Ports-in-Windows-Firewall-for-NFS-Server"><a href="#Open-Ports-in-Windows-Firewall-for-NFS-Server" class="headerlink" title="Open Ports in Windows Firewall for NFS Server"></a>Open Ports in Windows Firewall for NFS Server</h2><p><img src="/img/haneWIN_Firewall.png"></p>
+<h2 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h2><p>mkdir nfs_share<br>mount -t nfs 192.168.xxx.xxx:&#x2F;nfs_share &#x2F;home&#x2F;root&#x2F;nfs_share<br>umount nfs_share&#x2F;</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/" data-id="cl56jpsyf00ilascha6pu5i07" data-title="./xxx: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.22&#39; not found (required by ./xxx)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/12/28/how-to-mount-an-nfs-share-in-windows-10/" data-id="cl56jpsrm00b0asch4fmz8ztd" data-title="How to mount an NFS share in Windows 10" class="article-share-link">Share</a>
       
       
       
@@ -115,14 +116,14 @@
 
 
   
-    <article id="post-how-to-embed-latex-in-blogs-wordpress" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-some-built-in-macros-inside-cmakesettings-json" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/02/01/how-to-embed-latex-in-blogs-wordpress/" class="article-date">
-  <time class="dt-published" datetime="2019-02-01T05:11:14.000Z" itemprop="datePublished">2019-02-01</time>
+    <a href="/2018/12/28/some-built-in-macros-inside-cmakesettings-json/" class="article-date">
+  <time class="dt-published" datetime="2018-12-28T08:56:03.000Z" itemprop="datePublished">2018-12-28</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Math/">Math</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>►<a class="article-category-link" href="/categories/windows/">windows</a>►<a class="article-category-link" href="/categories/windows/Visual-Studio/">Visual Studio</a>
   </div>
 
   </div>
@@ -133,7 +134,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/02/01/how-to-embed-latex-in-blogs-wordpress/">How to embed Latex in blogs : WordPress</a>
+      <a class="p-name article-title" href="/2018/12/28/some-built-in-macros-inside-cmakesettings-json/">Some built-in macros inside CMakeSettings.json:</a>
     </h1>
   
 
@@ -141,20 +142,20 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Add-Plugin-Mathjax-Latex"><a href="#Add-Plugin-Mathjax-Latex" class="headerlink" title="Add Plugin : Mathjax-Latex"></a>Add Plugin : Mathjax-Latex</h2><p>The default option is use “Use MathJax CDN Service”. But sometimes it cannot work because of some reasons. So you have to install the service on your own vps!</p>
-<h2 id="Install-MathJax-Service"><a href="#Install-MathJax-Service" class="headerlink" title="Install MathJax Service"></a>Install MathJax Service</h2><p>wget <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax/archive/master.zip">https://github.com/mathjax/MathJax/archive/master.zip</a><br>unzip master.zip<br>mv MathJax-master &#x2F;xxxxxx ……&#x2F;wordpress&#x2F;wp-content&#x2F;plugins&#x2F;mathjax-latex&#x2F;</p>
-<h2 id="Check-The-MathJax-Service-is-Okay"><a href="#Check-The-MathJax-Service-is-Okay" class="headerlink" title="Check The MathJax Service is Okay"></a>Check The MathJax Service is Okay</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/02/MathJax_Test_Page.png"></p>
-<h2 id="Custom-MathJax-location"><a href="#Custom-MathJax-location" class="headerlink" title="Custom MathJax location"></a>Custom MathJax location</h2><p>“Settings”-&gt;”MathJax-LaTeX”-&gt;”Custom MathJax location”</p>
-<p>&#x2F;wp-content&#x2F;plugins&#x2F;mathjax-latex&#x2F;MathJax&#x2F;MathJax.js</p>
-<h2 id="Test-It"><a href="#Test-It" class="headerlink" title="Test It !"></a>Test It !</h2><p>[latex]E&#x3D;mc^2[&#x2F;latex]</p>
-<p>[latex]E&#x3D;mc^2[&#x2F;latex]</p>
-<p>[latex]\left( {\begin{array}{*{20}{c}}</p>
-<p>\end{array}} \right)[&#x2F;latex]</p>
+        <ul>
+<li><em>${workspaceRoot}</em> – provides the full path to the workspace folder</li>
+<li><em>${workspaceHash}</em> – hash of workspace location; useful for creating a unique identifier for the current workspace (e.g. to use in folder paths)</li>
+<li><em>${projectFile}</em> – the full path for the root CMakeLists.txt</li>
+<li><em>${projectDir}</em> – the full path to the folder of the root CMakeLists.txt file</li>
+<li><em>${thisFile}</em> – the full path to the CMakeSettings.json file</li>
+<li><em>${name}</em> – the name of the configuration</li>
+<li><em>${generator}</em> – the name of the CMake generator used in this configuration</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/02/01/how-to-embed-latex-in-blogs-wordpress/" data-id="cl56jpsrg00atasche8c9b44x" data-title="How to embed Latex in blogs : WordPress" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/12/28/some-built-in-macros-inside-cmakesettings-json/" data-id="cl56jpsx200h0asch9uz3hwgq" data-title="Some built-in macros inside CMakeSettings.json:" class="article-share-link">Share</a>
       
       
       
@@ -166,14 +167,14 @@
 
 
   
-    <article id="post-1296" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-how-to-build-qt-from-source-codes-qt-5-12-visual-studio-2017" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/23/1296/" class="article-date">
-  <time class="dt-published" datetime="2019-01-23T07:05:01.000Z" itemprop="datePublished">2019-01-23</time>
+    <a href="/2018/12/27/how-to-build-qt-from-source-codes-qt-5-12-visual-studio-2017/" class="article-date">
+  <time class="dt-published" datetime="2018-12-27T01:43:17.000Z" itemprop="datePublished">2018-12-27</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/QT/">QT</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>
   </div>
 
   </div>
@@ -184,7 +185,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/23/1296/">Untitled Post - 26</a>
+      <a class="p-name article-title" href="/2018/12/27/how-to-build-qt-from-source-codes-qt-5-12-visual-studio-2017/">How to Build Qt From Source Codes (QT 5.12 + Visual Studio 2017)</a>
     </h1>
   
 
@@ -192,11 +193,15 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="msvc-desktop-conf"><a href="#msvc-desktop-conf" class="headerlink" title="msvc-desktop.conf"></a>msvc-desktop.conf</h3><p>C:\Qt\5.12.0\Src\qtbase\mkspecs\common\msvc-desktop.conf</p>
+<p>QMAKE_CFLAGS_RELEASE    &#x3D; $QMAKE_CFLAGS_OPTIMIZE -MT<br>QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO +&#x3D; $QMAKE_CFLAGS_OPTIMIZE -Zi -MT<br>QMAKE_CFLAGS_DEBUG      &#x3D; -Zi -MTd</p>
+<h3 id="qt5vars-cmd"><a href="#qt5vars-cmd" class="headerlink" title="qt5vars.cmd"></a>qt5vars.cmd</h3><p>REM Set up \Microsoft Visual Studio 2017, where arch is \c amd64, \c x86, etc.<br>CALL “C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat” x86<br>SET _ROOT&#x3D;C:\Qt\5.12.0\Src<br>SET PATH&#x3D;%_ROOT%\qtbase\bin;%_ROOT%\gnuwin32\bin;%PATH%<br>REM Uncomment the below line when using a git checkout of the source repository<br>REM SET PATH&#x3D;%_ROOT%\qtrepotools\bin;%PATH%<br>SET _ROOT&#x3D;</p>
+<h3 id="make-amp-make-install"><a href="#make-amp-make-install" class="headerlink" title="make &amp; make install"></a>make &amp; make install</h3><p>C:\Qt\5.12.0\Src&gt;qt5vars.cmd<br>C:\Qt\5.12.0\Src&gt;configure -opensource -confirm-license<br>C:\Qt\5.12.0\Src&gt;jom -j 8<br>C:\Qt\5.12.0\Src&gt;jom install</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/23/1296/" data-id="cl56jpsir0034aschatm19vfp" data-title="Untitled Post - 26" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/12/27/how-to-build-qt-from-source-codes-qt-5-12-visual-studio-2017/" data-id="cl56jpsra00alaschcbc1ch2y" data-title="How to Build Qt From Source Codes (QT 5.12 + Visual Studio 2017)" class="article-share-link">Share</a>
       
       
       
@@ -208,14 +213,14 @@
 
 
   
-    <article id="post-1298" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-cmake-arm-cross-compilation-based-windows-systems-visual-studio" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/23/1298/" class="article-date">
-  <time class="dt-published" datetime="2019-01-23T07:05:01.000Z" itemprop="datePublished">2019-01-23</time>
+    <a href="/2018/12/24/cmake-arm-cross-compilation-based-windows-systems-visual-studio/" class="article-date">
+  <time class="dt-published" datetime="2018-12-24T09:00:19.000Z" itemprop="datePublished">2018-12-24</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Boost/">Boost</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>
   </div>
 
   </div>
@@ -226,7 +231,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/23/1298/">Untitled Post - 28</a>
+      <a class="p-name article-title" href="/2018/12/24/cmake-arm-cross-compilation-based-windows-systems-visual-studio/">CMake &amp; Arm Cross compilation based Windows systems (Visual Studio)</a>
     </h1>
   
 
@@ -234,11 +239,24 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><p>cmake_minimum_required(VERSION 3.12)<br>project(network_information)</p>
+<p>SET(CMAKE_SYSTEM_NAME Linux)</p>
+<p>add_definitions(“-std&#x3D;c++17”)</p>
+<h1 id="specify-the-cross-compiler"><a href="#specify-the-cross-compiler" class="headerlink" title="specify the cross compiler"></a>specify the cross compiler</h1><p>SET(CMAKE_C_COMPILER   arm-linux-gnueabihf-gcc)<br>SET(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)</p>
+<p>if(${CMAKE_HOST_SYSTEM_NAME} MATCHES “Windows”)<br>    set(BOOST_ROOT “C:&#x2F;MinGW&#x2F;msys&#x2F;1.0&#x2F;home&#x2F;d&#x2F;boost_1_68_0”)<br>else()<br>    set(BOOST_ROOT &#x2F;root&#x2F;Downloads&#x2F;boost_1_68_0)<br>endif()</p>
+<p>set(Boost_USE_STATIC_LIBS ON)<br>set(Boost_USE_MULTITHREADED ON)</p>
+<p>include_directories(sdk&#x2F;inc)<br>link_directories(“sdk&#x2F;lib”)</p>
+<p>add_executable(network_information<br>network_information.cpp<br>)<br>TARGET_LINK_LIBRARIES(network_information “-lpthread” “-ldl” “-lpos” “-lrt” “-lpng” “-liconv” “-lfreetype” “-lz”)</p>
+<h3 id="GNUlinux-config-cmake"><a href="#GNUlinux-config-cmake" class="headerlink" title="GNUlinux_config.cmake"></a>GNUlinux_config.cmake</h3><p>set(GNULINUX_PLATFORM ON)<br>set(CMAKE_SYSTEM_NAME “Linux”)<br>set(CMAKE_SYSTEM_PROCESSOR “arm”)</p>
+<p>if(NOT DEFINED ENV{NE10_LINUX_TARGET_ARCH})<br>   set(NE10_LINUX_TARGET_ARCH “armv7”)<br>else()<br>   set(NE10_LINUX_TARGET_ARCH $ENV{NE10_LINUX_TARGET_ARCH})<br>endif()</p>
+<p>if(NE10_LINUX_TARGET_ARCH STREQUAL “armv7”)<br>   set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)<br>   set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)<br>   set(CMAKE_ASM_COMPILER arm-linux-gnueabihf-as)<br>   find_program(CMAKE_AR NAMES “arm-linux-gnueabihf-ar”)<br>   find_program(CMAKE_RANLIB NAMES “arm-linux-gnueabihf-ranlib”)<br>elseif(NE10_LINUX_TARGET_ARCH STREQUAL “aarch64”)<br>   set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)<br>   set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)<br>   set(CMAKE_ASM_COMPILER aarch64-linux-gnu-as)<br>   find_program(CMAKE_AR NAMES “aarch64-linux-gnu-ar”)<br>   find_program(CMAKE_RANLIB NAMES “aarch64-linux-gnu-ranlib”)<br>endif()</p>
+<p>mark_as_advanced(CMAKE_AR)<br>mark_as_advanced(CMAKE_RANLIB)</p>
+<h3 id="CMakeSettings-json"><a href="#CMakeSettings-json" class="headerlink" title="CMakeSettings.json"></a>CMakeSettings.json</h3><p>{<br>  “configurations”: [<br>    {<br>      “environments”: [<br>        {<br>          “MINGW64_ROOT”: “C:\\MinGW\\msys\\1.0\\home\\d\\gcc-linaro-7.3.1-2018.05-i686-mingw32_arm-linux-gnueabihf”,<br>          “BIN_ROOT”: “${env.MINGW64_ROOT}\\bin”,<br>          “FLAVOR”: “x86_64-w64-mingw32”,<br>          “TOOLSET_VERSION”: “7.3.0”,<br>          “PATH”: “${env.MINGW64_ROOT}\\bin;${env.MINGW64_ROOT}\\..\\usr\\local\\bin;${env.MINGW64_ROOT}\\..\\usr\\bin;${env.MINGW64_ROOT}\\..\\bin;${env.PATH}”,<br>          “INCLUDE”: “${env.INCLUDE};${env.MINGW64_ROOT}\\include\\c++\\${env.TOOLSET_VERSION};${env.MINGW64_ROOT}\\include\\c++\\${env.TOOLSET_VERSION}\\tr1;${env.MINGW64_ROOT}\\include\\c++\\${env.TOOLSET_VERSION}\\${env.FLAVOR}”,<br>          “environment”: “mingw_64”<br>        }<br>      ],<br>      “name”: “Mingw64-Release”,<br>      “generator”: “Ninja”,<br>      “configurationType”: “Release”,<br>      “inheritEnvironments”: [<br>        “mingw_64”<br>      ],<br>      “buildRoot”: “${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\build\\${name}”,<br>      “installRoot”: “${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\install\\${name}”,<br>      “cmakeCommandArgs”: “”,<br>      “buildCommandArgs”: “-v”,<br>      “ctestCommandArgs”: “”,<br>      “intelliSenseMode”: “linux-gcc-x64”,<br>      “variables”: [<br>        {<br>          “name”: “CMAKE_TOOLCHAIN_FILE”,<br>          “value”: “GNUlinux_config.cmake”<br>        },<br>        {<br>          “name”: “CMAKE_C_COMPILER”,<br>          “value”: “${env.BIN_ROOT}\\arm-linux-gnueabihf-gcc.exe”<br>        },<br>        {<br>          “name”: “CMAKE_CXX_COMPILER”,<br>          “value”: “${env.BIN_ROOT}\\arm-linux-gnueabihf-g++.exe”<br>        }<br>      ]<br>    }<br>  ]<br>}</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/23/1298/" data-id="cl56jpsiu0039asch6rtj2r3l" data-title="Untitled Post - 28" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/12/24/cmake-arm-cross-compilation-based-windows-systems-visual-studio/" data-id="cl56jpsnl007dascheqx43pu4" data-title="CMake &amp; Arm Cross compilation based Windows systems (Visual Studio)" class="article-share-link">Share</a>
       
       
       
@@ -250,14 +268,14 @@
 
 
   
-    <article id="post-1297" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-cross-compile-with-sftp-server-to-arm" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/23/1297/" class="article-date">
-  <time class="dt-published" datetime="2019-01-23T07:05:01.000Z" itemprop="datePublished">2019-01-23</time>
+    <a href="/2018/12/24/cross-compile-with-sftp-server-to-arm/" class="article-date">
+  <time class="dt-published" datetime="2018-12-24T08:42:09.000Z" itemprop="datePublished">2018-12-24</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>
   </div>
 
   </div>
@@ -268,7 +286,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/23/1297/">Untitled Post - 27</a>
+      <a class="p-name article-title" href="/2018/12/24/cross-compile-with-sftp-server-to-arm/">Cross compile with sftp-server to ARM</a>
     </h1>
   
 
@@ -276,11 +294,32 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="zlib"><a href="#zlib" class="headerlink" title="zlib"></a>zlib</h3><p>tar xvf zlib-1.2.11.tar.xz<br>cd zlib-1.2.11&#x2F;<br>.&#x2F;configure –prefix&#x3D;&#x2F;root&#x2F;Downloads&#x2F;sftp-server&#x2F;rootfs</p>
+<p>[root@localhost zlib-1.2.11]# diff Makefile Makefile_bak<br>19c19<br>&lt; CC&#x3D;arm-linux-gnueabihf-gcc</p>
+<hr>
+<blockquote>
+<p>CC&#x3D;gcc<br>30,31c30,31<br>&lt; LDSHARED&#x3D;arm-linux-gnueabihf-gcc -shared -Wl,-soname,libz.so.1,–version-script,zlib.map<br>&lt; CPP&#x3D;arm-linux-gnueabihf-gcc -E</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>LDSHARED&#x3D;gcc -shared -Wl,-soname,libz.so.1,–version-script,zlib.map<br>CPP&#x3D;gcc -E<br>39c39<br>&lt; AR&#x3D;arm-linux-gnueabihf-ar</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>AR&#x3D;ar<br>41c41<br>&lt; RANLIB&#x3D;arm-linux-gnueabihf-ranlib</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>RANLIB&#x3D;ranlib</p>
+</blockquote>
+<p>make<br>make install</p>
+<h3 id="openssh"><a href="#openssh" class="headerlink" title="openssh"></a>openssh</h3><p>tar xzf openssh-6.9p1.tar.gz<br>cd openssh-6.9p1&#x2F;<br>.&#x2F;configure –prefix&#x3D; –host&#x3D;arm-linux-gnueabihf –sysconfdir&#x3D;&#x2F;etc –with-zlib&#x3D;&#x2F;root&#x2F;Downloads&#x2F;sftp-server&#x2F;rootfs<br>make sftp-server</p>
+<p>[root@localhost openssh-6.9p1]# file sftp-server<br>sftp-server: ELF 32-bit LSB shared object, ARM, version 1 (SYSV), dynamically linked (uses shared libs), for GNU&#x2F;Linux 3.2.0, BuildID[sha1]&#x3D;3f3bb0178b0e2ff2e27553e4754bd58d78dffd4d, not stripped</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/23/1297/" data-id="cl56jpsiw003caschgjji792v" data-title="Untitled Post - 27" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/12/24/cross-compile-with-sftp-server-to-arm/" data-id="cl56jpspb008qaschba0c1crm" data-title="Cross compile with sftp-server to ARM" class="article-share-link">Share</a>
       
       
       
@@ -292,14 +331,14 @@
 
 
   
-    <article id="post-1299" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-cmake-arm-cross-compilation-based-windows-systems" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/23/1299/" class="article-date">
-  <time class="dt-published" datetime="2019-01-23T07:05:01.000Z" itemprop="datePublished">2019-01-23</time>
+    <a href="/2018/12/02/cmake-arm-cross-compilation-based-windows-systems/" class="article-date">
+  <time class="dt-published" datetime="2018-12-02T09:38:50.000Z" itemprop="datePublished">2018-12-02</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/ARM/">ARM</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Boost/">Boost</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>
   </div>
 
   </div>
@@ -310,7 +349,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/23/1299/">Untitled Post - 29</a>
+      <a class="p-name article-title" href="/2018/12/02/cmake-arm-cross-compilation-based-windows-systems/">CMake &amp; Arm Cross compilation based Windows systems (CLion)</a>
     </h1>
   
 
@@ -318,179 +357,28 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/23/1299/" data-id="cl56jpsix003easch90uq00jp" data-title="Untitled Post - 29" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
+        <h3 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><p>cmake_minimum_required(VERSION 3.12)<br>project(untitled1)</p>
+<p>SET(CMAKE_SYSTEM_NAME Linux)</p>
+<p>add_definitions(“-std&#x3D;c++17”)</p>
+<p>SET(CMAKE_C_COMPILER   arm-linux-gnueabihf-gcc)<br>SET(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)</p>
+<p>if(${CMAKE_HOST_SYSTEM_NAME} MATCHES “Windows”)<br>    set(BOOST_ROOT “C:&#x2F;MinGW&#x2F;msys&#x2F;1.0&#x2F;home&#x2F;d&#x2F;boost_1_68_0”)<br>else()<br>    set(BOOST_ROOT &#x2F;root&#x2F;Downloads&#x2F;boost_1_68_0)<br>endif()</p>
+<p>set(Boost_USE_STATIC_LIBS ON)<br>set(Boost_USE_MULTITHREADED ON)</p>
+<p>find_package(Boost COMPONENTS regex system date_time timer REQUIRED)<br>if(Boost_FOUND)<br>    include_directories(${Boost_INCLUDE_DIRS})<br>    link_directories(“${Boost_INCLUDE_DIRS}&#x2F;stage&#x2F;lib”)<br>    include_directories(sdk&#x2F;inc)<br>    link_directories(“sdk&#x2F;lib”)<br>    MESSAGE( STATUS “Boost_INCLUDE_DIRS &#x3D; ${Boost_INCLUDE_DIRS}.”)<br>    MESSAGE( STATUS “Boost_LIBRARIES &#x3D; ${Boost_LIBRARIES}.”)<br>    MESSAGE( STATUS “Boost_LIB_VERSION &#x3D; ${Boost_LIB_VERSION}.”)</p>
+<pre><code>add\_executable(untitled1 main.cpp)
 
-
-
-  
-    <article id="post-tensorflow-on-android-refer-to-codelabs-tensorflow-for-poets" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/01/23/tensorflow-on-android-refer-to-codelabs-tensorflow-for-poets/" class="article-date">
-  <time class="dt-published" datetime="2019-01-23T06:46:07.000Z" itemprop="datePublished">2019-01-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/TensorFlow/">TensorFlow</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/23/tensorflow-on-android-refer-to-codelabs-tensorflow-for-poets/">TensorFlow on Android (Refer to codelabs : tensorflow-for-poets)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>The google demo is good, but there are some error when you follow it, so I copied and update it.</p>
-<h2 id="Install-TensorFlow-As-Normal"><a href="#Install-TensorFlow-As-Normal" class="headerlink" title="Install TensorFlow As Normal"></a>Install TensorFlow As Normal</h2><p>pip install tensorflow&#x3D;&#x3D;1.7.1</p>
-<h2 id="Download-Google-Demo"><a href="#Download-Google-Demo" class="headerlink" title="Download Google Demo"></a>Download Google Demo</h2><p>git clone <a target="_blank" rel="noopener" href="https://github.com/googlecodelabs/tensorflow-for-poets-2">https://github.com/googlecodelabs/tensorflow-for-poets-2</a><br>cd tensorflow-for-poets-2</p>
-<h2 id="Download-TF-Files"><a href="#Download-TF-Files" class="headerlink" title="Download TF_Files"></a>Download TF_Files</h2><p>wget <a target="_blank" rel="noopener" href="http://download.tensorflow.org/example/_images/flower/_photos.tgz">http://download.tensorflow.org/example\_images/flower\_photos.tgz</a><br>tar -xvf flower_photos.tgz -C tf_files</p>
-<h2 id="Set-ARCHITECTURE"><a href="#Set-ARCHITECTURE" class="headerlink" title="Set ARCHITECTURE"></a>Set ARCHITECTURE</h2><p>IMAGE_SIZE&#x3D;224<br>ARCHITECTURE&#x3D;”mobilenet_0.50_${IMAGE_SIZE}”</p>
-<h2 id="Start-TensorBoard"><a href="#Start-TensorBoard" class="headerlink" title="Start TensorBoard"></a>Start TensorBoard</h2><p>tensorboard –logdir tf_files&#x2F;training_summaries &amp;</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/TensorBoard-1024x576.png"></p>
-<h2 id="Help-retraining-script"><a href="#Help-retraining-script" class="headerlink" title="Help : retraining script"></a>Help : retraining script</h2><p>python -m scripts.retrain -h</p>
-<h2 id="Train"><a href="#Train" class="headerlink" title="Train"></a>Train</h2><p>python -m scripts.retrain \<br>  –bottleneck_dir&#x3D;tf_files&#x2F;bottlenecks \<br>  –how_many_training_steps&#x3D;500 \<br>  –model_dir&#x3D;tf_files&#x2F;models&#x2F; \<br>  –summaries_dir&#x3D;tf_files&#x2F;training_summaries&#x2F;“${ARCHITECTURE}” \<br>  –output_graph&#x3D;tf_files&#x2F;retrained_graph.pb \<br>  –output_labels&#x3D;tf_files&#x2F;retrained_labels.txt \<br>  –architecture&#x3D;”${ARCHITECTURE}” \<br>  –image_dir&#x3D;tf_files&#x2F;flower_photos</p>
-<h2 id="Train-with-default-4-000-iterations"><a href="#Train-with-default-4-000-iterations" class="headerlink" title="Train with default 4,000 iterations"></a>Train with default 4,000 iterations</h2><p>python -m scripts.retrain \<br>  –bottleneck_dir&#x3D;tf_files&#x2F;bottlenecks \<br>  –model_dir&#x3D;tf_files&#x2F;models&#x2F;“${ARCHITECTURE}” \<br>  –summaries_dir&#x3D;tf_files&#x2F;training_summaries&#x2F;“${ARCHITECTURE}” \<br>  –output_graph&#x3D;tf_files&#x2F;retrained_graph.pb \<br>  –output_labels&#x3D;tf_files&#x2F;retrained_labels.txt \<br>  –architecture&#x3D;”${ARCHITECTURE}” \<br>  –image_dir&#x3D;tf_files&#x2F;flower_photos</p>
-<h2 id="Train-with-Your-Own-Data"><a href="#Train-with-Your-Own-Data" class="headerlink" title="Train with Your Own Data"></a>Train with Your Own Data</h2><p><code>--image_dir= The root folder of the subdirectories which is used as label names by the classification script</code> This image is copied from google’s codelabs ! <img src="http://www.qinuu.com/wp-content/uploads/2019/01/Tensorflow_Own_Categories.png"></p>
-<h2 id="The-Retrained-Model"><a href="#The-Retrained-Model" class="headerlink" title="The Retrained Model"></a>The Retrained Model</h2><p>tf_files&#x2F;retrained_graph.pb<br>tf_files&#x2F;retrained_labels.txt</p>
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>(venv) water@water-G11CD:~&#x2F;tensorflow-for-poets-2$ python -m scripts.label_image     –graph&#x3D;tf_files&#x2F;retrained_graph.pb      –image&#x3D;tf_files&#x2F;flower_photos&#x2F;daisy&#x2F;21652746_cc379e0eea_m.jpg</p>
-<p>2019-01-23 14:13:50.234939: I tensorflow&#x2F;core&#x2F;platform&#x2F;cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA</p>
-<p>Evaluation time (1-image): 0.094s</p>
-<p>daisy (score&#x3D;0.99938)<br>sunflowers (score&#x3D;0.00033)<br>dandelion (score&#x3D;0.00028)<br>roses (score&#x3D;0.00000)<br>tulips (score&#x3D;0.00000)</p>
-<h2 id="Now-Prepare-for-Android"><a href="#Now-Prepare-for-Android" class="headerlink" title="Now, Prepare for Android"></a>Now, Prepare for Android</h2><h2 id="Install-PILLOW"><a href="#Install-PILLOW" class="headerlink" title="Install PILLOW"></a>Install PILLOW</h2><p>pip install PILLOW</p>
-<h2 id="Convert-the-model-to-TFLite-format"><a href="#Convert-the-model-to-TFLite-format" class="headerlink" title="Convert the model to TFLite format"></a>Convert the model to TFLite format</h2><p>IMAGE_SIZE&#x3D;224<br>toco   –input_file&#x3D;tf_files&#x2F;retrained_graph.pb   –output_file&#x3D;tf_files&#x2F;optimized_graph.lite   –input_format&#x3D;TENSORFLOW_GRAPHDEF   –output_format&#x3D;TFLITE   –input_shape&#x3D;1,${IMAGE_SIZE},${IMAGE_SIZE},3   –input_array&#x3D;input   –output_array&#x3D;final_result   –inference_type&#x3D;FLOAT   –input_data_type&#x3D;FLOAT</p>
-<h2 id="The-TFLite-Model"><a href="#The-TFLite-Model" class="headerlink" title="The TFLite Model"></a>The TFLite Model</h2><p>tf_files&#x2F;optimized_graph.lite</p>
-<h2 id="Install-AndroidStudio"><a href="#Install-AndroidStudio" class="headerlink" title="Install AndroidStudio"></a>Install AndroidStudio</h2><p>unzip android-studio-ide-182.5199772-linux.zip<br>cd android-studio&#x2F;<br>cd bin&#x2F;<br>.&#x2F;studio.sh </p>
-<h3 id="Maybe-You-Need-to-Set-Proxy"><a href="#Maybe-You-Need-to-Set-Proxy" class="headerlink" title="Maybe You Need to Set Proxy"></a>Maybe You Need to Set Proxy</h3><p>If you use lantern, you can do it like this! <img src="http://www.qinuu.com/wp-content/uploads/2019/01/Android_Studio_Lantern_Proxy-1024x576.png"></p>
-<h2 id="Open-Project"><a href="#Open-Project" class="headerlink" title="Open Project"></a>Open Project</h2><h4 id="Open-an-existing-Android-Studio-project"><a href="#Open-an-existing-Android-Studio-project" class="headerlink" title="Open an existing Android Studio project"></a>Open an existing Android Studio project</h4><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Android_Studio_Welcome.png"></p>
-<h4 id="Choose-android-x2F-tflite"><a href="#Choose-android-x2F-tflite" class="headerlink" title="Choose android&#x2F;tflite"></a>Choose android&#x2F;tflite</h4><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/Android_Studio_Open_Project.png"></p>
-<h2 id="Gradle-Sync-YES"><a href="#Gradle-Sync-YES" class="headerlink" title="Gradle Sync, YES"></a>Gradle Sync, YES</h2><h2 id="Build-Make-Project"><a href="#Build-Make-Project" class="headerlink" title="Build, Make Project"></a>Build, Make Project</h2><p>android&#x2F;tflite&#x2F;app&#x2F;build&#x2F;outputs&#x2F;apk&#x2F;debug&#x2F;app-debug.apk</p>
-<h2 id="Test-on-Your-Phone"><a href="#Test-on-Your-Phone" class="headerlink" title="Test on Your Phone"></a>Test on Your Phone</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/TFLite_Test_0-576x1024.jpg"></p>
-<h2 id="Add-your-model-files-to-the-project-and-then-Make-Project-Test-Again"><a href="#Add-your-model-files-to-the-project-and-then-Make-Project-Test-Again" class="headerlink" title="Add your model files to the project, and then Make Project, Test Again"></a>Add your model files to the project, and then Make Project, Test Again</h2><p>cp tf_files&#x2F;optimized_graph.lite android&#x2F;tflite&#x2F;app&#x2F;src&#x2F;main&#x2F;assets&#x2F;graph.lite<br>cp tf_files&#x2F;retrained_labels.txt android&#x2F;tflite&#x2F;app&#x2F;src&#x2F;main&#x2F;assets&#x2F;labels.txt</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/TFLite_Test_1-576x1024.jpg"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/23/tensorflow-on-android-refer-to-codelabs-tensorflow-for-poets/" data-id="cl56jpsxg00hfasch72vbhulw" data-title="TensorFlow on Android (Refer to codelabs : tensorflow-for-poets)" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-how-to-train-yolov3-to-detect-peppa-pig" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/01/22/how-to-train-yolov3-to-detect-peppa-pig/" class="article-date">
-  <time class="dt-published" datetime="2019-01-22T03:18:26.000Z" itemprop="datePublished">2019-01-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Yolo/">Yolo</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/22/how-to-train-yolov3-to-detect-peppa-pig/">How to train YOLOv3 to detect Peppa Pig</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>Collecting Data from the Web with Python If you like</p>
-<h2 id="PASCAL-VOC"><a href="#PASCAL-VOC" class="headerlink" title="PASCAL VOC"></a>PASCAL VOC</h2><p>. ├── VOCdevkit │ └── VOC2018 │ ├── Annotations ├── ImageSets │ │ └── Main &#x2F;&#x2F; name of *.jpg without “.jpg” ├── JPEGImages &#x2F;&#x2F; *.jpg</p>
-<h2 id="Annotation"><a href="#Annotation" class="headerlink" title="Annotation"></a>Annotation</h2><p><a target="_blank" rel="noopener" href="https://github.com/tzutalin/labelImg">LabelImg is a graphical image annotation tool</a></p>
-<h4 id="Example-XML"><a href="#Example-XML" class="headerlink" title="Example : XML"></a>Example : XML</h4><p> 000<br>000000.jpg<br>&#x2F;home&#x2F;water&#x2F;Machine_Learning&#x2F;Peppa_Pig&#x2F;train&#x2F;000&#x2F;000000.jpg<br>Unknown</p>
-<p> 410<br>256<br>3<br>0<br> Peppa<br>Unspecified<br>0<br>0<br> 64<br>87<br>166<br>226<br> Peppa<br>Unspecified<br>0<br>0<br> 290<br>77<br>333<br>131 </p>
-<h2 id="Generate-Labels-for-VOC"><a href="#Generate-Labels-for-VOC" class="headerlink" title="Generate Labels for VOC"></a>Generate Labels for VOC</h2><p>Darknet wants a .txt file for each image with a line for each ground truth object in the image that looks like:</p>
-<h4 id="voc-label-py"><a href="#voc-label-py" class="headerlink" title="voc_label.py"></a>voc_label.py</h4><p>import xml.etree.ElementTree as ET<br>import pickle<br>import os<br>from os import listdir, getcwd<br>from os.path import join</p>
-<p>sets&#x3D;[(‘2018’, ‘train’), (‘2018’, ‘val’)]</p>
-<p>classes &#x3D; [“Peppa”]</p>
-<p>def convert(size, box):<br>    dw &#x3D; 1.&#x2F;size[0]<br>    dh &#x3D; 1.&#x2F;size[1]<br>    x &#x3D; (box[0] + box[1])&#x2F;2.0<br>    y &#x3D; (box[2] + box[3])&#x2F;2.0<br>    w &#x3D; box[1] - box[0]<br>    h &#x3D; box[3] - box[2]<br>    x &#x3D; x*dw<br>    w &#x3D; w*dw<br>    y &#x3D; y*dh<br>    h &#x3D; h*dh<br>    return (x,y,w,h)</p>
-<p>def convert_annotation(year, image_id):<br>    in_file &#x3D; open(‘VOCdevkit&#x2F;VOC%s&#x2F;Annotations&#x2F;%s.xml’%(year, image_id))<br>    out_file &#x3D; open(‘VOCdevkit&#x2F;VOC%s&#x2F;labels&#x2F;%s.txt’%(year, image_id), ‘w’)<br>    tree&#x3D;ET.parse(in_file)<br>    root &#x3D; tree.getroot()<br>    size &#x3D; root.find(‘size’)<br>    w &#x3D; int(size.find(‘width’).text)<br>    h &#x3D; int(size.find(‘height’).text)</p>
-<pre><code>for obj in root.iter(&#39;object&#39;):
-    difficult = obj.find(&#39;difficult&#39;).text
-    cls = obj.find(&#39;name&#39;).text
-    if cls not in classes or int(difficult) == 1:
-        continue
-    cls\_id = classes.index(cls)
-    xmlbox = obj.find(&#39;bndbox&#39;)
-    b = (float(xmlbox.find(&#39;xmin&#39;).text), float(xmlbox.find(&#39;xmax&#39;).text), float(xmlbox.find(&#39;ymin&#39;).text), float(xmlbox.find(&#39;ymax&#39;).text))
-    bb = convert((w,h), b)
-    out\_file.write(str(cls\_id) + &quot; &quot; + &quot; &quot;.join(\[str(a) for a in bb\]) + &#39;\\n&#39;)
+TARGET\_LINK\_LIBRARIES(untitled1 $&#123;Boost\_LIBRARIES&#125; &quot;-lpthread&quot; &quot;-lpos&quot; &quot;-lrt&quot; &quot;-lpng&quot; &quot;-liconv&quot; &quot;-lfreetype&quot; &quot;-lz&quot; &quot;-l:libboost\_system.a&quot;)
 </code></pre>
-<p>wd &#x3D; getcwd()</p>
-<p>for year, image_set in sets:<br>    if not os.path.exists(‘VOCdevkit&#x2F;VOC%s&#x2F;labels&#x2F;‘%(year)):<br>        os.makedirs(‘VOCdevkit&#x2F;VOC%s&#x2F;labels&#x2F;‘%(year))<br>    image_ids &#x3D; open(‘VOCdevkit&#x2F;VOC%s&#x2F;ImageSets&#x2F;Main&#x2F;%s.txt’%(year, image_set)).read().strip().split()<br>    list_file &#x3D; open(‘%s_%s.txt’%(year, image_set), ‘w’)<br>    for image_id in image_ids:<br>        list_file.write(‘%s&#x2F;VOCdevkit&#x2F;VOC%s&#x2F;JPEGImages&#x2F;%s.jpg\n’%(wd, year, image_id))<br>        convert_annotation(year, image_id)<br>    list_file.close()</p>
-<h2 id="peppa-data"><a href="#peppa-data" class="headerlink" title="peppa.data"></a>peppa.data</h2><p>classes&#x3D; 1<br>train  &#x3D; &#x2F;home&#x2F;d&#x2F;Downloads&#x2F;Peppa_VOC&#x2F;2018_train.txt<br>valid  &#x3D; &#x2F;home&#x2F;d&#x2F;Downloads&#x2F;Peppa_VOC&#x2F;2018_val.txt<br>names &#x3D; data&#x2F;peppa.names<br>backup &#x3D; backup</p>
-<h2 id="yolov3-voc-peppa-cfg"><a href="#yolov3-voc-peppa-cfg" class="headerlink" title="yolov3-voc-peppa.cfg"></a>yolov3-voc-peppa.cfg</h2><p>[net]</p>
-<h1 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h1><p>batch&#x3D;1<br>subdivisions&#x3D;1</p>
-<h1 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h1><p> batch&#x3D;64<br> subdivisions&#x3D;2<br>width&#x3D;416<br>height&#x3D;416<br>channels&#x3D;3<br>momentum&#x3D;0.9<br>decay&#x3D;0.0005<br>angle&#x3D;0<br>saturation &#x3D; 1.5<br>exposure &#x3D; 1.5<br>hue&#x3D;.1</p>
-<p>learning_rate&#x3D;0.001<br>burn_in&#x3D;1000<br>max_batches &#x3D; 500200<br>policy&#x3D;steps<br>steps&#x3D;400000,450000<br>scales&#x3D;.1,.1</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;16<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;32<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;64<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;128<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;256<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;512<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;1</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;1024<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>###########</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;256<br>size&#x3D;1<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;512<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[convolutional]<br>size&#x3D;1<br>stride&#x3D;1<br>pad&#x3D;1<br>filters&#x3D;18<br>activation&#x3D;linear</p>
-<p>[yolo]<br>mask &#x3D; 3,4,5<br>anchors &#x3D; 10,14,  23,27,  37,58,  81,82,  135,169,  344,319<br>classes&#x3D;1<br>num&#x3D;6<br>jitter&#x3D;.3<br>ignore_thresh &#x3D; .7<br>truth_thresh &#x3D; 1<br>random&#x3D;1</p>
-<p>[route]<br>layers &#x3D; -4</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;128<br>size&#x3D;1<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[upsample]<br>stride&#x3D;2</p>
-<p>[route]<br>layers &#x3D; -1, 8</p>
-<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;256<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
-<p>[convolutional]<br>size&#x3D;1<br>stride&#x3D;1<br>pad&#x3D;1<br>filters&#x3D;18<br>activation&#x3D;linear</p>
-<p>[yolo]<br>mask &#x3D; 0,1,2<br>anchors &#x3D; 10,14,  23,27,  37,58,  81,82,  135,169,  344,319<br>classes&#x3D;1<br>num&#x3D;6<br>jitter&#x3D;.3<br>ignore_thresh &#x3D; .7<br>truth_thresh &#x3D; 1<br>random&#x3D;1</p>
-<h2 id="Train"><a href="#Train" class="headerlink" title="Train"></a>Train</h2><p>.&#x2F;darknet detector train cfg&#x2F;peppa.data cfg&#x2F;yolov3-voc-peppa.cfg darknet53.conv.74</p>
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/000529_predictions-219x300.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000418_predictions.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000333_predictions.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000308_predictions.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000264_predictions.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000010_predictions-300x187.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000007_predictions.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000005_predictions-300x128.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000000_predictions-300x187.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000996_predictions-300x213.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/000972_predictions-300x229.jpg"></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>@article{yolov3,<br>  title&#x3D;{YOLOv3: An Incremental Improvement},<br>  author&#x3D;{Redmon, Joseph and Farhadi, Ali},<br>  journal &#x3D; {arXiv},<br>  year&#x3D;{2018}<br>}</p>
+<p>endif()</p>
+<h3 id="GNUlinux-config-cmake"><a href="#GNUlinux-config-cmake" class="headerlink" title="GNUlinux_config.cmake"></a>GNUlinux_config.cmake</h3><p>set(GNULINUX_PLATFORM ON)<br>set(CMAKE_SYSTEM_NAME “Linux”)<br>set(CMAKE_SYSTEM_PROCESSOR “arm”)</p>
+<p>if(NOT DEFINED ENV{NE10_LINUX_TARGET_ARCH})<br>   set(NE10_LINUX_TARGET_ARCH “armv7”)<br>else()<br>   set(NE10_LINUX_TARGET_ARCH $ENV{NE10_LINUX_TARGET_ARCH})<br>endif()</p>
+<p>if(NE10_LINUX_TARGET_ARCH STREQUAL “armv7”)<br>   set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)<br>   set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)<br>   set(CMAKE_ASM_COMPILER arm-linux-gnueabihf-as)<br>   find_program(CMAKE_AR NAMES “arm-linux-gnueabihf-ar”)<br>   find_program(CMAKE_RANLIB NAMES “arm-linux-gnueabihf-ranlib”)<br>elseif(NE10_LINUX_TARGET_ARCH STREQUAL “aarch64”)<br>   set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)<br>   set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)<br>   set(CMAKE_ASM_COMPILER aarch64-linux-gnu-as)<br>   find_program(CMAKE_AR NAMES “aarch64-linux-gnu-ar”)<br>   find_program(CMAKE_RANLIB NAMES “aarch64-linux-gnu-ranlib”)<br>endif()</p>
+<p>mark_as_advanced(CMAKE_AR)<br>mark_as_advanced(CMAKE_RANLIB)</p>
+<h3 id="The-Most-Important-Thing-on-Windows"><a href="#The-Most-Important-Thing-on-Windows" class="headerlink" title="The Most Important Thing on Windows"></a>The Most Important Thing on Windows</h3><p>cmake -DCMAKE_TOOLCHAIN_FILE&#x3D;GNUlinux_config.cmake ..</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/22/how-to-train-yolov3-to-detect-peppa-pig/" data-id="cl56jpsro00b5aschgetmeucc" data-title="How to train YOLOv3 to detect Peppa Pig" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/12/02/cmake-arm-cross-compilation-based-windows-systems/" data-id="cl56jpsnm007fasch3rskdtnk" data-title="CMake &amp; Arm Cross compilation based Windows systems (CLion)" class="article-share-link">Share</a>
       
       
       
@@ -502,14 +390,14 @@
 
 
   
-    <article id="post-1244" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-how-to-use-wireshark" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/17/1244/" class="article-date">
-  <time class="dt-published" datetime="2019-01-17T09:23:25.000Z" itemprop="datePublished">2019-01-17</time>
+    <a href="/2018/06/21/how-to-use-wireshark/" class="article-date">
+  <time class="dt-published" datetime="2018-06-21T05:45:04.000Z" itemprop="datePublished">2018-06-21</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+    <a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>
   </div>
 
   </div>
@@ -520,7 +408,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/17/1244/">Untitled Post - 25</a>
+      <a class="p-name article-title" href="/2018/06/21/how-to-use-wireshark/">How To Use Wireshark</a>
     </h1>
   
 
@@ -528,11 +416,13 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="A-capture-filter"><a href="#A-capture-filter" class="headerlink" title="A capture filter"></a><strong>A capture filter</strong></h3><p><img src="/img/Wireshark_2.png"></p>
+<h3 id="How-to-Capture-127-0-0-1"><a href="#How-to-Capture-127-0-0-1" class="headerlink" title="How to Capture 127.0.0.1"></a><strong>How to Capture 127.0.0.1</strong></h3><h3 id=""><a href="#" class="headerlink" title=""></a><img src="/img/RawCap_1.png"></h3><p><img src="/img/Wireshark_1.png"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/17/1244/" data-id="cl56jpsiq0032asch0dxp5ev7" data-title="Untitled Post - 25" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/06/21/how-to-use-wireshark/" data-id="cl56jpsrq00b8aschazzeellg" data-title="How To Use Wireshark" class="article-share-link">Share</a>
       
       
       
@@ -544,14 +434,14 @@
 
 
   
-    <article id="post-style-transfer-caffe-example" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-boostprogram-options-demo" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/01/17/style-transfer-caffe-example/" class="article-date">
-  <time class="dt-published" datetime="2019-01-17T08:59:51.000Z" itemprop="datePublished">2019-01-17</time>
+    <a href="/2018/06/09/boostprogram-options-demo/" class="article-date">
+  <time class="dt-published" datetime="2018-06-09T05:02:25.000Z" itemprop="datePublished">2018-06-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>►<a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Ubuntu-16-04/">Ubuntu 16.04</a>►<a class="article-category-link" href="/categories/machine-learning/">machine-learning</a>►<a class="article-category-link" href="/categories/machine-learning/Caffe/">Caffe</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Python/">Python</a>
+    <a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Boost/">Boost</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/MacOS/">MacOS</a>
   </div>
 
   </div>
@@ -562,7 +452,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/01/17/style-transfer-caffe-example/">Style Transfer : Caffe Example</a>
+      <a class="p-name article-title" href="/2018/06/09/boostprogram-options-demo/">boost::program_options demo</a>
     </h1>
   
 
@@ -570,17 +460,190 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Default"><a href="#Default" class="headerlink" title="Default"></a>Default</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/IMG_4343-300x200.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/starry_night-300x188.jpg"></p>
-<h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><p>python nstyle.py</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_50-300x200.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_200-300x200.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_400-300x200.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_600-300x200.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_800-300x200.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/final-300x200.jpg"></p>
-<h2 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h2><p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/src-232x300.png"><img src="http://www.qinuu.com/wp-content/uploads/2019/01/style-300x252.jpg"></p>
-<h2 id="Start-with-style-weight-2"><a href="#Start-with-style-weight-2" class="headerlink" title="Start with style-weight 2"></a>Start with style-weight 2</h2><p>python nstyle.py –content-image ~&#x2F;Machine_Learning&#x2F;Style_Transfer&#x2F;src.png –style-image ~&#x2F;Machine_Learning&#x2F;Style_Transfer&#x2F;style.jpg –output_dir ~&#x2F;Machine_Learning&#x2F;Style_Transfer&#x2F;output_style-weight-2&#x2F; –save-epochs 200 –style-weight 2</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_200-2-232x300.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_400-2-232x300.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_600-2-232x300.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_800-2-232x300.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/e_1000-1-232x300.jpg"> <img src="http://www.qinuu.com/wp-content/uploads/2019/01/final-2-232x300.jpg"></p>
+        <h3 id="A-Simple-Demo"><a href="#A-Simple-Demo" class="headerlink" title="A Simple Demo"></a>A Simple Demo</h3><p>&#x2F;&#x2F;<br>&#x2F;&#x2F; Created by Water on 2018&#x2F;6&#x2F;9.<br>&#x2F;&#x2F;</p>
+<p>#include #include #include namespace  bpo &#x3D; boost::program_options;</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    bpo::options_description opts(“all options”);<br>    bpo::variables_map vm;</p>
+<pre><code>opts.add\_options()
+        (&quot;filename&quot;, bpo::value(), &quot;the file name which want to be found&quot;)
+        (&quot;help&quot;, &quot;this is a program to find a specified file&quot;);
+
+try&#123;
+    bpo::store(bpo::parse\_command\_line(argc, argv, opts), vm);
+&#125;
+catch(...)&#123;
+    std::cout &lt;&lt; &quot;undefined option！\\n&quot;;
+    return 0;
+&#125;
+
+if(vm.count(&quot;help&quot;) )&#123;
+    std::cout &lt;&lt; opts &lt;&lt; std::endl;
+&#125;
+if(vm.count(&quot;filename&quot;) )&#123;
+    std::cout &lt;&lt; &quot;find &quot; &lt;&lt; vm\[&quot;filename&quot;\].as() &lt;&lt; std::endl;
+&#125;
+if(vm.empty() )&#123;
+    std::cout &lt;&lt; &quot;no options found \\n&quot;;
+&#125;
+return 0;
+</code></pre>
+<p>} </p>
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><p><img src="/img/boost-program_options_1.png"></p>
+<h3 id="How-to-Set-Default-Value"><a href="#How-to-Set-Default-Value" class="headerlink" title="How to Set Default Value"></a>How to Set Default Value</h3><p>&#x2F;&#x2F;<br>&#x2F;&#x2F; Created by Water on 2018&#x2F;6&#x2F;9.<br>&#x2F;&#x2F;</p>
+<p>#include #include #include #include namespace bpo &#x3D; boost::program_options;</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    std::vector v_para;<br>    std::string port;<br>    int baud &#x3D; 0;<br>    int timeout &#x3D; 0;<br>    bpo::options_description opt(“all options”);</p>
+<pre><code>opt.add\_options()
+        (&quot;v\_para,v&quot;, bpo::value &gt;()-&gt;multitoken(), &quot;Serial v\_para&quot;)
+        (&quot;port,p&quot;, bpo::value(&amp;port)-&gt;default\_value(&quot;COM1&quot;), &quot;Serial Port&quot;)
+        (&quot;baud,b&quot;, bpo::value(&amp;baud)-&gt;default\_value(115200), &quot;Serial Baud&quot;)
+        (&quot;timeout,t&quot;, bpo::value(&amp;timeout)-&gt;default\_value(5000), &quot;Timeout&quot;)
+        (&quot;help&quot;, &quot;a demo ( default value )&quot;);
+
+bpo::variables\_map vm;
+
+try&#123;
+    bpo::store(parse\_command\_line(argc, argv, opt), vm);
+&#125;
+catch(...)&#123;
+    std::cout &lt;&lt; &quot;undefined option！\\n&quot;;
+    return 0;
+&#125;
+
+bpo::notify(vm);
+
+if(vm.count(&quot;help&quot;) )&#123;
+    std::cout &lt;&lt; opt &lt;&lt; std::endl;
+    return 0;
+&#125;
+if(vm.count(&quot;v\_para&quot;) )&#123;
+    std::cout &lt;&lt; &quot;v\_para：&quot;;
+    for(auto&amp; str : vm\[&quot;v\_para&quot;\].as &gt;() )
+        std::cout &lt;&lt; str &lt;&lt; &quot; &quot;;
+    std::cout &lt;&lt; std::endl;
+&#125;
+std::cout &lt;&lt; &quot;port:&quot; &lt;&lt; port &lt;&lt; std::endl;
+std::cout &lt;&lt; &quot;baud:&quot; &lt;&lt; baud &lt;&lt; std::endl;
+std::cout &lt;&lt; &quot;timeout:&quot; &lt;&lt; timeout &lt;&lt; std::endl;
+return 0;
+</code></pre>
+<p>} </p>
+<h3 id="Test-1"><a href="#Test-1" class="headerlink" title="Test"></a>Test</h3><p><img src="/img/boost-program_options_2.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/01/17/style-transfer-caffe-example/" data-id="cl56jpsxa00hdasch3asz8o91" data-title="Style Transfer : Caffe Example" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/06/09/boostprogram-options-demo/" data-id="cl56jpsn8006rasch3my440rs" data-title="boost::program_options demo" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-apache-axis2-c-installation-guide-windows" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/05/18/apache-axis2-c-installation-guide-windows/" class="article-date">
+  <time class="dt-published" datetime="2018-05-18T02:32:48.000Z" itemprop="datePublished">2018-05-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/Apache/">Apache</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/Web-Service/">Web Service</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/Windows/">Windows</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/05/18/apache-axis2-c-installation-guide-windows/">Apache Axis2/C Installation Guide (Windows)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="First"><a href="#First" class="headerlink" title="First"></a>First</h3><p><a target="_blank" rel="noopener" href="http://archive.apache.org/dist/ws/axis2/c/1/_6/_0/axis2c-bin-1.6.0-win32.zip">http://archive.apache.org/dist/ws/axis2/c/1\_6\_0/axis2c-bin-1.6.0-win32.zip</a> <a href="ftp://ftp.zlatkovic.com/libxml/libxml2-2.7.8.win32.zip">ftp://ftp.zlatkovic.com/libxml/libxml2-2.7.8.win32.zip</a> <a href="ftp://ftp.zlatkovic.com/libxml/iconv-1.9.2.win32.zip">ftp://ftp.zlatkovic.com/libxml/iconv-1.9.2.win32.zip</a> <a href="ftp://ftp.zlatkovic.com/libxml/zlib-1.2.5.win32.zip">ftp://ftp.zlatkovic.com/libxml/zlib-1.2.5.win32.zip</a> <a target="_blank" rel="noopener" href="http://archive.apache.org/dist/httpd/binaries/win32/httpd-2.2.25-win32-x86-openssl-0.9.8y.msi">http://archive.apache.org/dist/httpd/binaries/win32/httpd-2.2.25-win32-x86-openssl-0.9.8y.msi</a></p>
+<h3 id="Install-Axis2-x2F-C"><a href="#Install-Axis2-x2F-C" class="headerlink" title="Install Axis2&#x2F;C"></a>Install Axis2&#x2F;C</h3><ol>
+<li>Extract the binary distribution to a folder of your choice.(example: C:\axis2c-bin-1.6.0-win32)</li>
+<li>Copy the iconv.dll, libxml2.dll and zlib1.dll to C:\axis2c-bin-1.6.0-win32\lib</li>
+<li>Set the variable AXIS2C_HOME to the deploy folder (C:\axis2c-bin-1.6.0-win32)</li>
+<li>Add the path to lib directory to the PATH variable (%AXIS2C_HOME%\lib)<img src="/img/Axis2C-Test-Client.png"></li>
+</ol>
+<h3 id="Install-Apache-2-2"><a href="#Install-Apache-2-2" class="headerlink" title="Install Apache 2.2"></a>Install Apache 2.2</h3><ol>
+<li>Copy C:\axis2c-bin-1.6.0-win32\lib\mod_axis2.dll C:\Apache22\modules\mod_axis2.so</li>
+<li>Edit the Apache2’s configuration file (generally httpd.conf) and add the following directives</li>
+<li>LoadModule axis2_module modules&#x2F;mod_axis2.so Axis2RepoPath C:&#x2F;axis2c-bin-1.6.0-win32 Axis2LogFile C:&#x2F;axis2c-bin-1.6.0-win32&#x2F;logs Axis2MaxLogFileSize 40 Axis2LogLevel warn</li>
+<li>Restart apache2 and test whether mod_axis2 module is loaded by typing the URL <a target="_blank" rel="noopener" href="http://localhost/axis2/services">http://localhost/axis2/services</a> in your Web browser</li>
+</ol>
+<p><img src="/img/Axis2C-Test-Services.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/05/18/apache-axis2-c-installation-guide-windows/" data-id="cl56jpsmx006maschbpli8wb2" data-title="Apache Axis2/C Installation Guide (Windows)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-qt5-international" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/05/13/qt5-international/" class="article-date">
+  <time class="dt-published" datetime="2018-05-13T11:45:55.000Z" itemprop="datePublished">2018-05-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/QT/">QT</a>►<a class="article-category-link" href="/categories/operating-system/">operating-system</a>►<a class="article-category-link" href="/categories/operating-system/MacOS/">MacOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/05/13/qt5-international/">QT5 International</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Create-Project-amp-Generate-ts"><a href="#Create-Project-amp-Generate-ts" class="headerlink" title="Create Project &amp; Generate .ts"></a>Create Project &amp; Generate .ts</h3><p>lupdate TestInternational.pro -ts zh_CN.ts</p>
+<h3 id="Translate-with-Linguist"><a href="#Translate-with-Linguist" class="headerlink" title="Translate with Linguist"></a>Translate with Linguist</h3><p><img src="/img/QT5-Linguist-Translate.png"></p>
+<h3 id="Save-amp-Release-to-Generate-qm"><a href="#Save-amp-Release-to-Generate-qm" class="headerlink" title="Save &amp; Release to Generate .qm"></a>Save &amp; Release to Generate .qm</h3><h3 id="Add-Code-to-Choose-Language"><a href="#Add-Code-to-Choose-Language" class="headerlink" title="Add Code to Choose Language"></a>Add Code to Choose Language</h3><p>#include “widget.h”<br>#include #include #include int main(int argc, char *argv[])<br>{<br>    QApplication a(argc, argv);</p>
+<pre><code>QTranslator trans;
+ if(trans.load(a.applicationDirPath() + &quot;/../../../zh\_CN.qm&quot;))
+    a.installTranslator(&amp;trans);
+
+Widget w;
+w.show();
+
+return a.exec();
+</code></pre>
+<p>} </p>
+<h3 id="The-Result"><a href="#The-Result" class="headerlink" title="The Result"></a>The Result</h3><p><img src="/img/QT5-Linguist-Translate-After.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/05/13/qt5-international/" data-id="cl56jpsuq00ejasch4ckngvw5" data-title="QT5 International" class="article-share-link">Share</a>
       
       
       
@@ -596,7 +659,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
   </nav>
 
 </section>

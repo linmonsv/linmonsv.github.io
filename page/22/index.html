@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-background-subtraction-vs-frame-differencing" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-rabbitmq" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/background-subtraction-vs-frame-differencing/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T06:28:38.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/12/04/controller-rabbitmq/" class="article-date">
+  <time class="dt-published" datetime="2017-12-04T09:41:21.000Z" itemprop="datePublished">2017-12-04</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/background-subtraction-vs-frame-differencing/">Background Subtraction VS Frame Differencing</a>
+      <a class="p-name article-title" href="/2017/12/04/controller-rabbitmq/">Controller --- RabbitMQ</a>
     </h1>
   
 
@@ -97,51 +97,21 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Background-Subtraction"><a href="#Background-Subtraction" class="headerlink" title="Background Subtraction"></a>Background Subtraction</h3><pre><code>// Create MOG Background Subtractor object
-pMOG= cv::bgsegm::createBackgroundSubtractorMOG();//new BackgroundSubtractorMOG();
-
-// Create MOG2 Background Subtractor object
-pMOG2 = createBackgroundSubtractorMOG2(20, 16, true);//new BackgroundSubtractorMOG2();
-
-    // Capture the current frame
-    cap &gt;&gt; frame;
-    
-    // Resize the frame
-    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
-    
-    // Update the MOG background model based on the current frame
-    pMOG-&gt;apply(frame, fgMaskMOG);
-    
-    // Update the MOG2 background model based on the current frame
-    pMOG2-&gt;apply(frame, fgMaskMOG2);
-    
-    // Show the current frame
-    //imshow(&quot;Frame&quot;, frame);
-    
-    // Show the MOG foreground mask
-    //imshow(&quot;FG Mask MOG&quot;, fgMaskMOG);
-
-    // Show the MOG2 foreground mask
-    imshow(&quot;FG Mask MOG 2&quot;, fgMaskMOG2);
-</code></pre>
-<h3 id="Frame-Differencing"><a href="#Frame-Differencing" class="headerlink" title="Frame Differencing"></a>Frame Differencing</h3><p>Mat frameDiff(Mat prevFrame, Mat curFrame, Mat nextFrame)<br>{<br>    Mat diffFrames1, diffFrames2, output;</p>
-<pre><code>// Compute absolute difference between current frame and the next frame
-absdiff(nextFrame, curFrame, diffFrames1);
-
-// Compute absolute difference between current frame and the previous frame
-absdiff(curFrame, prevFrame, diffFrames2);
-
-// Bitwise &quot;AND&quot; operation between the above two diff images
-bitwise\_and(diffFrames1, diffFrames2, output);
-
-return output;
-</code></pre>
-<p>}</p>
+        <h3 id="Install-RabbitMQ"><a href="#Install-RabbitMQ" class="headerlink" title="Install RabbitMQ"></a>Install RabbitMQ</h3><p>[root@controller ~]# yum install erlang -y<br>[root@controller ~]# yum install rabbitmq-server -y</p>
+<h3 id="Start-RabbitMQ-Service"><a href="#Start-RabbitMQ-Service" class="headerlink" title="Start RabbitMQ Service"></a>Start RabbitMQ Service</h3><p>[root@controller ~]# systemctl enable rabbitmq-server.service<br>[root@controller ~]# systemctl restart rabbitmq-server.service<br>[root@controller ~]# systemctl status rabbitmq-server.service</p>
+<h3 id="List-RabbitMQ-Service"><a href="#List-RabbitMQ-Service" class="headerlink" title="List RabbitMQ Service"></a>List RabbitMQ Service</h3><p>[root@controller ~]# systemctl list-unit-files grep rabbitmq-server.service<br><strong>rabbitmq-server.service enable</strong></p>
+<h3 id="Configure-RabbitMQ"><a href="#Configure-RabbitMQ" class="headerlink" title="Configure RabbitMQ"></a>Configure RabbitMQ</h3><p>[root@controller ~]# rabbitmqctl add_user openstack password<br>[root@controller ~]# rabbitmqctl set_permissions openstack “.*“ “.*“ “.*“<br>[root@controller ~]# rabbitmqctl set_user_tags openstack administrator<br>[root@controller ~]# rabbitmqctl list_users</p>
+<h3 id="Check-The-Status"><a href="#Check-The-Status" class="headerlink" title="Check The Status"></a>Check The Status</h3><p>[root@controller ~]# netstat -ntlp grep 5672<br>tcp 0 0 0.0.0.0:<strong>15672</strong> 0.0.0.0:* LISTEN 1025&#x2F;beam<br>tcp 0 0 0.0.0.0:25672 0.0.0.0:* LISTEN 1025&#x2F;beam<br>tcp6 0 0 :::5672 :::* LISTEN 1025&#x2F;beam</p>
+<h3 id="List-Plugin"><a href="#List-Plugin" class="headerlink" title="List Plugin"></a>List Plugin</h3><p>[root@controller ~]# &#x2F;usr&#x2F;lib&#x2F;rabbitmq&#x2F;bin&#x2F;rabbitmq-plugins list<br>[E] amqp_client 3.3.5<br>[ ] cowboy 0.5.0-rmq3.3.5-git4b93c2d<br>[ ] eldap 3.3.5-gite309de4<br>[E] mochiweb 2.7.0-rmq3.3.5-git680dba8<br>[ ] rabbitmq_amqp1_0 3.3.5<br>[ ] rabbitmq_auth_backend_ldap 3.3.5<br>[ ] rabbitmq_auth_mechanism_ssl 3.3.5<br>[ ] rabbitmq_consistent_hash_exchange 3.3.5<br>[ ] rabbitmq_federation 3.3.5<br>[ ] rabbitmq_federation_management 3.3.5<br>[E] rabbitmq_management 3.3.5<br>[E] rabbitmq_management_agent 3.3.5<br>[ ] rabbitmq_management_visualiser 3.3.5<br>[ ] rabbitmq_mqtt 3.3.5<br>[ ] rabbitmq_shovel 3.3.5<br>[ ] rabbitmq_shovel_management 3.3.5<br>[ ] rabbitmq_stomp 3.3.5<br>[ ] rabbitmq_test 3.3.5<br>[ ] rabbitmq_tracing 3.3.5<br>[E] rabbitmq_web_dispatch 3.3.5<br>[ ] rabbitmq_web_stomp 3.3.5<br>[ ] rabbitmq_web_stomp_examples 3.3.5<br>[ ] sockjs 0.3.4-rmq3.3.5-git3132eb9<br>[E] webmachine 1.10.3-rmq3.3.5-gite9359c7</p>
+<h3 id="Enable-Plugin"><a href="#Enable-Plugin" class="headerlink" title="Enable Plugin"></a>Enable Plugin</h3><p>[root@controller ~]# &#x2F;usr&#x2F;lib&#x2F;rabbitmq&#x2F;bin&#x2F;rabbitmq-plugins enable rabbitmq_management mochiweb webmachine rabbitmq_web_dispatch amqp_client rabbitmq_management_agent</p>
+<h3 id="Restart-RabbitMQ-Service"><a href="#Restart-RabbitMQ-Service" class="headerlink" title="Restart RabbitMQ Service"></a>Restart RabbitMQ Service</h3><p>[root@controller ~]# systemctl restart rabbitmq-server</p>
+<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p>img&#x2F;rabbitMQ_login.png) </p>
+<h4 id="username-x2F-password"><a href="#username-x2F-password" class="headerlink" title="username&#x2F;password :"></a>username&#x2F;password :</h4><p>guest&#x2F;guest openstack&#x2F;password <img src="/img/rabbitMQ_overview.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/background-subtraction-vs-frame-differencing/" data-id="cl56jpsn6006oasch83a25mnf" data-title="Background Subtraction VS Frame Differencing" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/04/controller-rabbitmq/" data-id="cl56jpsoy008easchcenw2q56" data-title="Controller --- RabbitMQ" class="article-share-link">Share</a>
       
       
       
@@ -153,14 +123,14 @@ return output;
 
 
   
-    <article id="post-tracking-your-ears" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-controller-mariadb" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/tracking-your-ears/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T06:16:59.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/12/04/controller-mariadb/" class="article-date">
+  <time class="dt-published" datetime="2017-12-04T09:34:05.000Z" itemprop="datePublished">2017-12-04</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -171,7 +141,7 @@ return output;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/tracking-your-ears/">Tracking Your Ears</a>
+      <a class="p-name article-title" href="/2017/12/04/controller-mariadb/">Controller --- MariaDB</a>
     </h1>
   
 
@@ -179,43 +149,22 @@ return output;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Tracking-Your-Ears-Two-Ears-o-x2F"><a href="#Tracking-Your-Ears-Two-Ears-o-x2F" class="headerlink" title="Tracking Your Ears (Two Ears, \(^o^)&#x2F;~)"></a>Tracking Your Ears (Two Ears, \(^o^)&#x2F;~)</h3><pre><code>    // Capture the current frame
-    cap &gt;&gt; frame;
-    
-    // Resize the frame
-    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
-    
-    // Convert to grayscale
-    cvtColor(frame, frameGray, CV\_BGR2GRAY);
-    
-    // Equalize the histogram
-    equalizeHist(frameGray, frameGray);
-    
-    // Detect left ear
-    leftEarCascade.detectMultiScale(frameGray, leftEars, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
-    
-    // Detect right ear
-    rightEarCascade.detectMultiScale(frameGray, rightEars, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
-    
-    // Draw green rectangle around the left ear
-    for(int i = 0; i &lt; leftEars.size(); i++)
-    &#123;
-        Rect leftEarRect(leftEars\[i\].x, leftEars\[i\].y, leftEars\[i\].width, leftEars\[i\].height);
-        rectangle(frame, leftEarRect, Scalar(0,255,0), 4);
-    &#125;
-    
-    // Draw green rectangle around the right ear
-    for(int i = 0; i &lt; rightEars.size(); i++)
-    &#123;
-        Rect rightEarRect(rightEars\[i\].x, rightEars\[i\].y, rightEars\[i\].width, rightEars\[i\].height);
-        rectangle(frame, rightEarRect, Scalar(0,255,0), 4);
-    &#125;
-</code></pre>
+        <h3 id="Install-MariaDB"><a href="#Install-MariaDB" class="headerlink" title="Install MariaDB"></a>Install MariaDB</h3><p>[root@controller ~]# yum install mariadb mariadb-server -y</p>
+<h3 id="Configure-MariaDB-For-OpenStack"><a href="#Configure-MariaDB-For-OpenStack" class="headerlink" title="Configure MariaDB For OpenStack"></a>Configure MariaDB For OpenStack</h3><p>[root@controller ~]# cat &#x2F;etc&#x2F;my.cnf.d&#x2F;mariadb-openstack.cnf<br>[mysqld]<br>default-storage-engine &#x3D; innodb<br>innodb_file_per_table<br>collation-server &#x3D; utf8_general_ci<br>init-connect &#x3D; ‘SET NAMES utf8’<br>character-set-server &#x3D; utf8<br>bind-address &#x3D; 10.1.1.61</p>
+<h3 id="Start-MariaDB-Service"><a href="#Start-MariaDB-Service" class="headerlink" title="Start MariaDB Service"></a>Start MariaDB Service</h3><p>[root@controller ~]# systemctl enable mariadb.service<br>[root@controller ~]# systemctl restart mariadb.service<br>[root@controller ~]# systemctl status mariadb.service</p>
+<h3 id="List-MariaDB-Service"><a href="#List-MariaDB-Service" class="headerlink" title="List MariaDB Service"></a>List MariaDB Service</h3><p>[root@controller ~]# systemctl list-unit-files grep mariadb.service<br><strong>mariadb.service enabled</strong></p>
+<h3 id="MariaDB-Installation"><a href="#MariaDB-Installation" class="headerlink" title="MariaDB Installation"></a>MariaDB Installation</h3><p>[root@controller ~]# mysql_secure_installation</p>
+<p>[root@controller ~]# mysql -u root -p</p>
+<h3 id="Create-Database-For-OpenStack"><a href="#Create-Database-For-OpenStack" class="headerlink" title="Create Database For OpenStack"></a>Create Database For OpenStack</h3><p>CREATE DATABASE keystone;<br>GRANT ALL PRIVILEGES ON keystone.* TO ‘keystone‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON keystone.* TO ‘keystone‘@’%’ IDENTIFIED BY ‘password’;</p>
+<p>CREATE DATABASE glance;<br>GRANT ALL PRIVILEGES ON glance.* TO ‘glance‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON glance.* TO ‘glance‘@’%’ IDENTIFIED BY ‘password’;</p>
+<p>CREATE DATABASE nova;<br>CREATE DATABASE nova_api;<br>CREATE DATABASE nova_cell0;</p>
+<p>GRANT ALL PRIVILEGES ON nova.* TO ‘nova‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova.* TO ‘nova‘@’%’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova_api.* TO ‘nova‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova_api.* TO ‘nova‘@’%’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova_cell0.* TO ‘nova‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova_cell0.* TO ‘nova‘@’%’ IDENTIFIED BY ‘password’;<br>FLUSH PRIVILEGES;</p>
+<p>CREATE DATABASE neutron;<br>GRANT ALL PRIVILEGES ON neutron.* TO ‘neutron‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON neutron.* TO ‘neutron‘@’%’ IDENTIFIED BY ‘password’;</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/tracking-your-ears/" data-id="cl56jpsxx00hxaschats7fkv3" data-title="Tracking Your Ears" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/04/controller-mariadb/" data-id="cl56jpsor0084aschh2iqesv4" data-title="Controller --- MariaDB" class="article-share-link">Share</a>
       
       
       
@@ -227,14 +176,14 @@ return output;
 
 
   
-    <article id="post-overlaying-a-facemask" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-centos-7-4-install-configure" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/overlaying-a-facemask/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T06:10:08.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/12/04/centos-7-4-install-configure/" class="article-date">
+  <time class="dt-published" datetime="2017-12-04T08:46:36.000Z" itemprop="datePublished">2017-12-04</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -245,7 +194,7 @@ return output;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/overlaying-a-facemask/">Overlaying A Facemask</a>
+      <a class="p-name article-title" href="/2017/12/04/centos-7-4-install-configure/">CentOS 7.4 Install &amp; Configure</a>
     </h1>
   
 
@@ -253,62 +202,40 @@ return output;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Detect-Faces"><a href="#Detect-Faces" class="headerlink" title="Detect Faces"></a>Detect Faces</h3><pre><code>    // Capture the current frame
-    cap &gt;&gt; frame;
-
-    // Resize the frame
-    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
-
-    // Convert to grayscale
-    cvtColor(frame, frameGray, CV\_BGR2GRAY);
-
-    // Equalize the histogram
-    equalizeHist(frameGray, frameGray);
-
-    // Detect faces
-    faceCascade.detectMultiScale(frameGray, faces, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
-</code></pre>
-<h3 id="Add-Mask-Image"><a href="#Add-Mask-Image" class="headerlink" title="Add Mask Image"></a>Add Mask Image</h3><pre><code>    // Draw green rectangle around the face
-    for(int i = 0; i &lt; faces.size(); i++)
-    &#123;
-        //Rect faceRect(faces\[i\].x, faces\[i\].y, faces\[i\].width, faces\[i\].height);
-
-        // Custom parameters to make the mask fit your face. You may have to play around with them to make sure it works.
-        int x = faces\[i\].x - int(0.1\*faces\[i\].width);
-        int y = faces\[i\].y - int(0.1\*faces\[i\].height); // 0.0\*faces\[i\].height
-        int w = int(1.1 \* faces\[i\].width);
-        int h = int(1.3 \* faces\[i\].height);
-
-        // Extract region of interest (ROI) covering your face
-        frameROI = frame(Rect(x,y,w,h));
-
-        // Resize the face mask image based on the dimensions of the above ROI
-        resize(faceMask, faceMaskSmall, Size(w,h));
-
-        // Convert the above image to grayscale
-        cvtColor(faceMaskSmall, grayMaskSmall, CV\_BGR2GRAY);
-
-        // Threshold the above image to isolate the pixels associated only with the face mask
-        threshold(grayMaskSmall, grayMaskSmallThresh, 230, 255, CV\_THRESH\_BINARY\_INV);
-
-        // Create mask by inverting the above image (because we don&#39;t want the background to affect the overlay)
-        bitwise\_not(grayMaskSmallThresh, grayMaskSmallThreshInv);
-
-        // Use bitwise &quot;AND&quot; operator to extract precise boundary of face mask
-        bitwise\_and(faceMaskSmall, faceMaskSmall, maskedFace, grayMaskSmallThresh);
-
-        // Use bitwise &quot;AND&quot; operator to overlay face mask
-        bitwise\_and(frameROI, frameROI, maskedFrame, grayMaskSmallThreshInv);
-
-        // Add the above masked images and place it in the original frame ROI to create the final image
-        add(maskedFace, maskedFrame, frame(Rect(x,y,w,h)));
-    &#125;
-</code></pre>
+        <h3 id="CentOS-7-4-Minimum-Install"><a href="#CentOS-7-4-Minimum-Install" class="headerlink" title="CentOS 7.4 Minimum Install"></a>CentOS 7.4 Minimum Install</h3><p><img src="/img/QQ_20171204170802.png"></p>
+<h3 id="Firewalls-Configure"><a href="#Firewalls-Configure" class="headerlink" title="Firewalls Configure"></a>Firewalls Configure</h3><p>[root@controller ~]# systemctl stop firewalld.service<br>[root@controller ~]# systemctl disable firewalld.service<br>Removed symlink &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;firewalld.service.<br>Removed symlink &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;dbus-org.fedoraproject.FirewallD1.service.</p>
+<h3 id="Install-Tools"><a href="#Install-Tools" class="headerlink" title="Install Tools"></a>Install Tools</h3><p>[root@controller ~]# yum install net-tools wget vim ntpdate bash-completion -y</p>
+<h3 id="Network-Configure"><a href="#Network-Configure" class="headerlink" title="Network Configure"></a>Network Configure</h3><p>external：9.1.1.0&#x2F;24 admin manage：10.1.1.0&#x2F;24 tunnel：10.2.2.0&#x2F;24 internet：10.0.2.0&#x2F;24</p>
+<h4 id="Controller："><a href="#Controller：" class="headerlink" title="Controller："></a>Controller：</h4><p>List all the network adapter:</p>
+<p>[root@controller ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–. 1 root root 284 Oct 16 02:13 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>-rw-r–r– 1 root root 347 Oct 26 22:42 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s3<br>-rw-r–r– 1 root root 365 Oct 19 03:27 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>-rw-r–r– 1 root root 365 Oct 19 03:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>-rw-r–r–. 1 root root 254 May 3 2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s3<br>HWADDR&#x3D;08:00:27:6a:0e:c6<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s3<br>UUID&#x3D;213e8c02-7e99-4380-a080-a845923d5088<br>DEVICE&#x3D;enp0s3<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;9.1.1.61<br>NETMASK&#x3D;255.255.255.0</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>HWADDR&#x3D;08:00:27:01:4e:3a<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;edaf67ed-cc12-41a3-97aa-b71a497d7ac0<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.1.1.61<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.1.1.1</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>HWADDR&#x3D;08:00:27:66:23:8c<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s9<br>UUID&#x3D;7f5ab86f-efb6-4a93-b09a-af2fe80ea347<br>DEVICE&#x3D;enp0s9<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.2.2.61<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.2.2.1</p>
+<p>Update the 4th network adapter:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;dhcp<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s10<br>UUID&#x3D;ad48bc1f-4e7b-4643-b35a-f6cd457a75a0<br>DEVICE&#x3D;enp0s10<br>ONBOOT&#x3D;yes</p>
+<h4 id="Compute："><a href="#Compute：" class="headerlink" title="Compute："></a>Compute：</h4><p>List all the network adapter:</p>
+<p>[root@compute ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–. 1 root root 284 Oct 16 02:13 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>-rw-r–r– 1 root root 365 Oct 18 12:35 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>-rw-r–r– 1 root root 365 Oct 18 12:36 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>-rw-r–r–. 1 root root 254 May 3 2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>HWADDR&#x3D;08:00:27:b8:bd:60<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;edaf67ed-cc12-41a3-97aa-b71a497d7ac0<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.1.1.62<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.1.1.1</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>HWADDR&#x3D;08:00:27:42:5a:df<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s9<br>UUID&#x3D;7f5ab86f-efb6-4a93-b09a-af2fe80ea347<br>DEVICE&#x3D;enp0s9<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.2.2.62<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.2.2.1</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;dhcp<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s10<br>UUID&#x3D;ad48bc1f-4e7b-4643-b35a-f6cd457a75a0<br>DEVICE&#x3D;enp0s10<br>ONBOOT&#x3D;yes</p>
+<h3 id="Update-hostname"><a href="#Update-hostname" class="headerlink" title="Update hostname"></a>Update hostname</h3><p>Controller:</p>
+<p>[root@controller ~]# hostnamectl set-hostname controller</p>
+<p>Compute:</p>
+<p>[root@compute ~]# hostnamectl set-hostname compute</p>
+<p>Controller &amp; Compute:</p>
+<p>[root@controller ~]# cat &#x2F;etc&#x2F;hosts<br>127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4<br>::1 localhost localhost.localdomain localhost6 localhost6.localdomain6<br>10.1.1.61 controller<br>10.1.1.62 compute</p>
+<h3 id="synchronize-system-time-important"><a href="#synchronize-system-time-important" class="headerlink" title="synchronize system time ( important)"></a>synchronize system time ( important)</h3><p>[root@controller ~]# yum install ntp -y<br>[root@controller ~]# systemctl enable ntpd &amp;&amp; systemctl restart ntpd<br>[root@controller ~]# ntpq -p<br>[root@controller ~]# date</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/overlaying-a-facemask/" data-id="cl56jpsu300duaschfrnd386p" data-title="Overlaying A Facemask" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/04/centos-7-4-install-configure/" data-id="cl56jpsnf0073asch4kem57lx" data-title="CentOS 7.4 Install &amp; Configure" class="article-share-link">Share</a>
       
       
       
@@ -320,14 +247,14 @@ return output;
 
 
   
-    <article id="post-noise-removal-lighting-removal-binarization" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-prepare" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/noise-removal-lighting-removal-binarization/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T05:51:00.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/12/01/prepare/" class="article-date">
+  <time class="dt-published" datetime="2017-12-01T02:49:19.000Z" itemprop="datePublished">2017-12-01</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-Pike-Installation/">OpenStack Pike Installation</a>
   </div>
 
   </div>
@@ -338,7 +265,7 @@ return output;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/noise-removal-lighting-removal-binarization/">Noise removal &amp; Lighting removal &amp; Binarization</a>
+      <a class="p-name article-title" href="/2017/12/01/prepare/">Prepare</a>
     </h1>
   
 
@@ -346,15 +273,40 @@ return output;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Remove-Noise"><a href="#Remove-Noise" class="headerlink" title="Remove Noise"></a>Remove Noise</h3><p>  Mat img_noise, img_box_smooth;<br>  medianBlur(img, img_noise, 3);<br>  blur(img, img_box_smooth, Size(3,3));</p>
-<h3 id="Remove-Light"><a href="#Remove-Light" class="headerlink" title="Remove Light"></a>Remove Light</h3><p>  &#x2F;&#x2F; Load image to process<br>  Mat light_pattern&#x3D; imread(light_pattern_file, 0);<br>  if(light_pattern.data&#x3D;&#x3D;NULL){<br>    &#x2F;&#x2F; Calculate light pattern<br>    light_pattern&#x3D; calculateLightPattern(img_noise);<br>  }<br>  medianBlur(light_pattern, light_pattern, 3);</p>
-<p>  &#x2F;&#x2F;Apply the light pattern<br>  Mat img_no_light;<br>  img_noise.copyTo(img_no_light);<br>  if(method_light!&#x3D;2){<br>  img_no_light&#x3D; removeLight(img_noise, light_pattern, method_light);<br>  }</p>
-<h3 id="Binarize"><a href="#Binarize" class="headerlink" title="Binarize"></a>Binarize</h3><p>  &#x2F;&#x2F; Binarize image for segment<br>  Mat img_thr;<br>  if(method_light!&#x3D;2){<br>  threshold(img_no_light, img_thr, 30, 255, THRESH_BINARY);<br>  }else{<br>  threshold(img_no_light, img_thr, 140, 255, THRESH_BINARY_INV);<br>  }</p>
+        <h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p> Intel Core i7 processor</p>
+<p>16GB memory</p>
+<p>512GB storage</p>
+<h4 id="For-example："><a href="#For-example：" class="headerlink" title="For example："></a>For example：</h4><p> 15-inch MacBook Pro 2017:</p>
+<p>Touch Bar and Touch ID</p>
+<p>2.9GHz Processor </p>
+<p>512GB Storage</p>
+<p>2.9GHz quad-core 7th-generation Intel Core i7 processor</p>
+<p>Turbo Boost up to 3.9GHz</p>
+<p>16GB 2133MHz LPDDR3 memory</p>
+<p>512GB SSD storage1</p>
+<p>Radeon Pro 560 with 4GB memory</p>
+<p>Four Thunderbolt 3 ports</p>
+<p>Touch Bar and Touch ID</p>
+<h3 id="Virtual-Box-for-OpenStack-Requirement"><a href="#Virtual-Box-for-OpenStack-Requirement" class="headerlink" title="Virtual Box for OpenStack Requirement"></a>Virtual Box for OpenStack Requirement</h3><p><img src="/img/VirtualBox-NetworkNAT.png"></p>
+<h4 id="1-Controller"><a href="#1-Controller" class="headerlink" title="1 * Controller:"></a>1 * Controller:</h4><p>Memory : 8G</p>
+<p>Storage : 256G</p>
+<p>Network : 4 (extenel, admin, tunnel, net)</p>
+<p> <img src="/img/VirtualBox-Controller-Overview-1.png"></p>
+<p><img src="/img/VirtualBox-Controller-NetworkAdaptec1-1.png"></p>
+<p><img src="/img/VirtualBox-Controller-NetworkAdaptec2-1.png"></p>
+<p><img src="/img/VirtualBox-Controller-NetworkAdaptec3-1.png"></p>
+<p><img src="/img/VirtualBox-Controller-NetworkAdaptec4-1.png"></p>
+<h4 id="1-Compute"><a href="#1-Compute" class="headerlink" title="1 * Compute:"></a>1 * Compute:</h4><p>Memory : 4G</p>
+<p>Storage : 256G</p>
+<p>Network : 3 (admin, tunnel, net)</p>
+<p>    <img src="/img/VirtualBox-Compute-Overview.png"></p>
+<p><img src="/img/VirtualBox-Compute-NetworkAdaptec2.png"></p>
+<p><img src="/img/VirtualBox-Compute-NetworkAdaptec4.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/noise-removal-lighting-removal-binarization/" data-id="cl56jpsth00d8aschgavl7kwr" data-title="Noise removal &amp; Lighting removal &amp; Binarization" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/12/01/prepare/" data-id="cl56jpsu900e1asch78w6hus4" data-title="Prepare" class="article-share-link">Share</a>
       
       
       
@@ -366,14 +318,14 @@ return output;
 
 
   
-    <article id="post-segmenting-imagethe-connected-components-the-findcontours-function" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-rdo-all-in-one" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T05:47:35.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/11/29/rdo-all-in-one/" class="article-date">
+  <time class="dt-published" datetime="2017-11-29T09:18:41.000Z" itemprop="datePublished">2017-11-29</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/Cloud-Computing/">Cloud Computing</a>►<a class="article-category-link" href="/categories/cloud-computing/">cloud-computing</a>►<a class="article-category-link" href="/categories/cloud-computing/OpenStack-All-In-One/">OpenStack All In One</a>
   </div>
 
   </div>
@@ -384,7 +336,7 @@ return output;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/">Segmenting image(The connected components &amp; The findContours function)</a>
+      <a class="p-name article-title" href="/2017/11/29/rdo-all-in-one/">RDO ( All-In-One )</a>
     </h1>
   
 
@@ -392,22 +344,17 @@ return output;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Connected-Components"><a href="#Connected-Components" class="headerlink" title="Connected Components"></a>Connected Components</h3><p>void ConnectedComponents(Mat img)<br>{<br>  &#x2F;&#x2F; Use connected components to divide our possibles parts of images<br>  Mat labels;<br>  int num_objects&#x3D; connectedComponents(img, labels);<br>  &#x2F;&#x2F; Check the number of objects detected<br>  if(num_objects &lt; 2 ){<br>    cout &lt;&lt; “No objects detected” &lt;&lt; endl;<br>    return;<br>  }else{<br>    cout &lt;&lt; “Number of objects detected: “ &lt;&lt; num_objects - 1 &lt;&lt; endl;<br>  }<br>  &#x2F;&#x2F; Create output image coloring the objects<br>  Mat output&#x3D; Mat::zeros(img.rows,img.cols, CV_8UC3);<br>  RNG rng( 0xFFFFFFFF );<br>  for(int i&#x3D;1; iaddImage(“Result”, output);<br>}</p>
-<p>void ConnectedComponentsStats(Mat img)<br>{<br>  &#x2F;&#x2F; Use connected components with stats<br>  Mat labels, stats, centroids;<br>  int num_objects&#x3D; connectedComponentsWithStats(img, labels, stats, centroids);<br>  &#x2F;&#x2F; Check the number of objects detected<br>  if(num_objects &lt; 2 ){<br>    cout &lt;&lt; “No objects detected” &lt;&lt; endl;<br>    return;<br>  }else{<br>    cout &lt;&lt; “Number of objects detected: “ &lt;&lt; num_objects - 1 &lt;&lt; endl;<br>  }<br>  &#x2F;&#x2F; Create output image coloring the objects and show area<br>  Mat output&#x3D; Mat::zeros(img.rows,img.cols, CV_8UC3);<br>  RNG rng( 0xFFFFFFFF );<br>  for(int i&#x3D;1; i(i) &lt;&lt; “ with area “ &lt;&lt; stats.at(i, CC_STAT_AREA) &lt;&lt; endl;<br>    Mat mask&#x3D; labels&#x3D;&#x3D;i;<br>    output.setTo(randomColor(rng), mask);<br>    &#x2F;&#x2F; draw text with area<br>    stringstream ss;<br>    ss &lt;&lt; “area: “ &lt;&lt; stats.at(i, CC_STAT_AREA);</p>
-<pre><code>putText(output, 
-  ss.str(), 
-  centroids.at(i), 
-  FONT\_HERSHEY\_SIMPLEX, 
-  0.4, 
-  Scalar(255,255,255));
-</code></pre>
-<p>  }<br>  imshow(“Result”, output);<br>  miw-&gt;addImage(“Result”, output);<br>} </p>
-<h3 id="Find-Contours-Basic"><a href="#Find-Contours-Basic" class="headerlink" title="Find Contours Basic"></a>Find Contours Basic</h3><p>void FindContoursBasic(Mat img)<br>{<br>  vector &gt; contours;<br>  findContours(img, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);<br>  Mat output&#x3D; Mat::zeros(img.rows,img.cols, CV_8UC3);<br>  &#x2F;&#x2F; Check the number of objects detected<br>  if(contours.size() &#x3D;&#x3D; 0 ){<br>    cout &lt;&lt; “No objects detected” &lt;&lt; endl;<br>    return;<br>  }else{<br>    cout &lt;&lt; “Number of objects detected: “ &lt;&lt; contours.size() &lt;&lt; endl;<br>  }<br>  RNG rng( 0xFFFFFFFF );<br>  for(int i&#x3D;0; iaddImage(“Result”, output);<br>}</p>
+        <h3 id="Summary-for-the-impatient"><a href="#Summary-for-the-impatient" class="headerlink" title="Summary for the impatient"></a>Summary for the impatient</h3><p>[root@localhost ~]# yum install -y centos-release-openstack-pike<br>[root@localhost ~]# yum update -y<br>[root@localhost ~]# yum install -y openstack-packstack<br>[root@localhost ~]# packstack –allinone</p>
+<h3 id="The-Log"><a href="#The-Log" class="headerlink" title="The Log"></a>The Log</h3><p>Welcome to the Packstack setup utility</p>
+<p>The installation log file is available at: &#x2F;var&#x2F;tmp&#x2F;packstack&#x2F;20171018-213803-Gj17Wj&#x2F;openstack-setup.log<br>Packstack changed given value to required value &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub</p>
+<h3 id="Installing"><a href="#Installing" class="headerlink" title="Installing:"></a>Installing:</h3><p>Clean Up [ DONE ]<br>Discovering ip protocol version [ DONE ]<br>Setting up ssh keys [ DONE ]<br>Preparing servers [ DONE ]<br>Pre installing Puppet and discovering hosts’ details [ DONE ]<br>Preparing pre-install entries [ DONE ]<br>Setting up CACERT [ DONE ]<br>Preparing AMQP entries [ DONE ]<br>Preparing MariaDB entries [ DONE ]<br>Fixing Keystone LDAP config parameters to be undef if empty[ DONE ]<br>Preparing Keystone entries [ DONE ]<br>Preparing Glance entries [ DONE ]<br>Checking if the Cinder server has a cinder-volumes vg[ DONE ]<br>Preparing Cinder entries [ DONE ]<br>Preparing Nova API entries [ DONE ]<br>Creating ssh keys for Nova migration [ DONE ]<br>Gathering ssh host keys for Nova migration [ DONE ]<br>Preparing Nova Compute entries [ DONE ]<br>Preparing Nova Scheduler entries [ DONE ]<br>Preparing Nova VNC Proxy entries [ DONE ]<br>Preparing OpenStack Network-related Nova entries [ DONE ]<br>Preparing Nova Common entries [ DONE ]<br>Preparing Neutron LBaaS Agent entries [ DONE ]<br>Preparing Neutron API entries [ DONE ]<br>Preparing Neutron L3 entries [ DONE ]<br>Preparing Neutron L2 Agent entries [ DONE ]<br>Preparing Neutron DHCP Agent entries [ DONE ]<br>Preparing Neutron Metering Agent entries [ DONE ]<br>Checking if NetworkManager is enabled and running [ DONE ]<br>Preparing OpenStack Client entries [ DONE ]<br>Preparing Horizon entries [ DONE ]<br>Preparing Swift builder entries [ DONE ]<br>Preparing Swift proxy entries [ DONE ]<br>Preparing Swift storage entries [ DONE ]<br>Preparing Gnocchi entries [ DONE ]<br>Preparing MongoDB entries [ DONE ]<br>Preparing Redis entries [ DONE ]<br>Preparing Ceilometer entries [ DONE ]<br>Preparing Aodh entries [ DONE ]<br>Preparing Puppet manifests [ DONE ]<br>Copying Puppet modules and manifests [ DONE ]<br>Applying 192.168.78.134_controller.pp<br>192.168.78.134_controller.pp: [ DONE ]<br>Applying 192.168.78.134_network.pp<br>192.168.78.134_network.pp: [ DONE ]<br>Applying 192.168.78.134_compute.pp<br>192.168.78.134_compute.pp: [ DONE ]<br>Applying Puppet manifests [ DONE ]<br>Finalizing [ DONE ]</p>
+<p><strong>**** Installation completed successfully ******</strong></p>
+<p>Additional information:<br>* A new answerfile was created in: &#x2F;root&#x2F;packstack-answers-20171018-213808.txt<br>* Time synchronization installation was skipped. Please note that unsynchronized time on server instances might be problem for some OpenStack components.<br>* Warning: NetworkManager is active on 192.168.78.134. OpenStack networking currently does not work on systems that have the Network Manager service enabled.<br>* File &#x2F;root&#x2F;keystonerc_admin has been created on OpenStack client host 192.168.78.134. To use the command line tools you need to source the file.<br>* To access the OpenStack Dashboard browse to <strong><a target="_blank" rel="noopener" href="http://192.168.78.134/dashboard">http://192.168.78.134/dashboard</a></strong> .<br>Please, find your login credentials stored in the keystonerc_admin in your home directory.<br>* Because of the kernel update the host 192.168.78.134 requires reboot.<br>* The installation log file is available at: &#x2F;var&#x2F;tmp&#x2F;packstack&#x2F;20171018-213803-Gj17Wj&#x2F;openstack-setup.log<br>* The generated manifests are available at: &#x2F;var&#x2F;tmp&#x2F;packstack&#x2F;20171018-213803-Gj17Wj&#x2F;manifests<br>You have new mail in &#x2F;var&#x2F;spool&#x2F;mail&#x2F;root</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/segmenting-imagethe-connected-components-the-findcontours-function/" data-id="cl56jpswx00gtasch34gq01jz" data-title="Segmenting image(The connected components &amp; The findContours function)" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/11/29/rdo-all-in-one/" data-id="cl56jpswl00gcaschbczs5oaz" data-title="RDO ( All-In-One )" class="article-share-link">Share</a>
       
       
       
@@ -419,14 +366,14 @@ return output;
 
 
   
-    <article id="post-the-scene-text-detection-extraction-recognition" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-hello-world-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2018/05/03/the-scene-text-detection-extraction-recognition/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T03:49:12.000Z" itemprop="datePublished">2018-05-03</time>
+    <a href="/2017/11/28/hello-world-2/" class="article-date">
+  <time class="dt-published" datetime="2017-11-28T03:05:28.000Z" itemprop="datePublished">2017-11-28</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
+    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
   </div>
 
   </div>
@@ -437,7 +384,7 @@ return output;
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/the-scene-text-detection-extraction-recognition/">The Scene Text Detection &amp; Extraction &amp; Recognition</a>
+      <a class="p-name article-title" href="/2017/11/28/hello-world-2/">Hello world!</a>
     </h1>
   
 
@@ -445,374 +392,12 @@ return output;
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Separate-Channels"><a href="#Separate-Channels" class="headerlink" title="Separate Channels"></a>Separate Channels</h3><p>vector separateChannels(Mat&amp; src)<br>{<br>vector channels;<br>&#x2F;&#x2F;Grayscale images<br>if (src.type() &#x3D;&#x3D; CV_8U  src.type() &#x3D;&#x3D; CV_8UC1) {<br>channels.push_back(src);<br>channels.push_back(255-src);<br>return channels;<br>}</p>
-<p>&#x2F;&#x2F;Colored images<br>if (src.type() &#x3D;&#x3D; CV_8UC3) {<br>computeNMChannels(src, channels);<br>int size &#x3D; static_cast(channels.size())-1;<br>for (int c &#x3D; 0; c &lt; size; c++)<br>channels.push_back(255-channels[c]);<br>return channels;<br>}</p>
-<p>&#x2F;&#x2F;Other types<br>cout &lt;&lt; “Invalid image format!” &lt;&lt; endl;<br>exit(-1);<br>} </p>
-<h3 id="Detection-amp-Draw-Groups-Boxes"><a href="#Detection-amp-Draw-Groups-Boxes" class="headerlink" title="Detection &amp; Draw Groups Boxes"></a>Detection &amp; Draw Groups Boxes</h3><pre><code>//Convert the input image to grayscale.
-//Just do Mat processed = input; to work with colors.
-Mat processed;
-cvtColor(input, processed, CV\_RGB2GRAY);
-
-auto channels = separateChannels(processed);
-
-// Create ERFilter objects with the 1st and 2nd stage classifiers
-auto filter1 = createERFilterNM1(loadClassifierNM1(&quot;trained\_classifierNM1.xml&quot;),15,0.00015f,0.13f,0.2f,true,0.1f);
-auto filter2 = createERFilterNM2(loadClassifierNM2(&quot;trained\_classifierNM2.xml&quot;),0.5);
-
-//Extract text regions using Newmann &amp; Matas algorithm
-cout &lt;&lt; &quot;Processing &quot; &lt;&lt; channels.size() &lt;&lt; &quot; channels...&quot; &lt;&lt; endl;
-vector &gt; regions(channels.size());
-for (int c=0; c &lt; channels.size(); c++)
-&#123;
-    cout &lt;&lt; &quot;    Channel &quot; &lt;&lt; (c+1) &lt;&lt; endl;
-    filter1-&gt;run(channels\[c\], regions\[c\]);
-    filter2-&gt;run(channels\[c\], regions\[c\]);
-&#125;
-filter1.release();
-filter2.release();
-
-//Separate character groups from regions
-vector&lt; vector &gt; groups;
-vector groupRects;
-erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_HORIZ);
-//erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_ANY, &quot;trained\_classifier\_erGrouping.xml&quot;, 0.5);
-
-// draw groups boxes
-for (auto rect : groupRects)
-    rectangle(input, rect, Scalar(0, 255, 0), 3); 
-</code></pre>
-<h3 id="Get-Extremal-Region"><a href="#Get-Extremal-Region" class="headerlink" title="Get Extremal Region"></a>Get Extremal Region</h3><p>Mat drawER(const vector &amp;channels, const vector &gt; ®ions, const vector&amp; group, const Rect&amp; rect)<br>{<br>    Mat out &#x3D; Mat::zeros(channels[0].rows+2, channels[0].cols+2, CV_8UC1);</p>
-<pre><code>int flags = 4//4 neighbors
-            + (255 &lt;&lt; 8)//paint mask in white (255)
-</code></pre>
-<ul>
-<li><p>FLOODFILL_FIXED_RANGE&#x2F;&#x2F;fixed range</p>
-</li>
-<li><p>FLOODFILL_MASK_ONLY;&#x2F;&#x2F;Paint just the mask</p>
-<p>  for (int g&#x3D;0; g &lt; group.size(); g++)<br>  {<br>  int idx &#x3D; group[g][0];<br>  ERStat er &#x3D; regions[idx][group[g][1]];<br><br>  &#x2F;&#x2F;Ignore root region<br>  if (er.parent &#x3D;&#x3D; NULL)<br>      continue;<br>  &#x2F;&#x2F;Transform the linear pixel value to row and col<br>  int px &#x3D; er.pixel % channels[idx].cols;<br>  int py &#x3D; er.pixel &#x2F; channels[idx].cols;</p>
-<p>  &#x2F;&#x2F;Create the point and adds it to the list.<br>  Point p(px, py);</p>
-<p>  &#x2F;&#x2F;Draw the extremal region<br>  floodFill(<br>          channels[idx], out,&#x2F;&#x2F;Image and mask<br>          p, Scalar(255),&#x2F;&#x2F;Seed and color<br>          nullptr,&#x2F;&#x2F;No rect<br>          Scalar(er.level),Scalar(0),&#x2F;&#x2F;LoDiff and upDiff<br>          flags&#x2F;&#x2F;Flags<br>      );<br>  }</p>
-<p>  &#x2F;&#x2F;Crop just the text area and find it’s points<br>  out &#x3D; out(rect);</p>
-<p>  vector points;<br>  findNonZero(out, points);<br>  &#x2F;&#x2F;Use deskew and crop to crop it perfectly<br>  return deskewAndCrop(out, minAreaRect(points));</p>
-</li>
-</ul>
-<p>} </p>
-<h3 id="Create-ERFilter"><a href="#Create-ERFilter" class="headerlink" title="Create ERFilter"></a>Create ERFilter</h3><pre><code>// Create ERFilter objects with the 1st and 2nd stage classifiers
-auto filter1 = createERFilterNM1(loadClassifierNM1(&quot;trained\_classifierNM1.xml&quot;),15,0.00015f,0.13f,0.2f,true,0.1f);
-auto filter2 = createERFilterNM2(loadClassifierNM2(&quot;trained\_classifierNM2.xml&quot;),0.5);
-
-//Extract text regions using Newmann &amp; Matas algorithm
-cout &lt;&lt; &quot;Processing &quot; &lt;&lt; channels.size() &lt;&lt; &quot; channels...&quot; &lt;&lt; endl;
-vector &gt; regions(channels.size());
-for (int c=0; c &lt; channels.size(); c++)
-&#123;
-    cout &lt;&lt; &quot;    Channel &quot; &lt;&lt; (c+1) &lt;&lt; endl;
-    filter1-&gt;run(channels\[c\], regions\[c\]);
-    filter2-&gt;run(channels\[c\], regions\[c\]);
-&#125;
-filter1.release();
-filter2.release(); 
-</code></pre>
-<h3 id="Separate-Characters-amp-OCR-gt-Run"><a href="#Separate-Characters-amp-OCR-gt-Run" class="headerlink" title="Separate Characters &amp; OCR-&gt;Run"></a>Separate Characters &amp; OCR-&gt;Run</h3><pre><code>//Separate character groups from regions
-vector&lt; vector &gt; groups;
-vector groupRects;
-erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_HORIZ);
-//erGrouping(input, channels, regions, groups, groupRects, ERGROUPING\_ORIENTATION\_ANY, &quot;trained\_classifier\_erGrouping.xml&quot;, 0.5);
-
-// text detection
-cout &lt;&lt; endl &lt;&lt; &quot;Detected text:&quot; &lt;&lt; endl;
-cout &lt;&lt; &quot;-------------&quot; &lt;&lt; endl;
-auto ocr = initOCR(&quot;tesseract&quot;);
-for (int i = 0; i &lt; groups.size(); i++)
-&#123;
-    Mat wordImage = drawER(channels, regions, groups\[i\], groupRects\[i\]);
-
-    string word;
-    ocr-&gt;run(wordImage, word);
-    cout &lt;&lt; word &lt;&lt; endl;
-&#125;
-</code></pre>
+        <p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/the-scene-text-detection-extraction-recognition/" data-id="cl56jpsxt00hsasch9rmne6o7" data-title="The Scene Text Detection &amp; Extraction &amp; Recognition" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-tesseract-ocr-api" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/05/03/tesseract-ocr-api/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T02:52:59.000Z" itemprop="datePublished">2018-05-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/tesseract-ocr-api/">Tesseract OCR API</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Tesseract-API-—-OCR"><a href="#Tesseract-API-—-OCR" class="headerlink" title="Tesseract API — OCR"></a>Tesseract API — OCR</h3><p>tesseract::TessBaseAPI ocr;</p>
-<p>char* identifyText(Mat input, char* language &#x3D; “eng”)<br>{<br>ocr.Init(NULL, language, tesseract::OEM_TESSERACT_ONLY);<br>ocr.SetVariable(“tessedit_write_images”, “1”);<br>ocr.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);<br>ocr.SetImage(input.data, input.cols, input.rows, input.elemSize(), input.cols);</p>
-<p>char* text &#x3D; ocr.GetUTF8Text();<br>cout &lt;&lt; “Text:” &lt;&lt; endl;<br>cout &lt;&lt; text &lt;&lt; endl;<br>cout &lt;&lt; “Confidence: “ &lt;&lt; ocr.MeanTextConf() &lt;&lt; endl &lt;&lt; endl;</p>
-<p>&#x2F;&#x2F; Get the text<br>return text;<br>}</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/tesseract-ocr-api/" data-id="cl56jpsxi00hiaschaxxjhgdn" data-title="Tesseract OCR API" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-text-segmentation" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/05/03/text-segmentation/" class="article-date">
-  <time class="dt-published" datetime="2018-05-03T02:40:42.000Z" itemprop="datePublished">2018-05-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/05/03/text-segmentation/">Text Segmentation</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Binarize"><a href="#Binarize" class="headerlink" title="Binarize"></a>Binarize</h3><p>Mat binarize(Mat input)<br>{<br>&#x2F;&#x2F;Uses otsu to threshold the input image<br>Mat binaryImage;<br>cvtColor(input, input, CV_BGR2GRAY);<br>threshold(input, binaryImage, 0, 255, THRESH_OTSU);</p>
-<p>&#x2F;&#x2F;Count the number of black and white pixels<br>int white &#x3D; countNonZero(binaryImage);<br>int black &#x3D; binaryImage.size().area() - white;</p>
-<p>&#x2F;&#x2F;If the image is mostly white (white background), invert it<br>return white &lt; black ? binaryImage : ~binaryImage;<br>}</p>
-<h3 id="Dilate-amp-Find-Contours"><a href="#Dilate-amp-Find-Contours" class="headerlink" title="Dilate &amp; Find Contours"></a>Dilate &amp; Find Contours</h3><p>vector findTextAreas(Mat input) {<br>&#x2F;&#x2F;Dilate the image<br>Mat kernel &#x3D; getStructuringElement(MORPH_CROSS, Size(3,3));<br>Mat dilated;<br>dilate(input, dilated, kernel, cv::Point(-1, -1), 5);</p>
-<p>&#x2F;&#x2F;Find all image contours<br>vector &gt; contours;<br>findContours(dilated, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);</p>
-<p>&#x2F;&#x2F;For each contour<br>vector areas;<br>for (auto contour : contours)<br>{<br>&#x2F;&#x2F;Find it’s rotated rect<br>auto box &#x3D; minAreaRect(contour);</p>
-<p>&#x2F;&#x2F;Discard very small boxes<br>if (box.size.width &lt; 20  box.size.height &lt; 20)<br>continue;</p>
-<p>&#x2F;&#x2F;Discard squares shaped boxes and boxes<br>&#x2F;&#x2F;higher than larger<br>double proportion &#x3D; box.angle &lt; -45.0 ?<br>box.size.height &#x2F; box.size.width :<br>box.size.width &#x2F; box.size.height;</p>
-<p>if (proportion &lt; 2)<br>continue;</p>
-<p>&#x2F;&#x2F;Add the box<br>areas.push_back(box);<br>}<br>return areas;<br>} </p>
-<h3 id="Crop"><a href="#Crop" class="headerlink" title="Crop"></a>Crop</h3><p>Mat deskewAndCrop(Mat input, const RotatedRect&amp; box)<br>{<br>double angle &#x3D; box.angle;<br>Size2f size &#x3D; box.size;</p>
-<p>&#x2F;&#x2F;Adjust the box angle<br>   if (angle &lt; -45.0)<br>{<br>        angle +&#x3D; 90.0;<br>        std::swap(size.width, size.height);<br>}</p>
-<p>&#x2F;&#x2F;Rotate the text according to the angle<br>Mat transform &#x3D; getRotationMatrix2D(box.center, angle, 1.0);<br>Mat rotated;<br>warpAffine(input, rotated, transform, input.size(), INTER_CUBIC);</p>
-<p>&#x2F;&#x2F;Crop the result<br>Mat cropped;<br>getRectSubPix(rotated, size, box.center, cropped);<br>copyMakeBorder(cropped,cropped,10,10,10,10,BORDER_CONSTANT,Scalar(0));<br>return cropped;<br>}</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/03/text-segmentation/" data-id="cl56jpsxl00hnaschg6z0aauz" data-title="Text Segmentation" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-788" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/04/12/788/" class="article-date">
-  <time class="dt-published" datetime="2018-04-12T09:06:02.000Z" itemprop="datePublished">2018-04-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/multiple-programming-languages/">multiple-programming-languages</a>►<a class="article-category-link" href="/categories/multiple-programming-languages/OpenSSL/">OpenSSL</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/04/12/788/">VS2017 OpenSSL x64 Compile &amp; Test Source Code</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>Windows 10 Pro 1709 Visual Studio 2017 openssl-1.1.0h.tar.gz ActivePerl-5.26.1.2601-MSWin32-x64-404865.exe</p>
-<h3 id="Install-dmake"><a href="#Install-dmake" class="headerlink" title="Install dmake"></a>Install dmake</h3><p>ppm install dmake</p>
-<h3 id="Compile-OpenSSL-x64-Release-DLL"><a href="#Compile-OpenSSL-x64-Release-DLL" class="headerlink" title="Compile OpenSSL x64 Release DLL"></a>Compile OpenSSL x64 Release DLL</h3><p>C:\&gt;cd openssl-1.1.0h<br>C:\openssl-1.1.0h&gt;perl Configure VC-WIN64A no-asm –prefix&#x3D;C:&#x2F;openssl –openssldir&#x3D;C:&#x2F;openssl&#x2F;ssl<br>C:\openssl-1.1.0h&gt;nmake<br>C:\openssl-1.1.0h&gt;nmake test<br>C:\openssl-1.1.0h&gt;nmake install<br>C:\openssl-1.1.0h&gt;nmake clean</p>
-<h3 id="Have-A-Look"><a href="#Have-A-Look" class="headerlink" title="Have A Look"></a>Have A Look</h3><p>C:\openssl&gt; . ├─bin │ libcrypto-1_1-x64.dll │ libssl-1_1-x64.dll │ ├─include │ └─openssl │ *.h │ ├─lib │ │ libcrypto.lib │ │ libssl.lib</p>
-<h3 id="VS2017-Project-Properties"><a href="#VS2017-Project-Properties" class="headerlink" title="VS2017 Project Properties"></a>VS2017 Project Properties</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2018/04/VS2017_OpenSSL_Define.png"> <img src="http://www.qinuu.com/wp-content/uploads/2018/04/VS2017_OpenSSL_Include.png"> <img src="http://www.qinuu.com/wp-content/uploads/2018/04/VS2017_OpenSSL_Additional.png"> <img src="http://www.qinuu.com/wp-content/uploads/2018/04/VS2017_OpenSSL_Lib.png"></p>
-<h3 id="Test-Source-Code"><a href="#Test-Source-Code" class="headerlink" title="Test Source Code"></a>Test Source Code</h3><p>#include #include #include #include #include const int RECV_SIZE &#x3D; 8192;</p>
-<p>&#x2F;&#x2F;Delete the UnionPay Merchant Information</p>
-<p>int main()<br>{<br>WSADATA wsadData;<br>WSAStartup(MAKEWORD(2, 2), &amp;wsadData);</p>
-<p>ADDRINFOT aiHints;<br>ZeroMemory(&amp;aiHints, sizeof(ADDRINFOT));<br>aiHints.ai_family &#x3D; AF_INET;<br>aiHints.ai_flags &#x3D; AI_PASSIVE;<br>aiHints.ai_protocol &#x3D; 0;<br>aiHints.ai_socktype &#x3D; SOCK_STREAM;</p>
-<p>PADDRINFOT paiResult;<br>GetAddrInfo(wstrHost.c_str(), NULL, &amp;aiHints, &amp;paiResult);</p>
-<p>SOCKET sSocket &#x3D; socket(AF_INET, SOCK_STREAM, 0);<br>if (sSocket &#x3D;&#x3D; SOCKET_ERROR)<br>{<br>std::wcout &lt;&lt; “Error socket” &lt;&lt; std::endl;<br>return -1;<br>}</p>
-<p>struct sockaddr_in sinHost;<br>sinHost.sin_addr.s_addr &#x3D; inet_addr(ip);<br>sinHost.sin_family &#x3D; AF_INET;<br>sinHost.sin_port &#x3D; htons(port);<br>if (connect(sSocket, (LPSOCKADDR)&amp;sinHost, sizeof(SOCKADDR_IN)) &#x3D;&#x3D; SOCKET_ERROR)<br>{<br>std::wcout &lt;&lt; “Error connect” &lt;&lt; std::endl;<br>return -1;<br>}</p>
-<p>SSL_library_init();<br>SSLeay_add_ssl_algorithms();<br>SSL_load_error_strings();</p>
-<p>SSL_CTX *pctxSSL &#x3D; SSL_CTX_new(TLSv1_2_client_method());<br>if (pctxSSL &#x3D;&#x3D; NULL)<br>{<br>std::wcout &lt;&lt; “Error SSL_CTX_new” &lt;&lt; std::endl;<br>return -1;<br>}</p>
-<p>if (SSL_CTX_use_certificate_file(pctxSSL, “.&#x2F;o(*￣︶￣*)o.pem”, SSL_FILETYPE_PEM) &lt;&#x3D; 0)<br>{<br>exit(1);<br>}</p>
-<p>SSL *psslSSL &#x3D; SSL_new(pctxSSL);<br>if (psslSSL &#x3D;&#x3D; NULL)<br>{<br>std::wcout &lt;&lt; “Error SSL_new” &lt;&lt; std::endl;<br>return -1;<br>}<br>SSL_set_fd(psslSSL, sSocket);<br>INT iErrorConnect &#x3D; SSL_connect(psslSSL);<br>if (iErrorConnect &lt; 0)<br>{<br>std::wcout &lt;&lt; “Error SSL_connect, iErrorConnect&#x3D;” &lt;&lt; iErrorConnect &lt;&lt; std::endl;<br>return -1;<br>}<br>std::wcout &lt;&lt; “SSL connection using “ &lt;&lt; SSL_get_cipher(psslSSL) &lt;&lt; std::endl;</p>
-<p>&#x2F;&#x2F;Delete the HTTP Header</p>
-<p>INT iErrorWrite &#x3D; SSL_write(psslSSL, req, req_len) &lt; 0;<br>if (iErrorWrite &lt; 0)<br>{<br>std::wcout &lt;&lt; “Error SSL_write” &lt;&lt; std::endl;<br>return -1;<br>}</p>
-<p>LPSTR lpszRead &#x3D; new CHAR[RECV_SIZE];<br>INT iLength &#x3D; 1;<br>&#x2F;&#x2F;while (iLength &gt;&#x3D; 1)<br>{<br>iLength &#x3D; SSL_read(psslSSL, lpszRead, RECV_SIZE - 1);<br>if (iLength &lt; 0)<br>{<br>std::wcout &lt;&lt; “Error SSL_read” &lt;&lt; std::endl;<br>delete[] lpszRead;<br>return -1;<br>}<br>lpszRead[iLength] &#x3D; TEXT(‘\0’);<br>std::wcout &lt;&lt; lpszRead;</p>
-<p>{<br>char *token &#x3D; strtok(lpszRead, “\n”);<br>char *p_Length &#x3D; NULL;<br>while (token !&#x3D; NULL) {<br>printf(“%s\n”, token);<br>if (p_Length &#x3D; strstr(token, “Content-Length: “)) {<br>recv_len &#x3D; atoi(&amp;p_Length[strlen(“Content-Length: “)]);<br>memcpy(recv_data, &amp;lpszRead[iLength - recv_len], recv_len);<br>break;<br>}<br>token &#x3D; strtok(NULL, “\n”);<br>}<br>}</p>
-<p>{<br>int i;<br>printf(“&lt;— (%d): \n”, recv_len);<br>for (i &#x3D; 0; i &lt; recv_len; i++) {<br>printf(“%02X “, recv_data[i]);<br>}<br>printf(“\n”);<br>}</p>
-<p>}<br>delete[] lpszRead;</p>
-<p>return 0;<br>} </p>
-<h3 id="Test-Code"><a href="#Test-Code" class="headerlink" title="Test Code"></a>Test Code</h3><p><img src="http://www.qinuu.com/wp-content/uploads/2018/04/VS2017_OpenSSL_Exe_DIR.png"> <img src="http://www.qinuu.com/wp-content/uploads/2018/04/VS2017_OpenSSL_Exe_Result.png"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2018/04/12/788/" data-id="cl56jpsm10066aschcysvhg2g" data-title="VS2017 OpenSSL x64 Compile &amp; Test Source Code" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-harris-corner-detector-shi-tomasi-corner-detector" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/" class="article-date">
-  <time class="dt-published" datetime="2018-02-13T13:05:42.000Z" itemprop="datePublished">2018-02-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/computer-vision/">computer-vision</a>►<a class="article-category-link" href="/categories/computer-vision/OpenCV/">OpenCV</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/">Harris Corner Detector &amp; Shi-Tomasi Corner Detector</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Harris-Corner"><a href="#Harris-Corner" class="headerlink" title="Harris Corner"></a>Harris Corner</h3><pre><code>    // Capture the current frame
-    cap &gt;&gt; frame;
-    
-    // Resize the frame
-    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
-    
-    dst = Mat::zeros(frame.size(), CV\_32FC1);
-    
-    // Convert to grayscale
-    cvtColor(frame, frameGray, COLOR\_BGR2GRAY );
-    
-    // Detecting corners
-    cornerHarris(frameGray, dst, blockSize, apertureSize, k, BORDER\_DEFAULT);
-    
-    // Normalizing
-    normalize(dst, dst\_norm, 0, 255, NORM\_MINMAX, CV\_32FC1, Mat());
-    convertScaleAbs(dst\_norm, dst\_norm\_scaled);
-    
-    // Drawing a circle around corners
-    for(int j = 0; j &lt; dst\_norm.rows ; j++)
-    &#123;
-        for(int i = 0; i &lt; dst\_norm.cols; i++)
-        &#123;
-            if((int)dst\_norm.at(j,i) &gt; thresh)
-            &#123;
-                circle(frame, Point(i, j), 8,  Scalar(0,255,0), 2, 8, 0);
-            &#125;
-        &#125;
-    &#125; 
-</code></pre>
-<h3 id="Good-Features-To-Track-Shi-Tomasi"><a href="#Good-Features-To-Track-Shi-Tomasi" class="headerlink" title="Good Features To Track (Shi-Tomasi)"></a>Good Features To Track (Shi-Tomasi)</h3><pre><code>    // Capture the current frame
-    cap &gt;&gt; frame;
-    
-    // Resize the frame
-    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
-    
-    // Convert to grayscale
-    cvtColor(frame, frameGray, COLOR\_BGR2GRAY );
-    
-    // Initialize the parameters for Shi-Tomasi algorithm
-    vector corners;
-    double qualityThreshold = 0.02;
-    double minDist = 15;
-    int blockSize = 5;
-    bool useHarrisDetector = false;
-    double k = 0.07;
-    
-    // Clone the input frame
-    Mat frameCopy;
-    frameCopy = frame.clone();
-    
-    // Apply corner detection
-    goodFeaturesToTrack(frameGray, corners, numCorners, qualityThreshold, minDist, Mat(), blockSize, useHarrisDetector, k);
-    
-    // Parameters for the circles to display the corners
-    int radius = 8;      // radius of the cirles
-    int thickness = 2;   // thickness of the circles
-    int lineType = 8;
-    
-    // Draw the detected corners using circles
-    for(size\_t i = 0; i &lt; corners.size(); i++)
-    &#123;
-        Scalar color = Scalar(rng.uniform(0,255), rng.uniform(0,255), rng.uniform(0,255));
-        circle(frameCopy, corners\[i\], radius, color, thickness, lineType, 0);
-    &#125;
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2018/02/13/harris-corner-detector-shi-tomasi-corner-detector/" data-id="cl56jpsqo009uasch78e8cgq5" data-title="Harris Corner Detector &amp; Shi-Tomasi Corner Detector" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/11/28/hello-world-2/" data-id="cl56jpsql009pasch1elu7ysj" data-title="Hello world!" class="article-share-link">Share</a>
       
       
       
@@ -828,7 +413,7 @@ for (int i = 0; i &lt; groups.size(); i++)
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/21/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/23/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/21/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span>
   </nav>
 
 </section>

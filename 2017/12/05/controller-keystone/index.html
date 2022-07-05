@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Install KeyStone[root@controller ~]# yum install openstack-keystone httpd mod_wsgi python-openstackclient memcached python-memcached openstack-utils -y Start Memcached Service[root@controller ~]# syst">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/KeyStone-V1-1.png">
+<meta property="og:image" content="http://example.com/img/KeyStone-V1-1.png">
 <meta property="article:published_time" content="2017-12-05T01:26:37.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.174Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:39.856Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/KeyStone-V1-1.png">
+<meta name="twitter:image" content="http://example.com/img/KeyStone-V1-1.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 <h3 id="List-Httpd-Service"><a href="#List-Httpd-Service" class="headerlink" title="List Httpd Service"></a>List Httpd Service</h3><p>[root@controller ~]# systemctl list-unit-files grep httpd.service<br><strong>httpd.service enabled</strong> </p>
 <h3 id="Create-Admin-Role"><a href="#Create-Admin-Role" class="headerlink" title="Create Admin Role"></a>Create Admin Role</h3><p>[root@controller ~]# keystone-manage bootstrap \<br>–bootstrap-password password \<br>–bootstrap-username admin \<br>–bootstrap-project-name admin \<br>–bootstrap-role-name admin \<br>–bootstrap-service-name keystone \<br>–bootstrap-region-id RegionOne \<br>–bootstrap-admin-url <a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a> \<br>–bootstrap-internal-url <a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a> \<br>–bootstrap-public-url <a target="_blank" rel="noopener" href="http://controller:5000/v3">http://controller:5000/v3</a></p>
 <h3 id="List-OpenStack-Project"><a href="#List-OpenStack-Project" class="headerlink" title="List OpenStack Project"></a>List OpenStack Project</h3><p>[root@controller ~]# openstack project list –os-username admin –os-project-name admin –os-user-domain-id default –os-project-domain-id default –os-identity-api-version 3 –os-auth-url <a target="_blank" rel="noopener" href="http://controller:5000/">http://controller:5000</a> –os-password password</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2017/12/KeyStone-V1-1.png"></p>
+<p><img src="/img/KeyStone-V1-1.png"></p>
 <h3 id="Configure-Admin-Resource"><a href="#Configure-Admin-Resource" class="headerlink" title="Configure Admin Resource"></a>Configure Admin Resource</h3><p>[root@controller ~]# cat &#x2F;root&#x2F;admin-openrc<br>export OS_USER_DOMAIN_ID&#x3D;default<br>export OS_PROJECT_DOMAIN_ID&#x3D;default<br>export OS_USERNAME&#x3D;admin<br>export OS_PROJECT_NAME&#x3D;admin<br>export OS_PASSWORD&#x3D;password<br>export OS_IDENTITY_API_VERSION&#x3D;3<br>export OS_IMAGE_API_VERSION&#x3D;2<br>export OS_AUTH_URL&#x3D;<a target="_blank" rel="noopener" href="http://controller:35357/v3">http://controller:35357/v3</a></p>
 <h3 id="Create-OpenStack-Project"><a href="#Create-OpenStack-Project" class="headerlink" title="Create OpenStack Project"></a>Create OpenStack Project</h3><p>[root@controller ~]# source &#x2F;root&#x2F;admin-openrc</p>
 <p>[root@controller ~]# openstack project create –domain default –description “Service Project” service<br>[root@controller ~]# openstack project create –domain default –description “Demo Project” demo<br>[root@controller ~]# openstack user create –domain default demo –password password</p>

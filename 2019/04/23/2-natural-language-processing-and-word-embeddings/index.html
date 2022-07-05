@@ -13,20 +13,16 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Word RepresentationNLP, Natural Language Processing Word embeddings, which is a way of representing words. that let your algorithms automatically understand analogies like that, man is to woman, as ki">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Word_representation.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Featurized_representation_word_embedding.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Visualizing_word_embeddings.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Embedding_matrix.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/GloVe_global_vectors_for_word_representation.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/A_note_on_the_featurization_view_of_word_embeddings.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Sentiment_classification_problem.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Simple_sentiment_classification_model.png">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_for_sentiment_classification.png">
+<meta property="og:image" content="http://example.com/img/Word_representation.png">
+<meta property="og:image" content="http://example.com/img/Visualizing_word_embeddings.png">
+<meta property="og:image" content="http://example.com/img/Embedding_matrix.png">
+<meta property="og:image" content="http://example.com/img/A_note_on_the_featurization_view_of_word_embeddings.png">
+<meta property="og:image" content="http://example.com/img/RNN_for_sentiment_classification.png">
 <meta property="article:published_time" content="2019-04-23T01:43:11.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.563Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:39.444Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2019/04/Word_representation.png">
+<meta name="twitter:image" content="http://example.com/img/Word_representation.png">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -109,9 +105,9 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Word-Representation"><a href="#Word-Representation" class="headerlink" title="Word Representation"></a>Word Representation</h2><p><strong>NLP, Natural Language Processing</strong> <strong>Word embeddings</strong>, which is a way of representing words. that let your algorithms automatically understand analogies like that, man is to woman, as king is to queen, and many other examples. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Word_representation.png"> <strong>Representing words using a vocabulary of words.</strong> </p>
+        <h2 id="Word-Representation"><a href="#Word-Representation" class="headerlink" title="Word Representation"></a>Word Representation</h2><p><strong>NLP, Natural Language Processing</strong> <strong>Word embeddings</strong>, which is a way of representing words. that let your algorithms automatically understand analogies like that, man is to woman, as king is to queen, and many other examples. <img src="/img/Word_representation.png"> <strong>Representing words using a vocabulary of words.</strong> </p>
 <p>One of the weaknesses of this representation is that it treats each word as a thing onto itself, and it doesn’t allow an algorithm to easily generalize the cross words.</p>
-<p><img src="http://www.qinuu.com/wp-content/uploads/2019/04/Featurized_representation_word_embedding.png"> <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Visualizing_word_embeddings.png"> You see plots like these sometimes on the internet to visualize some of these 300 or higher dimensional embeddings. To visualize it, algorithms like <strong>t-SNE</strong>, map this to a much lower dimensional space.</p>
+<p><img src="/img/Visualizing_word_embeddings.png"> You see plots like these sometimes on the internet to visualize some of these 300 or higher dimensional embeddings. To visualize it, algorithms like <strong>t-SNE</strong>, map this to a much lower dimensional space.</p>
 <h2 id="Using-Word-Embeddings"><a href="#Using-Word-Embeddings" class="headerlink" title="Using Word Embeddings"></a>Using Word Embeddings</h2><p><strong>Transfer learning and word embeddings</strong></p>
 <ol>
 <li>Learn word embeddings from large text corpus. (1-100B words or download pre-trained embedding online.)</li>
@@ -119,7 +115,7 @@
 <li>Optional: Continue to finetune the word embeddings with new data.</li>
 </ol>
 <h2 id="Properties-of-Word-Embeddings"><a href="#Properties-of-Word-Embeddings" class="headerlink" title="Properties of Word Embeddings"></a>Properties of Word Embeddings</h2><p>One of the most fascinating properties of word embeddings is that they can also help with <strong>analogy reasoning</strong>. The most commonly used similarity function is called <strong>cosine similarity</strong> : [latex]CosineSimilarity(u,v) &#x3D; \frac{u.v}{\left \ u \right \_2\left \ v \right \_2} &#x3D; cos(\theta)[&#x2F;latex]</p>
-<h2 id="Embedding-Matrix"><a href="#Embedding-Matrix" class="headerlink" title="Embedding Matrix"></a>Embedding Matrix</h2><p>When you <strong>implement an algorithm to learn a word embedding</strong>, what you end up learning is an embedding matrix. And the <strong>columns</strong> of this matrix would be <strong>the different embeddings for the 10,000 different words</strong> you have in your vocabulary. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Embedding_matrix.png"></p>
+<h2 id="Embedding-Matrix"><a href="#Embedding-Matrix" class="headerlink" title="Embedding Matrix"></a>Embedding Matrix</h2><p>When you <strong>implement an algorithm to learn a word embedding</strong>, what you end up learning is an embedding matrix. And the <strong>columns</strong> of this matrix would be <strong>the different embeddings for the 10,000 different words</strong> you have in your vocabulary. <img src="/img/Embedding_matrix.png"></p>
 <h2 id="Learning-Word-Embeddings"><a href="#Learning-Word-Embeddings" class="headerlink" title="Learning Word Embeddings"></a>Learning Word Embeddings</h2><p>It turns out that <strong>building a neural language model</strong> is a reasonable way to learn a set of embedding. Well, what’s actually more commonly done is to have a <strong>fixed historical window</strong>.</p>
 <p><em>And using a fixed history, just means that you can deal with even arbitrarily long sentences because the input sizes are always fixed.</em></p>
 <p>If your goal is to learn a embedding. Researchers have experimented with many different types of context.</p>
@@ -144,8 +140,8 @@
 <li>use 1 over the vocab size, sample the negative examples uniformly at random, but that’s also very non-representative of the distribution of English words.</li>
 <li>the authors, Mikolov et al, reported that <strong>empirically</strong>, [latex]P(w_i) &#x3D; \frac{f(w_i)^{\frac{3}{4}}}{\sum _{j&#x3D;1}^{10,000}f(w_j)^{\frac{3}{4}}}[&#x2F;latex]</li>
 </ul>
-<h2 id="GloVe-Word-Vectors"><a href="#GloVe-Word-Vectors" class="headerlink" title="GloVe Word Vectors"></a>GloVe Word Vectors</h2><p><strong>GloVe</strong> stands for <strong>global vectors for word representation</strong>. Sampling pairs of words, context and target words, by picking two words that appear in close proximity to each other in our text corpus. So, what the GloVe algorithm does is, it starts off just by making that explicit. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/GloVe_global_vectors_for_word_representation.png"><img src="http://www.qinuu.com/wp-content/uploads/2019/04/A_note_on_the_featurization_view_of_word_embeddings.png"></p>
-<h2 id="Sentiment-Classification"><a href="#Sentiment-Classification" class="headerlink" title="Sentiment Classification"></a>Sentiment Classification</h2><p>Sentiment classification is the task of looking at a piece of text and telling if someone <strong>likes or dislikes</strong> the thing they’re talking about. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Sentiment_classification_problem.png"> One of the challenges of sentiment classification is you might not have a huge label training set for it. But <strong>with word embeddings</strong>, you’re able to build good sentiment classifiers <strong>even with only modest-size label training sets</strong>. <img src="http://www.qinuu.com/wp-content/uploads/2019/04/Simple_sentiment_classification_model.png"> <strong>One of the problems with this algorithm is it ignores word order.</strong> **More Sophisticated Model : ** <img src="http://www.qinuu.com/wp-content/uploads/2019/04/RNN_for_sentiment_classification.png"></p>
+<h2 id="GloVe-Word-Vectors"><a href="#GloVe-Word-Vectors" class="headerlink" title="GloVe Word Vectors"></a>GloVe Word Vectors</h2><p><strong>GloVe</strong> stands for <strong>global vectors for word representation</strong>. Sampling pairs of words, context and target words, by picking two words that appear in close proximity to each other in our text corpus. So, what the GloVe algorithm does is, it starts off just by making that explicit. <img src="/img/A_note_on_the_featurization_view_of_word_embeddings.png"></p>
+<h2 id="Sentiment-Classification"><a href="#Sentiment-Classification" class="headerlink" title="Sentiment Classification"></a>Sentiment Classification</h2><p>Sentiment classification is the task of looking at a piece of text and telling if someone <strong>likes or dislikes</strong> the thing they’re talking about. <img src="/img/RNN_for_sentiment_classification.png"></p>
 <h2 id="Debiasing-Word-Embeddings"><a href="#Debiasing-Word-Embeddings" class="headerlink" title="Debiasing Word Embeddings"></a>Debiasing Word Embeddings</h2><p>Machine learning and AI algorithms are increasingly trusted to help with, or <strong>to make, extremely important decisions</strong>. And so we like to <strong>make sure that as much as possible that they’re free of undesirable forms of bias</strong>, such as gender bias, ethnicity bias and so on.</p>
 <ul>
 <li>So the first thing we’re going to do is <strong>identify the direction corresponding to a particular bias</strong> we want to reduce or eliminate.</li>

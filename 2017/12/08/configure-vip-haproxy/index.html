@@ -13,12 +13,10 @@
 <meta property="og:site_name" content="Water&#39;s Home">
 <meta property="og:description" content="Configure the VIP[root@controller1 ~]# pcs resource create vip ocf:heartbeat:IPaddr2 ip&#x3D;”192.168.220.20” cidr_netmask&#x3D;”24” op monitor interval&#x3D;”30s” Installing HAProxy On Controllers[ro">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/HAProxy-V1.gif">
 <meta property="article:published_time" content="2017-12-08T03:55:01.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:26:09.225Z">
+<meta property="article:modified_time" content="2022-07-05T01:29:39.757Z">
 <meta property="article:author" content="Water">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.qinuu.com/wp-content/uploads/2017/12/HAProxy-V1.gif">
   
     <link rel="alternate" href="/atom.xml" title="Water's Home" type="application/atom+xml">
   
@@ -108,7 +106,7 @@
 <p>[root@controller1 ~]# scp &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg root@controller2:&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg<br>[root@controller1 ~]# scp &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg root@controller3:&#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg</p>
 <h4 id="Allow-Non-Local-IP-Binding"><a href="#Allow-Non-Local-IP-Binding" class="headerlink" title="Allow Non-Local IP Binding"></a>Allow Non-Local IP Binding</h4><p>[root@controller ~]# echo “net.ipv4.ip_nonlocal_bind &#x3D; 1” &gt;&gt;&#x2F;etc&#x2F;sysctl.conf<br>[root@controller ~]# sysctl -p<br>net.ipv4.ip_nonlocal_bind &#x3D; 1</p>
 <h4 id="Add-HAProxy-To-The-Cluster"><a href="#Add-HAProxy-To-The-Cluster" class="headerlink" title="Add HAProxy To The Cluster"></a>Add HAProxy To The Cluster</h4><p>[root@controller1 ~]# pcs resource create lb-haproxy systemd:haproxy –clone<br>[root@controller1 ~]# pcs constraint order start vip then lb-haproxy-clone kind&#x3D;Optional<br>Adding vip lb-haproxy-clone (kind: Optional) (Options: first-action&#x3D;start then-action&#x3D;start)<br>[root@controller1 ~]# pcs constraint colocation add lb-haproxy-clone with vip</p>
-<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p><a target="_blank" rel="noopener" href="http://192.168.220.20:1080/admin">http://192.168.220.20:1080/admin</a> <img src="http://www.qinuu.com/wp-content/uploads/2017/12/HAProxy-V1.gif"></p>
+<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p>img&#x2F;HAProxy-V1.gif)</p>
 <h4 id="username-x2F-password"><a href="#username-x2F-password" class="headerlink" title="username&#x2F;password :"></a>username&#x2F;password :</h4><p>admin&#x2F;admin</p>
 <h4 id="Add-RabbitMQTo-The-HAProxy"><a href="#Add-RabbitMQTo-The-HAProxy" class="headerlink" title="Add RabbitMQTo The HAProxy"></a>Add RabbitMQTo The HAProxy</h4><p>[root@controller1 ~]# echo ‘#RabbitMQ</p>
 <blockquote>

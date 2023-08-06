@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/15/mnist-caffe/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/25/3-linear-algebra-review/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/01/15/mnist-caffe/" class="post-title-link" itemprop="url">MNIST : Caffe</a>
+            <a href="/2019/03/25/3-linear-algebra-review/" class="post-title-link" itemprop="url">3 Linear Algebra Review</a>
         </h2>
 
         <div class="post-meta">
@@ -180,972 +180,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-01-15 17:01:58" itemprop="dateCreated datePublished" datetime="2019-01-15T17:01:58+08:00">2019-01-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Caffe/" itemprop="url" rel="index"><span itemprop="name">Caffe</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/Ubuntu-16-04/" itemprop="url" rel="index"><span itemprop="name">Ubuntu 16.04</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>wget <a target="_blank" rel="noopener" href="http://deeplearning.net/data/mnist/mnist.pkl.gz">http://deeplearning.net/data/mnist/mnist.pkl.gz</a></p>
-<h2 id="Loading-data-from-pkl"><a href="#Loading-data-from-pkl" class="headerlink" title="Loading data from pkl"></a>Loading data from pkl</h2><p>import os<br>import pickle, gzip<br>from matplotlib import pyplot</p>
-<p>print(‘Loading data from mnist.pkl.gz …’)<br>with gzip.open(‘mnist.pkl.gz’, ‘rb’) as f:<br>    train_set, valid_set, test_set &#x3D; pickle.load(f)</p>
-<p>imgs_dir &#x3D; ‘mnist’<br>os.system(‘mkdir -p {}’.format(imgs_dir))<br>datasets &#x3D; {‘train’: train_set, ‘val’: valid_set, ‘test’: test_set}</p>
-<p>for dataname, dataset in datasets.items():<br>    print(‘Converting {} dataset …’.format(dataname))<br>    data_dir &#x3D; os.sep.join([imgs_dir, dataname])</p>
-<pre><code>os.system(&#39;mkdir -p &#123;&#125;&#39;.format(data\_dir))
-
-for i, (img, label) in enumerate(zip(\*dataset)):
-
-    filename = &#39;&#123;:0&gt;6d&#125;\_&#123;&#125;.jpg&#39;.format(i, label)
-
-    filepath = os.sep.join(\[data\_dir, filename\])
-
-    img = img.reshape((28, 28))
-
-    pyplot.imsave(filepath, img, cmap=&#39;gray&#39;)
-    if (i + 1) % 10000 == 0:
-        print(&#39;&#123;&#125; images converted!&#39;.format(i + 1))
-</code></pre>
-<h2 id="Prepare-imglist-for-Caffe"><a href="#Prepare-imglist-for-Caffe" class="headerlink" title="Prepare imglist for Caffe"></a>Prepare imglist for Caffe</h2><p>import os<br>import sys</p>
-<p>input_path &#x3D; sys.argv[1].rstrip(os.sep)</p>
-<p>output_path &#x3D; sys.argv[2]</p>
-<p>filenames &#x3D; os.listdir(input_path)<br>with open(output_path, ‘w’) as f:<br>    for filename in filenames:</p>
-<pre><code>    filepath = os.sep.join(\[input\_path, filename\])
-
-    label = filename\[: filename.rfind(&#39;.&#39;)\].split(&#39;\_&#39;)\[1\]
-
-    line = &#39;&#123;&#125; &#123;&#125;\\n&#39;.format(filepath, label)
-    f.write(line)
-</code></pre>
-<h2 id="Convert-to-LMDB"><a href="#Convert-to-LMDB" class="headerlink" title="Convert to LMDB"></a>Convert to LMDB</h2><p>python gen_caffe_imglist.py mnist&#x2F;train train.txt<br>python gen_caffe_imglist.py mnist&#x2F;val val.txt<br>python gen_caffe_imglist.py mnist&#x2F;test test.txt</p>
-<p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; train.txt train_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; val.txt val_lmdb –gray –shuffle<br>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;convert_imageset .&#x2F; test.txt test_lmdb –gray –shuffle</p>
-<h2 id="Train-LeNet-5"><a href="#Train-LeNet-5" class="headerlink" title="Train (LeNet-5)"></a>Train (LeNet-5)</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver.prototxt -log_dir .&#x2F;</p>
-<p><img src="/img/mlp_train-401x1024.png"></p>
-<h2 id="Log-Visualization"><a href="#Log-Visualization" class="headerlink" title="Log Visualization"></a>Log Visualization</h2><h3 id="loss-iters"><a href="#loss-iters" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters.png caffe.ubuntu.d.log</p>
-<p><img src="/img/loss_iters_zoom_out-300x225.png"></p>
-<h3 id="accuracy-iters"><a href="#accuracy-iters" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters.png caffe.ubuntu.d.log</p>
-<p><img src="/img/accuracy_iters_zoom_out-300x225.png"></p>
-<h2 id="Test-Model-Accuracy"><a href="#Test-Model-Accuracy" class="headerlink" title="Test Model Accuracy"></a>Test Model Accuracy</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe test -model lenet_test.prototxt -weights mnist_lenet_iter_36000.caffemodel -iterations 100</p>
-<h2 id="Test-Model-Time"><a href="#Test-Model-Time" class="headerlink" title="Test Model Time"></a>Test Model Time</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe time -model lenet.prototxt</p>
-<h2 id="Augmented-Train"><a href="#Augmented-Train" class="headerlink" title="Augmented, Train"></a>Augmented, Train</h2><h3 id="loss-iters-1"><a href="#loss-iters-1" class="headerlink" title="loss_iters"></a>loss_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 2 loss_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
-<p><img src="/img/loss_iters_aug_3-300x225.png"></p>
-<h3 id="accuracy-iters-1"><a href="#accuracy-iters-1" class="headerlink" title="accuracy_iters"></a>accuracy_iters</h3><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;tools&#x2F;extra&#x2F;plot_training_log.py.example 0 accuracy_iters_aug.png mnist_train.log mnist_train_with_augmentation.log</p>
-<p><img src="/img/accuracy_iters_aug_3-300x225.png"></p>
-<h2 id="Update-solver-max-iter-Train"><a href="#Update-solver-max-iter-Train" class="headerlink" title="Update solver max_iter, Train"></a>Update solver max_iter, Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver lenet_solver_aug.prototxt -snapshot mnist_aug_lenet_iter_36000.solverstate -log_dir .&#x2F;</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/12/install-nvidia-driver-cuda-ubuntu-16-04/" class="post-title-link" itemprop="url">Install NVIDIA Driver & CUDA : Ubuntu 16.04</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-12 14:32:05" itemprop="dateCreated datePublished" datetime="2019-01-12T14:32:05+08:00">2019-01-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/Ubuntu-16-04/" itemprop="url" rel="index"><span itemprop="name">Ubuntu 16.04</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Operating-System/" itemprop="url" rel="index"><span itemprop="name">Operating System</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Remove-Default-Driver"><a href="#Remove-Default-Driver" class="headerlink" title="Remove Default Driver"></a>Remove Default Driver</h2><p>sudo apt –purge remove xserver-xorg-video-nouveau</p>
-<h2 id="Add-NVIDIA-Respository"><a href="#Add-NVIDIA-Respository" class="headerlink" title="Add NVIDIA Respository"></a>Add NVIDIA Respository</h2><p>sudo add-apt-repository ppa:graphics-drivers&#x2F;ppa</p>
-<h2 id="Install-NVIDIA-Driver"><a href="#Install-NVIDIA-Driver" class="headerlink" title="Install NVIDIA Driver"></a>Install NVIDIA Driver</h2><p>sudo apt install nvidia-361 nvidia-settings nvidia-prime</p>
-<h2 id="Install-NVIDIA-CUDA"><a href="#Install-NVIDIA-CUDA" class="headerlink" title="Install NVIDIA CUDA"></a>Install NVIDIA CUDA</h2><p>sudo apt install nvidia-cuda-toolkit</p>
-<h2 id="Reboot"><a href="#Reboot" class="headerlink" title="Reboot"></a>Reboot</h2><p><img src="/img/nvidia-smi.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/caffe-sample/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/09/caffe-sample/" class="post-title-link" itemprop="url">Caffe Sample</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-09 17:58:25" itemprop="dateCreated datePublished" datetime="2019-01-09T17:58:25+08:00">2019-01-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Caffe/" itemprop="url" rel="index"><span itemprop="name">Caffe</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Gen-HDF5-Data"><a href="#Gen-HDF5-Data" class="headerlink" title="Gen HDF5 Data"></a>Gen HDF5 Data</h2><p>import pickle<br>import numpy as np<br>import h5py</p>
-<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)<br>sample_size &#x3D; len(labels)</p>
-<p>samples &#x3D; np.array(samples).reshape((sample_size, 2))<br>labels &#x3D; np.array(labels).reshape((sample_size, 1))</p>
-<p>h5_filename &#x3D; ‘data.h5’<br>with h5py.File(h5_filename, ‘w’) as h:<br>    h.create_dataset(‘data’, data&#x3D;samples)<br>    h.create_dataset(‘label’, data&#x3D;labels)</p>
-<p>with open(‘data_h5.txt’, ‘w’) as f:<br>    f.write(h5_filename)</p>
-<h2 id="Network-Train"><a href="#Network-Train" class="headerlink" title="Network Train"></a>Network Train</h2><p>name: “SimpleMLP”<br>layer {<br>    name:   “data”<br>    type:   “HDF5Data”<br>    top:    “data”<br>    top:    “label”<br>    include {<br>        phase:  TRAIN<br>    }<br>    hdf5_data_param {<br>        source: “data_h5.txt”<br>        batch_size: 41<br>    }<br>}<br>layer {<br>    name:   “fc1”<br>    type:   “InnerProduct”<br>    bottom: “data”<br>    top:    “fc1”<br>    inner_product_param {<br>        num_output: 2<br>        weight_filler   {<br>            type:   “uniform”<br>        }<br>    }<br>}<br>layer {<br>    name:   “sigmoid1”<br>    type:   “Sigmoid”<br>    bottom: “fc1”<br>    top:    “sigmoid1”<br>}<br>layer {<br>    name:   “fc2”<br>    type:   “InnerProduct”<br>    bottom: “sigmoid1”<br>    top:    “fc2”<br>    inner_product_param {<br>        num_output: 2<br>        weight_filler   {<br>            type:   “uniform”<br>        }<br>    }<br>}<br>layer {<br>    name:   “loss”<br>    type:   “SoftmaxWithLoss”<br>    bottom: “fc2”<br>    bottom: “label”<br>    top:    “loss”<br>}</p>
-<h2 id="Gen-Network-Picture"><a href="#Gen-Network-Picture" class="headerlink" title="Gen Network Picture"></a>Gen Network Picture</h2><p>python &#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python&#x2F;draw_net.py train.prototxt mlp_train.png –rankdir BT</p>
-<p><img src="/img/Caffe_mlp_train-315x1024.png"></p>
-<h2 id="Network-Solver"><a href="#Network-Solver" class="headerlink" title="Network Solver"></a>Network Solver</h2><p>net:    “train.prototxt”<br>base_lr:    0.15<br>lr_policy:  “fixed”<br>display:    100<br>max_iter:   2000<br>momentum:   0.95<br>snapshot_prefix:    “simple_mlp”<br>solver_mode:    CPU</p>
-<h2 id="Start-Train"><a href="#Start-Train" class="headerlink" title="Start Train"></a>Start Train</h2><p>&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;build&#x2F;tools&#x2F;caffe train -solver solver.prototxt</p>
-<h2 id="Network-Test"><a href="#Network-Test" class="headerlink" title="Network Test"></a>Network Test</h2><p>name: “SimpleMLP”<br>input:  “data”<br>input_shape {<br>    dim:    1<br>    dim:    2<br>}<br>layer {<br>    name:   “fc1”<br>    type:   “InnerProduct”<br>    bottom: “data”<br>    top:    “fc1”<br>    inner_product_param {<br>        num_output: 2<br>    }<br>}<br>layer {<br>    name:   “sigmoid1”<br>    type:   “Sigmoid”<br>    bottom: “fc1”<br>    top:    “sigmoid1”<br>}<br>layer {<br>    name:   “fc2”<br>    type:   “InnerProduct”<br>    bottom: “sigmoid1”<br>    top:    “fc2”<br>    inner_product_param {<br>        num_output: 2<br>    }<br>}<br>layer {<br>    name:   “softmax”<br>    type:   “Softmax”<br>    bottom: “fc2”<br>    top:    “prob”<br>}</p>
-<h2 id="Start-Test"><a href="#Start-Test" class="headerlink" title="Start Test"></a>Start Test</h2><p>import sys<br>import pickle<br>import numpy as np<br>import matplotlib.pyplot as plt<br>from mpl_toolkits.mplot3d import Axes3D<br>sys.path.append(‘&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python’)<br>import caffe</p>
-<p>net &#x3D; caffe.Net(‘test.prototxt’, ‘simple_mlp_iter_2000.caffemodel’, caffe.TEST)</p>
-<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)<br>samples &#x3D; np.array(samples)<br>labels &#x3D; np.array(labels)</p>
-<p>X &#x3D; np.arange(0, 1.05, 0.05)<br>Y &#x3D; np.arange(0, 1.05, 0.05)<br>X, Y &#x3D; np.meshgrid(X, Y)</p>
-<p>grids &#x3D; np.array([[X[i][j], Y[i][j]] for i in range(X.shape[0]) for j in range(X.shape[1])])</p>
-<p>grid_probs &#x3D; []<br>for grid in grids:<br>    net.blobs[‘data’].data[…] &#x3D; grid.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    grid_probs.append(output[‘prob’][0][1])<br>grid_probs &#x3D; np.array(grid_probs).reshape(X.shape)<br>fig &#x3D; plt.figure(‘Sample Surface’)<br>ax &#x3D; fig.gca(projection&#x3D;’3d’)<br>ax.plot_surface(X, Y, grid_probs, alpha&#x3D;0.15, color&#x3D;’k’, rstride&#x3D;2, cstride&#x3D;2, lw&#x3D;0.5)</p>
-<p>samples0 &#x3D; samples[labels&#x3D;&#x3D;0]<br>samples0_probs &#x3D; []<br>for sample in samples0:<br>    net.blobs[‘data’].data[…] &#x3D; sample.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    samples0_probs.append(output[‘prob’][0][1])<br>samples1 &#x3D; samples[labels&#x3D;&#x3D;1]<br>samples1_probs &#x3D; []<br>for sample in samples1:<br>    net.blobs[‘data’].data[…] &#x3D; sample.reshape((1, 2))[…]<br>    output &#x3D; net.forward()<br>    samples1_probs.append(output[‘prob’][0][1])</p>
-<p>ax.scatter(samples0[:, 0], samples0[:, 1], samples0_probs, c&#x3D;’r’, marker&#x3D;’o’, s&#x3D;50)<br>ax.scatter(samples1[:, 0], samples1[:, 1], samples1_probs, c&#x3D;’b’, marker&#x3D;’^’, s&#x3D;50)</p>
-<p>plt.show()</p>
-<p><img src="/img/Caffe_Sample_Surface.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/mxnet-sample/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/09/mxnet-sample/" class="post-title-link" itemprop="url">MXNet Sample</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-09 16:14:37" itemprop="dateCreated datePublished" datetime="2019-01-09T16:14:37+08:00">2019-01-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/MXNet/" itemprop="url" rel="index"><span itemprop="name">MXNet</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="MXNet-Sample"><a href="#MXNet-Sample" class="headerlink" title="MXNet Sample"></a>MXNet Sample</h2><p><img src="/img/MXNet_simple_mlp.gv_.png"></p>
-<p>import pickle<br>import numpy as np</p>
-<p>def cos_curve(x):<br>    return 0.25 * np.sin(2 * x * np.pi + 0.5 * np.pi) + 0.5</p>
-<p>np.random.seed(123)<br>samples &#x3D; []<br>labels &#x3D; []</p>
-<p>sample_density &#x3D; 50<br>for i in range(sample_density):<br>    x1, x2 &#x3D; np.random.random(2)</p>
-<pre><code>bound = cos\_curve(x1)
-
-if bound - 0.1 &lt; x2 &lt;= bound + 0.1:
-    continue
-else:
-    samples.append((x1, x2))
-
-    if x2 &gt; bound:
-        labels.append(1)
-    else:
-        labels.append(0)
-</code></pre>
-<p>with open(‘data.pkl’, ‘wb’) as f:<br>    pickle.dump((samples, labels), f)</p>
-<p>import matplotlib.pyplot as plt</p>
-<p>for i, sample in enumerate(samples):<br>    plt.plot(sample[0], sample[1], ‘o’ if labels[i] else ‘^’,<br>             mec&#x3D;’r’ if labels[i] else ‘b’,<br>             mfc&#x3D;’none’,<br>             markersize&#x3D;10)<br>x1 &#x3D; np.linspace(0, 1)<br>plt.plot(x1, cos_curve(x1), ‘k–’)<br>plt.show()</p>
-<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>import numpy as np<br>import mxnet as mx</p>
-<p>data &#x3D; mx.sym.Variable(‘data’)</p>
-<p>fc1 &#x3D; mx.sym.FullyConnected(data&#x3D;data, name&#x3D;’fc1’, num_hidden&#x3D;2)</p>
-<p>sigmoid1 &#x3D; mx.sym.Activation(data&#x3D;fc1, name&#x3D;’sigmoid1’, act_type&#x3D;’sigmoid’)</p>
-<p>fc2 &#x3D; mx.sym.FullyConnected(data&#x3D;sigmoid1, name&#x3D;’fc2’, num_hidden&#x3D;2)</p>
-<p>mlp &#x3D; mx.sym.SoftmaxOutput(data&#x3D;fc2, name&#x3D;’softmax’)</p>
-<p>shape &#x3D; {‘data’: (2,)}<br>mlp_dot &#x3D; mx.viz.plot_network(symbol&#x3D;mlp, shape&#x3D;shape)<br>mlp_dot.render(‘simple_mlp.gv’, view&#x3D;True)</p>
-<h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><p>import pickle<br>import logging</p>
-<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)</p>
-<p>logging.getLogger().setLevel(logging.DEBUG)</p>
-<p>batch_size &#x3D; len(labels)<br>samples &#x3D; np.array(samples)<br>labels &#x3D; np.array(labels)</p>
-<p>train_iter &#x3D; mx.io.NDArrayIter(samples, labels, batch_size)</p>
-<p>model &#x3D; mx.model.FeedForward.create(<br>    symbol&#x3D;mlp,<br>    X&#x3D;train_iter,<br>    num_epoch&#x3D;1000,<br>    learning_rate&#x3D;0.1,<br>    momentum&#x3D;0.99<br>)<br>‘’’<br>model &#x3D; mx.model.FeedForward(<br>    symbol&#x3D;mlp,<br>    num_epoch&#x3D;1000,<br>    learning_rate&#x3D;0.1<br>    momentum&#x3D;0.99<br>)<br>model.fit(X&#x3D;train_iter)<br>‘’’<br>print(model.predict(mx.nd.array([[0.5, 0.5]])))</p>
-<h1 id="-2"><a href="#-2" class="headerlink" title=""></a></h1><p>import matplotlib.pyplot as plt<br>from mpl_toolkits.mplot3d import Axes3D</p>
-<p>X &#x3D; np.arange(0, 1.05, 0.05)<br>Y &#x3D; np.arange(0, 1.05, 0.05)<br>X, Y &#x3D; np.meshgrid(X, Y)</p>
-<p>grids &#x3D; mx.nd.array([[X[i][j], Y[i][j]] for i in range(X.shape[0]) for j in range(X.shape[1])])</p>
-<p>grid_probs &#x3D; model.predict(grids)[:, 1].reshape(X.shape)</p>
-<p>fig &#x3D; plt.figure(‘Sample Surface’)<br>ax &#x3D; fig.gca(projection&#x3D;’3d’)</p>
-<p>ax.plot_surface(X, Y, grid_probs, alpha&#x3D;0.15, color&#x3D;’k’, rstride&#x3D;2, cstride&#x3D;2, lw&#x3D;0.5)</p>
-<p>samples0 &#x3D; samples[labels&#x3D;&#x3D;0]<br>samples0_probs &#x3D; model.predict(samples0)[:, 1]<br>samples1 &#x3D; samples[labels&#x3D;&#x3D;1]<br>samples1_probs &#x3D; model.predict(samples1)[:, 1]</p>
-<p>ax.scatter(samples0[:, 0], samples0[:, 1], samples0_probs, c&#x3D;’r’, marker&#x3D;’o’, s&#x3D;50)<br>ax.scatter(samples1[:, 0], samples1[:, 1], samples1_probs, c&#x3D;’b’, marker&#x3D;’^’, s&#x3D;50)</p>
-<p>plt.show()</p>
-<p><img src="/img/MXNet_Sample_Surface.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/matplotlib-rgb-opencv-bgr/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/09/matplotlib-rgb-opencv-bgr/" class="post-title-link" itemprop="url">Matplotlib RGB & OpenCV BGR</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-09 11:11:45" itemprop="dateCreated datePublished" datetime="2019-01-09T11:11:45+08:00">2019-01-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Matplotlib-RGB-amp-OpenCV-BGR"><a href="#Matplotlib-RGB-amp-OpenCV-BGR" class="headerlink" title="Matplotlib RGB &amp; OpenCV BGR"></a>Matplotlib RGB &amp; OpenCV BGR</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>import cv2</p>
-<p>img &#x3D; np.array([<br>    [[255, 0, 0], [0, 255, 0], [0, 0, 255]],<br>    [[255, 255, 0], [255, 0, 255], [0, 255, 255]],<br>    [[255, 255, 255], [128, 128, 128], [0, 0, 0]],<br>], dtype&#x3D;np.uint8)</p>
-<p>plt.imsave(‘img_pyplot.png’, img)<br>cv2.imwrite(‘img_cv2.jpg’, img)</p>
-<p><img src="/img/img_cv2.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/matplotlib-3d-example-2-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/09/matplotlib-3d-example-2-python/" class="post-title-link" itemprop="url">Matplotlib 3D Example 2 : Python</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-09 10:21:07" itemprop="dateCreated datePublished" datetime="2019-01-09T10:21:07+08:00">2019-01-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="3D-Example-2"><a href="#3D-Example-2" class="headerlink" title="3D Example 2"></a>3D Example 2</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>from mpl_toolkits.mplot3d import Axes3D</p>
-<p>np.random.seed(42)</p>
-<p>n_samples &#x3D; 500<br>dim &#x3D; 3</p>
-<p>samples &#x3D; np.random.multivariate_normal(<br>    np.zeros(dim),<br>    np.eye(dim),<br>    n_samples<br>)</p>
-<p>for i in range(samples.shape[0]) :<br>    r &#x3D; np.power(np.random.random(), 1.0 &#x2F; 3.0)<br>    samples[i] *&#x3D; r &#x2F; np.linalg.norm(samples[i])</p>
-<p>upper_samples &#x3D; []<br>lower_samples &#x3D; []<br>for x, y, z in samples:<br>    if z &gt; 3 * x + 2 * y - 1:<br>        upper_samples.append((x, y, z))<br>    else:<br>        lower_samples.append((x, y, z))</p>
-<p>fig &#x3D; plt.figure(‘3D scatter plot’)<br>ax &#x3D; fig.add_subplot(111, projection&#x3D;’3d’)<br>uppers &#x3D; np.array(upper_samples)<br>lowers &#x3D; np.array(lower_samples)</p>
-<p>ax.scatter(uppers[:, 0], uppers[:, 1], uppers[:, 2], c&#x3D;’r’, marker&#x3D;’o’)<br>ax.scatter(uppers[:, 0], uppers[:, 1], uppers[:, 2], c&#x3D;’g’, marker&#x3D;’^’)</p>
-<p>plt.show()</p>
-<p><img src="/img/Matplotlib_3D_2.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/matplotlib-3d-example-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/09/matplotlib-3d-example-python/" class="post-title-link" itemprop="url">Matplotlib 3D Example : Python</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-09 10:04:16" itemprop="dateCreated datePublished" datetime="2019-01-09T10:04:16+08:00">2019-01-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="3D-Example"><a href="#3D-Example" class="headerlink" title="3D Example"></a>3D Example</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>from mpl_toolkits.mplot3d import Axes3D</p>
-<p>np.random.seed(42)</p>
-<p>n_grids &#x3D; 51<br>c &#x3D; n_grids &#x2F; 2<br>nf &#x3D; 2</p>
-<p>x &#x3D; np.linspace(0, 1, n_grids)<br>y &#x3D; np.linspace(0, 1, n_grids)<br>X, Y &#x3D; np.meshgrid(x, y)</p>
-<p>spectrum &#x3D; np.zeros((n_grids, n_grids), dtype&#x3D;np.complex)<br>noise &#x3D; [np.complex(x, y) for x, y in np.random.uniform(-1, 1, ((2 * nf + 1) ** 2 &#x2F; 2, 2))]<br>noisy_block &#x3D; np.concatenate((noise, [0j], np.conjugate(noise[:: -1])))<br>spectrum[c - nf: c + nf + 1, c - nf: c + nf + 1] &#x3D; noisy_block.reshape((2 * nf + 1, 2 * nf + 1))<br>Z &#x3D; np.real(np.fft.ifft2(np.fft.ifftshift(spectrum)))</p>
-<p>fig &#x3D; plt.figure(‘3D surface &amp; wire’)<br>ax &#x3D; fig.add_subplot(1, 2, 1, projection&#x3D;’3d’)<br>ax.plot_surface(X, Y, Z, alpha&#x3D;0.7, cmap&#x3D;’jet’, rstride&#x3D;1, cstride&#x3D;1, lw&#x3D;0)</p>
-<p>ax &#x3D; fig.add_subplot(1, 2, 2, projection&#x3D;’3d’)<br>ax.plot_wireframe(X, Y, Z, rstride&#x3D;3, cstride&#x3D;3, lw&#x3D;0.5)</p>
-<p>plt.show()</p>
-<p><img src="/img/Matplotlib_3D.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/matplotlib-2d-example-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/09/matplotlib-2d-example-python/" class="post-title-link" itemprop="url">Matplotlib 2D Example : Python</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-09 09:30:11" itemprop="dateCreated datePublished" datetime="2019-01-09T09:30:11+08:00">2019-01-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="2D-Example"><a href="#2D-Example" class="headerlink" title="2D Example"></a>2D Example</h2><p>import numpy as np<br>import matplotlib as mpl<br>import matplotlib.pyplot as plt</p>
-<p>mpl.rcParams[‘xtick.labelsize’] &#x3D; 24<br>mpl.rcParams[‘ytick.labelsize’] &#x3D; 24<br>np.random.seed(42)</p>
-<p>x &#x3D; np.linspace(0, 5, 100)<br>y &#x3D; 2 * np.sin(x) + 0.3 * x ** 2<br>y_data &#x3D; y + np.random.normal(scale&#x3D;0.3, size&#x3D;100)<br>plt.figure(‘data’)<br>plt.plot(x, y_data, ‘.’)</p>
-<p>plt.figure(‘model’)<br>plt.plot(x, y)</p>
-<p>plt.figure(‘data &amp; model’)<br>plt.plot(x, y, ‘k’, lw&#x3D;3)<br>plt.scatter(x, y_data)</p>
-<p>plt.savefig(‘result.png’)</p>
-<p>plt.show()</p>
-<p><img src="/img/numpy_2D_3.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/07/caffe-installation-ubuntu-16-04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/07/caffe-installation-ubuntu-16-04/" class="post-title-link" itemprop="url">Caffe Installation : Ubuntu 16.04</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-07 15:12:27" itemprop="dateCreated datePublished" datetime="2019-01-07T15:12:27+08:00">2019-01-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Caffe/" itemprop="url" rel="index"><span itemprop="name">Caffe</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/Ubuntu-16-04/" itemprop="url" rel="index"><span itemprop="name">Ubuntu 16.04</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>sudo apt update<br>sudo apt install build-essential git libatlas-base-dev<br>sudo apt-get install python-pip<br>pip install –upgrade pip<br>sudo apt-get install graphviz<br>sudo pip install graphviz<br>sudo apt install libprotobuf-dev libleveldb-dev libsnappy-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62 libfreeimage-dev libgoogle-glog-dev libbz2-dev libxml2-dev libxslt-dev libffi-dev libssl-dev libgflags-dev liblmdb-dev python-yaml<br>sudo apt-get install libopencv-dev python-opencv</p>
-<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p># git clone <a target="_blank" rel="noopener" href="https://github.com/BVLC/caffe">https://github.com/BVLC/caffe</a>. git</p>
-<h1 id="Or"><a href="#Or" class="headerlink" title="Or"></a>Or</h1><p>unzip caffe-master.zip<br>cd caffe-master&#x2F;<br>cp Makefile.config.example Makefile.config</p>
-<p>d@ubuntu:~&#x2F;Documents&#x2F;caffe$ diff Makefile.config.example Makefile.config<br>8c8<br>&lt; # CPU_ONLY :&#x3D; 1</p>
-<hr>
-<blockquote>
-<p>CPU_ONLY :&#x3D; 1<br>94c94<br>&lt; # WITH_PYTHON_LAYER :&#x3D; 1</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>WITH_PYTHON_LAYER :&#x3D; 1<br>97,98c97,98<br>&lt; INCLUDE_DIRS :&#x3D; $(PYTHON_INCLUDE) &#x2F;usr&#x2F;local&#x2F;include<br>&lt; LIBRARY_DIRS :&#x3D; $(PYTHON_LIB) &#x2F;usr&#x2F;local&#x2F;lib &#x2F;usr&#x2F;lib</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>INCLUDE_DIRS :&#x3D; $(PYTHON_INCLUDE) &#x2F;usr&#x2F;local&#x2F;include &#x2F;usr&#x2F;include&#x2F;hdf5&#x2F;serial&#x2F;<br>LIBRARY_DIRS :&#x3D; $(PYTHON_LIB) &#x2F;usr&#x2F;local&#x2F;lib &#x2F;usr&#x2F;lib &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;hdf5&#x2F;serial&#x2F;<br>d@ubuntu:~&#x2F;Documents&#x2F;caffe$ </p>
-</blockquote>
-<h2 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h2><p>export LD_LIBRARY&#x3D;$LD_LIBRARY:&#x2F;usr&#x2F;include&#x2F;hdf5<br>export PYTHONPATH&#x3D;$PYTHONPATH:&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python<br>make pycaffe -j<br>make all -j<br>make test -j<br>make runtest</p>
-<p><img src="/img/Caffe_Install_OK.png"></p>
-<h2 id="virtual-memory-exhausted"><a href="#virtual-memory-exhausted" class="headerlink" title="virtual memory exhausted"></a>virtual memory exhausted</h2><p>sudo mkdir &#x2F;opt&#x2F;images&#x2F;<br>sudo rm -rf &#x2F;opt&#x2F;images&#x2F;swap<br>sudo dd if&#x3D;&#x2F;dev&#x2F;zero of&#x3D;&#x2F;opt&#x2F;images&#x2F;swap bs&#x3D;1024 count&#x3D;10240000<br>sudo mkswap &#x2F;opt&#x2F;images&#x2F;swap<br>sudo swapon &#x2F;opt&#x2F;images&#x2F;swap</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/12/30/qt-opencv-example/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/12/30/qt-opencv-example/" class="post-title-link" itemprop="url">QT + OpenCV Example</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-12-30 14:40:40" itemprop="dateCreated datePublished" datetime="2018-12-30T14:40:40+08:00">2018-12-30</time>
+              <time title="Created: 2019-03-25 16:03:16" itemprop="dateCreated datePublished" datetime="2019-03-25T16:03:16+08:00">2019-03-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1160,15 +195,15 @@ else:
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
                 </span>
             </span>
 
@@ -1183,25 +218,913 @@ else:
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h2><p>#include #include int main(int argc, char *argv[])<br>{<br>    &#x2F;&#x2F;QCoreApplication a(argc, argv);</p>
-<pre><code>using namespace cv;
-Mat image = imread(&quot;/Users/water/Downloads/Share.jpg&quot;);
-imshow(&quot;Output&quot;, image);
+          <h2 id="Matrices-and-Vectors"><a href="#Matrices-and-Vectors" class="headerlink" title="Matrices and Vectors"></a>Matrices and Vectors</h2><p><strong>The dimension of the matrix</strong> is going to be written as the number of row times the number of columns in the matrix. A <strong>vector</strong> turns out to be a special case of a matrix. Matrix with just one column is what we call a <strong>vector</strong>.</p>
+<h2 id="Addition-and-Scalar-Multiplication"><a href="#Addition-and-Scalar-Multiplication" class="headerlink" title="Addition and Scalar Multiplication"></a>Addition and Scalar Multiplication</h2><h4 id="Addition"><a href="#Addition" class="headerlink" title="Addition"></a>Addition</h4><p>[latex] \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} + \begin{bmatrix} 4 &amp; 0.5 \\ 2 &amp; 5 \\ 0 &amp; 1 \end{bmatrix} &#x3D; \begin{bmatrix} 5 &amp; 0.5 \\ 4 &amp; 10 \\ 3 &amp; 2 \end{bmatrix} [&#x2F;latex]</p>
+<h4 id="Scalar-Multiplication"><a href="#Scalar-Multiplication" class="headerlink" title="Scalar Multiplication"></a>Scalar Multiplication</h4><p>[latex] 3 * \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} &#x3D; \begin{bmatrix} 3 &amp; 0 \\ 6 &amp; 15 \\ 9 &amp; 3 \end{bmatrix} &#x3D; \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} * 3 [&#x2F;latex]</p>
+<h2 id="Matrix-Vector-Multiplication"><a href="#Matrix-Vector-Multiplication" class="headerlink" title="Matrix Vector Multiplication"></a>Matrix Vector Multiplication</h2><p>[latex] \begin{bmatrix} 1 &amp; 3 \\ 4 &amp; 0 \\ 2 &amp; 1 \end{bmatrix} * \begin{bmatrix} 1 \\ 5 \end{bmatrix} &#x3D; \begin{bmatrix} 16 &#x3D; 1 * 1 + 3 * 5 \\ 4 &#x3D; 4 * 1 + 0 * 5 \\ 7 &#x3D; 2 * 1 + 1 * 5 \end{bmatrix} [&#x2F;latex]</p>
+<h2 id="Matrix-Matrix-Multiplication"><a href="#Matrix-Matrix-Multiplication" class="headerlink" title="Matrix Matrix Multiplication"></a>Matrix Matrix Multiplication</h2><p>[latex] \begin{bmatrix} C0 &amp; C1 \\ C2 &amp; C3 \end{bmatrix} &#x3D; \begin{bmatrix} A0 &amp; A1 \\ A2 &amp; A3 \end{bmatrix} * \begin{bmatrix} B0 &amp; B1 \\ B2 &amp; B3 \end{bmatrix} [&#x2F;latex]</p>
+<p>[latex]C0 &#x3D; A0 * B0 + A1 * B2[&#x2F;latex] [latex]C1 &#x3D; A0 * B1 + A1 * B3[&#x2F;latex] [latex]C2 &#x3D; A2 * B0 + A3 * B2[&#x2F;latex] [latex]C3 &#x3D; A2 * B1 + A3 * B3[&#x2F;latex]</p>
+<h2 id="Matrix-Multiplication-Properties"><a href="#Matrix-Multiplication-Properties" class="headerlink" title="Matrix Multiplication Properties"></a>Matrix Multiplication Properties</h2><p>[latex]A * B \neq B * A[&#x2F;latex] [latex]A * (B * C) &#x3D; (A * B) * C[&#x2F;latex] <strong>Identity matrix</strong>, has the property that it has ones along the diagonals, right, and so on and is zero everywhere else. [latex]AA^{-1} &#x3D; A^{-1}A &#x3D; I[&#x2F;latex] [latex]AI &#x3D; IA &#x3D; A[&#x2F;latex]</p>
+<h2 id="Inverse-and-Transpose"><a href="#Inverse-and-Transpose" class="headerlink" title="Inverse and Transpose"></a>Inverse and Transpose</h2><h4 id="Inverse"><a href="#Inverse" class="headerlink" title="Inverse"></a>Inverse</h4><p>[latex]A^{-1}[&#x2F;latex]</p>
+<h4 id="Transpose"><a href="#Transpose" class="headerlink" title="Transpose"></a>Transpose</h4><p>[latex]A^{T}[&#x2F;latex]</p>
+<p>[latex] \begin{vmatrix} a &amp; b\\ c &amp; d\\ e &amp; f \end{vmatrix} ^{T} &#x3D; \begin{vmatrix} a &amp; c &amp; e\\ b &amp; d &amp; f \end{vmatrix} [&#x2F;latex]</p>
 
-waitKey(1000);
+      
+    </div>
 
-return 0;
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-//return a.exec();
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/25/2-linear-regression-with-one-variable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/25/2-linear-regression-with-one-variable/" class="post-title-link" itemprop="url">2 Linear Regression with One Variable</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-25 11:37:40" itemprop="dateCreated datePublished" datetime="2019-03-25T11:37:40+08:00">2019-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Model-Representation"><a href="#Model-Representation" class="headerlink" title="Model Representation"></a>Model Representation</h2><p>[latex]m[&#x2F;latex] : the number of training examples [latex]x[&#x2F;latex] : input variables [latex]y[&#x2F;latex] : output variables [latex](x, y)[&#x2F;latex] : a single training example [latex](x^{(i)}, y^{(i)})[&#x2F;latex] : refer to the ith training example [latex]h[&#x2F;latex] : representing the hypothesis</p>
+<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>[latex]J({\theta }_0, {\theta }_1) &#x3D; \frac {1}{2m}\sum ^{m}_{i&#x3D;1}( h_{\theta }(x^{(i)}) - y^{(i)})^2[&#x2F;latex]</p>
+<p><strong>Cost function is also called the squared error function or sometimes called the square error cost function.</strong></p>
+<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>repeat until convergence {</p>
+<p>[latex]{\theta }_j :&#x3D; {\theta }_j - {\alpha }\frac {\partial }{\partial {\theta }_j}J({\theta }_0 - {\theta }_1) [&#x2F;latex] (for j &#x3D; 0 and j &#x3D; 1)</p>
+<p>} <strong><em>when people talk about <strong>gradient descent</strong>, they always mean <strong>simultaneous update</strong>.</em></strong></p>
+<h2 id="Gradient-Descent-For-LinearRegression"><a href="#Gradient-Descent-For-LinearRegression" class="headerlink" title="Gradient Descent For LinearRegression"></a>Gradient Descent For LinearRegression</h2><p>The term batch gradient descent means that refers to the fact that, in every step of gradient descent we’re looking at <strong>all of the training examples</strong>.</p>
+<p>In case it turns out gradient descent will scale better to <strong>larger data sets</strong> than that normal equals method.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/25/1-introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/25/1-introduction/" class="post-title-link" itemprop="url">1 Introduction</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-25 11:36:38" itemprop="dateCreated datePublished" datetime="2019-03-25T11:36:38+08:00">2019-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Why-to-have-a-Machine-Learning"><a href="#Why-to-have-a-Machine-Learning" class="headerlink" title="Why to have a Machine Learning"></a>Why to have a Machine Learning</h2><p>For the most part <strong>we just did not know how to write AI programs to do the more</strong> interesting things such as web search or photo tagging or email anti-spam. There was a realization that the only way to do these things was to have a machine learn to do it by itself.</p>
+<h2 id="What-is-Machine-Learning"><a href="#What-is-Machine-Learning" class="headerlink" title="What is Machine Learning"></a>What is Machine Learning</h2><p>Even among machine learning practitioners there isn’t a well accepted definition of what is and what isn’t machine learning.</p>
+<ul>
+<li>Someone defined machine learning as the field of study that gives computers the ability to learn without being explicitly programmed.</li>
+<li>A computer program is said to learn from experience E, with respect to some task T, and some performance measure P, if its performance on T as measured by P improves with experience E.</li>
+</ul>
+<p><em>And if you actually tried to develop a machine learning system, how to make those best practices type decisions about the way in which you build your system.</em></p>
+<h2 id="Supervised-Learning"><a href="#Supervised-Learning" class="headerlink" title="Supervised Learning"></a>Supervised Learning</h2><ul>
+<li><strong>Supervised learning</strong> refers to the fact that we gave the algorithm a data set in which <strong>the “right answers” were given</strong>.</li>
+<li>To define with a bit more terminology this is also called a <strong>regression problem</strong> and by regression problem I mean we’re trying to predict a continuous value output.</li>
+<li><strong>Support Vector Machine</strong>, that will allow a computer to deal with an infinite number of features.</li>
+</ul>
+<h2 id="Unsupervised-Learning"><a href="#Unsupervised-Learning" class="headerlink" title="Unsupervised Learning"></a>Unsupervised Learning</h2><ul>
+<li>Given this data set, an Unsupervised Learning algorithm might decide that the data lives in two different clusters. Supervised Learning algorithm may break these data into these two separate clusters. So this is called a <strong>clustering algorithm</strong>.</li>
+<li>Because we’re not giving the algorithm the right answer for the examples in my data set, this is <strong>Unsupervised Learning</strong>.</li>
+<li><strong>Clustering</strong> is just one type of Unsupervised Learning.</li>
+<li><strong>Octave</strong>, is free open source software, and using a tool like Octave or Matlab, many learning algorithms become just a few lines of code to implement.</li>
+</ul>
+<p><em>Learn much faster if you use Octave as your programming environment, and if you <strong>use Octave as your</strong></em> <em><strong>learning tool and as your prototyping tool</strong>, it’ll let you learn and prototype learning algorithms much more quickly.</em> <em>And in fact what many people will do to in the large Silicon Valley companies is in fact, use an algorithm like Octave to first prototype the learning algorithm, and only after you’ve gotten it</em> <em>to work, then you migrate it to C++ or Java or whatever.</em></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/22/deep-learning-catalog-andrew-ng/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/22/deep-learning-catalog-andrew-ng/" class="post-title-link" itemprop="url">Deep Learning Catalog : Andrew Ng</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-22 21:38:30" itemprop="dateCreated datePublished" datetime="2019-03-22T21:38:30+08:00">2019-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/" itemprop="url" rel="index"><span itemprop="name">Deep Learning Specialization Offered By deeplearning.ai</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/Deep-Learning.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/22/machine-learning-catalog-andrew-ng/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/22/machine-learning-catalog-andrew-ng/" class="post-title-link" itemprop="url">Machine Learning Catalog : Andrew Ng</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-22 21:37:29" itemprop="dateCreated datePublished" datetime="2019-03-22T21:37:29+08:00">2019-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/Machine-Learning.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/15/cross-compile-wget-with-openssl-for-arm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/15/cross-compile-wget-with-openssl-for-arm/" class="post-title-link" itemprop="url">Cross compile wget with openssl for ARM</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-15 10:08:04" itemprop="dateCreated datePublished" datetime="2019-03-15T10:08:04+08:00">2019-03-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Config-OpenSSL"><a href="#Config-OpenSSL" class="headerlink" title="Config OpenSSL"></a>Config OpenSSL</h3><p>tar xvf openssl-1.1.1b.tar.gz<br>cd openssl-1.1.1b&#x2F;<br>mkdir __install<br>.&#x2F;config –prefix&#x3D;$PWD&#x2F;__install no-asm shared</p>
+<h3 id="Edit-Makefile"><a href="#Edit-Makefile" class="headerlink" title="Edit Makefile"></a>Edit Makefile</h3><p>PLATFORM&#x3D;linux-armv4<br>CROSS_COMPILE&#x3D;arm-linux-gnueabihf-<br>delete “-m32” “-m64”</p>
+<h3 id="Compile-OpenSSL"><a href="#Compile-OpenSSL" class="headerlink" title="Compile OpenSSL"></a>Compile OpenSSL</h3><p>make<br>make install</p>
+<h3 id="Config-Wget-amp-amp-Make"><a href="#Config-Wget-amp-amp-Make" class="headerlink" title="Config Wget &amp;&amp; Make"></a>Config Wget &amp;&amp; Make</h3><p>tar zxvf wget-1.20.1.tar.gz<br>cd wget-1.20.1<br>.&#x2F;configure –prefix&#x3D;$PWD&#x2F;__install –host&#x3D;arm-linux CC&#x3D;arm-linux-gnueabihf-gcc –with-ssl&#x3D;openssl –with-libssl-prefix&#x3D;&#x2F;root&#x2F;Downloads&#x2F;wget_arm&#x2F;openssl-1.1.1b&#x2F;__install –without-zlib<br>make<br>make install</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/" class="post-title-link" itemprop="url">./xxx: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.22' not found (required by ./xxx)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-15 10:03:40" itemprop="dateCreated datePublished" datetime="2019-03-15T10:03:40+08:00">2019-03-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1"><a href="#Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1" class="headerlink" title="Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)"></a>Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)</h3><p>cd &#x2F;usr&#x2F;lib<br>mv libstdc++.so.6 libstdc++.so.6.bak<br>ln -s libstdc++.so.6.0.24 libstdc++.so.6<br>chmod 777 libstdc++.so.6</p>
+<h3 id="Now-it-will-be-like-this"><a href="#Now-it-will-be-like-this" class="headerlink" title="Now, it will be like this !"></a>Now, it will be like this !</h3><p>root@imx6ul7d:&#x2F;usr&#x2F;lib# ls -al libstdc++.so.6*<br>lrwxrwxrwx 1 root root      19 Sep 16 23:03 libstdc++.so.6 -&gt; libstdc++.so.6.0.24<br>-rwxr-xr-x 1 root root 1240644 Sep  9 02:04 libstdc++.so.6.0.21<br>-rwxrwxrwx 1 root root 9459568 Sep 16 23:35 libstdc++.so.6.0.24<br>lrwxrwxrwx 1 root root      19 Jan  1  1970 libstdc++.so.6.bak -&gt; libstdc++.so.6.0.21<br>-rwxr-xr-x 1 root root 9459568 Sep 16 23:11 libstdc++.so.6.bak_24</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/02/01/how-to-embed-latex-in-blogs-wordpress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/01/how-to-embed-latex-in-blogs-wordpress/" class="post-title-link" itemprop="url">How to embed Latex in blogs : WordPress</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-01 13:11:14" itemprop="dateCreated datePublished" datetime="2019-02-01T13:11:14+08:00">2019-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Add-Plugin-Mathjax-Latex"><a href="#Add-Plugin-Mathjax-Latex" class="headerlink" title="Add Plugin : Mathjax-Latex"></a>Add Plugin : Mathjax-Latex</h2><p>The default option is use “Use MathJax CDN Service”. But sometimes it cannot work because of some reasons. So you have to install the service on your own vps!</p>
+<h2 id="Install-MathJax-Service"><a href="#Install-MathJax-Service" class="headerlink" title="Install MathJax Service"></a>Install MathJax Service</h2><p>wget <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax/archive/master.zip">https://github.com/mathjax/MathJax/archive/master.zip</a><br>unzip master.zip<br>mv MathJax-master &#x2F;xxxxxx ……&#x2F;wordpress&#x2F;wp-content&#x2F;plugins&#x2F;mathjax-latex&#x2F;</p>
+<h2 id="Check-The-MathJax-Service-is-Okay"><a href="#Check-The-MathJax-Service-is-Okay" class="headerlink" title="Check The MathJax Service is Okay"></a>Check The MathJax Service is Okay</h2><p><img src="/img/MathJax_Test_Page.png"></p>
+<h2 id="Custom-MathJax-location"><a href="#Custom-MathJax-location" class="headerlink" title="Custom MathJax location"></a>Custom MathJax location</h2><p>“Settings”-&gt;”MathJax-LaTeX”-&gt;”Custom MathJax location”</p>
+<p>&#x2F;wp-content&#x2F;plugins&#x2F;mathjax-latex&#x2F;MathJax&#x2F;MathJax.js</p>
+<h2 id="Test-It"><a href="#Test-It" class="headerlink" title="Test It !"></a>Test It !</h2><p>[latex]E&#x3D;mc^2[&#x2F;latex]</p>
+<p>[latex]E&#x3D;mc^2[&#x2F;latex]</p>
+<p>[latex]\left( {\begin{array}{*{20}{c}}</p>
+<p>\end{array}} \right)[&#x2F;latex]</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/23/tensorflow-on-android-refer-to-codelabs-tensorflow-for-poets/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/23/tensorflow-on-android-refer-to-codelabs-tensorflow-for-poets/" class="post-title-link" itemprop="url">TensorFlow on Android (Refer to codelabs : tensorflow-for-poets)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-01-23 14:46:07" itemprop="dateCreated datePublished" datetime="2019-01-23T14:46:07+08:00">2019-01-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/Ubuntu-16-04/" itemprop="url" rel="index"><span itemprop="name">Ubuntu 16.04</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/TensorFlow/" itemprop="url" rel="index"><span itemprop="name">TensorFlow</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>The google demo is good, but there are some error when you follow it, so I copied and update it.</p>
+<h2 id="Install-TensorFlow-As-Normal"><a href="#Install-TensorFlow-As-Normal" class="headerlink" title="Install TensorFlow As Normal"></a>Install TensorFlow As Normal</h2><p>pip install tensorflow&#x3D;&#x3D;1.7.1</p>
+<h2 id="Download-Google-Demo"><a href="#Download-Google-Demo" class="headerlink" title="Download Google Demo"></a>Download Google Demo</h2><p>git clone <a target="_blank" rel="noopener" href="https://github.com/googlecodelabs/tensorflow-for-poets-2">https://github.com/googlecodelabs/tensorflow-for-poets-2</a><br>cd tensorflow-for-poets-2</p>
+<h2 id="Download-TF-Files"><a href="#Download-TF-Files" class="headerlink" title="Download TF_Files"></a>Download TF_Files</h2><p>wget <a target="_blank" rel="noopener" href="http://download.tensorflow.org/example/_images/flower/_photos.tgz">http://download.tensorflow.org/example\_images/flower\_photos.tgz</a><br>tar -xvf flower_photos.tgz -C tf_files</p>
+<h2 id="Set-ARCHITECTURE"><a href="#Set-ARCHITECTURE" class="headerlink" title="Set ARCHITECTURE"></a>Set ARCHITECTURE</h2><p>IMAGE_SIZE&#x3D;224<br>ARCHITECTURE&#x3D;”mobilenet_0.50_${IMAGE_SIZE}”</p>
+<h2 id="Start-TensorBoard"><a href="#Start-TensorBoard" class="headerlink" title="Start TensorBoard"></a>Start TensorBoard</h2><p>tensorboard –logdir tf_files&#x2F;training_summaries &amp;</p>
+<p><img src="/img/TensorBoard-1024x576.png"></p>
+<h2 id="Help-retraining-script"><a href="#Help-retraining-script" class="headerlink" title="Help : retraining script"></a>Help : retraining script</h2><p>python -m scripts.retrain -h</p>
+<h2 id="Train"><a href="#Train" class="headerlink" title="Train"></a>Train</h2><p>python -m scripts.retrain \<br>  –bottleneck_dir&#x3D;tf_files&#x2F;bottlenecks \<br>  –how_many_training_steps&#x3D;500 \<br>  –model_dir&#x3D;tf_files&#x2F;models&#x2F; \<br>  –summaries_dir&#x3D;tf_files&#x2F;training_summaries&#x2F;“${ARCHITECTURE}” \<br>  –output_graph&#x3D;tf_files&#x2F;retrained_graph.pb \<br>  –output_labels&#x3D;tf_files&#x2F;retrained_labels.txt \<br>  –architecture&#x3D;”${ARCHITECTURE}” \<br>  –image_dir&#x3D;tf_files&#x2F;flower_photos</p>
+<h2 id="Train-with-default-4-000-iterations"><a href="#Train-with-default-4-000-iterations" class="headerlink" title="Train with default 4,000 iterations"></a>Train with default 4,000 iterations</h2><p>python -m scripts.retrain \<br>  –bottleneck_dir&#x3D;tf_files&#x2F;bottlenecks \<br>  –model_dir&#x3D;tf_files&#x2F;models&#x2F;“${ARCHITECTURE}” \<br>  –summaries_dir&#x3D;tf_files&#x2F;training_summaries&#x2F;“${ARCHITECTURE}” \<br>  –output_graph&#x3D;tf_files&#x2F;retrained_graph.pb \<br>  –output_labels&#x3D;tf_files&#x2F;retrained_labels.txt \<br>  –architecture&#x3D;”${ARCHITECTURE}” \<br>  –image_dir&#x3D;tf_files&#x2F;flower_photos</p>
+<h2 id="Train-with-Your-Own-Data"><a href="#Train-with-Your-Own-Data" class="headerlink" title="Train with Your Own Data"></a>Train with Your Own Data</h2><p><code>--image_dir= The root folder of the subdirectories which is used as label names by the classification script</code> This image is copied from google’s codelabs ! <img src="/img/Tensorflow_Own_Categories.png"></p>
+<h2 id="The-Retrained-Model"><a href="#The-Retrained-Model" class="headerlink" title="The Retrained Model"></a>The Retrained Model</h2><p>tf_files&#x2F;retrained_graph.pb<br>tf_files&#x2F;retrained_labels.txt</p>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>(venv) water@water-G11CD:~&#x2F;tensorflow-for-poets-2$ python -m scripts.label_image     –graph&#x3D;tf_files&#x2F;retrained_graph.pb      –image&#x3D;tf_files&#x2F;flower_photos&#x2F;daisy&#x2F;21652746_cc379e0eea_m.jpg</p>
+<p>2019-01-23 14:13:50.234939: I tensorflow&#x2F;core&#x2F;platform&#x2F;cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA</p>
+<p>Evaluation time (1-image): 0.094s</p>
+<p>daisy (score&#x3D;0.99938)<br>sunflowers (score&#x3D;0.00033)<br>dandelion (score&#x3D;0.00028)<br>roses (score&#x3D;0.00000)<br>tulips (score&#x3D;0.00000)</p>
+<h2 id="Now-Prepare-for-Android"><a href="#Now-Prepare-for-Android" class="headerlink" title="Now, Prepare for Android"></a>Now, Prepare for Android</h2><h2 id="Install-PILLOW"><a href="#Install-PILLOW" class="headerlink" title="Install PILLOW"></a>Install PILLOW</h2><p>pip install PILLOW</p>
+<h2 id="Convert-the-model-to-TFLite-format"><a href="#Convert-the-model-to-TFLite-format" class="headerlink" title="Convert the model to TFLite format"></a>Convert the model to TFLite format</h2><p>IMAGE_SIZE&#x3D;224<br>toco   –input_file&#x3D;tf_files&#x2F;retrained_graph.pb   –output_file&#x3D;tf_files&#x2F;optimized_graph.lite   –input_format&#x3D;TENSORFLOW_GRAPHDEF   –output_format&#x3D;TFLITE   –input_shape&#x3D;1,${IMAGE_SIZE},${IMAGE_SIZE},3   –input_array&#x3D;input   –output_array&#x3D;final_result   –inference_type&#x3D;FLOAT   –input_data_type&#x3D;FLOAT</p>
+<h2 id="The-TFLite-Model"><a href="#The-TFLite-Model" class="headerlink" title="The TFLite Model"></a>The TFLite Model</h2><p>tf_files&#x2F;optimized_graph.lite</p>
+<h2 id="Install-AndroidStudio"><a href="#Install-AndroidStudio" class="headerlink" title="Install AndroidStudio"></a>Install AndroidStudio</h2><p>unzip android-studio-ide-182.5199772-linux.zip<br>cd android-studio&#x2F;<br>cd bin&#x2F;<br>.&#x2F;studio.sh </p>
+<h3 id="Maybe-You-Need-to-Set-Proxy"><a href="#Maybe-You-Need-to-Set-Proxy" class="headerlink" title="Maybe You Need to Set Proxy"></a>Maybe You Need to Set Proxy</h3><p>If you use lantern, you can do it like this! <img src="/img/Android_Studio_Lantern_Proxy-1024x576.png"></p>
+<h2 id="Open-Project"><a href="#Open-Project" class="headerlink" title="Open Project"></a>Open Project</h2><h4 id="Open-an-existing-Android-Studio-project"><a href="#Open-an-existing-Android-Studio-project" class="headerlink" title="Open an existing Android Studio project"></a>Open an existing Android Studio project</h4><p><img src="/img/Android_Studio_Welcome.png"></p>
+<h4 id="Choose-android-x2F-tflite"><a href="#Choose-android-x2F-tflite" class="headerlink" title="Choose android&#x2F;tflite"></a>Choose android&#x2F;tflite</h4><p><img src="/img/Android_Studio_Open_Project.png"></p>
+<h2 id="Gradle-Sync-YES"><a href="#Gradle-Sync-YES" class="headerlink" title="Gradle Sync, YES"></a>Gradle Sync, YES</h2><h2 id="Build-Make-Project"><a href="#Build-Make-Project" class="headerlink" title="Build, Make Project"></a>Build, Make Project</h2><p>android&#x2F;tflite&#x2F;app&#x2F;build&#x2F;outputs&#x2F;apk&#x2F;debug&#x2F;app-debug.apk</p>
+<h2 id="Test-on-Your-Phone"><a href="#Test-on-Your-Phone" class="headerlink" title="Test on Your Phone"></a>Test on Your Phone</h2><p><img src="/img/TFLite_Test_0-576x1024.jpg"></p>
+<h2 id="Add-your-model-files-to-the-project-and-then-Make-Project-Test-Again"><a href="#Add-your-model-files-to-the-project-and-then-Make-Project-Test-Again" class="headerlink" title="Add your model files to the project, and then Make Project, Test Again"></a>Add your model files to the project, and then Make Project, Test Again</h2><p>cp tf_files&#x2F;optimized_graph.lite android&#x2F;tflite&#x2F;app&#x2F;src&#x2F;main&#x2F;assets&#x2F;graph.lite<br>cp tf_files&#x2F;retrained_labels.txt android&#x2F;tflite&#x2F;app&#x2F;src&#x2F;main&#x2F;assets&#x2F;labels.txt</p>
+<p><img src="/img/TFLite_Test_1-576x1024.jpg"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/22/how-to-train-yolov3-to-detect-peppa-pig/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/22/how-to-train-yolov3-to-detect-peppa-pig/" class="post-title-link" itemprop="url">How to train YOLOv3 to detect Peppa Pig</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-01-22 11:18:26" itemprop="dateCreated datePublished" datetime="2019-01-22T11:18:26+08:00">2019-01-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/Ubuntu-16-04/" itemprop="url" rel="index"><span itemprop="name">Ubuntu 16.04</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Yolo/" itemprop="url" rel="index"><span itemprop="name">Yolo</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>Collecting Data from the Web with Python If you like</p>
+<h2 id="PASCAL-VOC"><a href="#PASCAL-VOC" class="headerlink" title="PASCAL VOC"></a>PASCAL VOC</h2><p>. ├── VOCdevkit │ └── VOC2018 │ ├── Annotations ├── ImageSets │ │ └── Main &#x2F;&#x2F; name of *.jpg without “.jpg” ├── JPEGImages &#x2F;&#x2F; *.jpg</p>
+<h2 id="Annotation"><a href="#Annotation" class="headerlink" title="Annotation"></a>Annotation</h2><p><a target="_blank" rel="noopener" href="https://github.com/tzutalin/labelImg">LabelImg is a graphical image annotation tool</a></p>
+<h4 id="Example-XML"><a href="#Example-XML" class="headerlink" title="Example : XML"></a>Example : XML</h4><p> 000<br>000000.jpg<br>&#x2F;home&#x2F;water&#x2F;Machine_Learning&#x2F;Peppa_Pig&#x2F;train&#x2F;000&#x2F;000000.jpg<br>Unknown</p>
+<p> 410<br>256<br>3<br>0<br> Peppa<br>Unspecified<br>0<br>0<br> 64<br>87<br>166<br>226<br> Peppa<br>Unspecified<br>0<br>0<br> 290<br>77<br>333<br>131 </p>
+<h2 id="Generate-Labels-for-VOC"><a href="#Generate-Labels-for-VOC" class="headerlink" title="Generate Labels for VOC"></a>Generate Labels for VOC</h2><p>Darknet wants a .txt file for each image with a line for each ground truth object in the image that looks like:</p>
+<h4 id="voc-label-py"><a href="#voc-label-py" class="headerlink" title="voc_label.py"></a>voc_label.py</h4><p>import xml.etree.ElementTree as ET<br>import pickle<br>import os<br>from os import listdir, getcwd<br>from os.path import join</p>
+<p>sets&#x3D;[(‘2018’, ‘train’), (‘2018’, ‘val’)]</p>
+<p>classes &#x3D; [“Peppa”]</p>
+<p>def convert(size, box):<br>    dw &#x3D; 1.&#x2F;size[0]<br>    dh &#x3D; 1.&#x2F;size[1]<br>    x &#x3D; (box[0] + box[1])&#x2F;2.0<br>    y &#x3D; (box[2] + box[3])&#x2F;2.0<br>    w &#x3D; box[1] - box[0]<br>    h &#x3D; box[3] - box[2]<br>    x &#x3D; x*dw<br>    w &#x3D; w*dw<br>    y &#x3D; y*dh<br>    h &#x3D; h*dh<br>    return (x,y,w,h)</p>
+<p>def convert_annotation(year, image_id):<br>    in_file &#x3D; open(‘VOCdevkit&#x2F;VOC%s&#x2F;Annotations&#x2F;%s.xml’%(year, image_id))<br>    out_file &#x3D; open(‘VOCdevkit&#x2F;VOC%s&#x2F;labels&#x2F;%s.txt’%(year, image_id), ‘w’)<br>    tree&#x3D;ET.parse(in_file)<br>    root &#x3D; tree.getroot()<br>    size &#x3D; root.find(‘size’)<br>    w &#x3D; int(size.find(‘width’).text)<br>    h &#x3D; int(size.find(‘height’).text)</p>
+<pre><code>for obj in root.iter(&#39;object&#39;):
+    difficult = obj.find(&#39;difficult&#39;).text
+    cls = obj.find(&#39;name&#39;).text
+    if cls not in classes or int(difficult) == 1:
+        continue
+    cls\_id = classes.index(cls)
+    xmlbox = obj.find(&#39;bndbox&#39;)
+    b = (float(xmlbox.find(&#39;xmin&#39;).text), float(xmlbox.find(&#39;xmax&#39;).text), float(xmlbox.find(&#39;ymin&#39;).text), float(xmlbox.find(&#39;ymax&#39;).text))
+    bb = convert((w,h), b)
+    out\_file.write(str(cls\_id) + &quot; &quot; + &quot; &quot;.join(\[str(a) for a in bb\]) + &#39;\\n&#39;)
 </code></pre>
-<p>} </p>
-<h2 id="pro"><a href="#pro" class="headerlink" title="pro"></a>pro</h2><p>QT -&#x3D; gui</p>
-<p>CONFIG +&#x3D; c++11 console<br>CONFIG -&#x3D; app_bundle</p>
-<h1 id="The-following-define-makes-your-compiler-emit-warnings-if-you-use"><a href="#The-following-define-makes-your-compiler-emit-warnings-if-you-use" class="headerlink" title="The following define makes your compiler emit warnings if you use"></a>The following define makes your compiler emit warnings if you use</h1><h1 id="any-Qt-feature-that-has-been-marked-deprecated-the-exact-warnings"><a href="#any-Qt-feature-that-has-been-marked-deprecated-the-exact-warnings" class="headerlink" title="any Qt feature that has been marked deprecated (the exact warnings"></a>any Qt feature that has been marked deprecated (the exact warnings</h1><h1 id="depend-on-your-compiler-Please-consult-the-documentation-of-the"><a href="#depend-on-your-compiler-Please-consult-the-documentation-of-the" class="headerlink" title="depend on your compiler). Please consult the documentation of the"></a>depend on your compiler). Please consult the documentation of the</h1><h1 id="deprecated-API-in-order-to-know-how-to-port-your-code-away-from-it"><a href="#deprecated-API-in-order-to-know-how-to-port-your-code-away-from-it" class="headerlink" title="deprecated API in order to know how to port your code away from it."></a>deprecated API in order to know how to port your code away from it.</h1><p>DEFINES +&#x3D; QT_DEPRECATED_WARNINGS</p>
-<h1 id="You-can-also-make-your-code-fail-to-compile-if-it-uses-deprecated-APIs"><a href="#You-can-also-make-your-code-fail-to-compile-if-it-uses-deprecated-APIs" class="headerlink" title="You can also make your code fail to compile if it uses deprecated APIs."></a>You can also make your code fail to compile if it uses deprecated APIs.</h1><h1 id="In-order-to-do-so-uncomment-the-following-line"><a href="#In-order-to-do-so-uncomment-the-following-line" class="headerlink" title="In order to do so, uncomment the following line."></a>In order to do so, uncomment the following line.</h1><h1 id="You-can-also-select-to-disable-deprecated-APIs-only-up-to-a-certain-version-of-Qt"><a href="#You-can-also-select-to-disable-deprecated-APIs-only-up-to-a-certain-version-of-Qt" class="headerlink" title="You can also select to disable deprecated APIs only up to a certain version of Qt."></a>You can also select to disable deprecated APIs only up to a certain version of Qt.</h1><p>#DEFINES +&#x3D; QT_DISABLE_DEPRECATED_BEFORE&#x3D;0x060000    # disables all the APIs deprecated before Qt 6.0.0</p>
-<p>SOURCES +&#x3D; \<br>        main.cpp</p>
-<h1 id="Default-rules-for-deployment"><a href="#Default-rules-for-deployment" class="headerlink" title="Default rules for deployment."></a>Default rules for deployment.</h1><p>qnx: target.path &#x3D; &#x2F;tmp&#x2F;$${TARGET}&#x2F;bin<br>else: unix:!android: target.path &#x3D; &#x2F;opt&#x2F;$${TARGET}&#x2F;bin<br>!isEmpty(target.path): INSTALLS +&#x3D; target</p>
-<p>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include<br>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include&#x2F;opencv<br>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include&#x2F;opencv2<br>LIBS +&#x3D; -L&#x2F;usr&#x2F;local&#x2F;lib \<br> -lopencv_core \<br> -lopencv_highgui \<br> -lopencv_imgproc \<br>  -lopencv_imgcodecs \</p>
+<p>wd &#x3D; getcwd()</p>
+<p>for year, image_set in sets:<br>    if not os.path.exists(‘VOCdevkit&#x2F;VOC%s&#x2F;labels&#x2F;‘%(year)):<br>        os.makedirs(‘VOCdevkit&#x2F;VOC%s&#x2F;labels&#x2F;‘%(year))<br>    image_ids &#x3D; open(‘VOCdevkit&#x2F;VOC%s&#x2F;ImageSets&#x2F;Main&#x2F;%s.txt’%(year, image_set)).read().strip().split()<br>    list_file &#x3D; open(‘%s_%s.txt’%(year, image_set), ‘w’)<br>    for image_id in image_ids:<br>        list_file.write(‘%s&#x2F;VOCdevkit&#x2F;VOC%s&#x2F;JPEGImages&#x2F;%s.jpg\n’%(wd, year, image_id))<br>        convert_annotation(year, image_id)<br>    list_file.close()</p>
+<h2 id="peppa-data"><a href="#peppa-data" class="headerlink" title="peppa.data"></a>peppa.data</h2><p>classes&#x3D; 1<br>train  &#x3D; &#x2F;home&#x2F;d&#x2F;Downloads&#x2F;Peppa_VOC&#x2F;2018_train.txt<br>valid  &#x3D; &#x2F;home&#x2F;d&#x2F;Downloads&#x2F;Peppa_VOC&#x2F;2018_val.txt<br>names &#x3D; data&#x2F;peppa.names<br>backup &#x3D; backup</p>
+<h2 id="yolov3-voc-peppa-cfg"><a href="#yolov3-voc-peppa-cfg" class="headerlink" title="yolov3-voc-peppa.cfg"></a>yolov3-voc-peppa.cfg</h2><p>[net]</p>
+<h1 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h1><p>batch&#x3D;1<br>subdivisions&#x3D;1</p>
+<h1 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h1><p> batch&#x3D;64<br> subdivisions&#x3D;2<br>width&#x3D;416<br>height&#x3D;416<br>channels&#x3D;3<br>momentum&#x3D;0.9<br>decay&#x3D;0.0005<br>angle&#x3D;0<br>saturation &#x3D; 1.5<br>exposure &#x3D; 1.5<br>hue&#x3D;.1</p>
+<p>learning_rate&#x3D;0.001<br>burn_in&#x3D;1000<br>max_batches &#x3D; 500200<br>policy&#x3D;steps<br>steps&#x3D;400000,450000<br>scales&#x3D;.1,.1</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;16<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;32<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;64<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;128<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;256<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;2</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;512<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[maxpool]<br>size&#x3D;2<br>stride&#x3D;1</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;1024<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>###########</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;256<br>size&#x3D;1<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;512<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[convolutional]<br>size&#x3D;1<br>stride&#x3D;1<br>pad&#x3D;1<br>filters&#x3D;18<br>activation&#x3D;linear</p>
+<p>[yolo]<br>mask &#x3D; 3,4,5<br>anchors &#x3D; 10,14,  23,27,  37,58,  81,82,  135,169,  344,319<br>classes&#x3D;1<br>num&#x3D;6<br>jitter&#x3D;.3<br>ignore_thresh &#x3D; .7<br>truth_thresh &#x3D; 1<br>random&#x3D;1</p>
+<p>[route]<br>layers &#x3D; -4</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;128<br>size&#x3D;1<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[upsample]<br>stride&#x3D;2</p>
+<p>[route]<br>layers &#x3D; -1, 8</p>
+<p>[convolutional]<br>batch_normalize&#x3D;1<br>filters&#x3D;256<br>size&#x3D;3<br>stride&#x3D;1<br>pad&#x3D;1<br>activation&#x3D;leaky</p>
+<p>[convolutional]<br>size&#x3D;1<br>stride&#x3D;1<br>pad&#x3D;1<br>filters&#x3D;18<br>activation&#x3D;linear</p>
+<p>[yolo]<br>mask &#x3D; 0,1,2<br>anchors &#x3D; 10,14,  23,27,  37,58,  81,82,  135,169,  344,319<br>classes&#x3D;1<br>num&#x3D;6<br>jitter&#x3D;.3<br>ignore_thresh &#x3D; .7<br>truth_thresh &#x3D; 1<br>random&#x3D;1</p>
+<h2 id="Train"><a href="#Train" class="headerlink" title="Train"></a>Train</h2><p>.&#x2F;darknet detector train cfg&#x2F;peppa.data cfg&#x2F;yolov3-voc-peppa.cfg darknet53.conv.74</p>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p><img src="/img/000972_predictions-300x229.jpg"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>@article{yolov3,<br>  title&#x3D;{YOLOv3: An Incremental Improvement},<br>  author&#x3D;{Redmon, Joseph and Farhadi, Ali},<br>  journal &#x3D; {arXiv},<br>  year&#x3D;{2018}<br>}</p>
 
       
     </div>
@@ -1220,7 +1143,7 @@ return 0;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1288,14 +1211,14 @@ return 0;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -1330,7 +1253,7 @@ return 0;
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

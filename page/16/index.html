@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/12/google-protobuf-c-example/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/mxnet-sample/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/05/12/google-protobuf-c-example/" class="post-title-link" itemprop="url">Google ProtoBuf C++ Example</a>
+            <a href="/2019/01/09/mxnet-sample/" class="post-title-link" itemprop="url">MXNet Sample</a>
         </h2>
 
         <div class="post-meta">
@@ -180,14 +180,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-05-12 16:49:31" itemprop="dateCreated datePublished" datetime="2018-05-12T16:49:31+08:00">2018-05-12</time>
+              <time title="Created: 2019-01-09 16:14:37" itemprop="dateCreated datePublished" datetime="2019-01-09T16:14:37+08:00">2019-01-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -195,11 +195,27 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/MacOS/" itemprop="url" rel="index"><span itemprop="name">MacOS</span></a>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/MXNet/" itemprop="url" rel="index"><span itemprop="name">MXNet</span></a>
                 </span>
             </span>
 
@@ -214,39 +230,624 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="SerializeToString-amp-SerializeToArray"><a href="#SerializeToString-amp-SerializeToArray" class="headerlink" title="SerializeToString &amp; SerializeToArray"></a>SerializeToString &amp; SerializeToArray</h3><p>syntax &#x3D; “proto3”;</p>
-<p>package test;</p>
-<p>message People {<br>  string name &#x3D; 1;<br>  int32 age &#x3D; 2;<br>  int32 steps &#x3D; 3;<br>}</p>
-<h5 id="protoc-Usage"><a href="#protoc-Usage" class="headerlink" title="protoc Usage :"></a>protoc Usage :</h5><p>water@waters-MacBook-Pro:<del>&#x2F;Documents&#x2F;GitHub&#x2F;CppQt5&#x2F;TestProtobuf$ protoc –cpp_out&#x3D;. people.proto<br>water@waters-MacBook-Pro:</del>&#x2F;Documents&#x2F;GitHub&#x2F;CppQt5&#x2F;TestProtobuf$ ls people.p*<br>people.pb.cc people.pb.h  people.proto</p>
-<p>#include #include “people.pb.h”</p>
-<p>int main(int argc, char *argv[])<br>{<br>    test::People pep;<br>    pep.set_name(“heheda”);<br>    pep.set_age(5);<br>    pep.set_steps(1304);</p>
-<pre><code>std::string buff;
-pep.SerializeToString(&amp;buff);
+          <h2 id="MXNet-Sample"><a href="#MXNet-Sample" class="headerlink" title="MXNet Sample"></a>MXNet Sample</h2><p><img src="/img/MXNet_simple_mlp.gv_.png"></p>
+<p>import pickle<br>import numpy as np</p>
+<p>def cos_curve(x):<br>    return 0.25 * np.sin(2 * x * np.pi + 0.5 * np.pi) + 0.5</p>
+<p>np.random.seed(123)<br>samples &#x3D; []<br>labels &#x3D; []</p>
+<p>sample_density &#x3D; 50<br>for i in range(sample_density):<br>    x1, x2 &#x3D; np.random.random(2)</p>
+<pre><code>bound = cos\_curve(x1)
 
-test::People pep2;
-pep2.ParseFromString(buff);
+if bound - 0.1 &lt; x2 &lt;= bound + 0.1:
+    continue
+else:
+    samples.append((x1, x2))
 
-std::cout &lt;&lt; pep2.name() &lt;&lt; std::endl;
-std::cout &lt;&lt; pep2.age() &lt;&lt; std::endl;
-std::cout &lt;&lt; pep2.steps() &lt;&lt; std::endl;
+    if x2 &gt; bound:
+        labels.append(1)
+    else:
+        labels.append(0)
+</code></pre>
+<p>with open(‘data.pkl’, ‘wb’) as f:<br>    pickle.dump((samples, labels), f)</p>
+<p>import matplotlib.pyplot as plt</p>
+<p>for i, sample in enumerate(samples):<br>    plt.plot(sample[0], sample[1], ‘o’ if labels[i] else ‘^’,<br>             mec&#x3D;’r’ if labels[i] else ‘b’,<br>             mfc&#x3D;’none’,<br>             markersize&#x3D;10)<br>x1 &#x3D; np.linspace(0, 1)<br>plt.plot(x1, cos_curve(x1), ‘k–’)<br>plt.show()</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>import numpy as np<br>import mxnet as mx</p>
+<p>data &#x3D; mx.sym.Variable(‘data’)</p>
+<p>fc1 &#x3D; mx.sym.FullyConnected(data&#x3D;data, name&#x3D;’fc1’, num_hidden&#x3D;2)</p>
+<p>sigmoid1 &#x3D; mx.sym.Activation(data&#x3D;fc1, name&#x3D;’sigmoid1’, act_type&#x3D;’sigmoid’)</p>
+<p>fc2 &#x3D; mx.sym.FullyConnected(data&#x3D;sigmoid1, name&#x3D;’fc2’, num_hidden&#x3D;2)</p>
+<p>mlp &#x3D; mx.sym.SoftmaxOutput(data&#x3D;fc2, name&#x3D;’softmax’)</p>
+<p>shape &#x3D; {‘data’: (2,)}<br>mlp_dot &#x3D; mx.viz.plot_network(symbol&#x3D;mlp, shape&#x3D;shape)<br>mlp_dot.render(‘simple_mlp.gv’, view&#x3D;True)</p>
+<h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><p>import pickle<br>import logging</p>
+<p>with open(‘data.pkl’, ‘rb’) as f:<br>    samples, labels &#x3D; pickle.load(f)</p>
+<p>logging.getLogger().setLevel(logging.DEBUG)</p>
+<p>batch_size &#x3D; len(labels)<br>samples &#x3D; np.array(samples)<br>labels &#x3D; np.array(labels)</p>
+<p>train_iter &#x3D; mx.io.NDArrayIter(samples, labels, batch_size)</p>
+<p>model &#x3D; mx.model.FeedForward.create(<br>    symbol&#x3D;mlp,<br>    X&#x3D;train_iter,<br>    num_epoch&#x3D;1000,<br>    learning_rate&#x3D;0.1,<br>    momentum&#x3D;0.99<br>)<br>‘’’<br>model &#x3D; mx.model.FeedForward(<br>    symbol&#x3D;mlp,<br>    num_epoch&#x3D;1000,<br>    learning_rate&#x3D;0.1<br>    momentum&#x3D;0.99<br>)<br>model.fit(X&#x3D;train_iter)<br>‘’’<br>print(model.predict(mx.nd.array([[0.5, 0.5]])))</p>
+<h1 id="-2"><a href="#-2" class="headerlink" title=""></a></h1><p>import matplotlib.pyplot as plt<br>from mpl_toolkits.mplot3d import Axes3D</p>
+<p>X &#x3D; np.arange(0, 1.05, 0.05)<br>Y &#x3D; np.arange(0, 1.05, 0.05)<br>X, Y &#x3D; np.meshgrid(X, Y)</p>
+<p>grids &#x3D; mx.nd.array([[X[i][j], Y[i][j]] for i in range(X.shape[0]) for j in range(X.shape[1])])</p>
+<p>grid_probs &#x3D; model.predict(grids)[:, 1].reshape(X.shape)</p>
+<p>fig &#x3D; plt.figure(‘Sample Surface’)<br>ax &#x3D; fig.gca(projection&#x3D;’3d’)</p>
+<p>ax.plot_surface(X, Y, grid_probs, alpha&#x3D;0.15, color&#x3D;’k’, rstride&#x3D;2, cstride&#x3D;2, lw&#x3D;0.5)</p>
+<p>samples0 &#x3D; samples[labels&#x3D;&#x3D;0]<br>samples0_probs &#x3D; model.predict(samples0)[:, 1]<br>samples1 &#x3D; samples[labels&#x3D;&#x3D;1]<br>samples1_probs &#x3D; model.predict(samples1)[:, 1]</p>
+<p>ax.scatter(samples0[:, 0], samples0[:, 1], samples0_probs, c&#x3D;’r’, marker&#x3D;’o’, s&#x3D;50)<br>ax.scatter(samples1[:, 0], samples1[:, 1], samples1_probs, c&#x3D;’b’, marker&#x3D;’^’, s&#x3D;50)</p>
+<p>plt.show()</p>
+<p><img src="/img/MXNet_Sample_Surface.png"></p>
 
-int data\_len = pep.ByteSize();
-unsigned char data\[1024\] = &quot;\\0&quot;;
-pep.SerializeToArray(data, data\_len);
-for(auto i = 0; i &lt; data\_len; i ++)
-    printf(&quot;%02X &quot;, data\[i\]);
-printf(&quot;\\n&quot;);
+      
+    </div>
 
-test::People pep3;
-pep3.ParseFromArray(data, data\_len);
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-std::cout &lt;&lt; pep3.name() &lt;&lt; std::endl;
-std::cout &lt;&lt; pep3.age() &lt;&lt; std::endl;
-std::cout &lt;&lt; pep3.steps() &lt;&lt; std::endl;
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/matplotlib-rgb-opencv-bgr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/09/matplotlib-rgb-opencv-bgr/" class="post-title-link" itemprop="url">Matplotlib RGB & OpenCV BGR</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-01-09 11:11:45" itemprop="dateCreated datePublished" datetime="2019-01-09T11:11:45+08:00">2019-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Matplotlib-RGB-amp-OpenCV-BGR"><a href="#Matplotlib-RGB-amp-OpenCV-BGR" class="headerlink" title="Matplotlib RGB &amp; OpenCV BGR"></a>Matplotlib RGB &amp; OpenCV BGR</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>import cv2</p>
+<p>img &#x3D; np.array([<br>    [[255, 0, 0], [0, 255, 0], [0, 0, 255]],<br>    [[255, 255, 0], [255, 0, 255], [0, 255, 255]],<br>    [[255, 255, 255], [128, 128, 128], [0, 0, 0]],<br>], dtype&#x3D;np.uint8)</p>
+<p>plt.imsave(‘img_pyplot.png’, img)<br>cv2.imwrite(‘img_cv2.jpg’, img)</p>
+<p><img src="/img/img_cv2.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/matplotlib-3d-example-2-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/09/matplotlib-3d-example-2-python/" class="post-title-link" itemprop="url">Matplotlib 3D Example 2 : Python</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-01-09 10:21:07" itemprop="dateCreated datePublished" datetime="2019-01-09T10:21:07+08:00">2019-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="3D-Example-2"><a href="#3D-Example-2" class="headerlink" title="3D Example 2"></a>3D Example 2</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>from mpl_toolkits.mplot3d import Axes3D</p>
+<p>np.random.seed(42)</p>
+<p>n_samples &#x3D; 500<br>dim &#x3D; 3</p>
+<p>samples &#x3D; np.random.multivariate_normal(<br>    np.zeros(dim),<br>    np.eye(dim),<br>    n_samples<br>)</p>
+<p>for i in range(samples.shape[0]) :<br>    r &#x3D; np.power(np.random.random(), 1.0 &#x2F; 3.0)<br>    samples[i] *&#x3D; r &#x2F; np.linalg.norm(samples[i])</p>
+<p>upper_samples &#x3D; []<br>lower_samples &#x3D; []<br>for x, y, z in samples:<br>    if z &gt; 3 * x + 2 * y - 1:<br>        upper_samples.append((x, y, z))<br>    else:<br>        lower_samples.append((x, y, z))</p>
+<p>fig &#x3D; plt.figure(‘3D scatter plot’)<br>ax &#x3D; fig.add_subplot(111, projection&#x3D;’3d’)<br>uppers &#x3D; np.array(upper_samples)<br>lowers &#x3D; np.array(lower_samples)</p>
+<p>ax.scatter(uppers[:, 0], uppers[:, 1], uppers[:, 2], c&#x3D;’r’, marker&#x3D;’o’)<br>ax.scatter(uppers[:, 0], uppers[:, 1], uppers[:, 2], c&#x3D;’g’, marker&#x3D;’^’)</p>
+<p>plt.show()</p>
+<p><img src="/img/Matplotlib_3D_2.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/matplotlib-3d-example-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/09/matplotlib-3d-example-python/" class="post-title-link" itemprop="url">Matplotlib 3D Example : Python</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-01-09 10:04:16" itemprop="dateCreated datePublished" datetime="2019-01-09T10:04:16+08:00">2019-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="3D-Example"><a href="#3D-Example" class="headerlink" title="3D Example"></a>3D Example</h2><p>import matplotlib.pyplot as plt<br>import numpy as np<br>from mpl_toolkits.mplot3d import Axes3D</p>
+<p>np.random.seed(42)</p>
+<p>n_grids &#x3D; 51<br>c &#x3D; n_grids &#x2F; 2<br>nf &#x3D; 2</p>
+<p>x &#x3D; np.linspace(0, 1, n_grids)<br>y &#x3D; np.linspace(0, 1, n_grids)<br>X, Y &#x3D; np.meshgrid(x, y)</p>
+<p>spectrum &#x3D; np.zeros((n_grids, n_grids), dtype&#x3D;np.complex)<br>noise &#x3D; [np.complex(x, y) for x, y in np.random.uniform(-1, 1, ((2 * nf + 1) ** 2 &#x2F; 2, 2))]<br>noisy_block &#x3D; np.concatenate((noise, [0j], np.conjugate(noise[:: -1])))<br>spectrum[c - nf: c + nf + 1, c - nf: c + nf + 1] &#x3D; noisy_block.reshape((2 * nf + 1, 2 * nf + 1))<br>Z &#x3D; np.real(np.fft.ifft2(np.fft.ifftshift(spectrum)))</p>
+<p>fig &#x3D; plt.figure(‘3D surface &amp; wire’)<br>ax &#x3D; fig.add_subplot(1, 2, 1, projection&#x3D;’3d’)<br>ax.plot_surface(X, Y, Z, alpha&#x3D;0.7, cmap&#x3D;’jet’, rstride&#x3D;1, cstride&#x3D;1, lw&#x3D;0)</p>
+<p>ax &#x3D; fig.add_subplot(1, 2, 2, projection&#x3D;’3d’)<br>ax.plot_wireframe(X, Y, Z, rstride&#x3D;3, cstride&#x3D;3, lw&#x3D;0.5)</p>
+<p>plt.show()</p>
+<p><img src="/img/Matplotlib_3D.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/09/matplotlib-2d-example-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/09/matplotlib-2d-example-python/" class="post-title-link" itemprop="url">Matplotlib 2D Example : Python</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-01-09 09:30:11" itemprop="dateCreated datePublished" datetime="2019-01-09T09:30:11+08:00">2019-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Multiple-Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Multiple Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="2D-Example"><a href="#2D-Example" class="headerlink" title="2D Example"></a>2D Example</h2><p>import numpy as np<br>import matplotlib as mpl<br>import matplotlib.pyplot as plt</p>
+<p>mpl.rcParams[‘xtick.labelsize’] &#x3D; 24<br>mpl.rcParams[‘ytick.labelsize’] &#x3D; 24<br>np.random.seed(42)</p>
+<p>x &#x3D; np.linspace(0, 5, 100)<br>y &#x3D; 2 * np.sin(x) + 0.3 * x ** 2<br>y_data &#x3D; y + np.random.normal(scale&#x3D;0.3, size&#x3D;100)<br>plt.figure(‘data’)<br>plt.plot(x, y_data, ‘.’)</p>
+<p>plt.figure(‘model’)<br>plt.plot(x, y)</p>
+<p>plt.figure(‘data &amp; model’)<br>plt.plot(x, y, ‘k’, lw&#x3D;3)<br>plt.scatter(x, y_data)</p>
+<p>plt.savefig(‘result.png’)</p>
+<p>plt.show()</p>
+<p><img src="/img/numpy_2D_3.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/07/caffe-installation-ubuntu-16-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/07/caffe-installation-ubuntu-16-04/" class="post-title-link" itemprop="url">Caffe Installation : Ubuntu 16.04</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-01-07 15:12:27" itemprop="dateCreated datePublished" datetime="2019-01-07T15:12:27+08:00">2019-01-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Caffe/" itemprop="url" rel="index"><span itemprop="name">Caffe</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/Ubuntu-16-04/" itemprop="url" rel="index"><span itemprop="name">Ubuntu 16.04</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>sudo apt update<br>sudo apt install build-essential git libatlas-base-dev<br>sudo apt-get install python-pip<br>pip install –upgrade pip<br>sudo apt-get install graphviz<br>sudo pip install graphviz<br>sudo apt install libprotobuf-dev libleveldb-dev libsnappy-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62 libfreeimage-dev libgoogle-glog-dev libbz2-dev libxml2-dev libxslt-dev libffi-dev libssl-dev libgflags-dev liblmdb-dev python-yaml<br>sudo apt-get install libopencv-dev python-opencv</p>
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p># git clone <a target="_blank" rel="noopener" href="https://github.com/BVLC/caffe">https://github.com/BVLC/caffe</a>. git</p>
+<h1 id="Or"><a href="#Or" class="headerlink" title="Or"></a>Or</h1><p>unzip caffe-master.zip<br>cd caffe-master&#x2F;<br>cp Makefile.config.example Makefile.config</p>
+<p>d@ubuntu:~&#x2F;Documents&#x2F;caffe$ diff Makefile.config.example Makefile.config<br>8c8<br>&lt; # CPU_ONLY :&#x3D; 1</p>
+<hr>
+<blockquote>
+<p>CPU_ONLY :&#x3D; 1<br>94c94<br>&lt; # WITH_PYTHON_LAYER :&#x3D; 1</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>WITH_PYTHON_LAYER :&#x3D; 1<br>97,98c97,98<br>&lt; INCLUDE_DIRS :&#x3D; $(PYTHON_INCLUDE) &#x2F;usr&#x2F;local&#x2F;include<br>&lt; LIBRARY_DIRS :&#x3D; $(PYTHON_LIB) &#x2F;usr&#x2F;local&#x2F;lib &#x2F;usr&#x2F;lib</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>INCLUDE_DIRS :&#x3D; $(PYTHON_INCLUDE) &#x2F;usr&#x2F;local&#x2F;include &#x2F;usr&#x2F;include&#x2F;hdf5&#x2F;serial&#x2F;<br>LIBRARY_DIRS :&#x3D; $(PYTHON_LIB) &#x2F;usr&#x2F;local&#x2F;lib &#x2F;usr&#x2F;lib &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;hdf5&#x2F;serial&#x2F;<br>d@ubuntu:~&#x2F;Documents&#x2F;caffe$ </p>
+</blockquote>
+<h2 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h2><p>export LD_LIBRARY&#x3D;$LD_LIBRARY:&#x2F;usr&#x2F;include&#x2F;hdf5<br>export PYTHONPATH&#x3D;$PYTHONPATH:&#x2F;home&#x2F;d&#x2F;Documents&#x2F;caffe&#x2F;python<br>make pycaffe -j<br>make all -j<br>make test -j<br>make runtest</p>
+<p><img src="/img/Caffe_Install_OK.png"></p>
+<h2 id="virtual-memory-exhausted"><a href="#virtual-memory-exhausted" class="headerlink" title="virtual memory exhausted"></a>virtual memory exhausted</h2><p>sudo mkdir &#x2F;opt&#x2F;images&#x2F;<br>sudo rm -rf &#x2F;opt&#x2F;images&#x2F;swap<br>sudo dd if&#x3D;&#x2F;dev&#x2F;zero of&#x3D;&#x2F;opt&#x2F;images&#x2F;swap bs&#x3D;1024 count&#x3D;10240000<br>sudo mkswap &#x2F;opt&#x2F;images&#x2F;swap<br>sudo swapon &#x2F;opt&#x2F;images&#x2F;swap</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/12/30/qt-opencv-example/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/12/30/qt-opencv-example/" class="post-title-link" itemprop="url">QT + OpenCV Example</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-12-30 14:40:40" itemprop="dateCreated datePublished" datetime="2018-12-30T14:40:40+08:00">2018-12-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/OpenCV/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h2><p>#include #include int main(int argc, char *argv[])<br>{<br>    &#x2F;&#x2F;QCoreApplication a(argc, argv);</p>
+<pre><code>using namespace cv;
+Mat image = imread(&quot;/Users/water/Downloads/Share.jpg&quot;);
+imshow(&quot;Output&quot;, image);
+
+waitKey(1000);
 
 return 0;
+
+//return a.exec();
 </code></pre>
-<p>}</p>
+<p>} </p>
+<h2 id="pro"><a href="#pro" class="headerlink" title="pro"></a>pro</h2><p>QT -&#x3D; gui</p>
+<p>CONFIG +&#x3D; c++11 console<br>CONFIG -&#x3D; app_bundle</p>
+<h1 id="The-following-define-makes-your-compiler-emit-warnings-if-you-use"><a href="#The-following-define-makes-your-compiler-emit-warnings-if-you-use" class="headerlink" title="The following define makes your compiler emit warnings if you use"></a>The following define makes your compiler emit warnings if you use</h1><h1 id="any-Qt-feature-that-has-been-marked-deprecated-the-exact-warnings"><a href="#any-Qt-feature-that-has-been-marked-deprecated-the-exact-warnings" class="headerlink" title="any Qt feature that has been marked deprecated (the exact warnings"></a>any Qt feature that has been marked deprecated (the exact warnings</h1><h1 id="depend-on-your-compiler-Please-consult-the-documentation-of-the"><a href="#depend-on-your-compiler-Please-consult-the-documentation-of-the" class="headerlink" title="depend on your compiler). Please consult the documentation of the"></a>depend on your compiler). Please consult the documentation of the</h1><h1 id="deprecated-API-in-order-to-know-how-to-port-your-code-away-from-it"><a href="#deprecated-API-in-order-to-know-how-to-port-your-code-away-from-it" class="headerlink" title="deprecated API in order to know how to port your code away from it."></a>deprecated API in order to know how to port your code away from it.</h1><p>DEFINES +&#x3D; QT_DEPRECATED_WARNINGS</p>
+<h1 id="You-can-also-make-your-code-fail-to-compile-if-it-uses-deprecated-APIs"><a href="#You-can-also-make-your-code-fail-to-compile-if-it-uses-deprecated-APIs" class="headerlink" title="You can also make your code fail to compile if it uses deprecated APIs."></a>You can also make your code fail to compile if it uses deprecated APIs.</h1><h1 id="In-order-to-do-so-uncomment-the-following-line"><a href="#In-order-to-do-so-uncomment-the-following-line" class="headerlink" title="In order to do so, uncomment the following line."></a>In order to do so, uncomment the following line.</h1><h1 id="You-can-also-select-to-disable-deprecated-APIs-only-up-to-a-certain-version-of-Qt"><a href="#You-can-also-select-to-disable-deprecated-APIs-only-up-to-a-certain-version-of-Qt" class="headerlink" title="You can also select to disable deprecated APIs only up to a certain version of Qt."></a>You can also select to disable deprecated APIs only up to a certain version of Qt.</h1><p>#DEFINES +&#x3D; QT_DISABLE_DEPRECATED_BEFORE&#x3D;0x060000    # disables all the APIs deprecated before Qt 6.0.0</p>
+<p>SOURCES +&#x3D; \<br>        main.cpp</p>
+<h1 id="Default-rules-for-deployment"><a href="#Default-rules-for-deployment" class="headerlink" title="Default rules for deployment."></a>Default rules for deployment.</h1><p>qnx: target.path &#x3D; &#x2F;tmp&#x2F;$${TARGET}&#x2F;bin<br>else: unix:!android: target.path &#x3D; &#x2F;opt&#x2F;$${TARGET}&#x2F;bin<br>!isEmpty(target.path): INSTALLS +&#x3D; target</p>
+<p>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include<br>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include&#x2F;opencv<br>INCLUDEPATH +&#x3D; &#x2F;usr&#x2F;local&#x2F;include&#x2F;opencv2<br>LIBS +&#x3D; -L&#x2F;usr&#x2F;local&#x2F;lib \<br> -lopencv_core \<br> -lopencv_highgui \<br> -lopencv_imgproc \<br>  -lopencv_imgcodecs \</p>
 
       
     </div>
@@ -266,7 +867,7 @@ return 0;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/12/how-to-build-googles-protobuf-in-macos/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/12/28/how-to-mount-an-nfs-share-in-windows-10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -280,7 +881,7 @@ return 0;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/05/12/how-to-build-googles-protobuf-in-macos/" class="post-title-link" itemprop="url">How to build Google’s protobuf in MacOS</a>
+            <a href="/2018/12/28/how-to-mount-an-nfs-share-in-windows-10/" class="post-title-link" itemprop="url">How to mount an NFS share in Windows 10</a>
         </h2>
 
         <div class="post-meta">
@@ -290,85 +891,7 @@ return 0;
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-05-12 15:59:29" itemprop="dateCreated datePublished" datetime="2018-05-12T15:59:29+08:00">2018-05-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/MacOS/" itemprop="url" rel="index"><span itemprop="name">MacOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h3><p>water@waters-MacBook-Pro:<del>&#x2F;Downloads&#x2F;protobuf-3.5.1$ .&#x2F;autogen.sh<br>water@waters-MacBook-Pro:</del>&#x2F;Downloads&#x2F;protobuf-3.5.1$ .&#x2F;configure<br>water@waters-MacBook-Pro:<del>&#x2F;Downloads&#x2F;protobuf-3.5.1$ make<br>water@waters-MacBook-Pro:</del>&#x2F;Downloads&#x2F;protobuf-3.5.1$ make install<br>water@waters-MacBook-Pro:~&#x2F;Downloads&#x2F;protobuf-3.5.1$ protoc –version<br>libprotoc 3.5.1</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/12/how-to-build-googles-protobuf-in-windows-using-mingw/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/12/how-to-build-googles-protobuf-in-windows-using-mingw/" class="post-title-link" itemprop="url">How to build Google's protobuf in Windows using MinGW</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-12 15:24:57" itemprop="dateCreated datePublished" datetime="2018-05-12T15:24:57+08:00">2018-05-12</time>
+              <time title="Created: 2018-12-28 17:35:10" itemprop="dateCreated datePublished" datetime="2018-12-28T17:35:10+08:00">2018-12-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -387,6 +910,208 @@ return 0;
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="haneWIN-NFS-Server"><a href="#haneWIN-NFS-Server" class="headerlink" title="haneWIN NFS Server"></a>haneWIN NFS Server</h3><h2 id="Run-as-administrator"><a href="#Run-as-administrator" class="headerlink" title="Run as administrator"></a><strong>Run as administrator</strong></h2><h3 id=""><a href="#" class="headerlink" title=""></a><img src="/img/haneWIN_1.png"></h3><h2 id="Edit-Exports-then-choose-the-checkbox-“Set-excute-bit-for-all-files”-if-you-need-to-run"><a href="#Edit-Exports-then-choose-the-checkbox-“Set-excute-bit-for-all-files”-if-you-need-to-run" class="headerlink" title="Edit Exports, then choose the checkbox “Set excute bit for all files” if you need to run"></a>Edit Exports, then choose the checkbox “Set excute bit for all files” if you need to run</h2><p><img src="/img/haneWIN_2.png"></p>
+<h2 id="Open-Ports-in-Windows-Firewall-for-NFS-Server"><a href="#Open-Ports-in-Windows-Firewall-for-NFS-Server" class="headerlink" title="Open Ports in Windows Firewall for NFS Server"></a>Open Ports in Windows Firewall for NFS Server</h2><p><img src="/img/haneWIN_Firewall.png"></p>
+<h2 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h2><p>mkdir nfs_share<br>mount -t nfs 192.168.xxx.xxx:&#x2F;nfs_share &#x2F;home&#x2F;root&#x2F;nfs_share<br>umount nfs_share&#x2F;</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/12/28/some-built-in-macros-inside-cmakesettings-json/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/12/28/some-built-in-macros-inside-cmakesettings-json/" class="post-title-link" itemprop="url">Some built-in macros inside CMakeSettings.json:</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-12-28 16:56:03" itemprop="dateCreated datePublished" datetime="2018-12-28T16:56:03+08:00">2018-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/windows/" itemprop="url" rel="index"><span itemprop="name">windows</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/windows/Visual-Studio/" itemprop="url" rel="index"><span itemprop="name">Visual Studio</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><em>${workspaceRoot}</em> – provides the full path to the workspace folder</li>
+<li><em>${workspaceHash}</em> – hash of workspace location; useful for creating a unique identifier for the current workspace (e.g. to use in folder paths)</li>
+<li><em>${projectFile}</em> – the full path for the root CMakeLists.txt</li>
+<li><em>${projectDir}</em> – the full path to the folder of the root CMakeLists.txt file</li>
+<li><em>${thisFile}</em> – the full path to the CMakeSettings.json file</li>
+<li><em>${name}</em> – the name of the configuration</li>
+<li><em>${generator}</em> – the name of the CMake generator used in this configuration</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/12/27/how-to-build-qt-from-source-codes-qt-5-12-visual-studio-2017/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/12/27/how-to-build-qt-from-source-codes-qt-5-12-visual-studio-2017/" class="post-title-link" itemprop="url">How to Build Qt From Source Codes (QT 5.12 + Visual Studio 2017)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-12-27 09:43:17" itemprop="dateCreated datePublished" datetime="2018-12-27T09:43:17+08:00">2018-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/operating-system/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
                 </span>
             </span>
@@ -402,865 +1127,10 @@ return 0;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="CMAKE-Config"><a href="#CMAKE-Config" class="headerlink" title="CMAKE Config"></a>CMAKE Config</h3><p><img src="/img/PROTOBUF-CMAKE-2.png"></p>
-<h3 id="mingw32-make-amp-install"><a href="#mingw32-make-amp-install" class="headerlink" title="mingw32-make &amp; install"></a>mingw32-make &amp; install</h3><p>c:\protobuf-3.5.1build&gt;mingw32-make<br>Scanning dependencies of target libprotobuf-lite<br>[  0%] Building CXX object CMakeFiles&#x2F;libprotobuf-lite.dir&#x2F;C_&#x2F;protobuf-3.5.1&#x2F;src&#x2F;google&#x2F;protobuf&#x2F;arena.cc.obj<br>[  1%] Building CXX object CMakeFiles&#x2F;libprotobuf-lite.dir&#x2F;C_&#x2F;protobuf-3.5.1&#x2F;src&#x2F;google&#x2F;protobuf&#x2F;arenastring.cc.obj<br>[  1%] Building CXX object CMakeFiles&#x2F;libprotobuf-lite.dir&#x2F;C_&#x2F;protobuf-3.5.1&#x2F;src&#x2F;google&#x2F;protobuf&#x2F;extension_set.cc.obj<br>[  2%] Building CXX object CMakeFiles&#x2F;libprotobuf-lite.dir&#x2F;C_&#x2F;protobuf-3.5.1&#x2F;src&#x2F;google&#x2F;protobuf&#x2F;generated_message_table_driven_lite.cc.obj<br>……</p>
-<p>c:\protobuf-3.5.1build&gt;mingw32-make install<br>[ 12%] Built target libprotobuf-lite<br>[ 52%] Built target libprotobuf<br>[ 52%] Built target js_embed<br>[ 99%] Built target libprotoc<br>[100%] Built target protoc<br>Install the project…<br>– Install configuration: “”<br>– Installing: C:&#x2F;protobuf-3.5.1-qt5.9&#x2F;lib&#x2F;libprotobuf-lite.a<br>– Installing: C:&#x2F;protobuf-3.5.1-qt5.9&#x2F;lib&#x2F;libprotobuf.a<br>– Installing: C:&#x2F;protobuf-3.5.1-qt5.9&#x2F;lib&#x2F;libprotoc.a<br>– Installing: C:&#x2F;protobuf-3.5.1-qt5.9&#x2F;bin&#x2F;protoc.exe<br>……</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/10/cross-compile-with-node-js-c-addons-to-arm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/10/cross-compile-with-node-js-c-addons-to-arm/" class="post-title-link" itemprop="url">Cross compile with Node.js C++ Addons to ARM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-10 16:47:03" itemprop="dateCreated datePublished" datetime="2018-05-10T16:47:03+08:00">2018-05-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Set-ENV"><a href="#Set-ENV" class="headerlink" title="Set ENV"></a>Set ENV</h3><p>export HOST&#x3D;arm-linux-gnueabihf<br>export CPP&#x3D;”${HOST}-gcc -E”<br>export STRIP&#x3D;”${HOST}-strip”<br>export OBJCOPY&#x3D;”${HOST}-objcopy”<br>export AR&#x3D;”${HOST}-ar”<br>export RANLIB&#x3D;”${HOST}-ranlib”<br>export LD&#x3D;”${HOST}-ld”<br>export OBJDUMP&#x3D;”${HOST}-objdump”<br>export CC&#x3D;”${HOST}-gcc”<br>export CXX&#x3D;”${HOST}-g++”<br>export NM&#x3D;”${HOST}-nm”<br>export AS&#x3D;”${HOST}-as”<br>export LD&#x3D;”$CXX”<br>export LINK&#x3D;”$CXX”<br>export GYP_DEFINES&#x3D;”armv7&#x3D;0”</p>
-<h3 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h3><p>node-gyp –arch arm configure build</p>
-<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><p>root@imx6ul7d:~# node hello.js<br>world</p>
-<h3 id="TIP-0"><a href="#TIP-0" class="headerlink" title="TIP 0"></a>TIP 0</h3><p>{<br>  “targets”: [<br>    {<br>      “target_name”: “addon”,<br>      “sources”: [ “test_api.cc” ],<br>  “include_dirs” : [“sdk&#x2F;inc”],<br>  “link_settings”: {“libraries”: [ “-L&#x2F;mnt&#x2F;hgfs&#x2F;tmp0511&#x2F;sdk&#x2F;lib”] },<br>  “libraries”: [ “-lpos”, “-lpthread”, “-lrt”, “-lpng”, “-liconv”, “-lfreetype”, “-lz” ],<br>    }<br>  ]<br>}</p>
-<h3 id="TIP-1"><a href="#TIP-1" class="headerlink" title="TIP 1"></a>TIP 1</h3><p>using v8::FunctionCallbackInfo;<br>using v8::Isolate;<br>using v8::Local;<br>using v8::Object;<br>using v8::String;<br>using v8::Value;<br>using v8::Number;<br>using v8::Exception;</p>
-<p>void js_Exchange(const FunctionCallbackInfo&amp; args) {<br>  Isolate* isolate &#x3D; args.GetIsolate();</p>
-<p>  int slot &#x3D; args[0]-&gt;NumberValue();</p>
-<p>  String::Utf8Value param1(args[1]-&gt;ToString());<br>  char *szApdu &#x3D; *param1;  </p>
-<p>  uint8_t apdu[300] &#x3D; “\0”;<br>  MyAHex((uint8_t *)szApdu, apdu, strlen(szApdu));</p>
-<p>  uint8_t rpdu[300] &#x3D; “\0”;<br>  uint32_t rpdu_len &#x3D; 0;<br>  char szResult[300] &#x3D; “\0”;</p>
-<p>  int ret &#x3D; Exchange(slot, apdu, strlen(szApdu) &#x2F; 2, rpdu, &amp;rpdu_len);<br>  if(0 &#x3D;&#x3D; ret) {<br>    MyHexA(rpdu, (uint8_t *)szResult, rpdu_len);<br>    args.GetReturnValue().Set(String::NewFromUtf8(isolate, szResult));<br>  } else {<br>    args.GetReturnValue().Set(String::NewFromUtf8(isolate, “”));<br>  }<br>}</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/10/node-js-c-addons/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/10/node-js-c-addons/" class="post-title-link" itemprop="url">Node.js C++ Addons</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-10 13:33:36" itemprop="dateCreated datePublished" datetime="2018-05-10T13:33:36+08:00">2018-05-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Install-node-gyp"><a href="#Install-node-gyp" class="headerlink" title="Install node-gyp"></a>Install node-gyp</h3><p>npm install -g node-gyp</p>
-<h3 id="Prepare-SourceCode"><a href="#Prepare-SourceCode" class="headerlink" title="Prepare SourceCode"></a>Prepare SourceCode</h3><p>[root@localhost test_nodejs]# ls<br>binding.gyp  hello.cc  hello.js</p>
-<h4 id="hello-cc"><a href="#hello-cc" class="headerlink" title="hello.cc"></a>hello.cc</h4><p>#include namespace demo {</p>
-<p>using v8::FunctionCallbackInfo;<br>using v8::Isolate;<br>using v8::Local;<br>using v8::Object;<br>using v8::String;<br>using v8::Value;</p>
-<p>void Method(const FunctionCallbackInfo&amp; args) {<br>  Isolate* isolate &#x3D; args.GetIsolate();<br>  args.GetReturnValue().Set(String::NewFromUtf8(isolate, “world”));<br>}</p>
-<p>void init(Local exports) {<br>  NODE_SET_METHOD(exports, “hello”, Method);<br>}</p>
-<p>NODE_MODULE(NODE_GYP_MODULE_NAME, init)</p>
-<p>}  &#x2F;&#x2F; namespace demo</p>
-<h4 id="hello-js"><a href="#hello-js" class="headerlink" title="hello.js"></a>hello.js</h4><p>&#x2F;&#x2F; hello.js<br>const addon &#x3D; require(‘.&#x2F;build&#x2F;Release&#x2F;addon’);</p>
-<p>console.log(addon.hello());<br>&#x2F;&#x2F; Prints: ‘world’</p>
-<h4 id="binding-gyp"><a href="#binding-gyp" class="headerlink" title="binding.gyp"></a>binding.gyp</h4><p>{<br>  “targets”: [<br>    {<br>      “target_name”: “addon”,<br>      “sources”: [ “hello.cc” ]<br>    }<br>  ]<br>}</p>
-<h3 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h3><p>[root@localhost test_nodejs]# node-gyp configure<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#x6e;&#111;&#100;&#101;&#45;&#x67;&#121;&#112;&#x40;&#51;&#46;&#54;&#46;&#x32;">&#x6e;&#111;&#100;&#101;&#45;&#x67;&#121;&#112;&#x40;&#51;&#46;&#54;&#46;&#x32;</a><br>gyp info using <a href="mailto:&#x6e;&#x6f;&#100;&#x65;&#x40;&#56;&#x2e;&#49;&#x31;&#x2e;&#49;">&#x6e;&#x6f;&#100;&#x65;&#x40;&#56;&#x2e;&#49;&#x31;&#x2e;&#49;</a>  linux  x64<br>gyp info spawn &#x2F;usr&#x2F;bin&#x2F;python2<br>gyp info spawn args [ ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;gyp&#x2F;gyp_main.py’,<br>gyp info spawn args   ‘binding.gyp’,<br>gyp info spawn args   ‘-f’,<br>gyp info spawn args   ‘make’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build&#x2F;config.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;addon.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;include&#x2F;node&#x2F;common.gypi’,<br>gyp info spawn args   ‘-Dlibrary&#x3D;shared_library’,<br>gyp info spawn args   ‘-Dvisibility&#x3D;default’,<br>gyp info spawn args   ‘-Dnode_root_dir&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1’,<br>gyp info spawn args   ‘-Dnode_gyp_dir&#x3D;&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp’,<br>gyp info spawn args   ‘-Dnode_lib_file&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;&lt;(target_arch)&#x2F;node.lib’,<br>gyp info spawn args   ‘-Dmodule_root_dir&#x3D;&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs’,<br>gyp info spawn args   ‘-Dnode_engine&#x3D;v8’,<br>gyp info spawn args   ‘–depth&#x3D;.’,<br>gyp info spawn args   ‘–no-parallel’,<br>gyp info spawn args   ‘–generator-output’,<br>gyp info spawn args   ‘build’,<br>gyp info spawn args   ‘-Goutput_dir&#x3D;.’ ]<br>gyp info ok<br>[root@localhost test_nodejs]#<br>[root@localhost test_nodejs]# ls<br>binding.gyp  build  hello.cc  hello.js<br>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile</p>
-<p>[root@localhost test_nodejs]# node-gyp build<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#110;&#x6f;&#100;&#101;&#45;&#103;&#121;&#x70;&#x40;&#51;&#x2e;&#x36;&#46;&#x32;">&#110;&#x6f;&#100;&#101;&#45;&#103;&#121;&#x70;&#x40;&#51;&#x2e;&#x36;&#46;&#x32;</a><br>gyp info using <a href="mailto:&#x6e;&#x6f;&#100;&#x65;&#x40;&#56;&#46;&#x31;&#49;&#x2e;&#49;">&#x6e;&#x6f;&#100;&#x65;&#x40;&#56;&#46;&#x31;&#49;&#x2e;&#49;</a>  linux  x64<br>gyp info spawn make<br>gyp info spawn args [ ‘BUILDTYPE&#x3D;Release’, ‘-C’, ‘build’ ]<br>make: Entering directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>  CXX(target) Release&#x2F;obj.target&#x2F;addon&#x2F;hello.o<br>  SOLINK_MODULE(target) Release&#x2F;obj.target&#x2F;addon.node<br>  COPY Release&#x2F;addon.node<br>make: Leaving directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>gyp info ok </p>
-<p>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile  Release<br>[root@localhost test_nodejs]# ls build&#x2F;Release&#x2F;<br>addon.node  obj.target</p>
-<p>[root@localhost test_nodejs]# node hello.js<br>world</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/10/how-to-install-node-js-on-centos-7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/10/how-to-install-node-js-on-centos-7/" class="post-title-link" itemprop="url">How to Install Node.js On CentOS 7</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-10 13:32:39" itemprop="dateCreated datePublished" datetime="2018-05-10T13:32:39+08:00">2018-05-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Unpack-node-xxx-tar-xxx"><a href="#Unpack-node-xxx-tar-xxx" class="headerlink" title="Unpack node.xxx.tar.xxx"></a>Unpack node.xxx.tar.xxx</h3><p>cp node-v8.11.1-linux-x64.tar.gz &#x2F;usr&#x2F;local&#x2F;<br>cd &#x2F;usr&#x2F;local&#x2F;<br>tar zxvf node-v8.11.1-linux-x64.tar.gz</p>
-<h3 id="Add-Node-Path"><a href="#Add-Node-Path" class="headerlink" title="Add Node Path"></a>Add Node Path</h3><p>vim &#x2F;etc&#x2F;profile<br>export NODE_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64<br>export PATH&#x3D;$NODE_HOME&#x2F;bin:$PATH</p>
-<p>source &#x2F;etc&#x2F;profile</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/vs2017-arm-boost-x64-compile-test-source-code/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/03/vs2017-arm-boost-x64-compile-test-source-code/" class="post-title-link" itemprop="url">OpenCV3 On ARM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-03 16:09:37" itemprop="dateCreated datePublished" datetime="2018-05-03T16:09:37+08:00">2018-05-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Source-Code-Dir"><a href="#Source-Code-Dir" class="headerlink" title="Source Code Dir"></a>Source Code Dir</h3><p><img src="/img/ARM-OpenCV-Dir.png"></p>
-<h3 id="CMake-GUI-Configure"><a href="#CMake-GUI-Configure" class="headerlink" title="CMake-GUI Configure"></a>CMake-GUI Configure</h3><p><img src="/img/ARM-OpenCV-CMake-GUI-Config.png"></p>
-<h4 id="Configure-x2F-Generate"><a href="#Configure-x2F-Generate" class="headerlink" title="Configure&#x2F;Generate"></a>Configure&#x2F;Generate</h4><p>Unix Makefiles Specify options for cross-compiling <img src="/img/ARM-OpenCV-CMake-GUI-Configure.png"></p>
-<h4 id="Choose-ARM-LINUX"><a href="#Choose-ARM-LINUX" class="headerlink" title="Choose ARM - LINUX"></a>Choose ARM - LINUX</h4><p>Operating System : arm-linux C Compilers : C++ Compilers : Target Root : The Cross Compiler BIN Directory <img src="/img/ARM-OpenCV-CMake-GUI-Configure-2.png"></p>
-<h4 id="CMAKE-INSTALL-PREFIX"><a href="#CMAKE-INSTALL-PREFIX" class="headerlink" title="CMAKE_INSTALL_PREFIX"></a>CMAKE_INSTALL_PREFIX</h4><p><img src="/img/ARM-OpenCV-CMake-GUI-Configure-3.png"></p>
-<h3 id="make-amp-make-install"><a href="#make-amp-make-install" class="headerlink" title="make &amp; make install"></a>make &amp; make install</h3><p>make<br>make install</p>
-<h4 id="Maybe-Need-It"><a href="#Maybe-Need-It" class="headerlink" title="Maybe Need It !"></a>Maybe Need It !</h4><p><img src="/img/ARM-OpenCV-CMakeCache.png"> &lt;&gt;</p>
-<h3 id="The-END"><a href="#The-END" class="headerlink" title="The END"></a>The END</h3><p>tar jcvf opencv-arm.tar.bz2 opencv-arm&#x2F;</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/lucas-kanade-farneback/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/03/lucas-kanade-farneback/" class="post-title-link" itemprop="url">Lucas-Kanade & Farneback</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-03 15:05:54" itemprop="dateCreated datePublished" datetime="2018-05-03T15:05:54+08:00">2018-05-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="LucasKanade-Tracker"><a href="#LucasKanade-Tracker" class="headerlink" title="LucasKanade Tracker"></a>LucasKanade Tracker</h3><pre><code>    // Check if there are points to track
-    if(!trackingPoints\[0\].empty())
-    &#123;
-        // Status vector to indicate whether the flow for the corresponding features has been found
-        vector statusVector;
-        
-        // Error vector to indicate the error for the corresponding feature
-        vector errorVector;
-        
-        // Check if previous image is empty
-        if(prevGrayImage.empty())
-        &#123;
-            curGrayImage.copyTo(prevGrayImage);
-        &#125;
-        
-        // Calculate the optical flow using Lucas-Kanade algorithm
-        calcOpticalFlowPyrLK(prevGrayImage, curGrayImage, trackingPoints\[0\], trackingPoints\[1\], statusVector, errorVector, windowSize, 3, terminationCriteria, 0, 0.001);
-
-        int count = 0;
-        
-        // Minimum distance between any two tracking points
-        int minDist = 7;
-        
-        for(int i=0; i &lt; trackingPoints\[1\].size(); i++)
-        &#123;
-            if(pointTrackingFlag)
-            &#123;
-                // If the new point is within &#39;minDist&#39; distance from an existing point, it will not be tracked
-                if(norm(currentPoint - trackingPoints\[1\]\[i\]) &lt;= minDist)
-                &#123;
-                    pointTrackingFlag = false;
-                    continue;
-                &#125;
-            &#125;
-            
-            // Check if the status vector is good
-            if(!statusVector\[i\])
-                continue;
-            
-            trackingPoints\[1\]\[count++\] = trackingPoints\[1\]\[i\];
-
-            // Draw a filled circle for each of the tracking points
-            int radius = 8;
-            int thickness = 2;
-            int lineType = 8;
-            circle(image, trackingPoints\[1\]\[i\], radius, Scalar(0,255,0), thickness, lineType);
-        &#125;
-        
-        trackingPoints\[1\].resize(count);
-    &#125;
-    
-    // Refining the location of the feature points
-    if(pointTrackingFlag &amp;&amp; trackingPoints\[1\].size() &lt; maxNumPoints)
-    &#123;
-        vector tempPoints;
-        tempPoints.push\_back(currentPoint);
-        
-        // Function to refine the location of the corners to subpixel accuracy.
-        // Here, &#39;pixel&#39; refers to the image patch of size &#39;windowSize&#39; and not the actual image pixel
-        cornerSubPix(curGrayImage, tempPoints, windowSize, cvSize(-1,-1), terminationCriteria);
-        
-        trackingPoints\[1\].push\_back(tempPoints\[0\]);
-        pointTrackingFlag = false;
-    &#125; 
-</code></pre>
-<h3 id="Farneback-Tracker"><a href="#Farneback-Tracker" class="headerlink" title="Farneback Tracker"></a>Farneback Tracker</h3><pre><code>    // Check if the image is valid
-    if(prevGray.data)
-    &#123;
-        // Initialize parameters for the optical flow algorithm
-        float pyrScale = 0.5;
-        int numLevels = 3;
-        int windowSize = 15;
-        int numIterations = 3;
-        int neighborhoodSize = 5;
-        float stdDeviation = 1.2;
-        
-        // Calculate optical flow map using Farneback algorithm
-        calcOpticalFlowFarneback(prevGray, curGray, flowImage, pyrScale, numLevels, windowSize, numIterations, neighborhoodSize, stdDeviation, OPTFLOW\_USE\_INITIAL\_FLOW);
-        
-        // Convert to 3-channel RGB
-        cvtColor(prevGray, flowImageGray, COLOR\_GRAY2BGR);
-        
-        // Draw the optical flow map
-        drawOpticalFlow(flowImage, flowImageGray);
-        
-        // Display the output image
-        imshow(windowName, flowImageGray);
-    &#125;
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/other-morphological-operators/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/03/other-morphological-operators/" class="post-title-link" itemprop="url">Other Morphological Operators</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-03 14:44:01" itemprop="dateCreated datePublished" datetime="2018-05-03T14:44:01+08:00">2018-05-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Opening"><a href="#Opening" class="headerlink" title="Opening"></a>Opening</h3><p>Mat performOpening(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply morphological opening to the image using the structuring element
-erode(inputImage, tempImage, element);
-dilate(tempImage, outputImage, element);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-<h3 id="Closing"><a href="#Closing" class="headerlink" title="Closing"></a>Closing</h3><p>Mat performClosing(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply morphological opening to the image using the structuring element
-dilate(inputImage, tempImage, element);
-erode(tempImage, outputImage, element);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-<h3 id="Morphological-Gradient"><a href="#Morphological-Gradient" class="headerlink" title="Morphological Gradient"></a>Morphological Gradient</h3><p>Mat performMorphologicalGradient(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage1, tempImage2;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply morphological gradient to the image using the structuring element
-dilate(inputImage, tempImage1, element);
-erode(inputImage, tempImage2, element);
-
-// Return the output image
-return tempImage1 - tempImage2;
-</code></pre>
-<p>}</p>
-<h3 id="TopHat"><a href="#TopHat" class="headerlink" title="TopHat"></a>TopHat</h3><p>Mat performTopHat(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply top hat operation to the image using the structuring element
-outputImage = inputImage - performOpening(inputImage, morphologyElement, morphologySize);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-<h3 id="BlackHat"><a href="#BlackHat" class="headerlink" title="BlackHat"></a>BlackHat</h3><p>Mat performBlackHat(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage;<br>    int morphologyType;</p>
-<pre><code>if(morphologyElement == 0)
-    morphologyType = MORPH\_RECT;
-
-else if(morphologyElement == 1)
-    morphologyType = MORPH\_CROSS;
-
-else if(morphologyElement == 2)
-    morphologyType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
-
-// Apply black hat operation to the image using the structuring element
-outputImage = performClosing(inputImage, morphologyElement, morphologySize) - inputImage;
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/slimming-thickening-the-shapes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/03/slimming-thickening-the-shapes/" class="post-title-link" itemprop="url">Slimming/Thickening The Shapes</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-03 14:33:01" itemprop="dateCreated datePublished" datetime="2018-05-03T14:33:01+08:00">2018-05-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Erosion"><a href="#Erosion" class="headerlink" title="Erosion"></a>Erosion</h3><p>Mat performErosion(Mat inputImage, int erosionElement, int erosionSize)<br>{<br>    Mat outputImage;<br>    int erosionType;</p>
-<pre><code>if(erosionElement == 0)
-    erosionType = MORPH\_RECT;
-
-else if(erosionElement == 1)
-    erosionType = MORPH\_CROSS;
-
-else if(erosionElement == 2)
-    erosionType = MORPH\_ELLIPSE;
-
-// Create the structuring element for erosion
-Mat element = getStructuringElement(erosionType, Size(2\*erosionSize + 1, 2\*erosionSize + 1), Point(erosionSize, erosionSize));
-
-// Erode the image using the structuring element
-erode(inputImage, outputImage, element);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
-<h3 id="Dilation"><a href="#Dilation" class="headerlink" title="Dilation"></a>Dilation</h3><p>Mat performDilation(Mat inputImage, int dilationElement, int dilationSize)<br>{<br>    Mat outputImage;<br>    int dilationType;</p>
-<pre><code>if(dilationElement == 0)
-    dilationType = MORPH\_RECT;
-
-else if(dilationElement == 1)
-    dilationType = MORPH\_CROSS;
-
-else if(dilationElement == 2)
-    dilationType = MORPH\_ELLIPSE;
-
-// Create the structuring element for dilation
-Mat element = getStructuringElement(dilationType, Size(2\*dilationSize + 1, 2\*dilationSize + 1), Point(dilationSize, dilationSize));
-
-// Dilate the image using the structuring element
-dilate(inputImage, outputImage, element);
-
-// Return the output image
-return outputImage;
-</code></pre>
-<p>}</p>
+          <h3 id="msvc-desktop-conf"><a href="#msvc-desktop-conf" class="headerlink" title="msvc-desktop.conf"></a>msvc-desktop.conf</h3><p>C:\Qt\5.12.0\Src\qtbase\mkspecs\common\msvc-desktop.conf</p>
+<p>QMAKE_CFLAGS_RELEASE    &#x3D; $QMAKE_CFLAGS_OPTIMIZE -MT<br>QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO +&#x3D; $QMAKE_CFLAGS_OPTIMIZE -Zi -MT<br>QMAKE_CFLAGS_DEBUG      &#x3D; -Zi -MTd</p>
+<h3 id="qt5vars-cmd"><a href="#qt5vars-cmd" class="headerlink" title="qt5vars.cmd"></a>qt5vars.cmd</h3><p>REM Set up \Microsoft Visual Studio 2017, where arch is \c amd64, \c x86, etc.<br>CALL “C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat” x86<br>SET _ROOT&#x3D;C:\Qt\5.12.0\Src<br>SET PATH&#x3D;%_ROOT%\qtbase\bin;%_ROOT%\gnuwin32\bin;%PATH%<br>REM Uncomment the below line when using a git checkout of the source repository<br>REM SET PATH&#x3D;%_ROOT%\qtrepotools\bin;%PATH%<br>SET _ROOT&#x3D;</p>
+<h3 id="make-amp-make-install"><a href="#make-amp-make-install" class="headerlink" title="make &amp; make install"></a>make &amp; make install</h3><p>C:\Qt\5.12.0\Src&gt;qt5vars.cmd<br>C:\Qt\5.12.0\Src&gt;configure -opensource -confirm-license<br>C:\Qt\5.12.0\Src&gt;jom -j 8<br>C:\Qt\5.12.0\Src&gt;jom install</p>
 
       
     </div>
@@ -1279,7 +1149,7 @@ return outputImage;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1347,14 +1217,14 @@ return outputImage;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -1389,7 +1259,7 @@ return outputImage;
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

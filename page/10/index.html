@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/10/ipc-performance-socket-on-arm/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/17/profile-linux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/10/ipc-performance-socket-on-arm/" class="post-title-link" itemprop="url">IPC Performance : Socket on ARM</a>
+            <a href="/2019/05/17/profile-linux/" class="post-title-link" itemprop="url">Profile : Linux</a>
         </h2>
 
         <div class="post-meta">
@@ -180,7 +180,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-04-10 17:09:41" itemprop="dateCreated datePublished" datetime="2019-04-10T17:09:41+08:00">2019-04-10</time>
+              <time title="Created: 2019-05-17 14:14:29" itemprop="dateCreated datePublished" datetime="2019-05-17T14:14:29+08:00">2019-05-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -195,11 +195,19 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -222,30 +230,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="Test-Environment"><a href="#Test-Environment" class="headerlink" title="Test Environment"></a>Test Environment</h4><p>CPU: Freescale i.MX6UL rev1.1 528 MHz DRAM: 512 MiB</p>
-<h4 id="Test-Code"><a href="#Test-Code" class="headerlink" title="Test Code"></a>Test Code</h4><p>#include #include #include #include #include #include #include #include #define CLTIP “127.0.0.1”<br>#define SRVPORT 10172<br>#define MAX_NUM 1024</p>
-<p>int main(int argc, char* argv[])<br>{<br>struct timeval tv_sta, tv_end;</p>
-<p>gettimeofday(&amp;tv_sta, NULL);</p>
-<p>int i &#x3D; 0;<br>int total &#x3D; 1;<br>int is_printf &#x3D; 1;<br>if (argc &gt; 1) {<br>total &#x3D; atoi(argv[1]);<br>}<br>if (argc &gt; 2) {<br>is_printf &#x3D; atoi(argv[2]);<br>}</p>
-<p>for (i &#x3D; 0; i &lt; total; i++) {</p>
-<p>int clientsock &#x3D; socket(PF_INET, SOCK_STREAM, 0);<br>if (clientsock &lt; 0)<br>{<br>printf(“socket creation failed\n”);<br>exit(-1);<br>}<br>if (is_printf)<br>printf(“socket create successfully.\n”);</p>
-<p>struct sockaddr_in clientAddr;<br>clientAddr.sin_family &#x3D; AF_INET;<br>clientAddr.sin_port &#x3D; htons((u_short)SRVPORT);<br>clientAddr.sin_addr.s_addr &#x3D; inet_addr(CLTIP);</p>
-<p>int flags &#x3D; fcntl(clientsock, F_GETFL, 0);<br>fcntl(clientsock, F_SETFL, flags  O_NONBLOCK);</p>
-<p>int n;<br>if ((n &#x3D; connect(clientsock, (struct sockaddr*) &amp; clientAddr, sizeof(struct sockaddr))) &lt; 0)<br>{<br>if (errno !&#x3D; EINPROGRESS) {<br>printf(“Connect error.IP[%s], port[%d]\n”, CLTIP, clientAddr.sin_port);<br>exit(-1);<br>}<br>}</p>
-<p>if (n !&#x3D; 0) {</p>
-<p>fd_set rset, wset;<br>FD_ZERO(&amp;rset);<br>FD_SET(clientsock, &amp;rset);<br>wset &#x3D; rset;<br>struct timeval tval;<br>tval.tv_sec &#x3D; 1;<br>tval.tv_usec &#x3D; 0;<br>if ((n &#x3D; select(clientsock + 1, &amp;rset, &amp;wset, NULL, 3 ? &amp;tval : NULL)) &#x3D;&#x3D; 0) {<br>printf(“Connect TIMEOUT.IP[%s], port[%d]\n”, CLTIP, clientAddr.sin_port);<br>exit(-1);<br>}<br>if (FD_ISSET(clientsock, &amp;rset)  FD_ISSET(clientsock, &amp;wset)) {<br>int error;<br>int len &#x3D; sizeof(error);<br>if (getsockopt(clientsock, SOL_SOCKET, SO_ERROR, &amp;error, &amp;len) &lt; 0) {<br>printf(“pending error”);<br>exit(-1);<br>}<br>}<br>else {<br>printf(“select error: clientsock not set”);<br>exit(-1);<br>}</p>
-<p>}<br>fcntl(clientsock, F_SETFL, flags);</p>
-<p>if (is_printf)<br>printf(“Connect to IP[%s], port[%d]\n”, CLTIP, clientAddr.sin_port);</p>
-<p>const char* sendBuf &#x3D; “{\“signalType\“:\“CONFIG\“, \“signalData\“:[{\“id\“:\“CONF_NAME\“, \“value\“:\“PPS_MChip1\“}]}”;<br>char recvBuf[MAX_NUM] &#x3D; { 0 };</p>
-<p>&#x2F;&#x2F;while(gets(sendBuf) !&#x3D; ‘\0’)<br>{<br>if (send(clientsock, sendBuf, strlen(sendBuf), 0) &#x3D;&#x3D; -1)<br>{<br>printf(“send error!\n”);<br>}<br>if (is_printf)<br>printf(“send to server:%s\n”, sendBuf);<br>&#x2F;&#x2F;memset(sendBuf, 0, sizeof(sendBuf));</p>
-<p>{<br>int timeOut &#x3D; 3000;<br>int nRet &#x3D; 0;<br>struct timeval timeout;<br>fd_set recvset;<br>FD_ZERO(&amp;recvset);<br>FD_SET(clientsock, &amp;recvset);<br>timeout.tv_sec &#x3D; timeOut &#x2F; 1000;<br>timeout.tv_usec &#x3D; timeOut % 1000;<br>nRet &#x3D; select(clientsock + 1, &amp;recvset, 0, 0, &amp;timeout);<br>if (nRet &lt;&#x3D; 0)<br>{<br>printf(“clientsock recv select is error!\n”);<br>exit(-1);<br>}<br>}</p>
-<p>if (recv(clientsock, recvBuf, MAX_NUM, 0) &#x3D;&#x3D; -1)<br>{<br>printf(“rev error!\n”);<br>}<br>if (is_printf)<br>printf(“receive from server:%s\n”, recvBuf);<br>if (strcmp(recvBuf, “Goodbye,my dear client!”) &#x3D;&#x3D; 0)<br>{<br>&#x2F;&#x2F;break;<br>}<br>memset(recvBuf, 0, sizeof(recvBuf));<br>}<br>close(clientsock);</p>
-<p>}</p>
-<p>gettimeofday(&amp;tv_end, NULL);</p>
-<p>int total_millisecond &#x3D; (tv_end.tv_sec * 1000 + tv_end.tv_usec &#x2F; 1000) - (tv_sta.tv_sec * 1000 + tv_sta.tv_usec &#x2F; 1000);<br>int average_millisecond &#x3D; (total_millisecond &#x2F; total);</p>
-<p>printf(“total_millisecond : %ld total_nums : %d\n”, total_millisecond, total);<br>printf(“average_millisecond   : %ld\n”, average_millisecond);</p>
-<p>return 0;<br>} </p>
-<h4 id="Test-Result"><a href="#Test-Result" class="headerlink" title="Test Result"></a>Test Result</h4><p>root@imx6ul7d:<del>&#x2F;tmp# .&#x2F;a.out 1 0<br>total_millisecond : 13 total_nums : 1<br>average_millisecond   : 13<br>root@imx6ul7d:</del>&#x2F;tmp# .&#x2F;a.out 10 0<br>total_millisecond : 104 total_nums : 10<br>average_millisecond   : 10<br>root@imx6ul7d:<del>&#x2F;tmp# .&#x2F;a.out 100 0<br>total_millisecond : 1023 total_nums : 100<br>average_millisecond   : 10<br>root@imx6ul7d:</del>&#x2F;tmp# .&#x2F;a.out 1000 0<br>total_millisecond : 10801 total_nums : 1000<br>average_millisecond   : 10</p>
+          <h2 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h2><h3 id="Add-pg"><a href="#Add-pg" class="headerlink" title="Add -pg"></a>Add -pg</h3><p>arm-linux-gnueabihf-g++ -Wall -g -pg hello.cpp -o hello -std&#x3D;c++17</p>
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><p>root@imx6ul7d:~# gprof -b hello<br>Flat profile:</p>
+<p>Each sample counts as 0.01 seconds.<br>  %   cumulative   self              self     total<br> time   seconds   seconds    calls   s&#x2F;call   s&#x2F;call  name<br>100.00      3.45     3.45        1     3.45     3.45  hehe()<br>  0.00      3.45     0.00        4     0.00     0.00  std::_Optional_base, std::allocator &gt; &gt;::_M_is_engaged() const<br>……</p>
 
       
     </div>
@@ -265,7 +252,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/09/2-basics-of-neural-network-programming/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/06/first-line-of-code-version-2-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -279,7 +266,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/09/2-basics-of-neural-network-programming/" class="post-title-link" itemprop="url">2 Basics of Neural Network programming</a>
+            <a href="/2019/05/06/first-line-of-code-version-2-notes/" class="post-title-link" itemprop="url">First Line of Code (Version 2) Notes</a>
         </h2>
 
         <div class="post-meta">
@@ -289,7 +276,97 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-04-09 17:45:11" itemprop="dateCreated datePublished" datetime="2019-04-09T17:45:11+08:00">2019-04-09</time>
+              <time title="Created: 2019-05-06 17:04:44" itemprop="dateCreated datePublished" datetime="2019-05-06T17:04:44+08:00">2019-05-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Operating-System/" itemprop="url" rel="index"><span itemprop="name">Operating System</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/First-Line-of-Code-Version-2.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/23/3-sequence-models-attention-mechanism/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/23/3-sequence-models-attention-mechanism/" class="post-title-link" itemprop="url">3 Sequence models & Attention mechanism</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-23 13:47:26" itemprop="dateCreated datePublished" datetime="2019-04-23T13:47:26+08:00">2019-04-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -331,44 +408,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>Logistic regression is an algorithm for binary classification.</p>
-<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>[latex]\hat{y} &#x3D; w^Tx + b[&#x2F;latex] : An algorithm that can output a prediction. More formally, you want [latex]\hat{y}[&#x2F;latex] to be the probability of the chance. And [latex]\hat{y}[&#x2F;latex] should really be between zero and one. <strong>sigmoid : [latex]\sigma (z) &#x3D; \frac {1}{1 + e^{-z}}[&#x2F;latex]</strong></p>
-<h2 id="Logistic-Regression-Cost-Function"><a href="#Logistic-Regression-Cost-Function" class="headerlink" title="Logistic Regression Cost Function"></a>Logistic Regression Cost Function</h2><p>To train the parameters W and B of the logistic regression model, we need to define a cost function. <strong>Sigmoid(z) :</strong> [latex]z^{(i)} &#x3D; w^Tx^{(i)} + b[&#x2F;latex] <strong>Loss function :</strong> [latex]L(\hat{y}, y)[&#x2F;latex] (measure how good our output [latex]\hat{y}[&#x2F;latex] is when the true label is [latex]y[&#x2F;latex]) <strong>Loss Function In Logistic Regression :</strong> [latex]L(\hat{y}, y) &#x3D; -ylog(\hat{y}) - (1-y)log(1 - \hat{y})[&#x2F;latex] (It measures how well you’re doing on a <strong>single</strong> training example) <strong>Cost Function :</strong> [latex]J(w,b) &#x3D; \frac {1}{m} \sum_{i&#x3D;1}^{m} L(\hat{y} ^{(i)}, y ^{(i)}) &#x3D;\frac {1}{m} \sum_{i&#x3D;1}^{m} (-y ^{(i)}log\hat{y} ^{(i)} - (1-y ^{(i)})log(1 - \hat{y} ^{(i)}))[&#x2F;latex] (It measures how well you’re doing an <strong>entire</strong> training set)</p>
-<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p><strong>Cost function J is a convex function</strong></p>
-<ol>
-<li>Random initialization</li>
-<li>takes a step in the steepest downhill direction repeatedly [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex]</li>
-<li>converge to this global optimum or get to something close to the global optimum</li>
-</ol>
-<h2 id="Derivatives"><a href="#Derivatives" class="headerlink" title="Derivatives"></a>Derivatives</h2><p>Really all you need is an intuitive understanding of this in order to build and successfully apply these algorithms. Watch the videos and then if you could do the homework and complete the programming homework successfully then you can <strong>apply</strong> deep learning.</p>
-<h2 id="More-Derivative-Examples"><a href="#More-Derivative-Examples" class="headerlink" title="More Derivative Examples"></a>More Derivative Examples</h2><ul>
-<li>the derivative of the function just means the slope of a function and the slope of a function can be different at different points on the function</li>
-<li>if you want to look up the derivative of a function you can flip open your calculus textbook or look at Wikipedia and often get a formula for the slope of these functions at different points</li>
+          <h2 id="Various-sequence-to-sequence-architectures"><a href="#Various-sequence-to-sequence-architectures" class="headerlink" title="Various sequence to sequence architectures"></a>Various sequence to sequence architectures</h2><p>Sequence to sequence models which are useful for everything from machine translation to speech recognition.</p>
+<ul>
+<li>translate</li>
+<li>image captioning</li>
 </ul>
-<h2 id="Computation-Graph"><a href="#Computation-Graph" class="headerlink" title="Computation Graph"></a>Computation Graph</h2><p>In order to compute derivatives Opa right to left pass like this kind of going in the opposite direction as the blue arrows that would be most natural for computing the derivatives so the recap the computation graph organizes a computation with this blue arrow left to right computation.</p>
-<h2 id="Derivatives-with-a-Computation-Graph"><a href="#Derivatives-with-a-Computation-Graph" class="headerlink" title="Derivatives with a Computation Graph"></a>Derivatives with a Computation Graph</h2><p>If you want to compute the derivative of this final output variable which uses variable you care most about, with respect to v, then we’re done sort of one step of backpropagation so the called one step backwards in this graph. By changing a you end up increasing v. Well, how much does v increase? It is increased by an amount that’s determined by dv&#x2F;da and then the change in v will cause the value of J to also increase. So, in Calculus this is actually called the chain rule. A computation graph and how there’s a forward or left to right calculation to compute the cost functions. Do you might want to optimize. And a backwards or a right to left calculation to compute derivatives.</p>
-<h2 id="Logistic-Regression-Gradient-Descent"><a href="#Logistic-Regression-Gradient-Descent" class="headerlink" title="Logistic Regression Gradient Descent"></a>Logistic Regression Gradient Descent</h2><p>How to compute derivatives for you to implement gradient descent for logistic regression. [latex]\frac{\mathrm{d} J}{\mathrm{d} u} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} v} \frac{\mathrm{d} v}{\mathrm{d} u} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} b} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} b} [&#x2F;latex],  [latex]\frac{\mathrm{d} J}{\mathrm{d} a} &#x3D; \frac{\mathrm{d} J}{\mathrm{d} u} \frac{\mathrm{d} u}{\mathrm{d} a} [&#x2F;latex]   Get you familiar with these ideas so that hopefully you’ll make a bit more sense when we talk about full fledged neural networks. <strong>Logistic Regression [latex]\left\{\begin{matrix} Lost \ Function : &amp; L(\hat y^{(i)}, y^{(i)}) &#x3D; -y^{(i)}log\hat y^{(i)} - (1-y^{(i)})log(1-\hat y^{(i)}) \\ Cost \ Function : &amp; J(w,b) &#x3D; \frac {1}{m} \sum _{i}^{m} L(\hat y^{(i)}, y^{(i)}) \end{matrix}\right.[&#x2F;latex]</strong> <strong>Gredient Descent :</strong> [latex]\left\{\begin{matrix} w :&#x3D; w - \alpha \frac {\partial J(w,b)}{\partial w} \\ b :&#x3D; b - \alpha \frac {\partial J(w,b)}{\partial b} \end{matrix}\right.[&#x2F;latex] <strong>Calculus :</strong> [latex]\frac{\mathrm{d} L(a,y)}{\mathrm{d} a} &#x3D; -y&#x2F;a + (1-y)&#x2F;(1-a)[&#x2F;latex] [latex]\left\{\begin{matrix} \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} z} &#x3D; \frac {\mathrm{d} L}{\mathrm{d} a} \frac {\mathrm{d} a}{\mathrm{d} z} \\ \frac {\mathrm{d} a}{\mathrm{d} z} &#x3D; a \cdot (1-a) \\ \frac{\mathrm{d} L}{\mathrm{d} a} &#x3D; -\frac{y}{a} + \frac{(1-y)}{(1-a)} \end{matrix}\right.[&#x2F;latex]   [latex]{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L(a,y)}{\mathrm{d} z} &#x3D; \frac{\mathrm{d} L}{\mathrm{d} z} &#x3D; (\frac {\mathrm{d} L}{\mathrm{d} a}) \cdot (\frac {\mathrm{d} a}{\mathrm{d} z} ) &#x3D; (-\frac{y}{a} + \frac{(1-y)}{(1-a)}) \cdot a(1-a) &#x3D; a - y[&#x2F;latex] [latex]\left\{\begin{matrix} {\mathrm{d} w_1} &#x3D; \frac {1}{m} \sum _i^m x_1^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} w_2} &#x3D; \frac {1}{m} \sum _i^m x_2^{(i)} (a^{(i)} - y^{(i)})\\ {\mathrm{d} b} &#x3D; \frac {1}{m} \sum _i^m (a^{(i)} - y^{(i)}) \end{matrix}\right.[&#x2F;latex]</p>
-<h2 id="Gradient-Descent-on-m-Examples"><a href="#Gradient-Descent-on-m-Examples" class="headerlink" title="Gradient Descent on m Examples"></a>Gradient Descent on m Examples</h2><p>[latex]J(w,b) &#x3D; \frac {1}{m}\sum _{i&#x3D;1}^m L (a^{(i)}, y^{(i)})[&#x2F;latex]  </p>
-<p>J&#x3D;0;dw1&#x3D;0;dw2&#x3D;0;db&#x3D;0;<br>    for i &#x3D; 1 to m<br>        z(i) &#x3D; wx(i)+b;<br>        a(i) &#x3D; sigmoid(z(i));<br>        J +&#x3D; -[y(i)log(a(i))+(1-y(i)）log(1-a(i));<br>        dz(i) &#x3D; a(i)-y(i);<br>        dw1 +&#x3D; x1(i)dz(i);<br>        dw2 +&#x3D; x2(i)dz(i);<br>        db +&#x3D; dz(i);<br>J&#x2F;&#x3D; m;<br>dw1&#x2F;&#x3D; m;<br>dw2&#x2F;&#x3D; m;<br>db&#x2F;&#x3D; m;<br>w&#x3D;w-alpha*dw<br>b&#x3D;b-alpha*db</p>
-<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><p>Vectorization is basically the art of getting rid of explicit for loops in your code. non-vectorized implementation :</p>
-<p>z&#x3D;0<br>for i in range(n_x)<br>    z+&#x3D;w[i]*x[i]<br>z+&#x3D;b</p>
-<p>vectorized implementation :</p>
-<p>z&#x3D;np.dot(w,x)+b</p>
-<p><em>They’re sometimes called SIMD instructions. This stands for a single instruction multiple data.</em> <strong>The rule of thumb to remember is whenever possible, avoid using explicit four loops.</strong></p>
-<h2 id="More-Examples-of-Vectorization"><a href="#More-Examples-of-Vectorization" class="headerlink" title="More Examples of Vectorization"></a>More Examples of Vectorization</h2><p>It’s not always possible to never use a for-loop, but when you can use a built in function or find some other way to compute whatever you need, you’ll often go faster than if you have an explicit for-loop.</p>
-<h2 id="Vectorizing-Logistic-Regression"><a href="#Vectorizing-Logistic-Regression" class="headerlink" title="Vectorizing Logistic Regression"></a>Vectorizing Logistic Regression</h2><p>How you can vectorize the implementation of logistic regression [latex]\left\{\begin{matrix} z^{(1)} &#x3D; w^Tx^{(1)} + b \\ a^{(1)} &#x3D; \sigma (z^{(1)}) \\ \hat y \end{matrix}\right.[&#x2F;latex]  </p>
-<p>Z&#x3D;np.dot(w.T, X)+b</p>
-<p>It turns out, you can also use vectorization very efficiently to compute the backward propagation, to compute the gradients.</p>
-<h2 id="Vectorizing-Logistic-Regression’s-Gradient"><a href="#Vectorizing-Logistic-Regression’s-Gradient" class="headerlink" title="Vectorizing Logistic Regression’s Gradient"></a>Vectorizing Logistic Regression’s Gradient</h2><p>How you can use vectorization to also perform the gradient computations for all m training samples. [latex]\begin{matrix} Z &#x3D; w^TX + b &#x3D; np.dot(w.T, X) + b\\ A &#x3D; \sigma (Z)\\ {\mathrm{d} Z} &#x3D; A - Y\\ {\mathrm{d} w} &#x3D; \frac {1}{m} * X * {\mathrm{d} z} ^T\\ {\mathrm{d} b} &#x3D; \frac {1}{m} * np.sum({\mathrm{d} Z})\\ w :&#x3D; w - a * {\mathrm{d} w}\\ b :&#x3D; b - a * {\mathrm{d} b} \end{matrix} [&#x2F;latex]  </p>
-<h2 id="Broadcasting-in-Python"><a href="#Broadcasting-in-Python" class="headerlink" title="Broadcasting in Python"></a>Broadcasting in Python</h2><p><img src="/img/Broadcasting-in-Python.png"></p>
-<h2 id="A-note-on-python-or-numpy-vectors"><a href="#A-note-on-python-or-numpy-vectors" class="headerlink" title="A note on python or numpy vectors"></a>A note on python or numpy vectors</h2><ul>
-<li>Because with broadcasting and this great amount of flexibility, sometimes it’s possible you can introduce very subtle bugs very strange looking bugs.</li>
-<li>When you’re coding neural networks, that you just not use data structures where the shape is 5, or n, rank 1 array.</li>
-<li>Don’t hesitate to throw in assertion statements like this whenever you feel like it.</li>
-<li>Do not use these rank 1 arrays, you can reshape this.</li>
+<h2 id="Picking-the-most-likely-sentence"><a href="#Picking-the-most-likely-sentence" class="headerlink" title="Picking the most likely sentence"></a>Picking the most likely sentence</h2><p><img src="/img/Why_not_a_greedy_search.png"></p>
+<h2 id="Beam-Search"><a href="#Beam-Search" class="headerlink" title="Beam Search"></a>Beam Search</h2><p>You don’t want to output a random English translation, you want to output <strong>the best and the most likely</strong> English translation. <strong>Beam search</strong> is the most widely used algorithm to do this. So, whereas greedy search will pick only the one most likely words and move on, Beam Search instead can <strong>consider multiple alternatives</strong>.  So, the Beam Search algorithm has a parameter called B, which is called the <strong>beam width</strong>. <em>Notice that what we ultimately care about in this second step would be to find the pair of the first and second words that is most likely. so it’s not just a second where is most likely but <strong>the pair of the first and second words most likely</strong>.</em> <em><strong>Evaluate all of these 30000 options according to the probability of the first and second words and then pick the top three</strong>. Because of beam width is equal to three, every step you instantiate three copies of the network to evaluate these partial sentence fragments and the output.</em> <em>And it’s because of beam width is equal to three that you have three copies of the network with different choices for the first words,</em> <strong>Beam search</strong> will usually find a <strong>much better</strong> output sentence <strong>than greedy search</strong>.</p>
+<h2 id="Refinements-to-Beam-Search"><a href="#Refinements-to-Beam-Search" class="headerlink" title="Refinements to Beam Search"></a>Refinements to Beam Search</h2><p><strong>Length normalization</strong> is a small change to the beam search algorithm that can help you <strong>get much better results</strong>. <strong>Numerical underflow</strong>. Meaning that it’s too small for the floating part representation in your computer to store accurately. So in most implementations, you <strong>keep track of the sum of logs of the probabilities</strong> rather than the production of probabilities. <em>Instead of using this as the objective you’re trying to maximize, one thing you could do is normalize this by the number of words in your translation. And so this takes the average of the log of the probability of each word.</em> <em>And this significantly reduces the penalty for outputting longer translations.</em> And in practice, as a heuristic instead of dividing by Ty, by the number of words in the output sentence, sometimes you use a softer approach. We have Ty to the <strong>power of alpha</strong>, where maybe alpha is equal to 0.7. So if alpha was equal to 1, then yeah, completely normalizing by length. If alpha was equal to 0, then, well, Ty to the 0 would be 1, then you’re just not normalizing at all. And this is somewhat in <strong>between full normalization and no normalization</strong>. And alpha’s another hyper parameter of algorithm that you can tune to try to get the best results. Pick the one that achieves the highest value on this normalized log probability objective. Sometimes it’s called a <strong>normalized log likelihood objective</strong>. <strong>In production systems</strong>, it’s not uncommon to see a beam width <strong>maybe around 10</strong>. <strong>Exact search algorithms :</strong> </p>
+<ul>
+<li>BFS, Breadth First Search</li>
+<li>DFS, Depth First Search</li>
 </ul>
-<h2 id="Quick-tour-of-Jupyter-x2F-iPython-Notebooks"><a href="#Quick-tour-of-Jupyter-x2F-iPython-Notebooks" class="headerlink" title="Quick tour of Jupyter&#x2F;iPython Notebooks"></a>Quick tour of Jupyter&#x2F;iPython Notebooks</h2><p>It’s so simple that nothing need to say.</p>
-<h2 id="Explanation-of-logistic-regression-cost-function"><a href="#Explanation-of-logistic-regression-cost-function" class="headerlink" title="Explanation of logistic regression cost function"></a>Explanation of logistic regression cost function</h2><p>A quick justification for why we like to use that cost function for logistic regression. [latex]\begin{matrix} \hat y &#x3D; \sigma (w^Tx + b)\\ \sigma (z) &#x3D; \sigma (w^Tx + b) &#x3D; \frac {1}{1+e^{-z}}\\ \hat y &#x3D; p(y &#x3D; 1 x) \end{matrix}[&#x2F;latex]   [latex]\left.\begin{matrix} If \ y &#x3D; 1 \ : &amp; p(yx) &#x3D; \hat y\\ If \ y &#x3D; 0 \ : &amp; p(yx) &#x3D; 1 - \hat y \end{matrix}\right\} p(yx) &#x3D; \hat y(1 - \hat y)^{(1-y)}[&#x2F;latex]   [latex]ylog\hat y + (1-y)log(1-\hat y)[&#x2F;latex]   In statistics, there’s a principle called the <strong>principle of maximum likelihood estimation</strong>, which just means to choose the parameters that maximizes this thing. Or in other words, that maximizes this thing. [latex]P(labels\ in\ training\ set) &#x3D; \prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)})[&#x2F;latex]   [latex]logP(labels\ in\ training\ set) &#x3D; log\prod _{i&#x3D;1}^{m} P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m}log P(y^{(i)} x^{(i)}) &#x3D; \sum _{i&#x3D;1}^{m} -L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]   [latex]J(w,b) &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} L(\hat y^{(i)}, y^{(i)})[&#x2F;latex]</p>
+<p><strong>Beam search runs much faster but does not guarantee to find the exact maximum</strong> for this arg max that you would like to find.</p>
+<h2 id="Error-analysis-in-beam-search"><a href="#Error-analysis-in-beam-search" class="headerlink" title="Error analysis in beam search"></a>Error analysis in beam search</h2><p>Beam search is an approximate search algorithm, also called a heuristic search algorithm. How <strong>error analysis</strong> interacts with beam search and how you can figure out whether it is the <strong>beam search algorithm</strong> that’s causing problems and worth spending time on. Or whether it might be your <strong>RNN model</strong> that is causing problems and worth spending time on. <strong>Model :</strong> </p>
+<ul>
+<li>RNN model (neural network model or sequence to sequence model)<ul>
+<li>It’s really an encoder and a decoder.</li>
+<li>P(yx)</li>
+</ul>
+</li>
+<li>Beam search algorithm</li>
+</ul>
+<p>[latex]\left\{\begin{matrix} P(y^{*}x) &amp; use \ model\\ P(\hat yx) &amp; use \ RNN \end{matrix}\right.[&#x2F;latex]   <img src="/img/Error_analysis_on_beam_search.png"></p>
+<h2 id="Bleu-Score"><a href="#Bleu-Score" class="headerlink" title="Bleu Score"></a>Bleu Score</h2><p>How to <strong>evaluate a machine translation system</strong></p>
+<p>The way this is done conventionally is through something called the BLEU score.</p>
+<p>What the BLEU score does is given a machine generated translation, it allows you to automatically compute a score that measures how good is that machine translation. <strong>BLEU, by the way, stands for bilingual evaluation understudy</strong>. <strong>Tthe intuition behind the BLEU score</strong> is we’re going to look at the machine generated output and see if the types of words it generates appear in at least one of the human generated references. <img src="/img/Bleu_details.png">   The reason the BLEU score was revolutionary for machine translation was because this gave a <strong>pretty good, by no means perfect</strong>, but <strong>pretty good single real number evaluation metric</strong>. And so that accelerated the progress of the entire field of machine translation. Today, <strong>BLEU score is used to evaluate</strong> many systems that generate text, such as <strong>machine translation systems</strong>, as well as the example I showed briefly earlier of <strong>image captioning systems</strong>.</p>
+<h2 id="Attention-Model-Intuition"><a href="#Attention-Model-Intuition" class="headerlink" title="Attention Model Intuition"></a>Attention Model Intuition</h2><p>Attention Model, that makes RNN work much better.</p>
+<ul>
+<li>It’s just difficult to get in your network to memorize a super long sentence.</li>
+<li>But with an Attention Model, machine translation systems performance can look like this, because by working one part of the sentence at a time, <ul>
+<li>What the Attention Model would be computing is a set of attention weights.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Attention-Model"><a href="#Attention-Model" class="headerlink" title="Attention Model"></a>Attention Model</h2><p><img src="/img/Computing_attention.png"> This algorithm runs in quadratic cost, Although in machine translation applications where neither input nor output sentences is usually that long maybe quadratic cost is actually acceptable.</p>
+<h2 id="Speech-recognition"><a href="#Speech-recognition" class="headerlink" title="Speech recognition"></a>Speech recognition</h2><p>One of the most exciting developments were sequence-to-sequence models has been the <strong>rise of very accurate speech recognition</strong>. <strong>A common pre-processing step for audio data</strong> is to run your raw audio clip and generate a spectrogram. So, this is the plots where the horizontal axis is time, and the vertical axis is frequencies, and intensity of different colors shows the amount of energy. Once upon a time, speech recognition systems used to be built using phonemes and this where, hand-engineered basic units of cells. But <strong>with end-to-end deep learning, we’re finding that phonemes representations are no longer necessary</strong>. <img src="/img/CTC_cost_for_speech_recognition.png"></p>
+<h2 id="Trigger-Word-Detection"><a href="#Trigger-Word-Detection" class="headerlink" title="Trigger Word Detection"></a>Trigger Word Detection</h2><p>When the rise of speech recognition have been more and more devices you can <strong>wake up with your voice</strong> and those are sometimes called <strong>trigger word detection systems</strong>. <img src="/img/Trigger_word_detection_algorithm.png">   Then in the training sets you can set the target labels to be zero for everything before that point and right after that to set the target label of one.And then if a little bit later on the trigger word was said again, and the trigger was said at this point, then you can again set the target label to be one right after that.</p>
+<p>One slight <strong>disadvantage</strong> of this is it creates a very imbalanced training set.So a lot more zeros than ones.</p>
+<p><strong>Instead of setting only a single time step to output one</strong>, you can actually make an output a few ones for several times or for a fixed period of time before reverting back to zero. So and that, slightly evens out the ratio of ones to zeros. But this is a little bit of a hack.</p>
 
       
     </div>
@@ -388,7 +466,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/09/1-introduction-to-deep-learning/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/23/2-natural-language-processing-and-word-embeddings/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -402,7 +480,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/09/1-introduction-to-deep-learning/" class="post-title-link" itemprop="url">1 Introduction to Deep Learning</a>
+            <a href="/2019/04/23/2-natural-language-processing-and-word-embeddings/" class="post-title-link" itemprop="url">2 Natural Language Processing and Word Embeddings</a>
         </h2>
 
         <div class="post-meta">
@@ -412,7 +490,716 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-04-09 13:55:12" itemprop="dateCreated datePublished" datetime="2019-04-09T13:55:12+08:00">2019-04-09</time>
+              <time title="Created: 2019-04-23 09:43:11" itemprop="dateCreated datePublished" datetime="2019-04-23T09:43:11+08:00">2019-04-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/" itemprop="url" rel="index"><span itemprop="name">Deep Learning Specialization Offered By deeplearning.ai</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Word-Representation"><a href="#Word-Representation" class="headerlink" title="Word Representation"></a>Word Representation</h2><p><strong>NLP, Natural Language Processing</strong> <strong>Word embeddings</strong>, which is a way of representing words. that let your algorithms automatically understand analogies like that, man is to woman, as king is to queen, and many other examples. <img src="/img/Word_representation.png"> <strong>Representing words using a vocabulary of words.</strong> </p>
+<p>One of the weaknesses of this representation is that it treats each word as a thing onto itself, and it doesn’t allow an algorithm to easily generalize the cross words.</p>
+<p><img src="/img/Visualizing_word_embeddings.png"> You see plots like these sometimes on the internet to visualize some of these 300 or higher dimensional embeddings. To visualize it, algorithms like <strong>t-SNE</strong>, map this to a much lower dimensional space.</p>
+<h2 id="Using-Word-Embeddings"><a href="#Using-Word-Embeddings" class="headerlink" title="Using Word Embeddings"></a>Using Word Embeddings</h2><p><strong>Transfer learning and word embeddings</strong></p>
+<ol>
+<li>Learn word embeddings from large text corpus. (1-100B words or download pre-trained embedding online.)</li>
+<li>Transfer embedding to new task with smaller training set. (say, 100k words)</li>
+<li>Optional: Continue to finetune the word embeddings with new data.</li>
+</ol>
+<h2 id="Properties-of-Word-Embeddings"><a href="#Properties-of-Word-Embeddings" class="headerlink" title="Properties of Word Embeddings"></a>Properties of Word Embeddings</h2><p>One of the most fascinating properties of word embeddings is that they can also help with <strong>analogy reasoning</strong>. The most commonly used similarity function is called <strong>cosine similarity</strong> : [latex]CosineSimilarity(u,v) &#x3D; \frac{u.v}{\left \ u \right \_2\left \ v \right \_2} &#x3D; cos(\theta)[&#x2F;latex]</p>
+<h2 id="Embedding-Matrix"><a href="#Embedding-Matrix" class="headerlink" title="Embedding Matrix"></a>Embedding Matrix</h2><p>When you <strong>implement an algorithm to learn a word embedding</strong>, what you end up learning is an embedding matrix. And the <strong>columns</strong> of this matrix would be <strong>the different embeddings for the 10,000 different words</strong> you have in your vocabulary. <img src="/img/Embedding_matrix.png"></p>
+<h2 id="Learning-Word-Embeddings"><a href="#Learning-Word-Embeddings" class="headerlink" title="Learning Word Embeddings"></a>Learning Word Embeddings</h2><p>It turns out that <strong>building a neural language model</strong> is a reasonable way to learn a set of embedding. Well, what’s actually more commonly done is to have a <strong>fixed historical window</strong>.</p>
+<p><em>And using a fixed history, just means that you can deal with even arbitrarily long sentences because the input sizes are always fixed.</em></p>
+<p>If your goal is to learn a embedding. Researchers have experimented with many different types of context.</p>
+<ul>
+<li>If your goal is to build a language model then it is natural for the context to be a few words right before the target word.</li>
+<li>But if your goal isn’t to learn the language model per se, then you can choose other contexts.</li>
+</ul>
+<h2 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h2><p>The Word2Vec algorithm which is simple and computationally more efficient way to learn this types of embeddings.</p>
+<h4 id="Skip-Gram-model"><a href="#Skip-Gram-model" class="headerlink" title="Skip-Gram model"></a>Skip-Gram model</h4><p>[latex]\begin{matrix} Softmax : &amp; p(tc) &#x3D; \frac{e^{\theta ^T_t e_c}}{\sum _{j&#x3D;1}^{10,000} e^{\theta ^T_j e_c}} \\ Loss Function : &amp; L(\hat y, y) &#x3D; - \sum _{i&#x3D;1}^{10,000} y_i log \hat y _i \end{matrix}[&#x2F;latex] the primary problem is computational speed, because of the softmax step is very expensive to calculate because needing to sum over your entire vocabulary size into the denominator of the softmax.</p>
+<p><strong>a few solutions</strong></p>
+<ul>
+<li><ul>
+<li>hierarchical softmax classifier</li>
+<li>negative sampling</li>
+</ul>
+</li>
+</ul>
+<h4 id="CBow"><a href="#CBow" class="headerlink" title="CBow"></a>CBow</h4><p>the Continuous Bag-Of-Words Model, which takes the surrounding contexts from middle word, and and uses the surrounding words to try to predict the middle word.</p>
+<h2 id="Negative-Sampling"><a href="#Negative-Sampling" class="headerlink" title="Negative Sampling"></a>Negative Sampling</h2><p>What to do in this algorithm is create a new supervised learning problem. And the problem is, given a pair of words like orange and juice, we’re going to predict is this a context-target pair? It’s really to <strong>try to distinguish between these two types of distributions</strong> from which you might sample a pair of words. <strong>How do you choose the negative examples?</strong></p>
+<ul>
+<li>sample the words in the middle, the candidate target words.</li>
+<li>use 1 over the vocab size, sample the negative examples uniformly at random, but that’s also very non-representative of the distribution of English words.</li>
+<li>the authors, Mikolov et al, reported that <strong>empirically</strong>, [latex]P(w_i) &#x3D; \frac{f(w_i)^{\frac{3}{4}}}{\sum _{j&#x3D;1}^{10,000}f(w_j)^{\frac{3}{4}}}[&#x2F;latex]</li>
+</ul>
+<h2 id="GloVe-Word-Vectors"><a href="#GloVe-Word-Vectors" class="headerlink" title="GloVe Word Vectors"></a>GloVe Word Vectors</h2><p><strong>GloVe</strong> stands for <strong>global vectors for word representation</strong>. Sampling pairs of words, context and target words, by picking two words that appear in close proximity to each other in our text corpus. So, what the GloVe algorithm does is, it starts off just by making that explicit. <img src="/img/A_note_on_the_featurization_view_of_word_embeddings.png"></p>
+<h2 id="Sentiment-Classification"><a href="#Sentiment-Classification" class="headerlink" title="Sentiment Classification"></a>Sentiment Classification</h2><p>Sentiment classification is the task of looking at a piece of text and telling if someone <strong>likes or dislikes</strong> the thing they’re talking about. <img src="/img/RNN_for_sentiment_classification.png"></p>
+<h2 id="Debiasing-Word-Embeddings"><a href="#Debiasing-Word-Embeddings" class="headerlink" title="Debiasing Word Embeddings"></a>Debiasing Word Embeddings</h2><p>Machine learning and AI algorithms are increasingly trusted to help with, or <strong>to make, extremely important decisions</strong>. And so we like to <strong>make sure that as much as possible that they’re free of undesirable forms of bias</strong>, such as gender bias, ethnicity bias and so on.</p>
+<ul>
+<li>So the first thing we’re going to do is <strong>identify the direction corresponding to a particular bias</strong> we want to reduce or eliminate.</li>
+<li>the next step is a <strong>neutralization</strong> step. So for every word that’s not definitional, project it to get rid of bias.</li>
+<li>And then the final step is called <strong>equalization</strong> in which you might have pairs of words such as grandmother and grandfather, or girl and boy, where you want the only difference in their embedding to be the gender.</li>
+<li>And then, finally, the number of pairs you want to equalize, that’s <strong>actually also relatively small</strong>, and is, at least for the gender example, it is quite feasible to hand-pick.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/22/1-recurrent-neural-networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/22/1-recurrent-neural-networks/" class="post-title-link" itemprop="url">1 Recurrent Neural Networks</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-22 16:55:03" itemprop="dateCreated datePublished" datetime="2019-04-22T16:55:03+08:00">2019-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:38" itemprop="dateModified" datetime="2022-07-05T09:29:38+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/" itemprop="url" rel="index"><span itemprop="name">Deep Learning Specialization Offered By deeplearning.ai</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Why-Sequence-Models"><a href="#Why-Sequence-Models" class="headerlink" title="Why Sequence Models?"></a>Why Sequence Models?</h2><p>Models like <strong>recurrent neural networks</strong> or <strong>RNNs</strong> have transformed speech recognition, natural language processing and other areas. <img src="/img/Examples_of_sequence_data.png"></p>
+<h2 id="Notation"><a href="#Notation" class="headerlink" title="Notation"></a>Notation</h2><p>Suppose the input is the sequence of nine words. So, eventually we’re going to have nine sets of features to represent these nine words, and index into the positions in the sequence, I’m going to use [latex]x^{&lt;1&gt;}[&#x2F;latex], [latex]x^{&lt;2&gt;}[&#x2F;latex], [latex]x^{&lt;3&gt;}[&#x2F;latex] and so on up to [latex]x^{&lt;9&gt;}[&#x2F;latex] to index into the different positions. use [latex]x^{<t>}[&#x2F;latex] to index into positions, in the middle of the sequence. And t implies that these are temporal sequences although whether the sequences are temporal one or not, I’m going to use the index t to index into the positions in the sequence. Used [latex]T_{x}[&#x2F;latex] denote the length of the input sequence, [latex]x^{(i)<t>}[&#x2F;latex] refer to the Tth element or the Tth element in the sequence of training example i [latex]T_{x}^{(i)}[&#x2F;latex] is the length of sequence i <strong>NLP</strong> or Natural Language Processing Use <strong>one-hot representations</strong> to represent each of these words. <img src="/img/Notation_Representing_words.png"> What if you encounter a word that is not in your vocabulary? Well the answer is, you create a new token or a new fake word called Unknown Word which under note as follows angle brackets <strong>UNK</strong> to represent words not in your vocabulary.</p>
+<h2 id="Recurrent-Neural-Network-Model"><a href="#Recurrent-Neural-Network-Model" class="headerlink" title="Recurrent Neural Network Model"></a>Recurrent Neural Network Model</h2><p><strong>Why not a standard network?</strong> <strong>Problems:</strong></p>
+<ul>
+<li>Inputs, outputs can be different lengths in different examples.</li>
+<li>Doesn’t share features learned across different positions of text.</li>
+</ul>
+<p>And <strong>what a recurrent neural network does is</strong> when it then goes on to read the second word in a sentence, say X2, instead of just predicting Y2 using only X2, it also gets to input some information from what had computed that time-step one’s. <strong>At each time-step,  the recurrent neural network passes on this activation to the next time-step for it to use</strong>. Now <strong>one limitation of this</strong> particular neural network structure is that the prediction at a certain time <strong>uses</strong> inputs or uses information from the inputs <strong>earlier in the sequence but not information later</strong> in the sequence. We will address this in a later video where we talk about a <strong>bidirectional recurrent neural networks</strong> or <strong>BRNNs</strong>. The activation function used in to compute the activations will often be a tanh and the choice of an RNN and sometimes, Relu are also used although the tanh is actually a pretty common choice. Simplified RNN notation : [latex]\begin{matrix} a^{<t>} &#x3D; g_1(W_{aa}a^{<t-1>} + W_{ax}x^{<t>} + b_a)\\ \hat y ^{<t>} &#x3D; g_2(W_{ya}a^{<t>} + b_y) \end{matrix}[&#x2F;latex] <img src="/img/RNN_Forward_Propagation.png"></p>
+<h2 id="Backpropagation-through-time"><a href="#Backpropagation-through-time" class="headerlink" title="Backpropagation through time"></a>Backpropagation through time</h2><p>As usual, when you implement this in one of the programming frameworks, <strong>often, the programming framework will automatically take care of backpropagation</strong>. <strong>Element-wise</strong> loss funtion : [latex]L^{<t>}(\hat y ^{<t>}, y ^{<t>}) &#x3D; -y ^{<t>}log \hat y ^{<t>} - (1 - \hat y ^{<t>})log(1 - \hat y ^{<t>})[&#x2F;latex] standard logistic regression loss also called the <strong>cross entropy loss</strong>. <strong>Overall</strong> loss of the entire sequence : [latex]L(\hat y, y) &#x3D; \sum _{t&#x3D;1}^{T_x} L ^{<t>}(\hat y ^{<t>}, y^{<t>})[&#x2F;latex] <strong>Backpropagation through time</strong>, And the motivation for this name is that for forward prop you are scanning from left to right, increasing indices of the time t, whereas the backpropagation, you’re going from right to left, kind of going backwards in time. <img src="/img/RNN_Back_Propagation.png"></p>
+<h2 id="Different-types-of-RNNs"><a href="#Different-types-of-RNNs" class="headerlink" title="Different types of RNNs"></a>Different types of RNNs</h2><p><img src="/img/Summary_of_RNN_types.png"></p>
+<h2 id="Language-model-and-sequence-generation"><a href="#Language-model-and-sequence-generation" class="headerlink" title="Language model and sequence generation"></a>Language model and sequence generation</h2><p><strong>What a language model does is</strong> given any sentence its job is to tell you <strong>what is the probability of a sentence</strong>, of that particular sentence. And this is a fundamental component for both speech recognition systems as you’ve just seen, as well as for machine translation systems where translation systems wants output. <strong>How do you build a language model?</strong></p>
+<ul>
+<li>first need a training set comprising a large corpus of English text. Or text from whatever language you want to build a language model of. And the word corpus is an NLP terminology that just means a large body or a very large set of English text of English sentences.<ul>
+<li>The first thing you would do is tokenize this sentence. And that means you would form a vocabulary as we saw in an earlier video. And then map each of these words to, say, one-hot vectors, all to indices in your vocabulary.</li>
+<li>One thing you might also want to do is model when sentences end. So another common thing to do is to add an extra token called a EOS.</li>
+</ul>
+</li>
+<li>Go on to built the RNN model<ul>
+<li>what [latex]a^{&lt;1&gt;}[&#x2F;latex] does is it will make a softmax prediction to try to figure out what is the probability of the first words y. And so that’s going to be y&lt;1&gt;. So what this step does is really, it has a softmax it’s trying to predict. What is the probability of any word in the dictionary?</li>
+<li>Then, the RNN steps forward to the next step and has some activation, [latex]a^{&lt;1&gt;}[&#x2F;latex] to the next step. And at this step, this job is try to figure out, what is the second word?</li>
+<li>whatever this given, everything that comes before, and hopefully it will predict that there’s a high chance of it, EOS end sentence token.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sampling-novel-sequences"><a href="#Sampling-novel-sequences" class="headerlink" title="Sampling novel sequences"></a>Sampling novel sequences</h2><p>After you train a sequence model, one of the ways you can informally get a sense of what is learned is to have a sample novel sequences.</p>
+<ul>
+<li>what you want to do is first sample what is the first word you want your model to generate.</li>
+<li>…</li>
+</ul>
+<p>Then you will <strong>generate a randomly chosen sentence</strong> from your RNN language model.</p>
+<ul>
+<li><strong>words level RNN</strong></li>
+<li><strong>character level RNN</strong><ul>
+<li>advantage : you don’t ever have to worry about unknown word tokens.</li>
+<li>disadvantage : you end up with much more, much longer sequences.<ul>
+<li>so they are not in widespread used today. Except for maybe specialized applications where you might need to deal with unknown words or other vocabulary words a lot.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Vanishing-gradients-with-RNNs"><a href="#Vanishing-gradients-with-RNNs" class="headerlink" title="Vanishing gradients with RNNs"></a>Vanishing gradients with RNNs</h2><p>It turns out the basics RNN we’ve seen so far it’s <strong>not very good at capturing very long-term dependencies</strong>.</p>
+<ul>
+<li>It turns out that <strong>vanishing gradients tends to be the bigger problem with training RNNs</strong>, </li>
+<li>although when <strong>exploding gradients</strong> happens, it can be catastrophic because the exponentially large gradients can cause your parameters to become so large that your neural network parameters get really messed up. So it turns out that exploding gradients are easier to spot because the parameters just blow up and you might often see NaNs, or not a numbers, meaning results of a numerical overflow in your neural network computation. <ul>
+<li>And if you do see exploding gradients, one solution to that is apply gradient clipping. And what that really means, all that means is look at your gradient vectors, and if it is bigger than some threshold, re-scale some of your gradient vector so that is not too big. So there are clips according to some maximum value. So if you see exploding gradients, if your derivatives do explode or you see NaNs, just apply <strong>gradient clipping</strong>, and that’s a relatively robust solution that will take care of exploding gradients.</li>
+</ul>
+</li>
+</ul>
+<p> </p>
+<h2 id="Gated-Recurrent-Unit（GRU）"><a href="#Gated-Recurrent-Unit（GRU）" class="headerlink" title="Gated Recurrent Unit（GRU）"></a>Gated Recurrent Unit（GRU）</h2><p>The <strong>Gated Recurrent Unit</strong> which is a modification to the RNN hidden layer that makes it much better capturing long range connections and helps a lot with the vanishing gradient problems. <img src="/img/RNN_unit.png">                   The GRU unit is going to have a new variable called c which stands for cell, for <strong>memory cell</strong>. And what the memory cell do is it will provide a bit of memory to remember. [latex]\tilde{c} ^{<t>} &#x3D; tanh (W_c [c ^{<t-1>}, x ^{<t>}] + b_c)[&#x2F;latex] <strong>the important idea of the GRU :</strong> [latex]\begin{matrix} \Gamma _u &#x3D; \sigma(W_u[c^{<t-1>}, x^{<t>}] + b_u) \\ c^{<t>} &#x3D; \Gamma _u * \tilde{c} ^{<t>} + (1 - \Gamma _u) * c^{<t-1>} \end{matrix}[&#x2F;latex]</p>
+<h2 id="LSTM（long-short-term-memory）unit"><a href="#LSTM（long-short-term-memory）unit" class="headerlink" title="LSTM（long short term memory）unit"></a>LSTM（long short term memory）unit</h2><p>the long short term memory units, and this is even more powerful than the GRU. <img src="/img/LSTM_in_pictures.png">   Perhaps, the most common one is that instead of just having the gate values be dependent only on a^{<t-1>} , x^{<t>}, sometimes, people also sneak in there the values c^{<t-1>} as well. This is called a <strong>peephole connection.</strong></p>
+<h4 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h4><ul>
+<li>relatively recent invention</li>
+<li>a simpler model and so it is actually easier to build a much bigger network, it only has two gates, so computationally, it runs a bit faster. So, it scales the building somewhat bigger models</li>
+</ul>
+<h4 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h4><ul>
+<li>actually came much earlier</li>
+<li>more powerful and more flexible since it has three gates instead of two.</li>
+</ul>
+<p><strong>LSTM has been the historically more proven choice.</strong></p>
+<h2 id="Bidirectional-RNN"><a href="#Bidirectional-RNN" class="headerlink" title="Bidirectional RNN"></a>Bidirectional RNN</h2><p><strong>Bidirectional RNNs</strong>, which lets you at a point in time to take information from both earlier and later in the sequence. In fact, for a lots of NLP problems, for a lot of text with natural language processing problems, <strong>a bidirectional RNN with a LSTM</strong> appears to <strong>be commonly used</strong>. The <strong>disadvantage</strong> of the bidirectional RNN is that you <strong>do need the entire sequence of data</strong> before you can make predictions anywhere.</p>
+<h2 id="Deep-RNNs"><a href="#Deep-RNNs" class="headerlink" title="Deep RNNs"></a>Deep RNNs</h2><p>The different versions of RNNs you’ve seen so far will already work quite well by themselves. But for learning very complex functions sometimes <strong>it’s useful to stack multiple layers of RNNs together to build even deeper versions</strong> of these models. For RNNs, having three layers is already quite a lot. Because of the temporal dimension, these networks can already get quite big even if you have just a small handful of layers. And you don’t usually see these stacked up to be like 100 layers. One thing you do see sometimes is that you have recurrent layers that are stacked on top of each other. But then you might take the output here, let’s get rid of this, and then <strong>just have a bunch of deep layers that are not connected horizontally but have a deep network here</strong> that then finally predicts y&lt;1&gt;.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/22/4-special-applications-face-recognition-neural-style-transfer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/22/4-special-applications-face-recognition-neural-style-transfer/" class="post-title-link" itemprop="url">4 Special applications : Face recognition & Neural style transfer</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-22 14:25:53" itemprop="dateCreated datePublished" datetime="2019-04-22T14:25:53+08:00">2019-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/" itemprop="url" rel="index"><span itemprop="name">Deep Learning Specialization Offered By deeplearning.ai</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="What-is-face-recognition"><a href="#What-is-face-recognition" class="headerlink" title="What is face recognition?"></a>What is face recognition?</h2><p><strong>Liveness detection</strong> <strong>Face Verification</strong></p>
+<ul>
+<li>Input image, name&#x2F;ID</li>
+<li>Output whether the input image is that of the claimed person</li>
+</ul>
+<p><strong>Face Recognition</strong></p>
+<ul>
+<li>Has a database of K persons</li>
+<li>Get an input image</li>
+<li>Output ID if the image is any of the K persons (or “not recognized”)</li>
+</ul>
+<p><strong>In fact we have a database of a hundred persons you probably need this to be even quite a bit higher than 99% for that to work well.</strong></p>
+<h2 id="One-shot-learning"><a href="#One-shot-learning" class="headerlink" title="One-shot learning"></a>One-shot learning</h2><p>One of the challenges of face recognition is that you need to solve the one-shot learning problem. What that means is that, for most face recognition applications, you need to recognize a person given just one single image, or given just one example of that person’s face.  And historically, deep learning algorithms don’t work well if you have only one training example. So the carry-outs face recognition to carry out one-shot learning. So instead, to make this work, what you’re going to do instead is learning similarity function. [latex]d(img1, img2) &#x3D; degree\ of\ difference\ between\ images.[&#x2F;latex]   [latex]\left.\begin{matrix} If \ \ d(img1, img2) \leq \tau &amp; , same\\ \ \ \ \ \ \ \ \ \ \ \ &gt; \tau &amp; , different \end{matrix}\right\}[&#x2F;latex]  </p>
+<h2 id="Siamese-network"><a href="#Siamese-network" class="headerlink" title="Siamese network"></a>Siamese network</h2><p><img src="/img/Siamese_network_Goal_of_learning.png"></p>
+<h2 id="Triplet-loss"><a href="#Triplet-loss" class="headerlink" title="Triplet loss"></a>Triplet loss</h2><p>One way to learn the parameters of the neural network so that it gives you a good encoding for your pictures of faces is to define and apply gradient descent on the <strong>triplet loss function</strong>. In the terminology of the triplet loss what you’re going to do is always look at one anchor image and then you want the distance between the anchor and a positive image really a positive example meaning is the same person to be similar. Whereas you want the anchor when pairs are compared to the negative example for their distances to be much further apart. So this is what gives rise to the term triplet loss which is that you always be <strong>looking at three images at a time</strong>, you’ll be looking at an <strong>anchor</strong> image a <strong>positive</strong> image as well as a <strong>negative</strong> image. [latex]\left \ f(A) - f(P) \right \ ^2 - \left \ f(A) - f(N) \right \ ^2 + a \leq 0[&#x2F;latex] [latex]L(A,P,N) &#x3D; max (\left \ f(A) - f(P) \right \ ^2 - \left \ f(A) - f(N) \right \ ^2 + a, 0)[&#x2F;latex] For your face recognition system maybe you have only a single picture of someone you might be trying to recognize but for your training set you do need to make sure you have multiple images of the same person at least for some people in your training set so that you can have pairs of anchor and positive images. <strong>Choosing the triplets A,P,N :</strong> </p>
+<p>During training, if A,P,N are chosen randomly, [latex]d(A,P) + a \leq d(A,N)[&#x2F;latex] is easily satisfied.</p>
+<p>So to construct a training set what you want to do is to <strong>choose triplets A P and N that are hard to train</strong> on this is one domain where because of the sheer data volume sizes this is one domain where often it might be useful for you to download someone else’s pretrained model rather than do everything from scratch yourself.</p>
+<h2 id="Face-verification-and-binary-classification"><a href="#Face-verification-and-binary-classification" class="headerlink" title="Face verification and binary classification"></a>Face verification and binary classification</h2><p>Take this pair of neural networks to take this siamese network and have them both compute these embeddings, maybe 128 dimensional embeddings, maybe even higher dimensional, and then have these be input to a logistic regression unit to then just make a prediction, where the target output will be 1 if both of these are the same persons, and 0 if both of these are of different persons. So this is a way to treat face recognition just as a binary classification problem. [latex]\hat y &#x3D; \sigma (\sum _{k&#x3D;1}^{128} w_i f(x^{(i)})_k - f(x^{(i)})_k + b)[&#x2F;latex]   <strong>Help your deployment significantly :</strong> </p>
+<p>what you can do is actually pre compute that, so when the new employee walks in, what you can do is use this upper ConvNet to to compute that encoding and use it to then compare it  to your pre computed encoding, and then use that to make a prediction y hat.</p>
+<h2 id="What-is-neural-style-transfer"><a href="#What-is-neural-style-transfer" class="headerlink" title="What is neural style transfer?"></a>What is neural style transfer?</h2><p>In order to implement neural style transfer, you need to look at the features extracted by ConvNets, at various layers, the shallow and the deeper layers of a ConvNets.</p>
+<h2 id="What-are-deep-ConvNets-learning"><a href="#What-are-deep-ConvNets-learning" class="headerlink" title="What are deep ConvNets learning?"></a>What are deep ConvNets learning?</h2><p><img src="/img/Visualizing_deep_layers_Layer_5.png"></p>
+<h2 id="Cost-function"><a href="#Cost-function" class="headerlink" title="Cost function"></a>Cost function</h2><p><strong>Given a content image C and the style image S, then the goal is to generate a new image G.</strong></p>
+<p>[latex]J(G) &#x3D; \alpha J_{content}(C,G) + \beta J_{style}(S,G)[&#x2F;latex]</p>
+<p><strong>Find the generated image G :</strong> </p>
+<ol>
+<li>Initiate G randomly (G : 100 * 100 * 3)</li>
+<li>Use gradient descent to minimiza J(G)</li>
+</ol>
+<h2 id="Content-cost-function"><a href="#Content-cost-function" class="headerlink" title="Content cost function"></a>Content cost function</h2><ul>
+<li>Say you use hidden layer l to compute content cost.</li>
+<li>Use pre-trained ConvNet. (E.g., VGG network)</li>
+</ul>
+<p>[latex]J_{content}(C,G) &#x3D; \frac {1}{2} \left \ a^{[l](C)} - a^{[l](G)} \right \ ^ 2[&#x2F;latex]</p>
+<ul>
+<li>Let [latex]a^{[l](C)}[&#x2F;latex] and [latex]a^{[l](G)}[&#x2F;latex] be the activation of layer l on the images</li>
+<li>If [latex]a^{[l](C)}[&#x2F;latex] and [latex]a^{[l](G)}[&#x2F;latex] are similar, both images have similar content</li>
+</ul>
+<h2 id="Style-cost-function"><a href="#Style-cost-function" class="headerlink" title="Style cost function"></a>Style cost function</h2><p>**Style matrix : ** Let [latex]a_{i,j,k}^{[l]}[&#x2F;latex] &#x3D; activation at [latex](i,j,k)[&#x2F;latex]. [latex]G^{[l](s)}[&#x2F;latex] is [latex]n_{c}^{[l]} \times n_{c}^{[l]}[&#x2F;latex] And it’s the degree of correlation that gives you one way of measuring how often these different high level features, such as vertical texture or this orange tint or other things as well. How often they occur and how often they occur together, and don’t occur together in different parts of an image. Define this style image. [latex]G_{kk’}^{[l](G)} &#x3D; \sum _{i&#x3D;1}^{n_H^{[l]}} \sum _{j&#x3D;1}^{n_W^{[l]}} a_{i,j,k}^{[l](G)} a_{i,j,k’}^{[l](G)} [&#x2F;latex] So G, defined using layer l and on the style image, is going to be a matrix, where the height and width of this matrix is the number of channels by number of channels. So in this matrix, the k, k prime element is going to measure how correlated our channels k and k prime. Style cost function : [latex]J_{style}^{[l]}(S,G) &#x3D; \frac{1}{(2n_H^{[l]}n_W^{[l]}n_C^{[l]})^2} \sum _{k} \sum _{k’} (G_{kk’}^{[l](S)} - G_{kk’}^{[l](G)})[&#x2F;latex]  </p>
+<h2 id="1D-and-3D-generalizations-of-models"><a href="#1D-and-3D-generalizations-of-models" class="headerlink" title="1D and 3D generalizations of models"></a>1D and 3D generalizations of models</h2><p>For a long of 1d data applications you actually use a recurrent neural network. Three-dimensional. And one way to think of this data is if your data now has some height, some width and then also some depth.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/19/3-object-detection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/19/3-object-detection/" class="post-title-link" itemprop="url">3 Object detection</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-19 19:39:45" itemprop="dateCreated datePublished" datetime="2019-04-19T19:39:45+08:00">2019-04-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/" itemprop="url" rel="index"><span itemprop="name">Deep Learning Specialization Offered By deeplearning.ai</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Object-localization"><a href="#Object-localization" class="headerlink" title="Object localization"></a>Object localization</h2><p><strong>Object detection</strong> is one of the areas of computer vision that’s just exploding. <strong>Object localization</strong> which means not only do you have to label this as say a car, but the algorithm also is responsible for putting a bounding box, so that’s called the classification with localization problem. <strong>Defining the target label y :</strong> </p>
+<ol>
+<li>pedestrian</li>
+<li>card</li>
+<li>motorcycle</li>
+<li>background</li>
+</ol>
+<p>Need to output bx, by, bh, bw, class label(1-4) [latex]y&#x3D;\begin{bmatrix} p_c \\ b_x \\ b_y \\ b_h \\ h_w \\ c_1 \\ c_2 \\ c_3 \end{bmatrix}[&#x2F;latex]</p>
+<p><strong>If using squared error, then loss function :</strong> [latex]L(\hat y, y) &#x3D; (\hat y_1 - y_1)^2 + (\hat y_2 - y_2)^2 + \cdots (\hat y_8 - y_8)^2[&#x2F;latex] In practice you could use you improbably use a log likelihood loss for the [latex]c_1[&#x2F;latex], [latex]c_2[&#x2F;latex], [latex]c_3[&#x2F;latex]to the softmax, output one of those elements, <strong>usually you can use squared error or something like squared error for the bounding box coordinates and then for [latex]p_c[&#x2F;latex]</strong>, you could use something like the logistic regression loss, although even if you use squared error or predict work okay.</p>
+<h2 id="Landmark-detection"><a href="#Landmark-detection" class="headerlink" title="Landmark detection"></a>Landmark detection</h2><p>Neural network just output x and y coordinates of important points in image sometimes called landmarks that you want the netural network to recognize. The labels have to be consistent across different images.</p>
+<h2 id="Object-detection"><a href="#Object-detection" class="headerlink" title="Object detection"></a>Object detection</h2><p><strong>Sliding windows detection algorithm :</strong> </p>
+<ul>
+<li>using a pretty large stride in this example just to make the animation go faster</li>
+<li>repeat it, but now use a larger window</li>
+<li>then slide the window over again using some stride and so on, and you run that throughout your entire image until you get to the end</li>
+</ul>
+<p><strong>There’s a huge disadvantage of sliding windows detection which is the computational cost :</strong> </p>
+<ul>
+<li>if you use a very coarse stride, a very big stride, a very big step size, then that will reduce the number of windows you need to pass through the ConvNet, but that coarser granularity may hurt performance</li>
+<li>whereas if you use a very fine granularity or a very small stride, then the huge number of all these little regions you’re passing through the ConvNet means that there’s a very high computational cost</li>
+</ul>
+<p><em>So before the rise of neural networks, people used to use much simpler classifiers</em></p>
+<h2 id="Convolutional-implementation-of-sliding-windows"><a href="#Convolutional-implementation-of-sliding-windows" class="headerlink" title="Convolutional implementation of sliding windows"></a>Convolutional implementation of sliding windows</h2><p>Turn fully connected layers in your neural network into convolutional layers It turns out a lot of this computation done by these 4 ConvNet is highly duplicated Sliding windows convolutionally makes the whole thing <strong>much more efficient</strong>, but it still has one weakness which is the position of the bounding boxes <strong>is not going to be too accurate</strong>.</p>
+<h2 id="Bounding-box-predictions"><a href="#Bounding-box-predictions" class="headerlink" title="Bounding box predictions"></a>Bounding box predictions</h2><p>A good way to get this output more accurate bounding boxes is with the <strong>YOLO</strong> algorithm, YOLO stands for <strong>you only look once</strong>. The basic idea is you’re going to take the <strong>image classification and localization algorithm</strong> and  <strong>what the YOLO algorithm does is it takes the midpoint of each of the two objects and it assigns the object to the grid cell containing the midpoint</strong>. The advantage of this algorithm is that the neural network outputs <strong>precise bounding boxes</strong> as follows so long as you don’t have more than one object in each grid cell this algorithm should work okay. <strong><em>Assign an object to grid cell is you look at the mid point of an object and then you assign that object to whichever one grid cell contains the mid point of the object.</em></strong> This is a pretty efficient algorithm and in fact one nice thing about the YOLO algorithm which which accounts for popularity is because this is a convolutional implementation it actually runs very fast so this works even for <strong>real-time object detection</strong>. <strong>The YOLO paper is one of the harder papers to read.</strong> <em>It’s not that uncommon sadly for even you know senior researchers to read research papers and have a hard time figuring out the details and have to look at the open source code or contact the authors or something else to figure out the details of these algorithms.</em></p>
+<h2 id="Intersection-over-union"><a href="#Intersection-over-union" class="headerlink" title="Intersection over union"></a>Intersection over union</h2><p>Intersection over union, and just we use both for <strong>evaluating your object detection algorithm</strong>. So, what the <strong>intersection over union</strong> function does or <strong>IoU</strong> does is it computes the intersection over union of these two bounding boxes. <strong>So, the union of these two bounding boxes is this area, is really the area that is contained in either bounding boxes, whereas the intersection is this smaller region here. So, what the intersection over union does is it computes the size of the intersection,</strong> And by convention, law of computer vision task will judge that your answer is correct, if the IoU is greater than or <strong>0.5</strong> (<em>just a human-chosen convention, there’s no particularly deep theoretical reason for it</em>).</p>
+<h2 id="Non-max-suppression"><a href="#Non-max-suppression" class="headerlink" title="Non-max suppression"></a>Non-max suppression</h2><p>One of the problems of object detection as you’ve learned about so far is that your algorithm may find multiple detections of the same object so rather than detecting an object just once it might detect it multiple times non-max suppression is a way for you to <strong>make sure that your algorithm detects each object only once</strong>.</p>
+<ul>
+<li>so concretely what it does is it first looks at the probabilities associated with each of these detections count on the p_c, and then it first takes the largest one <ul>
+<li>and says that’s my most confident detection</li>
+<li>so let’s highlight it, </li>
+<li>and all the ones with a high overlap with a high IoU with this one that you’ve just output will get suppressed.</li>
+</ul>
+</li>
+<li>and find the one with the highest probability the highest</li>
+</ul>
+<p><strong>Non max</strong> means that you’re going to output your maximal probabilities classifications but suppress it close by ones that are non maximal so that’s as a name non max suppression.</p>
+<h2 id="Anchor-Boxes"><a href="#Anchor-Boxes" class="headerlink" title="Anchor Boxes"></a>Anchor Boxes</h2><p>One of the problems with object detection as you’ve seen it so far is that each of the grid cells can detect only one object What if a grid cell wants to <strong>detect multiple objects</strong> here’s what you can do you can use the idea of anchor boxes. <img src="/img/Anchor_box_example.png">   The idea of anchor boxes what you’re going to do is predefined two different shapes called anchor boxes or anchor boxes shapes and what you’re going to do is now be able to associate two predictions with the two anchor boxes and in general you might use more anchor boxes maybe five or even more. <strong>Anchor box algorithm :</strong></p>
+<ul>
+<li>Previously :</li>
+</ul>
+<p>Echo object in training image is assigned to grid cell that contains that object’s midpoint.</p>
+<ul>
+<li>With two anchor boxes :</li>
+</ul>
+<p>Echo object in training image is assigned to grid cell that contains object’s midpoint and anchor box for the grid cell with highest IoU.</p>
+<p><strong>Now just some additional details what if you have two anchor boxes but 3 objects in the same grid cell that’s one case that this algorithm doesn’t handle it well.</strong> Anchor boxes gives you is it allows your learning algorithm to specialize better in particular if your data set has some tall skinny objects like pedestrians and some wide objects like cars then this allows your learning algorithm to specialize. <strong>How to choose the anchor boxes :</strong></p>
+<ul>
+<li>People used to just choose them by hand you choose maybe five or ten anchor box shapes that spans a variety of shapes that see to cover the types of objects you seem to detect.</li>
+<li>One of the later YOLO research papers is to use a k-means algorithm to group together two types of object shapes you tend to get and if we use that to select a set of anchor boxes that this most stereotypically representative of the may be multiple there may be dozens of object classes you’re trying to detect but that’s a more advanced way to automatically choose the anchor boxes.</li>
+</ul>
+<h2 id="Putting-it-together-YOLO-algorithm"><a href="#Putting-it-together-YOLO-algorithm" class="headerlink" title="Putting it together: YOLO algorithm"></a>Putting it together: YOLO algorithm</h2><p><img src="/img/YOLO_Outputting_the_non-max_supressed_outputs.png">  </p>
+<p><strong>One of the most effective object detection algorithms that</strong></p>
+<p><strong>also encompasses many of the best ideas across the entire computer vision literature that relate to object detection.</strong></p>
+<h2 id="Region-proposals-Optional"><a href="#Region-proposals-Optional" class="headerlink" title="Region proposals (Optional)"></a>Region proposals (Optional)</h2><p><em><strong>Algorithm convolutionally but one downside that the algorithm is it just classifies a lot of regions where there’s clearly no object.</strong></em> <strong>Faster algorithms :</strong> </p>
+<ul>
+<li>R-CNN : Propose regions. Classify proposed regions one at a time. Output label + bounding box.</li>
+<li>Fast R-CNN : Propose regions. Use convolution implementation of sliding windows to classify all the proposed regions.</li>
+<li>Faster R-CNN : Use convolutional network to propose regions.</li>
+</ul>
+<p>Although the faster R-CNN algorithm most implementations are usually still quite a bit slower than the YOLO algorithm. <strong>The idea of region proposals has been quite influential in computer vision.</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/19/2-deep-convolutional-models-case-studies/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/19/2-deep-convolutional-models-case-studies/" class="post-title-link" itemprop="url">2 Deep convolutional models : case studies</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-19 11:58:36" itemprop="dateCreated datePublished" datetime="2019-04-19T11:58:36+08:00">2019-04-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/" itemprop="url" rel="index"><span itemprop="name">Deep Learning Specialization Offered By deeplearning.ai</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Why-look-at-case-studies"><a href="#Why-look-at-case-studies" class="headerlink" title="Why look at case studies?"></a>Why look at case studies?</h2><p>It turns out a lot of the past few years of computer vision research has been on how to put together these basic building blocks to form effective convolutional neural networks.  And one of the best ways for you to gain intuition yourself, is to see some of these examples.</p>
+<h4 id="After-the-next-few-chapters-you’ll-be-able-to-read-some-of-the-research-papers-from-the-field-of-computer-vision"><a href="#After-the-next-few-chapters-you’ll-be-able-to-read-some-of-the-research-papers-from-the-field-of-computer-vision" class="headerlink" title="After the next few chapters, you’ll be able to read some of the research papers from the field of computer vision."></a><strong>After the next few chapters, you’ll be able to read some of the research papers from the field of computer vision.</strong></h4><h2 id="Classic-networks"><a href="#Classic-networks" class="headerlink" title="Classic networks"></a>Classic networks</h2><ul>
+<li><h4 id="LeNet-5"><a href="#LeNet-5" class="headerlink" title="LeNet-5"></a>LeNet-5</h4></li>
+</ul>
+<p>And back then, when this paper was written, people used <strong>average pooling</strong> much more. If you’re building a modern variant, you’ll probably use mass pooling instead. So it turns out that if you read the original paper, back then people used <strong>Sigmoid and Tahn</strong> non-linearities, and people weren’t using ReLu non-linearities back then. But back then, computers were much slower. And so, to save on computation as well as on parameters, the original LeNet - 5 had <strong>some crazy complicated way where different filters look at different channels of the input block</strong>. And so, the paper talks about those details, but the more modern implementation you wouldn’t have that type of complexity these days.</p>
+<ul>
+<li><h4 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h4></li>
+</ul>
+<p>So, this neural network actually had a lot of similarities to LeNet, but it was <strong>much bigger</strong>. And the fact that they <strong>could take pretty similar basic building blocks that have a lot more hidden units and trained on a lot more data they trained on the image and the data set</strong>, Another aspect of this architecture that made it much better than LeNet was using the <strong>ReLU</strong> activation function. One is that when this paper was written, GPUs were still a little bit slower. So, it had a <strong>complicated way of training on two GPUs</strong>. The original AlexNet architecture, also had another type of a layer called a <em><strong>local response normalization</strong></em>. the basic idea of local response normalization is, if you look at one of these blocks, one of these volumes that we have on top, let’s say for the sake of argument this one,13 by 13 by 256. look at all 256 numbers and normalize them. And the motivation for this local response normalization was that for each position in this 13 by 13 image, maybe you don’t want too many neurons with a very high activation. But subsequently, many researchers have found that <em><strong>this doesn’t help that much</strong></em>. It was really this paper that convinced a lot of the computer vision community to take a serious look at deep learning, and to convince them that deep learning really works in computer vision, and then it grew on to have a huge impact, not just in computer vision but beyond computer vision as well.</p>
+<ul>
+<li><h4 id="VGG-16"><a href="#VGG-16" class="headerlink" title="VGG-16"></a>VGG-16</h4></li>
+</ul>
+<p>Instead of having so many hyper parameters, let’s use a <strong>much simpler network</strong> where you focus on just having conv layers that are <strong>just three by three filters with stride one and always use the same padding, and make all your max pooling layers two by two with a stride of two</strong>. And so, one very nice thing about the VGG network was, it really simplified these neural network architectures. But VGG-16 is a <strong>relatively deep network</strong>. The 16 in the name VGG-16, refers to the fact that this has 16 layers that have to weight. And this is a pretty large network. This network has a total of about 138 million parameters. And that’s pretty large even by modern standards. But the simplicity of the VGG-16 architecture made it <strong>quite appealing</strong>. You can tell its architecture is <strong>really quite uniform</strong>. There’s a few conv layers followed by a pooling layer, which reduces the height and width. So the pooling layers reduce the height and width. You have a few of them here. But then also, if you look at the number of filters in the conv layers, here you have 64 filters, and then you double to 128, double to 256 doubles to 512. But roughly doubling on every step, or doubling through every stack of conv layers was another <strong>simple principle used to design the architecture of this network</strong>. And so, I think the relative uniformity of this architecture made it <strong>quite attractive to researchers</strong>. <strong>The main downside was that, it was a pretty large network in terms of the number of parameters you had to train.</strong> this made this pattern of how as you go deeper, height and width goes down. It just goes down by a factor of two each time by the pooling layers, whereas the number of channels increases. And sure it roughly goes up by a factor of two every time you have a new set of conv layers.</p>
+<h2 id="ResNets-Residual-Networks"><a href="#ResNets-Residual-Networks" class="headerlink" title="ResNets (Residual Networks)"></a>ResNets (Residual Networks)</h2><p>Very, very deep neural networks are difficult to train because of vanishing and exploding gradients types of problems. skip connections which allows you to take the activation from one layer and suddenly feed it to another layer, even much deeper in the neural network.  And using that, you’re going to build ResNets which enables you to train very, very deep networks sometimes even networks of over 100 layers. <strong>ResNets</strong> are built out of something called a <strong>residual block</strong>. Plain network : [latex]\begin{matrix} z^{[l+1]} &#x3D; W^{[l+1]} a^{[l]} + b^{[l+1]} &amp; a^{[l+1]} &#x3D; g(z^{[l+1]}) \\ z^{[l+2]} &#x3D; W^{[l+2]} a^{[l+1]} + b^{[l+2]} &amp; a^{[l+2]} &#x3D; g(z^{[l+2]})\\ \end{matrix}[&#x2F;latex] Residual block : [latex]\begin{matrix} z^{[l+1]} &#x3D; W^{[l+1]} a^{[l]} + b^{[l+1]} &amp; a^{[l+1]} &#x3D; g(z^{[l+1]}) \\ z^{[l+2]} &#x3D; W^{[l+2]} a^{[l+1]} + b^{[l+2]} &amp; a^{[l+2]} &#x3D; g(z^{[l+2]} + a^{[l]})\\ \end{matrix}[&#x2F;latex] In practice, or in reality, having a plain network. So <strong>no ResNet</strong>, having plain network that’s very <strong>deep</strong> means that your optimization algorithm just has a <strong>much harder</strong> time training. And so, in reality, your training error gets worse if you pick a network that’s too deep. But what happens <strong>with ResNets</strong> is that even as the number of layers gets deeper, you <strong>can have the performance</strong> of the training error kind of keep on going down. Now, even if you train a network with over 100 layers.</p>
+<h2 id="Why-ResNets-work"><a href="#Why-ResNets-work" class="headerlink" title="Why ResNets work?"></a>Why ResNets work?</h2><p><strong>Doing well on the training set</strong> is usually a prerequisite to doing well on your hold out, or on your dev, on your test sets. So being able to at least train the ResNets to do well on a training set is a good first step toward that. <strong>Adding this residual block somewhere in the middle or to the end of this big neural network, it doesn’t hurt performance.</strong> <strong>The residual network works is that it’s so easy for these extra layers to learn the identity function Or at least is easier to go from a decent baseline of not hurting performance and then creating the same can only improve the solution from there.</strong> And then as is common in these networks, you have conv, conv, conv, pool, conv, conv, conv, pool, conv, conv, conv, pool. And then at the end, I have a fully connected layer that then makes a prediction using a softmax.</p>
+<h2 id="Network-in-Network-and-1×1-convolutions"><a href="#Network-in-Network-and-1×1-convolutions" class="headerlink" title="Network in Network and 1×1 convolutions"></a>Network in Network and 1×1 convolutions</h2><p><strong>1 x 1 filter</strong></p>
+<ul>
+<li>6 x 6 x 1 image, doesn’t seem particularly useful</li>
+<li>6 x 6 x 1 channel images, and in particular, what a 1 x 1 convolution will do is it will look at each of the 36 different positions here. And it will take the element wise product between 32 numbers on the left and the 32 numbers in the filter. And then apply a ReLU nonlinearity to it after that.</li>
+</ul>
+<p>And in fact, one way to think about the 32 numbers you have in this 1 x 1 x 32 filter(<strong>weights</strong>) So one way to think about the 1 x 1 convolution is that it is basically having a fully connected neural network that applies to each of the 32 different positions. It’s sometimes also called <strong>Network in Network.</strong> A pretty non-trivial operation that allows you to <strong>shrink</strong> the number of channels in your volumes, or <strong>keep</strong> it the same, or even <strong>increase</strong> it if you want.</p>
+<h2 id="Inception-network-motivation"><a href="#Inception-network-motivation" class="headerlink" title="Inception network motivation"></a>Inception network motivation</h2><p>When designing a layer for a CONV layer you might <strong>have to pick</strong> do you want to 1 x 3 filter, or 3 x 3, or 5 x 5. Or do you want to pooling layer? What <strong>inception network</strong> does is it says, why should you do them all. And this makes the network architecture more complicated but it also works remarkably well. The inception network or what an inception layer says is, is <strong>instead of choosing</strong> what filter size you want in a CONV layer or even do you want a convolutional layer or pooling layer. And the basic idea is that instead of you needing to pick one of these filter sizes or pooling you want and committing to that, <strong>you can do them all and just concatenate all the outputs and let the network learn whatever parameters it wants to use, what are the combinations of these filter sizes at once</strong>. There’s a <strong>problem</strong> with the inception layer as I’ve describe it here which is <strong>computational cost</strong>. A <strong>bottleneck layer</strong> is the smallest part of this network. We shrink the representation before increasing the size again. The total number of multiplications you need to do is the sum of those.</p>
+<ul>
+<li>If you are building a layer of a neural network and you <strong>don’t want to have to decide</strong> do you want a 1 x 1 or 3 x 3 or 5 x 5 of pooling layer. The <strong>inception</strong> module, let’s do them all. And let’s concatenate the results.</li>
+<li>The <strong>problem of computational cost</strong> and we just saw here was how using a 1 x 1 convolution, you can <strong>create this bottleneck layer thereby reducing the computational cost significantly</strong>.</li>
+<li>It turns out that so long as you implement this bottleneck layer within the region, you can shrink down the representation size significantly. And it doesn’t seem to hurt the performance. That saves you a lot of computation.</li>
+</ul>
+<h2 id="Inception-network"><a href="#Inception-network" class="headerlink" title="Inception network"></a>Inception network</h2><p><img src="/img/Inception_network.png"></p>
+<h2 id="Using-open-source-implementations"><a href="#Using-open-source-implementations" class="headerlink" title="Using open-source implementations"></a>Using open-source implementations</h2><p>It turns out that a lot of these neural networks are <strong>difficult or finicky to replicate</strong>. Because a lot of details about tuning the hyperparameters. Sometimes difficult even for say, AI or deep learning Ph.D. students even at the top universities to replicate someone else’s publish work just from reading the research paper. Fortunately, a lot of deep learning researchers <strong>routinely open source their work on the internet such as on GitHub</strong>. If you see a research paper whose results you would like to build on top of, one thing you should consider doing, one thing I do quite often is just <strong>look online for an open-source implementation</strong>. <strong>The MIT license is one of the more permissive open source licenses.</strong></p>
+<ol>
+<li>If you’re developing a computer vision application, a very common workflow would be to pick an architecture that you’d like. Maybe one of the ones you’ve learned about in this course, or maybe one that you’ve heard about from a friend, or from some of the literature.</li>
+<li>And look for an open-source implementation and download it from GitHub to start building from there.</li>
+</ol>
+<p><em>One of the advantages of doing so also is that sometimes these networks take a long time to train and someone else might have used multiple GPUs and a very largely data set to pre-trained some of these networks. And that allows you to do transfer learning using these networks.</em></p>
+<h2 id="Transfer-Learning"><a href="#Transfer-Learning" class="headerlink" title="Transfer Learning"></a>Transfer Learning</h2><p><em>If you’re building a computer vision application, rather than training the weights from scratch, from random initialization, you often make much faster progress if your download weights that some else has already trained on a network architecture.</em> <em>And use that as pre-training and transfer that to a new task that you might be interested in. Use transfer learning to sort of transfer knowledge from some of these very large public data sets to your own problem.</em> Go online and download some open source implementation of a neural network. And <strong>download not just the code, but also the weights</strong>. <strong>What you can do is then get rid of the softmax layer, and create your own softmax unit by using someone else’s pre-trained weights, you’re likely to get pretty good performance on this, even with a small data set. Fortunately, a lot of deep learning frameworks support this mode of operation.</strong> And these are different ways in different deep learning programming frameworks letting you specify whether or not to train the weights associated with a particular layer. <strong>If you have a bigger a data set, then maybe of enough data, not just to train a single softmax unit. But to train some modest-sized neural network that comprises the last few layers of this final network that you end up using. And then finally, if you have a lot of data, one thing you might do is take this open source network and weights, and use the whole thing just as initialization, and train the whole network.</strong> <strong>Computer vision is one where transfer learning is somethingz that you should almost always do.</strong> Unless you actually have a very, very large, unless you have an exceptionally large data set to train everything else from scratch yourself.</p>
+<h2 id="Data-augmentation"><a href="#Data-augmentation" class="headerlink" title="Data augmentation"></a>Data augmentation</h2><p>Most computer vision tasks could <strong>use more data</strong> and so <strong>data augmentation</strong> is one of the techniques that is often used to improve the performance of computer vision systems. <strong>The majority of computer vision problems is that we just can’t get enough data.</strong> <strong>The common data augmentation methods :</strong></p>
+<ul>
+<li>mirroring on the vertical axis</li>
+<li>random cropping<ul>
+<li>Rotation Shearing local warping</li>
+</ul>
+</li>
+<li>color shifting</li>
+</ul>
+<p>One of the ways to influence color distortion uses an algorithm called <strong>PCA (Principles Components Analysis)</strong>.</p>
+<p><em>The rough idea the called PCA color augmentation, is for example, if your image is mainly purple, if it has mainly red and blue tints,</em> <em>and very little green, then PCA color augmentation will add and subtract a lot to red and blue were relatively little to green so it kind of keeps the overall color of the tint the same.</em></p>
+<p>A pretty common way of of implementing data augmentation is to really have one thread or <strong>multiple threads</strong> that is responsible for <strong>loading</strong> the data and implementing distortions, <strong>and then passing that to some other thread or some other process</strong> that then does the training and often this and this, can run in <strong>parallel</strong>. <strong>A good place to get started might be to use someone else’s open source implementation for how they use data augmentation.</strong></p>
+<h2 id="The-state-of-computer-vision"><a href="#The-state-of-computer-vision" class="headerlink" title="The state of computer vision"></a>The state of computer vision</h2><p><em>Deep learning has been successfully applied to computer vision, natural language processing, speech recognition, online advertising, logistics, many, many, many problems.</em> Image recognition was a problem of looking at a picture and telling you, is this a cat or not? Whereas object detection is look at a picture and actually, you’re putting the bounding boxes and telling you where in the picture the objects, such as the cars are, as well. And so because of <strong>the costs of getting the bounding boxes is just more expensive to label the objects and the bounding boxes</strong>, so we tend to have less data for object detection than for image recognition. <strong>On average that when you have a lot data, you tend to find people getting away with using simpler algorithms as well as less hand engineering. So there’s just less needing to carefully design features for the problem.</strong></p>
+<ul>
+<li>But instead you can have a giant neural network, even a simpler architecture and have a neural network just learn whatever it wants to learn when you have a lot of data.</li>
+<li>Whereas in contrast, when you don’t have that much data, then, on average you see people engaging in more hand engineering and</li>
+</ul>
+<p><strong>Two sources of knowledge :</strong></p>
+<ul>
+<li>labeled data</li>
+<li>hand engineering features &#x2F; network architectures &#x2F; other components of your system</li>
+</ul>
+<p>And someone that is insightful with hand engineering will get better performance. If you look at the <em>computer vision literature</em>, look at the set of ideas out there, you’ll also find that people are <em>really enthusiastic</em>. They’re <em>really into doing well on standardized benchmark data sets and on winning competitions</em>. And for computer vision researchers, if you do well on the benchmarks it’s <em>easier to get the paper published</em>. So there is just a lot of attention on doing well on these benchmarks. </p>
+<ul>
+<li>And the positive side of this is that it helps the whole community figure out what are the most effective algorithms</li>
+<li>but you also see in the papers, people do things that allow you to do well on a benchmark,</li>
+<li><strong>but that you wouldn’t really use in a production or a system that you deploy in an actual application.</strong></li>
+</ul>
+<p><strong>Tips for doing well on benchmarks &#x2F; winning competitions</strong></p>
+<ul>
+<li>Ensembling</li>
+</ul>
+<p>Train several neural networks independently and average their outputs</p>
+<p><em>But it’s almost never used in production to serve actual customers, I guess unless you have a huge computational budget and don’t mind burning a lot more of it per customer image.</em></p>
+<ul>
+<li>Multi-crop at test time</li>
+</ul>
+<p>Take the central crop. Then, take the four corners crops. Run these images through your classifier and then average the results.</p>
+<p><strong>And a neural network that works well on one vision problem often, maybe surprisingly, but it just often will work other vision problems as well. So, to build a practical system often you do well starting off with some else’s neural network architecture.</strong></p>
+<ul>
+<li>And you can use an open source implementation if possible because the open source implementation might have figured out all the finicky details.</li>
+<li>But if you have the computer resources and the inclination, don’t let me stop you from training your own networks from scratch. And, in fact, if you want to invent your own computer vision algorithm, that’s what you might have to do.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/18/1-foundations-of-convolutional-neural-networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/18/1-foundations-of-convolutional-neural-networks/" class="post-title-link" itemprop="url">1 Foundations of Convolutional Neural Networks</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-18 17:52:26" itemprop="dateCreated datePublished" datetime="2019-04-18T17:52:26+08:00">2019-04-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -454,39 +1241,61 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome"></a>Welcome</h2><p>Deep Learning has aready transformed the traditional internet businesses</p>
-<h2 id="What-is-a-Neural-Network"><a href="#What-is-a-Neural-Network" class="headerlink" title="What is a Neural Network"></a>What is a Neural Network</h2><p>You probably find them to be most useful, most powerful, in supervised learning settings. Meaning that you’re trying to take an input x and map it some output y,</p>
-<h2 id="Supervised-Learning-with-Neural-Networks"><a href="#Supervised-Learning-with-Neural-Networks" class="headerlink" title="Supervised Learning with Neural Networks"></a>Supervised Learning with Neural Networks</h2><p><strong>It turns out that so far, almost all the economic value created by neural networks has been through one type of machine learning, called supervised learning.</strong> Possibly the single most lucrative application of deep learning today is online advertising.</p>
-<ul>
-<li>Computer Vision</li>
-<li>Speech Recognition</li>
-<li>Autonomous Driving</li>
+          <h2 id="Computer-vision"><a href="#Computer-vision" class="headerlink" title="Computer vision"></a>Computer vision</h2><ul>
+<li>Rapid advances in computer vision are enabling brand new applications to be able.</li>
+<li>Even if you don’t end up building computer vision systems per se, because the computer vision research community has been so creative and so inventive in coming up with new neural network architectures and algorithms, is actually inspire that creates a lot of cross-fertilization into other areas as well.</li>
 </ul>
-<p>It turns out that slightly different types of neural networks are useful for different applications. <strong>CNN (Convolutional Neural Network)</strong> <strong>RNN (Recurrent Neural Network)</strong></p>
+<p><strong>Some examples of computer vision problems :</strong></p>
 <ul>
-<li>Structured Data means basically databases of data.</li>
-<li>In contrast, unstructured data refers to things like audio, raw audio, or images where you might want to recognize what’s in the image or text. Historically, it has been much harder for computers to make sense of unstructured data compared to structured data.</li>
+<li>Image classification, sometimes also called image recognition</li>
+<li>Object detection</li>
+<li>Neural style transfer</li>
 </ul>
-<p><strong>It turns out that a lot of short term economic value that neural networks are creating has also been on structured data</strong>, such as much better advertising systems, much better profit recommendations, and just a much better ability to process the giant databases that many companies have to make accurate predictions from them.</p>
-<h2 id="Why-is-Deep-Learning-taking-off"><a href="#Why-is-Deep-Learning-taking-off" class="headerlink" title="Why is Deep Learning taking off?"></a>Why is Deep Learning taking off?</h2><p>Go over some of the main drivers behind the rise of deep learning because I think this will help you better spot the best opportunities within your own organization to apply these to. More and more and more data have been collected so over the last 20 years for a lot of applications we just accumulate a lot more data more than traditional learning algorithms were able to effectively take advantage of. <strong>Hit very high level of performance :</strong> </p>
-<ol>
-<li>Train a big enough neural network</li>
-<li>Throw more data</li>
+<p><strong>One of the challenges of computer vision problems is that the inputs can get really big.</strong> To do that, you <strong>need</strong> to be the implement the <strong>convolution</strong> operation.</p>
+<h2 id="Edge-detection-example"><a href="#Edge-detection-example" class="headerlink" title="Edge detection example"></a>Edge detection example</h2><ol>
+<li>The early layers a neural network might detect edges.</li>
+<li>And then the somewhat later layers might detect parts of objects.</li>
+<li>And then even later layers maybe detect parts of complete objects</li>
 </ol>
-<p><strong>If you don’t have a lot of training data is often up to your skill at hand engineering features that determines the performance.</strong> The performance depends much more on your skill at hand engineer features and other normal details of the algorithms and there’s only in this some big data regions very large training sets very large M regions in the right that we more consistently see largely neural nets dominating the other approaches and so</p>
 <ul>
-<li><strong>Data</strong></li>
-<li><strong>Computation</strong></li>
-<li><strong>Algorithmic Innovation</strong></li>
+<li><strong>A Matrix.</strong> And in the pooling, the terminology of convolutional neural networks, this is going to be called a <strong>filter</strong>. Sometimes research papers will call this a <strong>kernel</strong> instead of a filter.</li>
 </ul>
-<p>One of the huge breakthroughs in neural networks has been switching from a sigmoid function which looks like this to a ReLU function.</p>
+<h2 id="More-edge-detection"><a href="#More-edge-detection" class="headerlink" title="More edge detection"></a>More edge detection</h2><p><strong>Sobel filter :</strong> [latex]\begin{bmatrix} 1 &amp; 0 &amp; -1\\ 2 &amp; 0 &amp; -2\\ 1 &amp; 0 &amp; -1 \end{bmatrix}[&#x2F;latex]</p>
+<h2 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h2><p>If we have a n-by-n image, and convolve that with an f-by-f filter, then the dimension of the output will be [latex](n-f+1) * (n-f+1)[&#x2F;latex] <strong>The two downsides to this</strong></p>
 <ul>
-<li>Ultimately the impact of this algorithmic innovation was it really help computation so there remains quite a lot of examples like this of where we change the algorithm because it allows that code to <strong>run much faster</strong> and this allows us to <strong>train bigger neural networks</strong> or to do so <strong>within reasonable amount of time</strong> even when we have a large network with a lot of data.</li>
-<li>It turns out the process of training your network it is very intuitive often. you have an idea for a neural network architecture and so you implement your idea and code. Implementing your idea then lets you run an experiment which tells you how well your neural network does and then by looking at it you go back to change the details of your neural network and then you go around this circle over and over and when your neural network takes a long time to train it just takes a long time to go around this cycle and there’s a huge difference in your productivity building effective neural networks.</li>
+<li>every time you apply a convolutional operator, your image shrinks</li>
+<li>if you look the pixel at the corner of the edge, this pixel is touched or used only in one of the outputs</li>
 </ul>
-<p><strong>Faster Computation —&gt; Iterate Much Faster —&gt; Improve Ideas Much Faster</strong></p>
-<h2 id="About-this-Course"><a href="#About-this-Course" class="headerlink" title="About this Course"></a>About this Course</h2><p><strong>Just use the multiple choice questions to check your understanding. And dont’ review, you can try again and again until you get them all right.</strong></p>
-<h2 id="Course-Resources"><a href="#Course-Resources" class="headerlink" title="Course Resources"></a>Course Resources</h2><p>If you have any questions or you want to discuss anything with the classmates or … the best place to do that is <strong>the discussion forum</strong>.</p>
+<p><strong>So to solve both of these problems :</strong> before apply the convolutional operation, you can pad the image padding all around with an extra border of one pixels, that the output becomes [latex](n+2p-f+1)*(n+2p-f+1)[&#x2F;latex]. So this effective maybe not quite throwing away,  but counting less the information from the edge of a corner or the edge of the image is reduced. <strong>How much to pad :</strong> </p>
+<ul>
+<li>Valid convolution : this basically means no padding.</li>
+<li>Same Convolution : that means when you pad,so the output size is the same as the input size.</li>
+</ul>
+<p><strong>And you rarely see an even-numbered filters, filter would be used in computer vision.</strong></p>
+<ul>
+<li>One is that if f was even, then you need some asymmetric padding</li>
+<li>And then second, when you have an odd dimension filter, then it has a central position.</li>
+</ul>
+<h2 id="Strided-convolutions"><a href="#Strided-convolutions" class="headerlink" title="Strided convolutions"></a>Strided convolutions</h2><p>If you have an n x n matrix or <strong>[latex]n * n[&#x2F;latex] image</strong> that you convolve with an <strong>[latex]f* f[&#x2F;latex] filter</strong> with <strong>padding p</strong>, and <strong>stride s</strong>, then the output size will have this dimension. <strong>[latex]\frac{n+2p-f}{s} + 1 \times \frac{n+2p-f}{s} + 1[&#x2F;latex]</strong> In that case, we’re going to round this down. <strong>[latex]\left \lfloor z \right \rfloor[&#x2F;latex]</strong> And technically, what we’re actually doing, really, is sometimes called <strong>cross-correlation</strong> instead of convolution. But in deep learning literature, by convention we just call this a <strong>convolution operation</strong>.</p>
+<h2 id="Convolutions-over-volumes"><a href="#Convolutions-over-volumes" class="headerlink" title="Convolutions over volumes"></a>Convolutions over volumes</h2><p>Convolve this not to a three by three filter as you had previously, but now with also a 3D filter, That’s going to be three by three by three, So, the filter itself will also have three layers. You can now detect two features or maybe several hundred different features, and the output will then have a number of channels equal to the number of features you are detecting.</p>
+<h2 id="One-layer-of-a-convolutional-network"><a href="#One-layer-of-a-convolutional-network" class="headerlink" title="One layer of a convolutional network"></a>One layer of a convolutional network</h2><p>Suppose you have 10 filters not just 2 filters, that are 3 x 3 x 3 in one layer of a neural network. How many parameters does this layer have? Each filter is a three by three by three volume, So three by three by three, so each filter has 27 parameters, right, so it’s 27 numbers to be learned. And then plus the bias, so that was the b parameters, so this gives you 28 parameters. Then all together you would have 28 times 10, so that would be 280 parameters. <strong>size of the output :</strong> [latex]n_H^{[l]} &#x3D; \left \lfloor \frac{n_W^{[l-1]} + 2p^{[l] - f^{[l]}}}{s^{[l]}} + 1 \right \rfloor[&#x2F;latex] <strong>the number of filters :</strong> [latex]f^{[l]} \times f^{[l]} \times n_c^{[l-1]}[&#x2F;latex]</p>
+<h2 id="A-simple-convolution-network-example"><a href="#A-simple-convolution-network-example" class="headerlink" title="A simple convolution network example"></a>A simple convolution network example</h2><p>A lot of the work in designing a convolutional neural net is selecting hyperparameters like these, deciding what’s the filter size, what’s the stride, what’s the padding, and how many filters you use. <strong>Types of layer in a convolutional network :</strong> </p>
+<ul>
+<li>Convolution</li>
+<li>Pooling</li>
+<li>Fully connected</li>
+</ul>
+<h2 id="Pooling-layers"><a href="#Pooling-layers" class="headerlink" title="Pooling layers"></a>Pooling layers</h2><p>Other than convolutional layers, ConvNets often also use <strong>pooling layers to reduce the size of their representation</strong> to speed up computation, as well as to make some of the features it detects a bit more robust Suppose you have a 4x4 input, and you want to apply a type of pooling called max pooling. And the output of this particular implementation of max pooling will be a 2x2 output. And the way you do that is quite simple. Take your 4x4 input and break it into different regions. And I’m going to color the four regions as follows. And then in the output, which is 2x2, <strong>each of the outputs will just be the max from the correspondingly shaded region</strong>. So what the max operation does is so long as the feature is detected anywhere in one of these quadrants, it then remains preserved in the output of Max pooling. So what the max operator does is really says, if this feature is detected anywhere in this filter, then keep a high number. But if this feature is not detected, so maybe this feature doesn’t exist in the upper right hand quadrant, then the max of all those numbers is still itself quite small. So maybe that’s <strong>the intuition behind max pooling</strong>. The main reason people use max pooling is because it’s been found in a lot of experiments to work well. <strong>Average pooling :</strong> So that’s pretty much what you’d expect, which is instead of taking the maxes within each filter, you take the average. So these days <strong>max pooling is used much more</strong> often than average pooling, One thing to note about pooling is that there are <strong>no parameters to learn</strong>, right.</p>
+<h2 id="Convolutional-neural-network-example"><a href="#Convolutional-neural-network-example" class="headerlink" title="Convolutional neural network example"></a>Convolutional neural network example</h2><p>It turns out that in the literature of a ConvNet, there are two conventions which are slightly in consistence about what you call a layer.</p>
+<ul>
+<li>One convention is that this is called one layer, so this will be Layer 1 of the neural network.</li>
+<li>Another convention would be to count the Conv layer as a layer, and the Pool layer as a layer.</li>
+</ul>
+<p><strong>When people report a number of layers in a neural network, usually people report just the number of layers that have weights, that have parameters, and because the pooling layer has no weights, has no parameters, only a few hyper parameters,</strong> Maybe one common guideline is to actually not try to invent your own settings of hyperparameters, but to <strong>look in the literature to see what hyperparameters that you work for others</strong>. And to just choose an architecture that has worked well for someone else, and there’s a chance that will work for your application as well.</p>
+<h2 id="Why-convolutions"><a href="#Why-convolutions" class="headerlink" title="Why convolutions?"></a>Why convolutions?</h2><ul>
+<li><strong>Parameter sharing:</strong> A feature detector(such as a vertical edge detector) that’s useful in one part of the image is probably useful in another part of the image.</li>
+<li><strong>Sparsity of connections:</strong> In each layer, each output value depends only on a smalll number of inputs.</li>
+</ul>
 
       
     </div>
@@ -506,7 +1315,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/18-application-example-photo-ocr/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/18/2-ml-strategy-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -520,7 +1329,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/08/18-application-example-photo-ocr/" class="post-title-link" itemprop="url">18 Application Example: Photo OCR</a>
+            <a href="/2019/04/18/2-ml-strategy-2/" class="post-title-link" itemprop="url">2 ML strategy (2)</a>
         </h2>
 
         <div class="post-meta">
@@ -530,7 +1339,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-04-08 15:56:52" itemprop="dateCreated datePublished" datetime="2019-04-08T15:56:52+08:00">2019-04-08</time>
+              <time title="Created: 2019-04-18 16:08:16" itemprop="dateCreated datePublished" datetime="2019-04-18T16:08:16+08:00">2019-04-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -549,11 +1358,15 @@
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                  <a href="/categories/machine-learning/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/" itemprop="url" rel="index"><span itemprop="name">Deep Learning Specialization Offered By deeplearning.ai</span></a>
                 </span>
             </span>
 
@@ -568,558 +1381,107 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Problem-Description-and-Pipeline"><a href="#Problem-Description-and-Pipeline" class="headerlink" title="Problem Description and Pipeline"></a>Problem Description and Pipeline</h2><ol>
-<li>Text detection</li>
-<li>Character segmentation</li>
-<li>Character classification</li>
-</ol>
-<h2 id="Sliding-Windows"><a href="#Sliding-Windows" class="headerlink" title="Sliding Windows"></a>Sliding Windows</h2><p>Go out and collect large training sets of positive and negative examples. Take that green rectangle and we slide it over a bit and then run that new image patch through our classifier to decide if there’s a pedestrian there.</p>
-<h2 id="Getting-Lots-of-Data-and-Artificial-Data"><a href="#Getting-Lots-of-Data-and-Artificial-Data" class="headerlink" title="Getting Lots of Data and Artificial Data"></a>Getting Lots of Data and Artificial Data</h2><ol>
-<li>artificial data synthesis</li>
-<li>just collect the data and you label it yourself</li>
-<li>crowd sourcing</li>
-</ol>
-<h2 id="Ceiling-Analysis-What-Part-of-the-Pipeline-to-Work-on-Next"><a href="#Ceiling-Analysis-What-Part-of-the-Pipeline-to-Work-on-Next" class="headerlink" title="Ceiling Analysis What Part of the Pipeline to Work on Next"></a>Ceiling Analysis What Part of the Pipeline to Work on Next</h2><p>Where should you allocate resources? Which of these boxes is most worth your efforts, trying to improve the performance of.</p>
-<ol>
-<li>choose one module</li>
-<li>provide it the correct text detection outputs</li>
-<li>And then, use the same evaluation metric as before, to measure what is the overall accuracy of the entire system</li>
-<li>go to step 1, but choose another one</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/17-large-scale-machine-learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/08/17-large-scale-machine-learning/" class="post-title-link" itemprop="url">17 Large Scale Machine Learning</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-08 15:32:45" itemprop="dateCreated datePublished" datetime="2019-04-08T15:32:45+08:00">2019-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Learning-With-Large-Datasets"><a href="#Learning-With-Large-Datasets" class="headerlink" title="Learning With Large Datasets"></a>Learning With Large Datasets</h2><p>Draw a learning curve and determine if more data needs to be collected.</p>
-<h2 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h2><p><strong>Cost Function in SGD :</strong> [latex]cost(\theta, (x^{(i)}, y^{(i)})) &#x3D; \frac {1}{2}(h_{\theta}(x^{(i)})-y^{(i)})^2[&#x2F;latex]</p>
-<ol>
-<li>randomly shuffle the data set</li>
-<li>a little gradient descent step using just one single training example</li>
-<li>maybe head in a bad direction, generally move the parameters in the direction of the global minimum, but not always</li>
-<li>it ends up doing is wandering around continuously in some region that’s in some region close to the global minimum</li>
-</ol>
-<h2 id="Mini-Batch-Gradient-Descent"><a href="#Mini-Batch-Gradient-Descent" class="headerlink" title="Mini-Batch Gradient Descent"></a>Mini-Batch Gradient Descent</h2><p>In <strong>Batch gradient descent</strong> we will use <strong>all m examples</strong> in each generation. Whereas in <strong>Stochastic gradient descent</strong> we will use a <strong>single example</strong> in each generation. What <strong>Mini-batch gradient descent</strong> does is somewhere <strong>in between</strong>.</p>
-<h2 id="Stochastic-Gradient-Descent-Convergence"><a href="#Stochastic-Gradient-Descent-Convergence" class="headerlink" title="Stochastic Gradient Descent Convergence"></a>Stochastic Gradient Descent Convergence</h2><p>[latex]\alpha &#x3D; \frac {const1}{iterationNumber + const2}[&#x2F;latex] We can <strong>compute the cost function on the last 1000 examples or so</strong>. And we can use this method both to make sure the stochastic gradient descent is okay and is converging or to use it to tune the learning rate alpha.</p>
-<h2 id="Online-Learning"><a href="#Online-Learning" class="headerlink" title="Online Learning"></a>Online Learning</h2><p>The online learning setting allows us to model problems where we have <strong>a continuous flood or a continuous stream of data coming in</strong> and we would like an algorithm to learn from that. We learn using that example like so <strong>and then we throw that example away</strong>. If you really have a continuous stream of data, then an online learning algorithm can be very effective. If you have <strong>a changing pool of users</strong>, or if the things you’re trying to <strong>predict are slowly changing</strong> like your user taste is slowly changing, the online learning algorithm can slowly adapt your learned hypothesis to whatever the latest sets of user behaviors are like as well.</p>
-<h2 id="Map-Reduce-and-Data-Parallelism"><a href="#Map-Reduce-and-Data-Parallelism" class="headerlink" title="Map Reduce and Data Parallelism"></a>Map Reduce and Data Parallelism</h2><p>In the MapReduce idea, one way to do, is split this training set in to different subsets and use many different machines.</p>
+          <h2 id="Carrying-out-error-analysis"><a href="#Carrying-out-error-analysis" class="headerlink" title="Carrying out error analysis"></a>Carrying out error analysis</h2><p>If you’re trying to get a learning algorithm to do a task that humans can do. And if your learning algorithm is not yet at the performance of a human. Then manually examining mistakes that your algorithm is making, can give you insights into what to do next. This process is called <strong>error analysis</strong>. An error analysis procedure that can let you very quickly tell whether or not this could be worth your effort. In machine learning, sometimes we call this the <strong>ceiling on performance</strong> which just means, what’s in the best case? In machine learning, sometimes we speak disparagingly of <strong>hand engineering</strong> things, or using too much manual insight. But if you’re building applied systems, then this simple counting procedure, error analysis, can save you a lot of time. In terms of deciding what’s the most important, or what’s the most promising direction to focus on.</p>
+<p>Maybe this is a 5 to 10 minute effort. This will gives you an estimate of how worthwhile this direction is. And could help you make a much better decision, How to using error analysis to evaluate whether or not is worth working on. Sometimes you can also evaluate multiple ideas in parallel doing error analysis.</p>
+<p><strong>During error analysis, you’re just looking at dev set examples that your algorithm has misrecognized.</strong> Quick counting procedure, which you can often do in, at most, small numbers of hours can really help you make much better prioritization decisions, and understand how promising different approaches are to work on.</p>
 <ul>
-<li>multi-core machine</li>
-<li>multiple machines</li>
-<li>numerical linear algebra libraries</li>
-<li>like Hadoop</li>
+<li>To carry out error analysis,you should find a set of mislabeled examples, either in your dev set, or in your development set.</li>
+<li>And look at the mislabeled examples for false positives and false negatives. And just count up the number of errors that fall into various different categories.</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/16-recommender-systems/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/08/16-recommender-systems/" class="post-title-link" itemprop="url">16 Recommender Systems</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-08 14:48:38" itemprop="dateCreated datePublished" datetime="2019-04-08T14:48:38+08:00">2019-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Problem-Formulation"><a href="#Problem-Formulation" class="headerlink" title="Problem Formulation"></a>Problem Formulation</h2><ol>
-<li>an important application of machine learning</li>
-<li>this idea of learning the features</li>
-</ol>
-<h2 id="Content-Based-Recommendations"><a href="#Content-Based-Recommendations" class="headerlink" title="Content Based Recommendations"></a>Content Based Recommendations</h2><p><strong>user j ‘s parameter vector :</strong> [latex]\theta^{(j)}[&#x2F;latex] <strong>movie i’s feature vector :</strong> [latex]x^{(i)}[&#x2F;latex] <strong>Predicting rating:</strong> [latex](\theta^{(j)})^Tx^{(i)}[&#x2F;latex] <strong>user [latex]j[&#x2F;latex] ‘s cost function :</strong> [latex]\underset {\theta ^{(j)}}{min} \frac {1}{2} \sum _{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+ \frac {\lambda}{2}(\theta_k^{(j)})^2[&#x2F;latex] <strong>all user’s cost function :</strong> [latex]\underset {\theta ^{(j)}, \cdots , \theta ^{(n_u)}}{min} \frac {1}{2} \sum _{j&#x3D;1}^{n_u} \sum _{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+ \frac {\lambda}{2} \sum_{j&#x3D;1}^{n_u} \sum_{k&#x3D;1}^{n} (\theta_k^{(j)})^2[&#x2F;latex] **Gradient descent : ** [latex]\left\{\begin{matrix} \theta_k^{(j)} :&#x3D; \theta_k^{(j)} - \alpha \sum_{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)} - y^{(i,j)})x_{k}^{(i)} &amp; \ (for \ k \ &#x3D; \ 0) \\ \theta_k^{(j)} :&#x3D; \theta_k^{(j)} - \alpha (\sum_{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)} - y^{(i,j)})x_{k}^{(i)} + \lambda \theta_{k}^{(j)}) &amp; \ (for \ k \ \neq \ 0) \end{matrix}\right.[&#x2F;latex]  </p>
-<h2 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h2><p><strong>No User’s Parameter and No Movie’s Features, you can do this.</strong> <em>The term <strong>collaborative filtering</strong> refers to the observation that when you run this algorithm with a large set of users, what all of these users are effectively doing are sort of collaboratively or collaborating to get better movie ratings for everyone because with every user rating some subset with the movies, every user is helping the algorithm a little bit to learn better features, and then by helping– by rating a few movies myself, I will be helping the system learn better features and then these features can be used by the system to make better movie predictions for everyone else. And so there is a sense of collaboration where every user is helping the system learn better features for the common good. This is this collaborative filtering.</em></p>
-<h2 id="Collaborative-Filtering-Algorithm"><a href="#Collaborative-Filtering-Algorithm" class="headerlink" title="Collaborative Filtering Algorithm"></a>Collaborative Filtering Algorithm</h2><ol>
-<li>Initialize x and theta to small random values</li>
-<li>minimize the cost function using great intercepts or one of the advance optimization algorithms</li>
-<li>predict</li>
-</ol>
-<h2 id="Vectorization-Low-Rank-Matrix-Factorization"><a href="#Vectorization-Low-Rank-Matrix-Factorization" class="headerlink" title="Vectorization Low Rank Matrix Factorization"></a>Vectorization Low Rank Matrix Factorization</h2><p>A user has recently been looking at one product. Are there <strong>other related products</strong> that you could <strong>recommend</strong> to this user? If you can find a different movie i, j, so that the distance between [latex]x^{(i)}[&#x2F;latex] and [latex]x^{(j)}[&#x2F;latex] is small, then this is a pretty strong indication that, you know, movies j and i are somehow similar Use learned features to find what might be movies and what might be products that aren’t related to each other.</p>
-<h2 id="Implementational-Detail-Mean-Normalization"><a href="#Implementational-Detail-Mean-Normalization" class="headerlink" title="Implementational Detail Mean Normalization"></a>Implementational Detail Mean Normalization</h2><p><strong>If a user has not evaluated any movies, which movie should we recommend?</strong> The idea of mean normalization will let us fix this problem.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/15-anomaly-detection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/08/15-anomaly-detection/" class="post-title-link" itemprop="url">15 Anomaly Detection</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-08 11:52:31" itemprop="dateCreated datePublished" datetime="2019-04-08T11:52:31+08:00">2019-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Problem-Motivation"><a href="#Problem-Motivation" class="headerlink" title="Problem Motivation"></a>Problem Motivation</h2><p>It’s mainly for unsupervised problem, that there’s some aspects of it that are also very similar to sort of the supervised learning problem. <strong>some examples :</strong> </p>
+<p><strong>During this process,</strong></p>
 <ul>
-<li>detect strange behavior or fraudulent behavior</li>
-<li>manufacturing</li>
-<li>monitoring computers in a data center</li>
+<li>you might be inspired to generate new categories of errors,</li>
+<li>You can create new categories during that process.</li>
+<li>By counting up the fraction of examples that are mislabeled in different ways, often this will help you prioritize or give you inspiration for new directions to go in.</li>
 </ul>
-<h2 id="Gaussian-Distribution"><a href="#Gaussian-Distribution" class="headerlink" title="Gaussian Distribution"></a>Gaussian Distribution</h2><h4 id="Gaussian-distribution"><a href="#Gaussian-distribution" class="headerlink" title="Gaussian distribution"></a>Gaussian distribution</h4><p>[latex]x\sim N(\mu , \sigma ^2)[&#x2F;latex]  </p>
-<h4 id="Gaussian-probability-density"><a href="#Gaussian-probability-density" class="headerlink" title="Gaussian probability density"></a>Gaussian probability density</h4><p>[latex]p(x, \mu , \sigma ^2) &#x3D; \frac {1}{\sqrt{2\pi }\sigma } exp(-\frac {(x - \mu)^2}{2 \sigma ^2})[&#x2F;latex]  </p>
-<h4 id="The-location-of-the-center-of-this-bell-shaped-curve"><a href="#The-location-of-the-center-of-this-bell-shaped-curve" class="headerlink" title="The location of the center of this bell-shaped curve"></a>The location of the center of this bell-shaped curve</h4><p>[latex]\mu &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)}[&#x2F;latex]  </p>
-<h4 id="The-width-of-this-bell-shaped-curve"><a href="#The-width-of-this-bell-shaped-curve" class="headerlink" title="The width of this bell-shaped curve"></a>The width of this bell-shaped curve</h4><p>[latex]\sigma ^ 2 &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} (x^{(i)} - \mu) ^2[&#x2F;latex]   <strong>Notice :</strong> The formula here  we use [latex]m[&#x2F;latex] instead of [latex]m - 1[&#x2F;latex] which is used in a statistics.</p>
-<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>Address anomaly detection : [latex]\mu _j &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)} _j[&#x2F;latex]   [latex]\sigma ^ 2 _j &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} (x^{(i)}_j - \mu _j) ^2[&#x2F;latex]   [latex]p(x) &#x3D; \prod _{j&#x3D;1}^{n}p(x_j; \mu _j, \sigma ^2_j) &#x3D; \prod _{j&#x3D;1}^{1}\frac {1}{\sqrt{2\pi } \sigma _j} exp(-\frac {(x_j - \mu_j)^2}{2 \sigma ^2_j})[&#x2F;latex]   <strong>If [latex]p(x) &lt; \varepsilon [&#x2F;latex], it’s anomaly.</strong></p>
-<h2 id="Developing-and-Evaluating-an-Anomaly-Detection-System"><a href="#Developing-and-Evaluating-an-Anomaly-Detection-System" class="headerlink" title="Developing and Evaluating an Anomaly Detection System"></a>Developing and Evaluating an Anomaly Detection System</h2><p><strong>How to develop and evaluate an algorithm ?</strong></p>
-<ol>
-<li>Take the training sets and fit the model [latex]p(x)[&#x2F;latex]</li>
-<li>On the cross validation of the test set, try to use different [latex]\varepsilon[&#x2F;latex], and then compute the F1 score</li>
-<li>After choosed [latex]\varepsilon[&#x2F;latex], evaluation of the algorithm on the test sets</li>
-</ol>
-<h2 id="Anomaly-Detection-vs-Supervised-Learning"><a href="#Anomaly-Detection-vs-Supervised-Learning" class="headerlink" title="Anomaly Detection vs. Supervised Learning"></a>Anomaly Detection vs. Supervised Learning</h2><p>[table id&#x3D;3 &#x2F;]</p>
-<h2 id="Choosing-What-Features-to-Use"><a href="#Choosing-What-Features-to-Use" class="headerlink" title="Choosing What Features to Use"></a>Choosing What Features to Use</h2><ol>
-<li>model the features using this sort of Gaussian distribution (play with different transformations of the data in order to make it look more Gaussian)</li>
-<li>do an error analysis procedure to come up with features for an anomaly detection algorithm</li>
-<li>create new features by combining me features</li>
-</ol>
-<h2 id="Multivariate-Gaussian-Distribution"><a href="#Multivariate-Gaussian-Distribution" class="headerlink" title="Multivariate Gaussian Distribution"></a>Multivariate Gaussian Distribution</h2><p>[latex]p(x) &#x3D; \prod _{j&#x3D;1}^{n}p(x_j; \mu, \sigma ^2_j) &#x3D; \prod _{j&#x3D;1}^{n}\frac {1}{\sqrt{2\pi } \sigma _j} exp(-\frac {(x_j - \mu_j)^2}{2 \sigma ^2_j})[&#x2F;latex]   [latex]\mu &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)}[&#x2F;latex]   [latex]\sum &#x3D; \frac {1}{m} \sum_{i&#x3D;1}^{m} (x^{(i)} - \mu )(x^{(i)} - \mu )^T &#x3D; \frac {1}{m} (X - \mu)^T(X - \mu)[&#x2F;latex]   [latex]p(x) &#x3D; \frac {1}{(2 \pi)^{\frac {n}{2}}\left \sum \right ^{\frac {1}{2}}} exp(-\frac {1}{2} (x-\mu)^T\sum ^{-1}(x-\mu))[&#x2F;latex]   [table id&#x3D;4 &#x2F;]</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/" class="post-title-link" itemprop="url">Gaussian Distribution vs Multivariate Gaussian Distribution</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-08 11:34:31" itemprop="dateCreated datePublished" datetime="2019-04-08T11:34:31+08:00">2019-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[[“Gaussian Distribution “,”Multivariate Gaussian Distribution”],[“Manually create features to capture anomalies”,”Automatically captures correlations between features”],[“Computationally cheaper”,””],[“”,”Must have m &gt; 10n or else sum is non-invertible”]]</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/anomaly-detection-vs-supervised-learning-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/08/anomaly-detection-vs-supervised-learning-2/" class="post-title-link" itemprop="url">Anomaly Detection vs. Supervised Learning</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-08 11:00:34" itemprop="dateCreated datePublished" datetime="2019-04-08T11:00:34+08:00">2019-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[[“Anomaly Detection”,”Supervised Learning”],[“very small number of positive, and a relatively large number of negative examples”,”a reasonably large number of both positive and negative examples”],[“many different types of anomalies”,”have enough positive examples for an algorithm to get a sense of what the positive examples are like”],[“future anomalies may look nothing like the ones you’ve seen so far”,””],[“fraud detection, manufacturing, data center”,”SPAM email, weather prediction, classifying cancers”]]</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/04/upgrade-to-visual-studio-2019-build-problems/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/04/upgrade-to-visual-studio-2019-build-problems/" class="post-title-link" itemprop="url">Upgrade to Visual Studio 2019 : Build Problems</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-04 11:09:13" itemprop="dateCreated datePublished" datetime="2019-04-04T11:09:13+08:00">2019-04-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/windows/" itemprop="url" rel="index"><span itemprop="name">windows</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/windows/Visual-Studio/" itemprop="url" rel="index"><span itemprop="name">Visual Studio</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-std-toupper-—-gt-toupper"><a href="#1-std-toupper-—-gt-toupper" class="headerlink" title="1. std::toupper —&gt; ::toupper"></a>1. std::toupper —&gt; ::toupper</h2><h4 id="Original-Code-It’s-OKay-in-VS2017"><a href="#Original-Code-It’s-OKay-in-VS2017" class="headerlink" title="Original Code (It’s OKay in VS2017) :"></a>Original Code (It’s OKay in VS2017) :</h4><p><img src="/img/VS2019_toupper_1.png">      </p>
-<h4 id="VS-Upgraded"><a href="#VS-Upgraded" class="headerlink" title="VS Upgraded :"></a>VS Upgraded :</h4><p><img src="/img/VS2019_toupper_2.png">  </p>
-<h4 id="Code-Updated-It’s-OKay-in-VS2019"><a href="#Code-Updated-It’s-OKay-in-VS2019" class="headerlink" title="Code Updated (It’s OKay in VS2019) :"></a>Code Updated (It’s OKay in VS2019) :</h4><p><img src="/img/VS2019_toupper_OK.png"></p>
+<h2 id="Cleaning-up-Incorrectly-labeled-data"><a href="#Cleaning-up-Incorrectly-labeled-data" class="headerlink" title="Cleaning up Incorrectly labeled data"></a>Cleaning up Incorrectly labeled data</h2><p>If you going through your data and you find that some of these output labels Y are incorrect, you have data which is incorrectly labeled? Is it worth your while to go in to fix up some of these labels?</p>
+<ul>
+<li>It turns out that deep learning algorithms are quite robust to random errors in the training set.</li>
+<li>If the errors are reasonably random, then it’s probably okay to just leave the errors as they are and not spend too much time fixing them.</li>
+<li>So long as the total data set size is big enough and the actual percentage of errors is maybe not too high.</li>
+<li><strong>There is one caveat to this which is that deep learning algorithms are robust to random errors. They are less robust to systematic errors.</strong></li>
+</ul>
+<p>If it makes a significant difference to your ability to evaluate algorithms on your dev set, then go ahead and spend the time to fix incorrect labels. But if it doesn’t make a significant difference to your ability to use the dev set to evaluate cost bias, then it might not be the best use of your time. <strong>Apply whatever process you apply to both your dev and test sets at the same time. It’s actually less important to correct the labels in your training set.</strong></p>
+<ul>
+<li>In building practical systems, often there’s also more manual error analysis and more human insight that goes into the systems than sometimes deep learning researchers like to acknowledge.</li>
+<li>Actually go in and look at the data myself and try to counter the fraction of errors. And I think that because these minutes or maybe a small number of hours of counting data can really help you prioritize where to go next.</li>
+</ul>
+<h2 id="Build-your-first-system-quickly-then-iterate"><a href="#Build-your-first-system-quickly-then-iterate" class="headerlink" title="Build your first system quickly, then iterate"></a>Build your first system quickly, then iterate</h2><p>And more generally, for almost any machine learning application, there could be 50 different directions you could go in and each of these directions is reasonable and would make your system better. But the challenge is, <strong>how do you pick which of these to focus on</strong>.</p>
+<ul>
+<li>If you’re starting on <strong>building a brand new machine learning application</strong>, is to build your first system quickly and then iterate.<ul>
+<li>First quickly set up a dev&#x2F;test set and metric. So this is really deciding where to place your target.</li>
+</ul>
+</li>
+</ul>
+<p><em>All the value of the initial system is having some learned system, having some trained system allows you to localize bias&#x2F;variance, to try to prioritize what to do next, allows you to do error analysis, look at some mistakes, to figure out all the different directions you can go in, which ones are actually the most worthwhile.</em></p>
+<ul>
+<li>If there’s a significant body of academic literature that you can draw on for <strong>pretty much the exact same problem you’re building</strong>. It might be okay to build a more complex system from the get-go by building on this large body of academic literature.<ul>
+<li>But if you are tackling a new problem for the first time, then I would encourage you to really not, there are more teams overthink and build something too complicated.</li>
+</ul>
+</li>
+</ul>
+<p>If you are applying to your machine learning algorithms to a new application, and if your main goal is to build something that works, as opposed to if your main goal is to invent a new machine learning algorithm which is a different goal, then your main goal is to get something that works really well.</p>
+<h2 id="Training-and-testing-on-different-distributions"><a href="#Training-and-testing-on-different-distributions" class="headerlink" title="Training and testing on different distributions"></a>Training and testing on different distributions</h2><p>How to deal with when your train and test distributions differ from each other.</p>
+<ul>
+<li>Put both of these data sets together</li>
+</ul>
+<p>But the disadvantage, is that if you look at your dev set, a lot of it rather than what you actually care about.</p>
+<ul>
+<li><strong>The training set is still the images, and then for dev and test sets would be all app images. Now you’re aiming the target where you want it to be.</strong></li>
+</ul>
+<h2 id="Bias-and-Variance-with-mismatched-data-distributions"><a href="#Bias-and-Variance-with-mismatched-data-distributions" class="headerlink" title="Bias and Variance with mismatched data distributions"></a>Bias and Variance with mismatched data distributions</h2><p>In order to tease out these two effects it will be useful to define a new piece of data which we’ll call the <strong>training-dev set</strong>.</p>
+<ul>
+<li><strong>What we’re going to do is randomly shuffle the training sets and then carve out just a piece of the training set to be the training-dev set.</strong> So just as the dev and test set have the same distribution, the training set and the training-dev set, also have the same distribution.</li>
+<li>But, the difference is that now you train your neural network, just on the training set proper. You won’t let the neural network, you won’t run backpropagation on the training-dev portion of this data.</li>
+</ul>
+<p><strong>Bias &#x2F; variance on mismatched training and dev &#x2F; test sets</strong></p>
+<ul>
+<li>When you went from training data to training dev data the error really went up a lot. And only the difference between the training data and the training-dev data is that your neural network got to sort the first part of this. It was trained explicitly on this, but it wasn’t trained explicitly on the training-dev data. So this tells you that you have a variance problem.</li>
+<li>But then it really jumps when you go to the dev set. So this is a data mismatch problem, where data mismatched. So somehow your algorithm has learned to do well on a different distribution than what you really care about, so we call that a data mismatch problem.</li>
+</ul>
+<h2 id="Addressing-data-mismatch"><a href="#Addressing-data-mismatch" class="headerlink" title="Addressing data mismatch"></a>Addressing data mismatch</h2><ul>
+<li>Carry out manual error analysis to try to understand the differences between the training set and the dev&#x2F;test sets.</li>
+<li>Make training data more similar,; or collect more data similar to dev&#x2F;test sets</li>
+</ul>
+<p><em>One of the ways we talked about is <strong>artificial data synthesis</strong>. And artificial data synthesis does work.</em> <em>But, if you’re using artificial data synthesis, just be cautious and bear in mind whether or not you might be accidentally simulating data only from a tiny subset of the space of all possible examples.</em></p>
+<h2 id="Transfer-learning"><a href="#Transfer-learning" class="headerlink" title="Transfer learning"></a>Transfer learning</h2><p>One of the most powerful ideas in deep learning is that sometimes you can take knowledge the neural network has learned from one task and apply that knowledge to a separate task. What you can do is take this last output layer of the neural network and just delete that and delete also the weights feeding into that last output layer and create a new set of randomly initialized weights just for the last layer and have that now output. <strong>A couple options of how you retrain neural network with radiology data :</strong></p>
+<ul>
+<li>If you have a small radiology dataset, you might want to just retrain the weights of the last layer.</li>
+<li>But if you have a lot of data, then maybe you can retrain all the parameters in the network.</li>
+</ul>
+<p><strong>When transfer learning makes sense :</strong></p>
+<ul>
+<li>Task A and B have the same input X</li>
+<li>You have a lot more data for Task A than Task B</li>
+<li>Low level features from A could be helpful for learning B</li>
+</ul>
+<h2 id="Multi-task-learning"><a href="#Multi-task-learning" class="headerlink" title="Multi-task learning"></a>Multi-task learning</h2><p>So whereas in transfer learning, you have a sequential process where you learn from task A and then transfer that to task B. <strong>In multi-task learning, you start off simultaneously, trying to have one neural network do several things at the same time. And then each of these task helps hopefully all of the other task.</strong> <strong>When multi-task learning makes sense</strong></p>
+<ul>
+<li>Training on a set of tasks that could benefit from having shared lower-level features.</li>
+<li>Usually: Amount of data you have for each task is quite similar.</li>
+<li>Can train a big enough neural network to do well on all the tasks.</li>
+</ul>
+<h2 id="What-is-end-to-end-deep-learning"><a href="#What-is-end-to-end-deep-learning" class="headerlink" title="What is end-to-end deep learning?"></a>What is end-to-end deep learning?</h2><p>Briefly, there have been some data processing systems, or learning systems that require multiple stages of processing. And what end-to-end deep learning does, is it can take all those multiple stages, and replace it usually with just a single neural network.</p>
+<ul>
+<li>It turns out that one of the challenges of end-to-end deep learning is that you might need a lot of data before it works well.</li>
+<li>If you’re training on smaller data to build a speech recognition system, then the traditional pipeline, the full traditional pipeline works really well.</li>
+</ul>
+<p><strong>So why is it that the two step approach works better?</strong></p>
+<ul>
+<li>One is that each of the two problems you’re solving is actually much simpler.</li>
+<li>But second, is that you have a lot of data for each of the two sub-tasks.</li>
+</ul>
+<p>Although if you had enough data for the end-to-end approach, maybe the end-to-end approach would work better.</p>
+<h2 id="Whether-to-use-end-to-end-learning"><a href="#Whether-to-use-end-to-end-learning" class="headerlink" title="Whether to use end-to-end learning?"></a>Whether to use end-to-end learning?</h2><p><strong>The benefits of applying end-to-end learning :</strong></p>
+<ul>
+<li>end-to-end learning really just lets the data speak.</li>
+<li>there’s less hand designing of components needed.</li>
+</ul>
+<p><strong>The disadvantages :</strong></p>
+<ul>
+<li>it may need a large amount of data.</li>
+<li>it excludes potentially useful hand designed components, but the hand-designed components could be very helpful if well designed.</li>
+</ul>
 
       
     </div>
@@ -1138,7 +1500,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1206,14 +1568,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -1248,7 +1610,7 @@
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

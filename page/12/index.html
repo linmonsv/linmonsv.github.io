@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/26/6-logistic-regression/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/18-application-example-photo-ocr/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/26/6-logistic-regression/" class="post-title-link" itemprop="url">6 Logistic Regression</a>
+            <a href="/2019/04/08/18-application-example-photo-ocr/" class="post-title-link" itemprop="url">18 Application Example: Photo OCR</a>
         </h2>
 
         <div class="post-meta">
@@ -180,7 +180,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-03-26 14:40:42" itemprop="dateCreated datePublished" datetime="2019-03-26T14:40:42+08:00">2019-03-26</time>
+              <time title="Created: 2019-04-08 15:56:52" itemprop="dateCreated datePublished" datetime="2019-04-08T15:56:52+08:00">2019-04-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -218,19 +218,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>Classification : [latex]y &#x3D; [&#x2F;latex] 0 or 1 [latex]h_\theta (x)[&#x2F;latex] can be &gt; 1 or &lt; 0</p>
-<p>Logistic Regression: [latex]0 \leq h_\theta (x) \leq 1 [&#x2F;latex] Logistic regression which has the property that the output, the predictions of logistic regression are always between zero and one. Logistic Regression is actually a classification algorithm.</p>
-<h2 id="Hypothesis-Representation"><a href="#Hypothesis-Representation" class="headerlink" title="Hypothesis Representation"></a>Hypothesis Representation</h2><p><strong>Sigmoid function</strong> : [latex]g(z) &#x3D; \frac {1}{1+e^{-z}}[&#x2F;latex]</p>
-<p>import numpy as np<br>def sigmoid(z):<br>    return 1 &#x2F; (1 + np.exp(-z))</p>
-<h2 id="Decision-Boundary"><a href="#Decision-Boundary" class="headerlink" title="Decision Boundary"></a>Decision Boundary</h2><p>Much higher order polynomials, then it’s possible to show that you can get even more complex decision boundaries and logistic regression can be used to find the zero boundaries.</p>
-<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>How to fit the parameters theta for logistic regression. In particular, I’d like to define the optimization objective or the cost function that we’ll use to fit the parameters. Here’s to supervised learning problem of fitting a logistic regression model.</p>
-<h4 id="Linear-regression-the-cost-function"><a href="#Linear-regression-the-cost-function" class="headerlink" title="Linear regression the cost function"></a>Linear regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} \frac {1}{2}(h_\theta(x^{(i)}) - y^{(i)})^{2} [&#x2F;latex]</p>
-<h4 id="Logistic-regression-the-cost-function"><a href="#Logistic-regression-the-cost-function" class="headerlink" title="Logistic regression the cost function"></a>Logistic regression the cost function</h4><p>[latex] J(\theta ) &#x3D; \frac {1}{m} \sum_{i &#x3D; 1}^{m} Cost(h_\theta(x^{(i)}), y^{(i)}) [&#x2F;latex]</p>
-<p>[latex] Cost(h_\theta (x), y) &#x3D; \begin{cases} -log(h_\theta(x)) &amp; \text{ if } y&#x3D;1 \\ -log(1 - h_\theta(x)) &amp; \text{ if } y&#x3D;0 \end{cases} [&#x2F;latex]</p>
-<h2 id="Simplified-Cost-Function-and-Gradient-Descent"><a href="#Simplified-Cost-Function-and-Gradient-Descent" class="headerlink" title="Simplified Cost Function and Gradient Descent"></a>Simplified Cost Function and Gradient Descent</h2><p>How to implement a fully working version of logistic regression. It’s too hard to notes here , if you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a> A vectorized implementation can update, you know, all of these N plus 1 parameters all in one fell swoop. Feature scaling can help gradient descents converge faster for linear regression. The idea of feature scaling also applies to gradient descent for logistic regression.</p>
-<h2 id="Advanced-Optimization"><a href="#Advanced-Optimization" class="headerlink" title="Advanced Optimization"></a>Advanced Optimization</h2><p>For gradient descent, I guess technically you don’t actually need code to compute the cost function [latex]J_\theta[&#x2F;latex]. You only need code to compute the derivative terms. Conjugate gradient BFGS and L-BFGS are examples of more sophisticated optimization algorithms. <strong>These algorithms have a number of advantages:</strong>*   do not need to manually pick the learning rate alpha.</p>
-<p><em>It is actually entirely possible to use these algorithms successfully and apply to lots of different learning problems without actually understanding the inter-loop of what these algorithms do.</em> For these algorithms also what I would recommend you do is just <strong>use a software library</strong>. Sophisticated optimization library, it makes the just a little bit more opaque and so just maybe a little bit harder to debug. But these algorithms <strong>often run much faster</strong> than gradient descent. If you have <strong>a large machine learning problem</strong>, you can use these algorithms instead of using gradient descent.</p>
-<h2 id="Multiclass-Classification-One-vs-all"><a href="#Multiclass-Classification-One-vs-all" class="headerlink" title="Multiclass Classification_ One-vs-all"></a>Multiclass Classification_ One-vs-all</h2><p>one-versus-all classification Do the same thing for the third class and fit a third classifier H superscript 3 of X and maybe this or give us a classifier that separates the positive and negative examples like that. Basically pick the classifier, pick whichever one of the three classifiers is most confident, or most enthusistically says that it thinks it has a right class. And with this little method you can now take the logistic regression classifier and make it work on multi-class classification problems as well.</p>
+          <h2 id="Problem-Description-and-Pipeline"><a href="#Problem-Description-and-Pipeline" class="headerlink" title="Problem Description and Pipeline"></a>Problem Description and Pipeline</h2><ol>
+<li>Text detection</li>
+<li>Character segmentation</li>
+<li>Character classification</li>
+</ol>
+<h2 id="Sliding-Windows"><a href="#Sliding-Windows" class="headerlink" title="Sliding Windows"></a>Sliding Windows</h2><p>Go out and collect large training sets of positive and negative examples. Take that green rectangle and we slide it over a bit and then run that new image patch through our classifier to decide if there’s a pedestrian there.</p>
+<h2 id="Getting-Lots-of-Data-and-Artificial-Data"><a href="#Getting-Lots-of-Data-and-Artificial-Data" class="headerlink" title="Getting Lots of Data and Artificial Data"></a>Getting Lots of Data and Artificial Data</h2><ol>
+<li>artificial data synthesis</li>
+<li>just collect the data and you label it yourself</li>
+<li>crowd sourcing</li>
+</ol>
+<h2 id="Ceiling-Analysis-What-Part-of-the-Pipeline-to-Work-on-Next"><a href="#Ceiling-Analysis-What-Part-of-the-Pipeline-to-Work-on-Next" class="headerlink" title="Ceiling Analysis What Part of the Pipeline to Work on Next"></a>Ceiling Analysis What Part of the Pipeline to Work on Next</h2><p>Where should you allocate resources? Which of these boxes is most worth your efforts, trying to improve the performance of.</p>
+<ol>
+<li>choose one module</li>
+<li>provide it the correct text detection outputs</li>
+<li>And then, use the same evaluation metric as before, to measure what is the overall accuracy of the entire system</li>
+<li>go to step 1, but choose another one</li>
+</ol>
 
       
     </div>
@@ -250,7 +255,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/26/5-octave-tutorial/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/17-large-scale-machine-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -264,7 +269,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/26/5-octave-tutorial/" class="post-title-link" itemprop="url">5 Octave Tutorial</a>
+            <a href="/2019/04/08/17-large-scale-machine-learning/" class="post-title-link" itemprop="url">17 Large Scale Machine Learning</a>
         </h2>
 
         <div class="post-meta">
@@ -274,7 +279,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-03-26 14:35:24" itemprop="dateCreated datePublished" datetime="2019-03-26T14:35:24+08:00">2019-03-26</time>
+              <time title="Created: 2019-04-08 15:32:45" itemprop="dateCreated datePublished" datetime="2019-04-08T15:32:45+08:00">2019-04-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -312,103 +317,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Basic-Operations"><a href="#Basic-Operations" class="headerlink" title="Basic Operations"></a>Basic Operations</h2><p>If you want to build a large scale deployment of a learning algorithm, what people will often do is prototype and the language is <strong>Octave</strong>. Get your learning algorithms to work more quickly in Octave. Then overall you have a huge time savings by <strong>first developing the algorithms in Octave</strong>, and then <strong>implementing and maybe C++ or Java</strong>, only after we have the ideas working. Octave is nice because open sourced.*   % : comment</p>
+          <h2 id="Learning-With-Large-Datasets"><a href="#Learning-With-Large-Datasets" class="headerlink" title="Learning With Large Datasets"></a>Learning With Large Datasets</h2><p>Draw a learning curve and determine if more data needs to be collected.</p>
+<h2 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h2><p><strong>Cost Function in SGD :</strong> [latex]cost(\theta, (x^{(i)}, y^{(i)})) &#x3D; \frac {1}{2}(h_{\theta}(x^{(i)})-y^{(i)})^2[&#x2F;latex]</p>
+<ol>
+<li>randomly shuffle the data set</li>
+<li>a little gradient descent step using just one single training example</li>
+<li>maybe head in a bad direction, generally move the parameters in the direction of the global minimum, but not always</li>
+<li>it ends up doing is wandering around continuously in some region that’s in some region close to the global minimum</li>
+</ol>
+<h2 id="Mini-Batch-Gradient-Descent"><a href="#Mini-Batch-Gradient-Descent" class="headerlink" title="Mini-Batch Gradient Descent"></a>Mini-Batch Gradient Descent</h2><p>In <strong>Batch gradient descent</strong> we will use <strong>all m examples</strong> in each generation. Whereas in <strong>Stochastic gradient descent</strong> we will use a <strong>single example</strong> in each generation. What <strong>Mini-batch gradient descent</strong> does is somewhere <strong>in between</strong>.</p>
+<h2 id="Stochastic-Gradient-Descent-Convergence"><a href="#Stochastic-Gradient-Descent-Convergence" class="headerlink" title="Stochastic Gradient Descent Convergence"></a>Stochastic Gradient Descent Convergence</h2><p>[latex]\alpha &#x3D; \frac {const1}{iterationNumber + const2}[&#x2F;latex] We can <strong>compute the cost function on the last 1000 examples or so</strong>. And we can use this method both to make sure the stochastic gradient descent is okay and is converging or to use it to tune the learning rate alpha.</p>
+<h2 id="Online-Learning"><a href="#Online-Learning" class="headerlink" title="Online Learning"></a>Online Learning</h2><p>The online learning setting allows us to model problems where we have <strong>a continuous flood or a continuous stream of data coming in</strong> and we would like an algorithm to learn from that. We learn using that example like so <strong>and then we throw that example away</strong>. If you really have a continuous stream of data, then an online learning algorithm can be very effective. If you have <strong>a changing pool of users</strong>, or if the things you’re trying to <strong>predict are slowly changing</strong> like your user taste is slowly changing, the online learning algorithm can slowly adapt your learned hypothesis to whatever the latest sets of user behaviors are like as well.</p>
+<h2 id="Map-Reduce-and-Data-Parallelism"><a href="#Map-Reduce-and-Data-Parallelism" class="headerlink" title="Map Reduce and Data Parallelism"></a>Map Reduce and Data Parallelism</h2><p>In the MapReduce idea, one way to do, is split this training set in to different subsets and use many different machines.</p>
 <ul>
-<li>~&#x3D; : not equal</li>
-<li>; : suppresses the print output</li>
-<li>DISP : For more complex printing</li>
+<li>multi-core machine</li>
+<li>multiple machines</li>
+<li>numerical linear algebra libraries</li>
+<li>like Hadoop</li>
 </ul>
-<p>V&#x3D;1：0.1：2 % it sets V to the bunch of elements that start from 1. And increments and steps of 0.1 until you get up to 2.</p>
-<p>ones(2, 3) % generates a matrix that is a two by three matrix that is the matrix of all ones.</p>
-<p>C &#x3D; 2 * ones(2, 3) % that is all two’s.</p>
-<p>w &#x3D; zeros(1, 3) % that is all zero’s.</p>
-<p>rand(3,3)</p>
-<p>w &#x3D; rand(1, 3) % normal random variable</p>
-<p>hist % plot a histogram</p>
-<p>help</p>
-<h2 id="Moving-Data-Around"><a href="#Moving-Data-Around" class="headerlink" title="Moving Data Around"></a>Moving Data Around</h2><p>size(A) % the size of a matrix</p>
-<p>size(A, 1) % the first dimension of A, size of the first dimension of A.</p>
-<p>length(v) % the size of the longest dimension.</p>
-<p>load(‘featureX.dat’)</p>
-<p>who % the variables that Octave has in memory currently</p>
-<p>whos % the detailed view</p>
-<p>clear featuresX</p>
-<p>save hello.mat v % save the variable V into a file called hello.mat.</p>
-<p>save hello.txt v -ascii % a human readable format</p>
-<p>A(3,2)</p>
-<p>A(2,:) % fetch everything in the second row.</p>
-<p>A([1 3],:) % get all of the elements of A who’s first indexes one or three.</p>
-<p>A &#x3D; [A, [100, 101, 102]] % this will do is add another column vector to the right.</p>
-<p>A(:) % put all elements with A into a single column vector</p>
-<p>C &#x3D; [A B] % taking these two matrices and just concatenating onto each other.</p>
-<p>C &#x3D; [A; B] % The semicolon notation means that I go put the next thing at the bottom.</p>
-<p><strong>There’s no point at all to try to memorize all these commands.</strong> It’s just, but what you should do is, hopefully from this video you have gotten a sense of the sorts of things you can do.</p>
-<h2 id="Computing-on-Data"><a href="#Computing-on-Data" class="headerlink" title="Computing on Data"></a>Computing on Data</h2><p>AxC % multiply 2 of matrices</p>
-<p>A .* B % take each elements of A and multiply it by the corresponding elements of B.</p>
-<p>A .^ 2 % the element wise squaring of A</p>
-<p>1 .&#x2F; V % the element wise reciprocal of V</p>
-<p>log(v) % an element wise logarithm of v</p>
-<p>exp(v) </p>
-<p>abs(V) % the element wise absolute value of V</p>
-<p>-v % the same as -1 x V</p>
-<p>v + ones(3,1) % this increments V by one.</p>
-<p>v + 1 % another simpler way</p>
-<p>A’ % the apostrophe symbol, a transpose of A</p>
-<p>val&#x3D;max(a) % set val equals max of A</p>
-<p>[val, ind] &#x3D; max(a) % val &#x3D; the maximum value, ind &#x3D; the index</p>
-<p>a &lt; 3 % a &#x3D; [1 15 2 0.5], the result will be [1 0 1 1]</p>
-<p>find(a &lt; 3) % [1 3 4]</p>
-<p>A &#x3D; magic(3) % Returns this matrices called magic squares that all of their rows and columns and diagonals sum up to the same thing.</p>
-<p>[r,c] &#x3D; find( A&gt;&#x3D;7 ) % This finds all the elements of a that are greater than and equals to 7 and so, R C sense a row and column.</p>
-<p>sum(a) % This adds up all the elements of A.</p>
-<p>prod(a) % multiply them</p>
-<p>floor(a) % Floor A rounds down</p>
-<p>ceil(A) % rounded up</p>
-<p>type(3) % sets a 3 by 3 matrix</p>
-<p>max(A,[],1) % takes the column wise maximum</p>
-<p>max(A,[],2) % takes the per row maximum</p>
-<p>max(A) % it defaults to column</p>
-<p>max(max(A)) % the maximum element in the entire matrix A</p>
-<p>sum(A,1) % does a per column sum</p>
-<p>sum(A,2) % do the row wise sum</p>
-<p>eye(9) % nine identity matrix</p>
-<p>sum(sum(A.*eye(9)) % the sum of these diagonal elements</p>
-<p>flipup&#x2F;flipud % Flip UD stands for flip up&#x2F;down</p>
-<p>pinv(A) % a pseudo inference</p>
-<p>After running a learning algorithm, often one of the most useful things is to be able to look at your results, or to plot, or visualize your result.</p>
-<h2 id="Plotting-Data"><a href="#Plotting-Data" class="headerlink" title="Plotting Data"></a>Plotting Data</h2><p>Often, plots of the data or of all the learning algorithm outputs will also give you ideas for how to improve your learning algorithm.</p>
-<p>t &#x3D; [0:0.01:0.98]<br>y1 &#x3D; sin(2 * pi * 4 * t)<br>plot(t, y1) % plot the sine function</p>
-<p>y2 &#x3D; cos(2 * pi * 4 * 4)<br>plot(t, y2)</p>
-<p>hold on % figures on top of the old one</p>
-<p>plot(t, y2, ‘r’) % different color</p>
-<p>xlabel(‘time’) % label the X axis, or the horizontal axis<br>ylabel(‘value’)</p>
-<p>legend(‘sin’, ‘cos’) % puts this legend up on the upper right showing what the 2 lines are</p>
-<p>title(‘myplot’) % the title at the top of this figure</p>
-<p>print -dpng ‘myplot.png’ % save figure</p>
-<p>close % disappeared</p>
-<p>figure(1); plot(t, y1); % Starts up first figure, and that plots t, y1.<br>figure(2); plot(t, y2); </p>
-<p>subplot(1,2,1) % sub-divides the plot into a one-by-two grid with the first 2 parameters are<br>plot(t, y1) % fills up this first element<br>subplot(1,2,2)<br>plot(t, y2)</p>
-<p>axis([0.5 1 -1 1]) % sets the x range and y range for the figure on the right</p>
-<p>clf % clear</p>
-<p>imagesc(A) % visualize the matrix and the different colors correspond to the different values in the A matrix.<br>colormap gray % color map gray</p>
-<p>imagesc(magic(15))，colorbar，colormap gray % running three commands at a time</p>
-<h2 id="Control-Statements-for-while-if-statements"><a href="#Control-Statements-for-while-if-statements" class="headerlink" title="Control Statements_ for, while, if statements"></a>Control Statements_ for, while, if statements</h2><p>for i &#x3D; 1 : 10,<br>    v(i) &#x3D; 2 ^ i;<br>end;</p>
-<p>indices &#x3D; 1 : 10;<br>for i &#x3D; indices,<br>    disp(i);<br>end;</p>
-<p>i &#x3D; 1;<br>while i &lt;&#x3D; 5,<br>    v(i) &#x3D; 100;<br>    i &#x3D; i + 1;<br>end;</p>
-<p>i &#x3D; 1;<br>while true,<br>    v(i) &#x3D; 999;<br>    i &#x3D; i + 1;<br>    if i &#x3D;&#x3D; 6,<br>        break;<br>    end;<br>end;</p>
-<p>v(1) &#x3D; 2;<br>if v(1) &#x3D;&#x3D; 1,<br>    disp(‘The value is one’);<br>elseif v(1) &#x3D;&#x3D; 2,<br>    disp(‘The value is two’);<br>else,<br>    disp(‘The value is not one or two’);<br>end;</p>
-<p>function name (arg-list)<br>  body<br>endfunction</p>
-<p>function wakeup (message)<br>  printf (“\a%s\n”, message);<br>endfunction</p>
-<p>wakeup (“Rise and shine!”);</p>
-<p>function y &#x3D; squareThisNumber(x)</p>
-<p>addpath % add path for search dirs</p>
-<p>[a, b] &#x3D; SquareAndCubeThisNumber(5) % a &#x3D; 25, b &#x3D; 125</p>
-<h2 id="Vectorization"><a href="#Vectorization" class="headerlink" title="Vectorization"></a>Vectorization</h2><h4 id="Unvectorized-implementation"><a href="#Unvectorized-implementation" class="headerlink" title="Unvectorized implementation"></a>Unvectorized implementation</h4><p>[latex]h_\theta (x) &#x3D; \sum _{j&#x3D;0}^{n} \theta _jx_j[&#x2F;latex]</p>
-<p>prediction &#x3D; 0.0;<br>for j &#x3D; 1 : n + 1,<br>    prediction &#x3D; prediction + theta(j) * x(j)<br>end;</p>
-<h4 id="Vectorized-implementation"><a href="#Vectorized-implementation" class="headerlink" title="Vectorized implementation"></a>Vectorized implementation</h4><p>[latex]h_\theta (x) &#x3D; \theta ^Tx[&#x2F;latex]</p>
-<p>prediction &#x3D; theta’ * x;</p>
-<p>Using a vectorized implementation, you should be able to get a much more efficient implementation of linear regression.</p>
-<h2 id="Working-on-and-Submitting-Programming-Exercises"><a href="#Working-on-and-Submitting-Programming-Exercises" class="headerlink" title="Working on and Submitting Programming Exercises"></a>Working on and Submitting Programming Exercises</h2><p>How to use the submission system which will let you verify right away that you got the right answer for your machine learning program exercise. If you are interested in details, you can visit <a target="_blank" rel="noopener" href="https://www.coursera.org/learn/machine-learning">coursera.org</a></p>
 
       
     </div>
@@ -428,7 +354,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/25/4-linear-regression-with-multiple-variables/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/16-recommender-systems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -442,7 +368,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/25/4-linear-regression-with-multiple-variables/" class="post-title-link" itemprop="url">4 Linear Regression with Multiple Variables</a>
+            <a href="/2019/04/08/16-recommender-systems/" class="post-title-link" itemprop="url">16 Recommender Systems</a>
         </h2>
 
         <div class="post-meta">
@@ -452,7 +378,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-03-25 16:57:28" itemprop="dateCreated datePublished" datetime="2019-03-25T16:57:28+08:00">2019-03-25</time>
+              <time title="Created: 2019-04-08 14:48:38" itemprop="dateCreated datePublished" datetime="2019-04-08T14:48:38+08:00">2019-04-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -490,21 +416,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Linear-Regression-with-Multiple-Variables"><a href="#Linear-Regression-with-Multiple-Variables" class="headerlink" title="Linear Regression with Multiple Variables"></a>Linear Regression with Multiple Variables</h2><p>[latex]x^{(i)}_j[&#x2F;latex] : refer to feature number <strong>j</strong> in the <strong>x</strong> factor.</p>
-<h2 id="Gradient-Descent-for-Multiple-Variables"><a href="#Gradient-Descent-for-Multiple-Variables" class="headerlink" title="Gradient Descent for Multiple Variables"></a>Gradient Descent for Multiple Variables</h2><p>def computeCost(X, y, theta):<br>    inner &#x3D; np.power(((X * theta.T) - y), 2)<br>    return np.sum(inner) &#x2F; (2 * len(X))</p>
-<h2 id="Gradient-Descent-in-Practice-I-Feature-Scaling"><a href="#Gradient-Descent-in-Practice-I-Feature-Scaling" class="headerlink" title="Gradient Descent in Practice I - Feature Scaling"></a>Gradient Descent in Practice I - Feature Scaling</h2><p>the different features take on similar ranges of values, then gradient descents can converge more quickly. [latex] x_n &#x3D; \frac {x_n -\mu _n}{s_n} [&#x2F;latex] [latex]\mu _n[&#x2F;latex] : the average value [latex]s_n[&#x2F;latex] : the range of values</p>
-<h2 id="Gradient-Descent-in-Practice-II-Learning-Rate"><a href="#Gradient-Descent-in-Practice-II-Learning-Rate" class="headerlink" title="Gradient Descent in Practice II - Learning Rate"></a>Gradient Descent in Practice II - Learning Rate</h2><p>Looking at figure that pluck the cost function j of theta as gradient descent runs and the x-axis here is the number of iteration of gradient descent and as gradient descent runs. Maybe [latex]\alpha &#x3D; 0.01, 0.03, 0.1, 0.3, 1, 3, 10[&#x2F;latex]</p>
-<h2 id="Features-and-Polynomial-Regression"><a href="#Features-and-Polynomial-Regression" class="headerlink" title="Features and Polynomial Regression"></a>Features and Polynomial Regression</h2><p>Look at the data and choose features. You can put polynomial functions as well and sometimes by appropriate insight into the feature simply get a much better model for your data. Feature Scaling is very necessary if you use polynomial functions.</p>
-<h2 id="Normal-Equation"><a href="#Normal-Equation" class="headerlink" title="Normal Equation"></a>Normal Equation</h2><p>The normal equation, which for some linear regression problems, will give us a much better way to solve for the optimal value of the parameters theta. [latex]\theta &#x3D; (X^{T}X)^{-1}X^{T}y[&#x2F;latex]</p>
-<h4 id="Disadvantages-of-gradient-descent"><a href="#Disadvantages-of-gradient-descent" class="headerlink" title="Disadvantages of gradient descent"></a>Disadvantages of gradient descent</h4><ul>
-<li>choose the learning rate Alpha.</li>
-<li>many more iterations</li>
-</ul>
-<h4 id="Advantages-of-gradient-descent"><a href="#Advantages-of-gradient-descent" class="headerlink" title="Advantages of gradient descent"></a>Advantages of gradient descent</h4><ul>
-<li>works pretty well even if you have millions of features</li>
-<li>many kinds of models</li>
-</ul>
-<h2 id="Normal-Equation-Noninvertibility"><a href="#Normal-Equation-Noninvertibility" class="headerlink" title="Normal Equation Noninvertibility"></a>Normal Equation Noninvertibility</h2><p>Some matrices are invertible and some matrices do not have an inverse we call those <strong>non-invertible matrices</strong>. Look at your features and see if you have redundant features or being a linear function of each other, and if you do have redundant features and if you just delete one of these features you really don’t need both of these features that will solve your <strong>non-invertibility problem</strong>.</p>
+          <h2 id="Problem-Formulation"><a href="#Problem-Formulation" class="headerlink" title="Problem Formulation"></a>Problem Formulation</h2><ol>
+<li>an important application of machine learning</li>
+<li>this idea of learning the features</li>
+</ol>
+<h2 id="Content-Based-Recommendations"><a href="#Content-Based-Recommendations" class="headerlink" title="Content Based Recommendations"></a>Content Based Recommendations</h2><p><strong>user j ‘s parameter vector :</strong> [latex]\theta^{(j)}[&#x2F;latex] <strong>movie i’s feature vector :</strong> [latex]x^{(i)}[&#x2F;latex] <strong>Predicting rating:</strong> [latex](\theta^{(j)})^Tx^{(i)}[&#x2F;latex] <strong>user [latex]j[&#x2F;latex] ‘s cost function :</strong> [latex]\underset {\theta ^{(j)}}{min} \frac {1}{2} \sum _{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+ \frac {\lambda}{2}(\theta_k^{(j)})^2[&#x2F;latex] <strong>all user’s cost function :</strong> [latex]\underset {\theta ^{(j)}, \cdots , \theta ^{(n_u)}}{min} \frac {1}{2} \sum _{j&#x3D;1}^{n_u} \sum _{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+ \frac {\lambda}{2} \sum_{j&#x3D;1}^{n_u} \sum_{k&#x3D;1}^{n} (\theta_k^{(j)})^2[&#x2F;latex] **Gradient descent : ** [latex]\left\{\begin{matrix} \theta_k^{(j)} :&#x3D; \theta_k^{(j)} - \alpha \sum_{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)} - y^{(i,j)})x_{k}^{(i)} &amp; \ (for \ k \ &#x3D; \ 0) \\ \theta_k^{(j)} :&#x3D; \theta_k^{(j)} - \alpha (\sum_{i:r(i,j)&#x3D;1} ((\theta^{(j)})^Tx^{(i)} - y^{(i,j)})x_{k}^{(i)} + \lambda \theta_{k}^{(j)}) &amp; \ (for \ k \ \neq \ 0) \end{matrix}\right.[&#x2F;latex]  </p>
+<h2 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h2><p><strong>No User’s Parameter and No Movie’s Features, you can do this.</strong> <em>The term <strong>collaborative filtering</strong> refers to the observation that when you run this algorithm with a large set of users, what all of these users are effectively doing are sort of collaboratively or collaborating to get better movie ratings for everyone because with every user rating some subset with the movies, every user is helping the algorithm a little bit to learn better features, and then by helping– by rating a few movies myself, I will be helping the system learn better features and then these features can be used by the system to make better movie predictions for everyone else. And so there is a sense of collaboration where every user is helping the system learn better features for the common good. This is this collaborative filtering.</em></p>
+<h2 id="Collaborative-Filtering-Algorithm"><a href="#Collaborative-Filtering-Algorithm" class="headerlink" title="Collaborative Filtering Algorithm"></a>Collaborative Filtering Algorithm</h2><ol>
+<li>Initialize x and theta to small random values</li>
+<li>minimize the cost function using great intercepts or one of the advance optimization algorithms</li>
+<li>predict</li>
+</ol>
+<h2 id="Vectorization-Low-Rank-Matrix-Factorization"><a href="#Vectorization-Low-Rank-Matrix-Factorization" class="headerlink" title="Vectorization Low Rank Matrix Factorization"></a>Vectorization Low Rank Matrix Factorization</h2><p>A user has recently been looking at one product. Are there <strong>other related products</strong> that you could <strong>recommend</strong> to this user? If you can find a different movie i, j, so that the distance between [latex]x^{(i)}[&#x2F;latex] and [latex]x^{(j)}[&#x2F;latex] is small, then this is a pretty strong indication that, you know, movies j and i are somehow similar Use learned features to find what might be movies and what might be products that aren’t related to each other.</p>
+<h2 id="Implementational-Detail-Mean-Normalization"><a href="#Implementational-Detail-Mean-Normalization" class="headerlink" title="Implementational Detail Mean Normalization"></a>Implementational Detail Mean Normalization</h2><p><strong>If a user has not evaluated any movies, which movie should we recommend?</strong> The idea of mean normalization will let us fix this problem.</p>
 
       
     </div>
@@ -524,7 +448,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/25/3-linear-algebra-review/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/15-anomaly-detection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -538,7 +462,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/25/3-linear-algebra-review/" class="post-title-link" itemprop="url">3 Linear Algebra Review</a>
+            <a href="/2019/04/08/15-anomaly-detection/" class="post-title-link" itemprop="url">15 Anomaly Detection</a>
         </h2>
 
         <div class="post-meta">
@@ -548,7 +472,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-03-25 16:03:16" itemprop="dateCreated datePublished" datetime="2019-03-25T16:03:16+08:00">2019-03-25</time>
+              <time title="Created: 2019-04-08 11:52:31" itemprop="dateCreated datePublished" datetime="2019-04-08T11:52:31+08:00">2019-04-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -586,205 +510,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Matrices-and-Vectors"><a href="#Matrices-and-Vectors" class="headerlink" title="Matrices and Vectors"></a>Matrices and Vectors</h2><p><strong>The dimension of the matrix</strong> is going to be written as the number of row times the number of columns in the matrix. A <strong>vector</strong> turns out to be a special case of a matrix. Matrix with just one column is what we call a <strong>vector</strong>.</p>
-<h2 id="Addition-and-Scalar-Multiplication"><a href="#Addition-and-Scalar-Multiplication" class="headerlink" title="Addition and Scalar Multiplication"></a>Addition and Scalar Multiplication</h2><h4 id="Addition"><a href="#Addition" class="headerlink" title="Addition"></a>Addition</h4><p>[latex] \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} + \begin{bmatrix} 4 &amp; 0.5 \\ 2 &amp; 5 \\ 0 &amp; 1 \end{bmatrix} &#x3D; \begin{bmatrix} 5 &amp; 0.5 \\ 4 &amp; 10 \\ 3 &amp; 2 \end{bmatrix} [&#x2F;latex]</p>
-<h4 id="Scalar-Multiplication"><a href="#Scalar-Multiplication" class="headerlink" title="Scalar Multiplication"></a>Scalar Multiplication</h4><p>[latex] 3 * \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} &#x3D; \begin{bmatrix} 3 &amp; 0 \\ 6 &amp; 15 \\ 9 &amp; 3 \end{bmatrix} &#x3D; \begin{bmatrix} 1 &amp; 0 \\ 2 &amp; 5 \\ 3 &amp; 1 \end{bmatrix} * 3 [&#x2F;latex]</p>
-<h2 id="Matrix-Vector-Multiplication"><a href="#Matrix-Vector-Multiplication" class="headerlink" title="Matrix Vector Multiplication"></a>Matrix Vector Multiplication</h2><p>[latex] \begin{bmatrix} 1 &amp; 3 \\ 4 &amp; 0 \\ 2 &amp; 1 \end{bmatrix} * \begin{bmatrix} 1 \\ 5 \end{bmatrix} &#x3D; \begin{bmatrix} 16 &#x3D; 1 * 1 + 3 * 5 \\ 4 &#x3D; 4 * 1 + 0 * 5 \\ 7 &#x3D; 2 * 1 + 1 * 5 \end{bmatrix} [&#x2F;latex]</p>
-<h2 id="Matrix-Matrix-Multiplication"><a href="#Matrix-Matrix-Multiplication" class="headerlink" title="Matrix Matrix Multiplication"></a>Matrix Matrix Multiplication</h2><p>[latex] \begin{bmatrix} C0 &amp; C1 \\ C2 &amp; C3 \end{bmatrix} &#x3D; \begin{bmatrix} A0 &amp; A1 \\ A2 &amp; A3 \end{bmatrix} * \begin{bmatrix} B0 &amp; B1 \\ B2 &amp; B3 \end{bmatrix} [&#x2F;latex]</p>
-<p>[latex]C0 &#x3D; A0 * B0 + A1 * B2[&#x2F;latex] [latex]C1 &#x3D; A0 * B1 + A1 * B3[&#x2F;latex] [latex]C2 &#x3D; A2 * B0 + A3 * B2[&#x2F;latex] [latex]C3 &#x3D; A2 * B1 + A3 * B3[&#x2F;latex]</p>
-<h2 id="Matrix-Multiplication-Properties"><a href="#Matrix-Multiplication-Properties" class="headerlink" title="Matrix Multiplication Properties"></a>Matrix Multiplication Properties</h2><p>[latex]A * B \neq B * A[&#x2F;latex] [latex]A * (B * C) &#x3D; (A * B) * C[&#x2F;latex] <strong>Identity matrix</strong>, has the property that it has ones along the diagonals, right, and so on and is zero everywhere else. [latex]AA^{-1} &#x3D; A^{-1}A &#x3D; I[&#x2F;latex] [latex]AI &#x3D; IA &#x3D; A[&#x2F;latex]</p>
-<h2 id="Inverse-and-Transpose"><a href="#Inverse-and-Transpose" class="headerlink" title="Inverse and Transpose"></a>Inverse and Transpose</h2><h4 id="Inverse"><a href="#Inverse" class="headerlink" title="Inverse"></a>Inverse</h4><p>[latex]A^{-1}[&#x2F;latex]</p>
-<h4 id="Transpose"><a href="#Transpose" class="headerlink" title="Transpose"></a>Transpose</h4><p>[latex]A^{T}[&#x2F;latex]</p>
-<p>[latex] \begin{vmatrix} a &amp; b\\ c &amp; d\\ e &amp; f \end{vmatrix} ^{T} &#x3D; \begin{vmatrix} a &amp; c &amp; e\\ b &amp; d &amp; f \end{vmatrix} [&#x2F;latex]</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/25/2-linear-regression-with-one-variable/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/25/2-linear-regression-with-one-variable/" class="post-title-link" itemprop="url">2 Linear Regression with One Variable</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-25 11:37:40" itemprop="dateCreated datePublished" datetime="2019-03-25T11:37:40+08:00">2019-03-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Model-Representation"><a href="#Model-Representation" class="headerlink" title="Model Representation"></a>Model Representation</h2><p>[latex]m[&#x2F;latex] : the number of training examples [latex]x[&#x2F;latex] : input variables [latex]y[&#x2F;latex] : output variables [latex](x, y)[&#x2F;latex] : a single training example [latex](x^{(i)}, y^{(i)})[&#x2F;latex] : refer to the ith training example [latex]h[&#x2F;latex] : representing the hypothesis</p>
-<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>[latex]J({\theta }_0, {\theta }_1) &#x3D; \frac {1}{2m}\sum ^{m}_{i&#x3D;1}( h_{\theta }(x^{(i)}) - y^{(i)})^2[&#x2F;latex]</p>
-<p><strong>Cost function is also called the squared error function or sometimes called the square error cost function.</strong></p>
-<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>repeat until convergence {</p>
-<p>[latex]{\theta }_j :&#x3D; {\theta }_j - {\alpha }\frac {\partial }{\partial {\theta }_j}J({\theta }_0 - {\theta }_1) [&#x2F;latex] (for j &#x3D; 0 and j &#x3D; 1)</p>
-<p>} <strong><em>when people talk about <strong>gradient descent</strong>, they always mean <strong>simultaneous update</strong>.</em></strong></p>
-<h2 id="Gradient-Descent-For-LinearRegression"><a href="#Gradient-Descent-For-LinearRegression" class="headerlink" title="Gradient Descent For LinearRegression"></a>Gradient Descent For LinearRegression</h2><p>The term batch gradient descent means that refers to the fact that, in every step of gradient descent we’re looking at <strong>all of the training examples</strong>.</p>
-<p>In case it turns out gradient descent will scale better to <strong>larger data sets</strong> than that normal equals method.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/25/1-introduction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/25/1-introduction/" class="post-title-link" itemprop="url">1 Introduction</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-25 11:36:38" itemprop="dateCreated datePublished" datetime="2019-03-25T11:36:38+08:00">2019-03-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Why-to-have-a-Machine-Learning"><a href="#Why-to-have-a-Machine-Learning" class="headerlink" title="Why to have a Machine Learning"></a>Why to have a Machine Learning</h2><p>For the most part <strong>we just did not know how to write AI programs to do the more</strong> interesting things such as web search or photo tagging or email anti-spam. There was a realization that the only way to do these things was to have a machine learn to do it by itself.</p>
-<h2 id="What-is-Machine-Learning"><a href="#What-is-Machine-Learning" class="headerlink" title="What is Machine Learning"></a>What is Machine Learning</h2><p>Even among machine learning practitioners there isn’t a well accepted definition of what is and what isn’t machine learning.</p>
+          <h2 id="Problem-Motivation"><a href="#Problem-Motivation" class="headerlink" title="Problem Motivation"></a>Problem Motivation</h2><p>It’s mainly for unsupervised problem, that there’s some aspects of it that are also very similar to sort of the supervised learning problem. <strong>some examples :</strong> </p>
 <ul>
-<li>Someone defined machine learning as the field of study that gives computers the ability to learn without being explicitly programmed.</li>
-<li>A computer program is said to learn from experience E, with respect to some task T, and some performance measure P, if its performance on T as measured by P improves with experience E.</li>
+<li>detect strange behavior or fraudulent behavior</li>
+<li>manufacturing</li>
+<li>monitoring computers in a data center</li>
 </ul>
-<p><em>And if you actually tried to develop a machine learning system, how to make those best practices type decisions about the way in which you build your system.</em></p>
-<h2 id="Supervised-Learning"><a href="#Supervised-Learning" class="headerlink" title="Supervised Learning"></a>Supervised Learning</h2><ul>
-<li><strong>Supervised learning</strong> refers to the fact that we gave the algorithm a data set in which <strong>the “right answers” were given</strong>.</li>
-<li>To define with a bit more terminology this is also called a <strong>regression problem</strong> and by regression problem I mean we’re trying to predict a continuous value output.</li>
-<li><strong>Support Vector Machine</strong>, that will allow a computer to deal with an infinite number of features.</li>
-</ul>
-<h2 id="Unsupervised-Learning"><a href="#Unsupervised-Learning" class="headerlink" title="Unsupervised Learning"></a>Unsupervised Learning</h2><ul>
-<li>Given this data set, an Unsupervised Learning algorithm might decide that the data lives in two different clusters. Supervised Learning algorithm may break these data into these two separate clusters. So this is called a <strong>clustering algorithm</strong>.</li>
-<li>Because we’re not giving the algorithm the right answer for the examples in my data set, this is <strong>Unsupervised Learning</strong>.</li>
-<li><strong>Clustering</strong> is just one type of Unsupervised Learning.</li>
-<li><strong>Octave</strong>, is free open source software, and using a tool like Octave or Matlab, many learning algorithms become just a few lines of code to implement.</li>
-</ul>
-<p><em>Learn much faster if you use Octave as your programming environment, and if you <strong>use Octave as your</strong></em> <em><strong>learning tool and as your prototyping tool</strong>, it’ll let you learn and prototype learning algorithms much more quickly.</em> <em>And in fact what many people will do to in the large Silicon Valley companies is in fact, use an algorithm like Octave to first prototype the learning algorithm, and only after you’ve gotten it</em> <em>to work, then you migrate it to C++ or Java or whatever.</em></p>
+<h2 id="Gaussian-Distribution"><a href="#Gaussian-Distribution" class="headerlink" title="Gaussian Distribution"></a>Gaussian Distribution</h2><h4 id="Gaussian-distribution"><a href="#Gaussian-distribution" class="headerlink" title="Gaussian distribution"></a>Gaussian distribution</h4><p>[latex]x\sim N(\mu , \sigma ^2)[&#x2F;latex]  </p>
+<h4 id="Gaussian-probability-density"><a href="#Gaussian-probability-density" class="headerlink" title="Gaussian probability density"></a>Gaussian probability density</h4><p>[latex]p(x, \mu , \sigma ^2) &#x3D; \frac {1}{\sqrt{2\pi }\sigma } exp(-\frac {(x - \mu)^2}{2 \sigma ^2})[&#x2F;latex]  </p>
+<h4 id="The-location-of-the-center-of-this-bell-shaped-curve"><a href="#The-location-of-the-center-of-this-bell-shaped-curve" class="headerlink" title="The location of the center of this bell-shaped curve"></a>The location of the center of this bell-shaped curve</h4><p>[latex]\mu &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)}[&#x2F;latex]  </p>
+<h4 id="The-width-of-this-bell-shaped-curve"><a href="#The-width-of-this-bell-shaped-curve" class="headerlink" title="The width of this bell-shaped curve"></a>The width of this bell-shaped curve</h4><p>[latex]\sigma ^ 2 &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} (x^{(i)} - \mu) ^2[&#x2F;latex]   <strong>Notice :</strong> The formula here  we use [latex]m[&#x2F;latex] instead of [latex]m - 1[&#x2F;latex] which is used in a statistics.</p>
+<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>Address anomaly detection : [latex]\mu _j &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)} _j[&#x2F;latex]   [latex]\sigma ^ 2 _j &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m} (x^{(i)}_j - \mu _j) ^2[&#x2F;latex]   [latex]p(x) &#x3D; \prod _{j&#x3D;1}^{n}p(x_j; \mu _j, \sigma ^2_j) &#x3D; \prod _{j&#x3D;1}^{1}\frac {1}{\sqrt{2\pi } \sigma _j} exp(-\frac {(x_j - \mu_j)^2}{2 \sigma ^2_j})[&#x2F;latex]   <strong>If [latex]p(x) &lt; \varepsilon [&#x2F;latex], it’s anomaly.</strong></p>
+<h2 id="Developing-and-Evaluating-an-Anomaly-Detection-System"><a href="#Developing-and-Evaluating-an-Anomaly-Detection-System" class="headerlink" title="Developing and Evaluating an Anomaly Detection System"></a>Developing and Evaluating an Anomaly Detection System</h2><p><strong>How to develop and evaluate an algorithm ?</strong></p>
+<ol>
+<li>Take the training sets and fit the model [latex]p(x)[&#x2F;latex]</li>
+<li>On the cross validation of the test set, try to use different [latex]\varepsilon[&#x2F;latex], and then compute the F1 score</li>
+<li>After choosed [latex]\varepsilon[&#x2F;latex], evaluation of the algorithm on the test sets</li>
+</ol>
+<h2 id="Anomaly-Detection-vs-Supervised-Learning"><a href="#Anomaly-Detection-vs-Supervised-Learning" class="headerlink" title="Anomaly Detection vs. Supervised Learning"></a>Anomaly Detection vs. Supervised Learning</h2><p>[table id&#x3D;3 &#x2F;]</p>
+<h2 id="Choosing-What-Features-to-Use"><a href="#Choosing-What-Features-to-Use" class="headerlink" title="Choosing What Features to Use"></a>Choosing What Features to Use</h2><ol>
+<li>model the features using this sort of Gaussian distribution (play with different transformations of the data in order to make it look more Gaussian)</li>
+<li>do an error analysis procedure to come up with features for an anomaly detection algorithm</li>
+<li>create new features by combining me features</li>
+</ol>
+<h2 id="Multivariate-Gaussian-Distribution"><a href="#Multivariate-Gaussian-Distribution" class="headerlink" title="Multivariate Gaussian Distribution"></a>Multivariate Gaussian Distribution</h2><p>[latex]p(x) &#x3D; \prod _{j&#x3D;1}^{n}p(x_j; \mu, \sigma ^2_j) &#x3D; \prod _{j&#x3D;1}^{n}\frac {1}{\sqrt{2\pi } \sigma _j} exp(-\frac {(x_j - \mu_j)^2}{2 \sigma ^2_j})[&#x2F;latex]   [latex]\mu &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{m}x^{(i)}[&#x2F;latex]   [latex]\sum &#x3D; \frac {1}{m} \sum_{i&#x3D;1}^{m} (x^{(i)} - \mu )(x^{(i)} - \mu )^T &#x3D; \frac {1}{m} (X - \mu)^T(X - \mu)[&#x2F;latex]   [latex]p(x) &#x3D; \frac {1}{(2 \pi)^{\frac {n}{2}}\left \sum \right ^{\frac {1}{2}}} exp(-\frac {1}{2} (x-\mu)^T\sum ^{-1}(x-\mu))[&#x2F;latex]   [table id&#x3D;4 &#x2F;]</p>
 
       
     </div>
@@ -804,7 +553,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/22/deep-learning-catalog-andrew-ng/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -818,7 +567,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/22/deep-learning-catalog-andrew-ng/" class="post-title-link" itemprop="url">Deep Learning Catalog : Andrew Ng</a>
+            <a href="/2019/04/08/gaussian-distribution-vs-multivariate-gaussian-distribution/" class="post-title-link" itemprop="url">Gaussian Distribution vs Multivariate Gaussian Distribution</a>
         </h2>
 
         <div class="post-meta">
@@ -828,7 +577,341 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-03-22 21:38:30" itemprop="dateCreated datePublished" datetime="2019-03-22T21:38:30+08:00">2019-03-22</time>
+              <time title="Created: 2019-04-08 11:34:31" itemprop="dateCreated datePublished" datetime="2019-04-08T11:34:31+08:00">2019-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[[“Gaussian Distribution “,”Multivariate Gaussian Distribution”],[“Manually create features to capture anomalies”,”Automatically captures correlations between features”],[“Computationally cheaper”,””],[“”,”Must have m &gt; 10n or else sum is non-invertible”]]</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/08/anomaly-detection-vs-supervised-learning-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/08/anomaly-detection-vs-supervised-learning-2/" class="post-title-link" itemprop="url">Anomaly Detection vs. Supervised Learning</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-08 11:00:34" itemprop="dateCreated datePublished" datetime="2019-04-08T11:00:34+08:00">2019-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[[“Anomaly Detection”,”Supervised Learning”],[“very small number of positive, and a relatively large number of negative examples”,”a reasonably large number of both positive and negative examples”],[“many different types of anomalies”,”have enough positive examples for an algorithm to get a sense of what the positive examples are like”],[“future anomalies may look nothing like the ones you’ve seen so far”,””],[“fraud detection, manufacturing, data center”,”SPAM email, weather prediction, classifying cancers”]]</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/04/upgrade-to-visual-studio-2019-build-problems/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/04/upgrade-to-visual-studio-2019-build-problems/" class="post-title-link" itemprop="url">Upgrade to Visual Studio 2019 : Build Problems</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-04 11:09:13" itemprop="dateCreated datePublished" datetime="2019-04-04T11:09:13+08:00">2019-04-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/windows/" itemprop="url" rel="index"><span itemprop="name">windows</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/windows/Visual-Studio/" itemprop="url" rel="index"><span itemprop="name">Visual Studio</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-std-toupper-—-gt-toupper"><a href="#1-std-toupper-—-gt-toupper" class="headerlink" title="1. std::toupper —&gt; ::toupper"></a>1. std::toupper —&gt; ::toupper</h2><h4 id="Original-Code-It’s-OKay-in-VS2017"><a href="#Original-Code-It’s-OKay-in-VS2017" class="headerlink" title="Original Code (It’s OKay in VS2017) :"></a>Original Code (It’s OKay in VS2017) :</h4><p><img src="/img/VS2019_toupper_1.png">      </p>
+<h4 id="VS-Upgraded"><a href="#VS-Upgraded" class="headerlink" title="VS Upgraded :"></a>VS Upgraded :</h4><p><img src="/img/VS2019_toupper_2.png">  </p>
+<h4 id="Code-Updated-It’s-OKay-in-VS2019"><a href="#Code-Updated-It’s-OKay-in-VS2019" class="headerlink" title="Code Updated (It’s OKay in VS2019) :"></a>Code Updated (It’s OKay in VS2019) :</h4><p><img src="/img/VS2019_toupper_OK.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/03/14-dimensionality-reduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/03/14-dimensionality-reduction/" class="post-title-link" itemprop="url">14 Dimensionality Reduction</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-03 16:33:22" itemprop="dateCreated datePublished" datetime="2019-04-03T16:33:22+08:00">2019-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Motivation-I-Data-Compression"><a href="#Motivation-I-Data-Compression" class="headerlink" title="Motivation I Data Compression"></a>Motivation I Data Compression</h2><ol>
+<li>compress the data, use up less computer memory or disk space</li>
+<li>speed up our learning algorithms.</li>
+</ol>
+<h2 id="Motivation-II-Visualization"><a href="#Motivation-II-Visualization" class="headerlink" title="Motivation II Visualization"></a>Motivation II Visualization</h2><p>If you have 50 features, it’s very difficult to plot 50-dimensional data. But if you reduce dimensions, the problems is what these new features means.</p>
+<h2 id="Principal-Component-Analysis-Problem-Formulation"><a href="#Principal-Component-Analysis-Problem-Formulation" class="headerlink" title="Principal Component Analysis Problem Formulation"></a>Principal Component Analysis Problem Formulation</h2><p>By far the most commonly used algorithm is something called principal components analysis or PCA. What PCA does is it tries to find the surface onto which to project the data so as to minimize that. Before applying PCA it’s standard practice to first perform mean normalization and feature scaling.</p>
+<h2 id="Principal-Component-Analysis-Algorithm"><a href="#Principal-Component-Analysis-Algorithm" class="headerlink" title="Principal Component Analysis Algorithm"></a>Principal Component Analysis Algorithm</h2><p><strong>Reduce the dimensions :</strong></p>
+<ol>
+<li>Mean normalization, maybe perform feature scaling as well</li>
+<li>Covariance matrix, [latex]\sum &#x3D; \frac {1}{m} \sum _{i&#x3D;1}^{n}(x^{(i)})(x^{(i)})^T[&#x2F;latex]</li>
+<li>Eigenvectors of the matrix sigma</li>
+</ol>
+<h2 id="Choosing-The-Number-Of-Principal-Components"><a href="#Choosing-The-Number-Of-Principal-Components" class="headerlink" title="Choosing The Number Of Principal Components"></a>Choosing The Number Of Principal Components</h2><p>The variation of the training sets : [latex]\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} \right \^2[&#x2F;latex] Try to choose k, a pretty common rule of thumb for choosing k is to choose the smaller values so that the ratio of  the average square projection error and the total variation in the data between these is less than 0.01. [latex]\frac {\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} - x^{(i)}_{approx} \right \^2}{\frac {1}{m} \sum_{i&#x3D;1}^{m} \left \ x^{(i)} \right \ ^2} &#x3D; 1 - \frac {\sum_{i&#x3D;1}^{k}S_{ii}}{\sum_{i&#x3D;1}^{n}S_{ii}} \leq 1 \%[&#x2F;latex]   [latex]\frac {\sum_{i&#x3D;1}^{k}S_{ii}}{\sum_{i&#x3D;1}^{n}S_{ii}} \geq 99 \%[&#x2F;latex]   After compressed :  [latex]x^{(i)}_{approx} &#x3D; U_{reduce}Z^{(i)}[&#x2F;latex]</p>
+<h2 id="Advice-for-Applying-PCA"><a href="#Advice-for-Applying-PCA" class="headerlink" title="Advice for Applying PCA"></a>Advice for Applying PCA</h2><ul>
+<li>Don’t think of PCA as a way to prevent over-fitting. A much better way to address it, to use regularization. And the reason is that it throws away or reduces the dimension of your data without knowing what the values of y is so that it might throw away some valueable information.</li>
+<li>First consider doing it with your original raw data [latex]x^{(i)}[&#x2F;latex], and only if that doesn’t do what you want, then implement PCA before using [latex]Z^{(i)}[&#x2F;latex].</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/03/how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/03/how-to-expose-a-local-server-behind-a-nat-or-firewall-to-the-internet/" class="post-title-link" itemprop="url">How to expose a local server behind a NAT or firewall to the internet</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-03 10:29:26" itemprop="dateCreated datePublished" datetime="2019-04-03T10:29:26+08:00">2019-04-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -836,178 +919,6 @@
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/deep-learning/Deep-Learning-Specialization-Offered-By-deeplearning-ai/" itemprop="url" rel="index"><span itemprop="name">Deep Learning Specialization Offered By deeplearning.ai</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/img/Deep-Learning.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/22/machine-learning-catalog-andrew-ng/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/22/machine-learning-catalog-andrew-ng/" class="post-title-link" itemprop="url">Machine Learning Catalog : Andrew Ng</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-22 21:37:29" itemprop="dateCreated datePublished" datetime="2019-03-22T21:37:29+08:00">2019-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/img/Machine-Learning.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/15/cross-compile-wget-with-openssl-for-arm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/15/cross-compile-wget-with-openssl-for-arm/" class="post-title-link" itemprop="url">Cross compile wget with openssl for ARM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-15 10:08:04" itemprop="dateCreated datePublished" datetime="2019-03-15T10:08:04+08:00">2019-03-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1029,6 +940,18 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
                 </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/ARM/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/ARM/CentOS-7/Ubuntu-16-04/" itemprop="url" rel="index"><span itemprop="name">Ubuntu 16.04</span></a>
+                </span>
             </span>
 
           
@@ -1042,10 +965,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Config-OpenSSL"><a href="#Config-OpenSSL" class="headerlink" title="Config OpenSSL"></a>Config OpenSSL</h3><p>tar xvf openssl-1.1.1b.tar.gz<br>cd openssl-1.1.1b&#x2F;<br>mkdir __install<br>.&#x2F;config –prefix&#x3D;$PWD&#x2F;__install no-asm shared</p>
-<h3 id="Edit-Makefile"><a href="#Edit-Makefile" class="headerlink" title="Edit Makefile"></a>Edit Makefile</h3><p>PLATFORM&#x3D;linux-armv4<br>CROSS_COMPILE&#x3D;arm-linux-gnueabihf-<br>delete “-m32” “-m64”</p>
-<h3 id="Compile-OpenSSL"><a href="#Compile-OpenSSL" class="headerlink" title="Compile OpenSSL"></a>Compile OpenSSL</h3><p>make<br>make install</p>
-<h3 id="Config-Wget-amp-amp-Make"><a href="#Config-Wget-amp-amp-Make" class="headerlink" title="Config Wget &amp;&amp; Make"></a>Config Wget &amp;&amp; Make</h3><p>tar zxvf wget-1.20.1.tar.gz<br>cd wget-1.20.1<br>.&#x2F;configure –prefix&#x3D;$PWD&#x2F;__install –host&#x3D;arm-linux CC&#x3D;arm-linux-gnueabihf-gcc –with-ssl&#x3D;openssl –with-libssl-prefix&#x3D;&#x2F;root&#x2F;Downloads&#x2F;wget_arm&#x2F;openssl-1.1.1b&#x2F;__install –without-zlib<br>make<br>make install</p>
+          <h3 id="Download-FRP-Server-amp-Client"><a href="#Download-FRP-Server-amp-Client" class="headerlink" title="Download FRP Server &amp; Client"></a><a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases">Download FRP Server &amp; Client</a></h3><h3 id="Modify-frps-ini"><a href="#Modify-frps-ini" class="headerlink" title="Modify frps.ini"></a>Modify frps.ini</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# cat frps.ini<br>[common]<br>bind_port &#x3D; xxxxxx<br>dashboard_port &#x3D; xxxxxx<br>dashboard_user &#x3D; xxxxxxxxxxxxxxxx<br>dashboard_pwd &#x3D; xxxxxxxxxxxxxxxx<br>allow_ports &#x3D; xxxxx-xxxxx<br>token &#x3D; xxxxxxxxxxxxxxxx<br>max_pool_count &#x3D; 10<br>pool_count &#x3D; 3</p>
+<h3 id="Start-frps"><a href="#Start-frps" class="headerlink" title="Start frps"></a>Start frps</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# .&#x2F;frps -c .&#x2F;frps.ini</p>
+<p><img src="/img/frp_dashboard.png"></p>
+<h3 id="Modify-frpc-ini"><a href="#Modify-frpc-ini" class="headerlink" title="Modify frpc.ini"></a>Modify frpc.ini</h3><p>root@imx6ul7d:~&#x2F;frp# cat frpc.ini<br>[common]<br>server_addr &#x3D; qinuu.com<br>server_port &#x3D; xxxxxx<br>token &#x3D; xxxxxxxxxxxxxxxx<br>[ssh]<br>type &#x3D; tcp<br>local_ip &#x3D; 127.0.0.1<br>local_port &#x3D; 22<br>remote_port &#x3D; xxxxxx</p>
+<h3 id="Start-frpc"><a href="#Start-frpc" class="headerlink" title="Start frpc"></a>Start frpc</h3><p>root@imx6ul7d:~&#x2F;frp# .&#x2F;frpc -c .&#x2F;frpc.ini</p>
+<p><img src="/img/frp_putty.png"></p>
+<h3 id="Start-a-systemd-service"><a href="#Start-a-systemd-service" class="headerlink" title="Start a systemd service"></a>Start a systemd service</h3><p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# cat &#x2F;lib&#x2F;systemd&#x2F;system&#x2F;frps.service<br>[Unit]<br>Description&#x3D;Frp Server Service<br>After&#x3D;network.target</p>
+<p>[Service]<br>Type&#x3D;simple<br>User&#x3D;nobody<br>Restart&#x3D;on-failure<br>RestartSec&#x3D;5s<br>ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;frp&#x2F;frp_0.25.3_linux_amd64&#x2F;frps -c &#x2F;usr&#x2F;local&#x2F;frp&#x2F;frp_0.25.3_linux_amd64&#x2F;frps.ini</p>
+<p>[Install]<br>WantedBy&#x3D;multi-user.targethis</p>
+<p>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# systemctl start frps<br>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# systemctl enable frps<br>[root@VM_0_5_centos frp_0.25.3_linux_amd64]# systemctl status frps</p>
 
       
     </div>
@@ -1065,7 +994,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/02/13-clustering/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -1079,7 +1008,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/15/xxx-usr-lib-libstdc-so-6-version-glibcxx-3-4-22-not-found-required-by-xxx/" class="post-title-link" itemprop="url">./xxx: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.22' not found (required by ./xxx)</a>
+            <a href="/2019/04/02/13-clustering/" class="post-title-link" itemprop="url">13 Clustering</a>
         </h2>
 
         <div class="post-meta">
@@ -1089,7 +1018,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-03-15 10:03:40" itemprop="dateCreated datePublished" datetime="2019-03-15T10:03:40+08:00">2019-03-15</time>
+              <time title="Created: 2019-04-02 17:22:55" itemprop="dateCreated datePublished" datetime="2019-04-02T17:22:55+08:00">2019-04-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1104,19 +1033,15 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
+                  <a href="/categories/machine-learning/Machine-Learning-Offered-By-Stanford-University/" itemprop="url" rel="index"><span itemprop="name">Machine Learning Offered By Stanford University</span></a>
                 </span>
             </span>
 
@@ -1131,8 +1056,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1"><a href="#Copy-libstdc-so-6-0-24-from-cross-compiler-7-3-1" class="headerlink" title="Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)"></a>Copy libstdc++.so.6.0.24 from cross compiler (7.3.1)</h3><p>cd &#x2F;usr&#x2F;lib<br>mv libstdc++.so.6 libstdc++.so.6.bak<br>ln -s libstdc++.so.6.0.24 libstdc++.so.6<br>chmod 777 libstdc++.so.6</p>
-<h3 id="Now-it-will-be-like-this"><a href="#Now-it-will-be-like-this" class="headerlink" title="Now, it will be like this !"></a>Now, it will be like this !</h3><p>root@imx6ul7d:&#x2F;usr&#x2F;lib# ls -al libstdc++.so.6*<br>lrwxrwxrwx 1 root root      19 Sep 16 23:03 libstdc++.so.6 -&gt; libstdc++.so.6.0.24<br>-rwxr-xr-x 1 root root 1240644 Sep  9 02:04 libstdc++.so.6.0.21<br>-rwxrwxrwx 1 root root 9459568 Sep 16 23:35 libstdc++.so.6.0.24<br>lrwxrwxrwx 1 root root      19 Jan  1  1970 libstdc++.so.6.bak -&gt; libstdc++.so.6.0.21<br>-rwxr-xr-x 1 root root 9459568 Sep 16 23:11 libstdc++.so.6.bak_24</p>
+          <h2 id="Unsupervised-Learning-Introduction"><a href="#Unsupervised-Learning-Introduction" class="headerlink" title="Unsupervised Learning Introduction"></a>Unsupervised Learning Introduction</h2><p>In unsupervised learning, what we do is, we give this sort of unlabeled training set to an algorithm and we just ask the algorithm: find some structure in the data for us. Given this data set, one type of structure we might have an algorithm find, is that it looks like this data set has points grouped into two separate clusters and so an algorithm that finds that clusters like the ones I just circled, is called a <strong>clustering algorithm</strong>.</p>
+<h4 id="So-what-is-clustering-good-for"><a href="#So-what-is-clustering-good-for" class="headerlink" title="So what is clustering good for?"></a>So what is clustering good for?</h4><ul>
+<li>Market segmentation</li>
+<li>Social network analysis</li>
+<li>Organize compute clusters or to organize data centers</li>
+<li>Understand galaxy formation and astronomical detail</li>
+</ul>
+<h2 id="K-Means-Algorithm"><a href="#K-Means-Algorithm" class="headerlink" title="K-Means Algorithm"></a>K-Means Algorithm</h2><p>The K Means algorithm is by far the most popular, by far the most widely used clustering algorithm. K Means is an iterative algorithm and it does two things.</p>
+<p><em>randomly initialize two points, called the <strong>cluster centroids</strong></em></p>
+<ol>
+<li>cluster assignment step</li>
+<li>move centroid step</li>
+</ol>
+<p>Repeat {<br>for i &#x3D; 1 to m<br>c(i) :&#x3D; index (from 1 to K) of cluster centroid closet to x(i)<br>for k &#x3D; 1 to K<br>µk :&#x3D; average (mean) of points assigned to cluster k<br>}</p>
+<h2 id="Optimization-Objective"><a href="#Optimization-Objective" class="headerlink" title="Optimization Objective"></a>Optimization Objective</h2><p>**Distortion function : ** [latex]J(c^{(1)},\cdots c^{(m)}, \mu_1,\cdots \mu_K) &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m}\left \ X^{(i)}-\mu_c(i) \right \^2[&#x2F;latex]   [latex]\mu_c(i)[&#x2F;latex] : the distance between [latex]X^{(i)}[&#x2F;latex] and the cluster centroid</p>
+<h2 id="Random-Initialization"><a href="#Random-Initialization" class="headerlink" title="Random Initialization"></a>Random Initialization</h2><p>K-means can end up converging to different solutions depending on exactly how the clusters were initialized, and so, depending on the random initialization. K-means can end up at different solutions. And, in particular, K-means can actually end up at local optima. How to initialize K-means and how to make K-means avoid local optima as well. What we can do is, <strong>initialize K-means lots of times and run K-means lots of times</strong>, and use that to try to make sure we get as good a solution, as good a local or global optima as possible. If <strong>the number of clusters</strong> is anywhere from <strong>two up to maybe 10</strong> then doing multiple random initialization can often, can sometimes make sure that you find a better local optima. <strong>But if K is very large, less likely to make a huge difference.</strong></p>
+<h2 id="Choosing-the-Number-of-Clusters"><a href="#Choosing-the-Number-of-Clusters" class="headerlink" title="Choosing the Number of Clusters"></a>Choosing the Number of Clusters</h2><p>There <strong>actually isn’t a great way</strong> of answering this or doing this automatically and by far the most common way of choosing the number of clusters, is still <strong>choosing it manually</strong> by <strong>looking at visualizations</strong> or by <strong>looking at the output of the clustering algorithm</strong> or something else. One method  is called the <strong>Elbow Method,</strong> but don’t always expect that to work well.</p>
 
       
     </div>
@@ -1151,7 +1091,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1219,14 +1159,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -1261,7 +1201,7 @@
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

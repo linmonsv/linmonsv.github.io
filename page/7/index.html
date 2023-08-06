@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/20/using-x11-for-gui/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/09/qtquick-listview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/20/using-x11-for-gui/" class="post-title-link" itemprop="url">Using X11 for GUI</a>
+            <a href="/2020/04/09/qtquick-listview/" class="post-title-link" itemprop="url">QtQuick ListView</a>
         </h2>
 
         <div class="post-meta">
@@ -180,791 +180,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-11-20 09:15:32" itemprop="dateCreated datePublished" datetime="2019-11-20T09:15:32+08:00">2019-11-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/X11/" itemprop="url" rel="index"><span itemprop="name">X11</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><img src="/img/x11-hello.gif"></p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>#include #include #include #include #include void<br>DrawCenteredMbString(Display* dpy, Window w, XFontSet fontset, GC gc, char* str, int num_bytes, int x, int y, int width,<br>int height) {<br>XRectangle boundingbox;<br>XRectangle dummy;<br>int originx, originy;</p>
-<p>(void)XmbTextExtents(fontset, str, num_bytes, &amp;dummy, &amp;boundingbox);</p>
-<p>originx &#x3D; x + (width - boundingbox.width) &#x2F; 2 - boundingbox.x;<br>originy &#x3D; y + (height - boundingbox.height) &#x2F; 2 - boundingbox.y;</p>
-<p>XmbDrawString(dpy, w, fontset, gc, originx, originy, str, num_bytes);<br>}</p>
-<p>int main(void) {<br>Display* d;<br>Window w;<br>GC gc;<br>XGCValues values;<br>XEvent e;<br>XFontStruct* fs, * fs16;<br>char** fonts;<br>int font_count;<br>XFontSet fontset;<br>char** missing_charsets;<br>int num_missing_charsets;<br>char* default_string;</p>
-<p>char* msg &#x3D; “Hello, World!”;<br>char* msg2 &#x3D; “啊，世界，啊啊啊”;<br>int s;</p>
-<p>if (setlocale(LC_ALL, “”) &#x3D;&#x3D; NULL) {<br>printf(“cannot set locale \n”);<br>exit(1);<br>}</p>
-<p>if (!XSupportsLocale()) {<br>printf(“X does not support locale %s\n”, setlocale(LC_ALL, NULL));<br>exit(1);<br>}</p>
-<p>if (XSetLocaleModifiers(“”) &#x3D;&#x3D; NULL) {<br>printf(“Warning: cannot set locale modifiers\n”);<br>}</p>
-<p>d &#x3D; XOpenDisplay(NULL);<br>if (d &#x3D;&#x3D; NULL) {<br>fprintf(stderr, “Cannot open display\n”);<br>exit(1);<br>}</p>
-<p>fonts &#x3D; XListFonts(d, “*hanzi*“, 10000, &amp;font_count);<br>for (int i &#x3D; 0; i &lt; font_count; i++)<br>printf(“%s\n”, fonts[i]);<br>XFreeFontNames(fonts);</p>
-<p>if ((fs16 &#x3D; XLoadQueryFont(d, “hanzigb16st”)) &#x3D;&#x3D; NULL) {<br>printf(“Cannot load font\n”);<br>exit(1);<br>}</p>
-<p>s &#x3D; DefaultScreen(d);<br>w &#x3D; XCreateSimpleWindow(d, RootWindow(d, s), 100, 100, 500, 500, 1,<br>777215, 111111);<br>printf(“BlackPixel(d, s) is %d\n”, (int)BlackPixel(d, s));<br>printf(“WhitePixel(d, s) is %d\n”, (int)WhitePixel(d, s));</p>
-<p>fontset &#x3D; XCreateFontSet(<br>d, “-*-*-*-*-*-*-16-*-*-*-*-*-*-*“,<br>&amp;missing_charsets, &amp;num_missing_charsets,<br>&amp;default_string);<br>if (num_missing_charsets &gt; 0) {<br>printf(“The following charsets are missing\n”);<br>for (int i &#x3D; 0; i &lt; num_missing_charsets; i++) {<br>printf(“%s \n”, missing_charsets);<br>printf(“The string is %s \n”, default_string);<br>printf(“of any characters from those sets\n”);<br>}<br>XFreeStringList(missing_charsets);<br>}<br>XSetLineAttributes(d, gc, 5, LineSolid, CapRound, JoinRound);</p>
-<p>XSelectInput(d, w, ExposureMask  KeyPressMask);<br>gc &#x3D; XCreateGC(d, w, 0, &amp;values);<br>XMapWindow(d, w);</p>
-<p>int y &#x3D; 50;<br>for (int i &#x3D; 0; i &lt; 10; i++) {</p>
-<p>&#x2F;&#x2F;XFillRectangle(d, w, DefaultGC(d, s), 20, 20, 10, 10);<br>XDrawString(d, w, DefaultGC(d, s), 10, y + i * 20, msg, strlen(msg));</p>
-<p>&#x2F;&#x2F;XSetFont(d, gc, fs16-&gt;fid);<br>&#x2F;&#x2F;XDrawString16(d, w, gc, 100, y + i * 20, (XChar2b *) msg2, strlen(msg2) &#x2F; 2);</p>
-<p>int msg_len &#x3D; strlen(msg2);</p>
-<p>DrawCenteredMbString(<br>d, w, fontset, gc,<br>msg2,<br>msg_len, 50, y + i * 20, 100, 50);</p>
-<p>XFlush(d);<br>sleep(1);</p>
-<p>}</p>
-<p>&#x2F;*while(1) {<br>XNextEvent(d, &amp;e);<br>if (e.type &#x3D;&#x3D; KeyPress)<br>  break;<br>}*&#x2F;</p>
-<p>XCloseDisplay(d);<br>return 0;<br>}</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/11/how-to-enable-case-sensitive-file-and-folder-names-on-windows-10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/11/how-to-enable-case-sensitive-file-and-folder-names-on-windows-10/" class="post-title-link" itemprop="url">How to Enable Case Sensitive File and Folder Names on Windows 10</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-11 16:05:36" itemprop="dateCreated datePublished" datetime="2019-10-11T16:05:36+08:00">2019-10-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Enable-Windows-Subsystem-Linux"><a href="#Enable-Windows-Subsystem-Linux" class="headerlink" title="Enable Windows Subsystem Linux"></a>Enable Windows Subsystem Linux</h2><p><code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</code></p>
-<h2 id="setCaseSensitiveInfo-enable-x2F-disable"><a href="#setCaseSensitiveInfo-enable-x2F-disable" class="headerlink" title="setCaseSensitiveInfo enable&#x2F;disable"></a>setCaseSensitiveInfo enable&#x2F;disable</h2><p><code>fsutil.exe file setCaseSensitiveInfo linux\netfilter_ipv4 enable</code></p>
-<h2 id="queryCaseCaseSensitiveInfo"><a href="#queryCaseCaseSensitiveInfo" class="headerlink" title="queryCaseCaseSensitiveInfo"></a>queryCaseCaseSensitiveInfo</h2><p><code>fsutil.exe file queryCaseCaseSensitiveInfo D:\linux-3.0.35\include\linux\netfilter</code></p>
-<h2 id="This-Doesn’t-Affect-Subfolders"><a href="#This-Doesn’t-Affect-Subfolders" class="headerlink" title="This Doesn’t Affect Subfolders"></a><strong>This Doesn’t Affect Subfolders</strong></h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/26/generate-an-incremental-ota/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/26/generate-an-incremental-ota/" class="post-title-link" itemprop="url">Generate an incremental OTA</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-26 14:51:22" itemprop="dateCreated datePublished" datetime="2019-09-26T14:51:22+08:00">2019-09-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Generate-an-OTA"><a href="#Generate-an-OTA" class="headerlink" title="Generate an OTA"></a>Generate an OTA</h2><p>make -j8<br>make otapackage</p>
-<h2 id="Generate-an-incremental-OTA"><a href="#Generate-an-incremental-OTA" class="headerlink" title="Generate an incremental OTA"></a>Generate an incremental OTA</h2><p>.&#x2F;build&#x2F;tools&#x2F;releasetools&#x2F;ota_from_target_files -i .&#x2F;OTA&#x2F;base.zip .&#x2F;OTA&#x2F;target_files.zip .&#x2F;OTA&#x2F;update.zip</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/26/android-adb-shell-commands-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/26/android-adb-shell-commands-notes/" class="post-title-link" itemprop="url">Android ADB Shell Commands Notes</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-26 14:35:54" itemprop="dateCreated datePublished" datetime="2019-09-26T14:35:54+08:00">2019-09-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Prints-a-list-of-all-attached-emulator-x2F-device"><a href="#Prints-a-list-of-all-attached-emulator-x2F-device" class="headerlink" title="Prints a list of all attached emulator&#x2F;device"></a>Prints a list of all attached emulator&#x2F;device</h2><p>&gt;adb devices<br>List of devices attached<br>xxxxxxxxxx      device</p>
-<h2 id="Forward-socket-connections"><a href="#Forward-socket-connections" class="headerlink" title="Forward socket connections"></a>Forward socket connections</h2><p>&gt;adb forward tcp:10172 tcp:9999</p>
-<h2 id="Restarts-the-adbd-daemon-with-Root-permissions"><a href="#Restarts-the-adbd-daemon-with-Root-permissions" class="headerlink" title="Restarts the adbd daemon with Root permissions"></a>Restarts the adbd daemon with Root permissions</h2><p>&gt;adb root</p>
-<h2 id="Put-x2F-system-partition-in-Writable-mode"><a href="#Put-x2F-system-partition-in-Writable-mode" class="headerlink" title="Put &#x2F;system partition in Writable mode"></a>Put &#x2F;system partition in Writable mode</h2><p>&gt;adb remount remount succeeded</p>
-<h2 id="Upload-a-specified-file-from-your-computer-to-an-emulator-x2F-device"><a href="#Upload-a-specified-file-from-your-computer-to-an-emulator-x2F-device" class="headerlink" title="Upload a specified file from your computer to an emulator&#x2F;device"></a>Upload a specified file from your computer to an emulator&#x2F;device</h2><p>&gt;adb -s xxxxxxxxxx push term_emv_clc2 &#x2F;system&#x2F;tmp</p>
-<h2 id="Shell-command-mode"><a href="#Shell-command-mode" class="headerlink" title="Shell command mode"></a>Shell command mode</h2><p>&gt;adb shell</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/19/how-to-compile-lua-for-android/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/19/how-to-compile-lua-for-android/" class="post-title-link" itemprop="url">How to compile Lua for Android</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-19 17:46:02" itemprop="dateCreated datePublished" datetime="2019-09-19T17:46:02+08:00">2019-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Update-lmathlib-c"><a href="#Update-lmathlib-c" class="headerlink" title="Update lmathlib.c"></a>Update lmathlib.c</h2><h1 id="Index-lmathlib-c"><a href="#Index-lmathlib-c" class="headerlink" title="Index: lmathlib.c"></a>Index: lmathlib.c</h1><p>— lmathlib.c(revision 4050)<br>+++ lmathlib.c(revision 4051)<br>@@ -183,10 +183,10 @@<br>     res &#x3D; l_mathop(log)(x);<br>   else {<br>     lua_Number base &#x3D; luaL_checknumber(L, 2);<br>-#if !defined(LUA_USE_C89)</p>
-<ul>
-<li>if (base &#x3D;&#x3D; l_mathop(2.0))</li>
-<li><pre><code> res = l\_mathop(log2)(x); else
-</code></pre>
--#endif<br>+&#x2F;&#x2F;#if !defined(LUA_USE_C89)<br>+&#x2F;&#x2F;    if (base &#x3D;&#x3D; l_mathop(2.0))<br>+&#x2F;&#x2F;      res &#x3D; l_mathop(log2)(x); else<br>+&#x2F;&#x2F;#endif<br>   if (base &#x3D;&#x3D; l_mathop(10.0))<br> res &#x3D; l_mathop(log10)(x);<br>   else</li>
-</ul>
-<h2 id="Update-luaconf-h"><a href="#Update-luaconf-h" class="headerlink" title="Update luaconf.h"></a>Update luaconf.h</h2><h1 id="Index-luaconf-h"><a href="#Index-luaconf-h" class="headerlink" title="Index: luaconf.h"></a>Index: luaconf.h</h1><p>— luaconf.h(revision 4050)<br>+++ luaconf.h(revision 4051)<br>@@ -677,7 +677,7 @@<br> ** macro must include header ‘locale.h’.)<br> *&#x2F;<br> #if !defined(lua_getlocaledecpoint)<br>-#define lua_getlocaledecpoint()(localeconv()-&gt;decimal_point[0])<br>+#define lua_getlocaledecpoint()(‘.’)<br> #endif</p>
-<p> &#x2F;* }&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; *&#x2F;</p>
-<h2 id="Android-mk"><a href="#Android-mk" class="headerlink" title="Android.mk"></a>Android.mk</h2><h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="Android-mk-1"><a href="#Android-mk-1" class="headerlink" title="Android.mk"></a>Android.mk</h1><h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><h1 id="Lua"><a href="#Lua" class="headerlink" title="Lua"></a>Lua</h1><h1 id="-2"><a href="#-2" class="headerlink" title=""></a></h1><p>LOCAL_PATH :&#x3D; $(call my-dir)&#x2F;..&#x2F;src</p>
-<p>include $(CLEAR_VARS)</p>
-<p>LOCAL_MODULE     :&#x3D; Lua<br>LOCAL_CPPFLAGS   :&#x3D; -std&#x3D;c++17<br>LOCAL_SRC_FILES :&#x3D; \<br>    $(LOCAL_PATH)&#x2F;lapi.c \<br>    $(LOCAL_PATH)&#x2F;lauxlib.c \<br>    $(LOCAL_PATH)&#x2F;lbaselib.c \<br>    $(LOCAL_PATH)&#x2F;lbitlib.c \<br>    $(LOCAL_PATH)&#x2F;lcode.c \<br>    $(LOCAL_PATH)&#x2F;lcorolib.c \<br>    $(LOCAL_PATH)&#x2F;lctype.c \<br>    $(LOCAL_PATH)&#x2F;ldblib.c \<br>    $(LOCAL_PATH)&#x2F;ldebug.c \<br>    $(LOCAL_PATH)&#x2F;ldo.c \<br>    $(LOCAL_PATH)&#x2F;ldump.c \<br>    $(LOCAL_PATH)&#x2F;lfunc.c \<br>    $(LOCAL_PATH)&#x2F;lgc.c \<br>    $(LOCAL_PATH)&#x2F;linit.c \<br>    $(LOCAL_PATH)&#x2F;liolib.c \<br>    $(LOCAL_PATH)&#x2F;llex.c \<br>    $(LOCAL_PATH)&#x2F;lmathlib.c \<br>    $(LOCAL_PATH)&#x2F;lmem.c \<br>    $(LOCAL_PATH)&#x2F;loadlib.c \<br>    $(LOCAL_PATH)&#x2F;lobject.c \<br>    $(LOCAL_PATH)&#x2F;lopcodes.c \<br>    $(LOCAL_PATH)&#x2F;loslib.c \<br>    $(LOCAL_PATH)&#x2F;lparser.c \<br>    $(LOCAL_PATH)&#x2F;lstate.c \<br>    $(LOCAL_PATH)&#x2F;lstring.c \<br>    $(LOCAL_PATH)&#x2F;lstrlib.c \<br>    $(LOCAL_PATH)&#x2F;ltable.c \<br>    $(LOCAL_PATH)&#x2F;ltablib.c \<br>    $(LOCAL_PATH)&#x2F;ltm.c \<br>    $(LOCAL_PATH)&#x2F;lua.c \<br>    $(LOCAL_PATH)&#x2F;luac.c \<br>    $(LOCAL_PATH)&#x2F;lundump.c \<br>    $(LOCAL_PATH)&#x2F;lutf8lib.c \<br>    $(LOCAL_PATH)&#x2F;lvm.c \<br>    $(LOCAL_PATH)&#x2F;lzio.c</p>
-<p>include $(BUILD_STATIC_LIBRARY)</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/19/android-ndk-c17-support/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/19/android-ndk-c17-support/" class="post-title-link" itemprop="url">Android NDK C++17 Support</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-19 16:56:25" itemprop="dateCreated datePublished" datetime="2019-09-19T16:56:25+08:00">2019-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="build-gradle"><a href="#build-gradle" class="headerlink" title="build.gradle"></a>build.gradle</h2><p>apply plugin: ‘com.android.application’</p>
-<p>android {<br>    compileSdkVersion 29<br>    buildToolsVersion “29.0.2”<br>    defaultConfig {<br>        applicationId “com.example.myapplication”<br>        minSdkVersion 15<br>        targetSdkVersion 29<br>        versionCode 1<br>        versionName “1.0”<br>        testInstrumentationRunner “androidx.test.runner.AndroidJUnitRunner”<br>        externalNativeBuild {<br>            cmake {<br>                cppFlags “-std&#x3D;c++17”<br>            }<br>        }<br>    }<br>    buildTypes {<br>        release {<br>            minifyEnabled false<br>            proguardFiles getDefaultProguardFile(‘proguard-android-optimize.txt’), ‘proguard-rules.pro’<br>        }<br>    }<br>    externalNativeBuild {<br>        cmake {<br>            path “src&#x2F;main&#x2F;cpp&#x2F;CMakeLists.txt”<br>            version “3.10.2”<br>        }<br>    }<br>}</p>
-<p>dependencies {<br>    implementation fileTree(dir: ‘libs’, include: [‘*.jar’])<br>    implementation ‘androidx.appcompat:appcompat:1.0.2’<br>    implementation ‘androidx.constraintlayout:constraintlayout:1.1.3’<br>    testImplementation ‘junit:junit:4.12’<br>    androidTestImplementation ‘androidx.test:runner:1.1.1’<br>    androidTestImplementation ‘androidx.test.espresso:espresso-core:3.1.1’<br>}</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/19/android-emulator-server-pc-client/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/19/android-emulator-server-pc-client/" class="post-title-link" itemprop="url">Android Emulator-Server / PC-Client</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-19 16:51:32" itemprop="dateCreated datePublished" datetime="2019-09-19T16:51:32+08:00">2019-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><code>&gt;adb devices List of devices attached emulator-5554 device</code> <code>&gt;adb -s emulator-5554 forward tcp:6100 tcp:7100 6100</code></p>
-<h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><p>127.0.0.1:6100</p>
-<h2 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h2><p>7100</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/16/calling-a-c-function-from-lua/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/16/calling-a-c-function-from-lua/" class="post-title-link" itemprop="url">Calling a C Function From Lua</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-16 16:38:55" itemprop="dateCreated datePublished" datetime="2019-08-16T16:38:55+08:00">2019-08-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/Lua/" itemprop="url" rel="index"><span itemprop="name">Lua</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Prepare-So"><a href="#Prepare-So" class="headerlink" title="Prepare So"></a>Prepare So</h2><p>#include #include #include #include static int my_sum(lua_State *L){<br>    int d1 &#x3D; luaL_checknumber(L, 1);<br>    int d2 &#x3D; luaL_checknumber(L, 2);<br>    lua_pushnumber(L, d1+d2);<br>    return 1;<br>}</p>
-<p>static int my_info(lua_State *L){<br>    lua_pushstring(L, “qinuu”);<br>    return 1;<br>}</p>
-<p>static const struct luaL_Reg test_lib[] &#x3D; {<br>    {“my_sum” , my_sum},<br>    {“my_info” , my_info},<br>    {NULL, NULL}<br>};</p>
-<p>int luaopen_test_lib(lua_State *L){<br>    &#x2F;&#x2F;luaL_newlib(L, test_lib); &#x2F;&#x2F; 5.2<br>    luaL_register(L, “test_lib”,test_lib); &#x2F;&#x2F; lua 5.1<br>    return 1;<br>} </p>
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>local my_lib &#x3D; require “test_lib”</p>
-<p>print(type(test_lib))</p>
-<p>print(test_lib.my_sum(23,17))</p>
-<p>print(test_lib.my_info())</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/16/how-to-connect-internal-and-external-networks-at-the-same-time-windows/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/16/how-to-connect-internal-and-external-networks-at-the-same-time-windows/" class="post-title-link" itemprop="url">How to Connect Internal and External Networks at the same time : Windows</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-16 16:38:14" itemprop="dateCreated datePublished" datetime="2019-08-16T16:38:14+08:00">2019-08-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Delete-Default-Route"><a href="#Delete-Default-Route" class="headerlink" title="Delete Default Route"></a>Delete Default Route</h2><p><code>route delete 0.0.0.0</code></p>
-<h2 id="Add-Gateway-Internal"><a href="#Add-Gateway-Internal" class="headerlink" title="Add Gateway : Internal"></a>Add Gateway : Internal</h2><p><code>route add 192.168.10.0 mask 255.255.255.0 192.168.10.1 -p</code></p>
-<h2 id="Add-Gateway-External"><a href="#Add-Gateway-External" class="headerlink" title="Add Gateway : External"></a>Add Gateway : External</h2><p><code>route add 0.0.0.0 mask 0.0.0.0 192.168.20.1 -p</code></p>
-<h2 id="Check-It"><a href="#Check-It" class="headerlink" title="Check It!"></a>Check It!</h2><p><code>route print</code> IPv4 Route Table &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Active Routes: Network Destination Netmask Gateway Interface Metric 0.0.0.0 0.0.0.0 192.168.20.254 192.168.20.151 55 0.0.0.0 0.0.0.0 192.168.1.1 192.168.1.103 45 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Persistent Routes: Network Address Netmask Gateway Address Metric 192.168.1.0 255.255.255.0 192.168.1.1 1 192.168.3.0 255.255.255.0 192.168.3.1 1</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/11/profile-linux-png/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/11/profile-linux-png/" class="post-title-link" itemprop="url">Profile : Linux -> PNG</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-07-11 10:07:58" itemprop="dateCreated datePublished" datetime="2019-07-11T10:07:58+08:00">2019-07-11</time>
+              <time title="Created: 2020-04-09 13:31:16" itemprop="dateCreated datePublished" datetime="2020-04-09T13:31:16+08:00">2020-04-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -979,27 +195,11 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/multiple-programming-languages/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
+                  <a href="/categories/computer-vision/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
                 </span>
             </span>
 
@@ -1014,7 +214,693 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><code>gprof -b emv_clc2 &gt; report.txt gprof2dot.py report.txt &gt; call_graph.dot dot -Tpng call_graph.dot -o call_graph.png</code> <img src="/img/gprof2dot_1.png"></p>
+          <p><img src="/img/QtQuick_13_1_ListView.gif"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/09/qtquick-flickable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/09/qtquick-flickable/" class="post-title-link" itemprop="url">QtQuick Flickable</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-09 13:29:42" itemprop="dateCreated datePublished" datetime="2020-04-09T13:29:42+08:00">2020-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:41" itemprop="dateModified" datetime="2022-07-05T09:29:41+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/QtQuick_9_11_Flickable.gif"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/05/hit-gopher/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/05/hit-gopher/" class="post-title-link" itemprop="url">Hit Gopher</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-05 13:26:37" itemprop="dateCreated datePublished" datetime="2020-04-05T13:26:37+08:00">2020-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/Hit_Gopher-1.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/31/qml-syntax-basics-qml-object-the-id-attribute/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/qml-syntax-basics-qml-object-the-id-attribute/" class="post-title-link" itemprop="url">QML Syntax Basics & QML Object The id Attribute</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-31 13:24:58" itemprop="dateCreated datePublished" datetime="2020-03-31T13:24:58+08:00">2020-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:41" itemprop="dateModified" datetime="2022-07-05T09:29:41+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/QML_Syntax_Basics.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/28/openeuler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/28/openeuler/" class="post-title-link" itemprop="url">openEuler</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-28 11:12:18" itemprop="dateCreated datePublished" datetime="2020-03-28T11:12:18+08:00">2020-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:41" itemprop="dateModified" datetime="2022-07-05T09:29:41+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/openEuler-6.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/28/%E5%AE%9D%E5%A1%94%E9%95%87%E6%B2%B3%E5%A6%96%EF%BC%8C%EF%BC%8C%EF%BC%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/28/%E5%AE%9D%E5%A1%94%E9%95%87%E6%B2%B3%E5%A6%96%EF%BC%8C%EF%BC%8C%EF%BC%8C/" class="post-title-link" itemprop="url">宝塔镇河妖，，，</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-28 10:59:21" itemprop="dateCreated datePublished" datetime="2020-03-28T10:59:21+08:00">2020-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Wordpress/" itemprop="url" rel="index"><span itemprop="name">Wordpress</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/bt-10.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/22/wordpress-mu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/22/wordpress-mu/" class="post-title-link" itemprop="url">Wordpress MU</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-22 13:16:39" itemprop="dateCreated datePublished" datetime="2020-03-22T13:16:39+08:00">2020-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Wordpress/" itemprop="url" rel="index"><span itemprop="name">Wordpress</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/Wordpress-install-1-1024x633.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/21/docker-mirror/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/21/docker-mirror/" class="post-title-link" itemprop="url">Docker mirror</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-21 11:11:29" itemprop="dateCreated datePublished" datetime="2020-03-21T11:11:29+08:00">2020-03-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/Virtualization/" itemprop="url" rel="index"><span itemprop="name">Virtualization</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/Docker-mirrors-1.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/19/google-adsense/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/19/google-adsense/" class="post-title-link" itemprop="url">Google AdSense</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-19 11:18:26" itemprop="dateCreated datePublished" datetime="2020-03-19T11:18:26+08:00">2020-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/Google-AdSense-1.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/19/letsencrypt-free-https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/19/letsencrypt-free-https/" class="post-title-link" itemprop="url">LetsEncrypt - Free HTTPS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-19 11:11:58" itemprop="dateCreated datePublished" datetime="2020-03-19T11:11:58+08:00">2020-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Wordpress/" itemprop="url" rel="index"><span itemprop="name">Wordpress</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/img/LetsEncrypt-1.png"></p>
 
       
     </div>
@@ -1033,7 +919,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1101,14 +987,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -1143,7 +1029,7 @@
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

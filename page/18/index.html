@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/13/tracking-specific-color-tracking-object/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/10/cross-compile-with-node-js-c-addons-to-arm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/02/13/tracking-specific-color-tracking-object/" class="post-title-link" itemprop="url">Tracking Specific Color / Tracking Object</a>
+            <a href="/2018/05/10/cross-compile-with-node-js-c-addons-to-arm/" class="post-title-link" itemprop="url">Cross compile with Node.js C++ Addons to ARM</a>
         </h2>
 
         <div class="post-meta">
@@ -180,7 +180,400 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-02-13 21:04:47" itemprop="dateCreated datePublished" datetime="2018-02-13T21:04:47+08:00">2018-02-13</time>
+              <time title="Created: 2018-05-10 16:47:03" itemprop="dateCreated datePublished" datetime="2018-05-10T16:47:03+08:00">2018-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Set-ENV"><a href="#Set-ENV" class="headerlink" title="Set ENV"></a>Set ENV</h3><p>export HOST&#x3D;arm-linux-gnueabihf<br>export CPP&#x3D;”${HOST}-gcc -E”<br>export STRIP&#x3D;”${HOST}-strip”<br>export OBJCOPY&#x3D;”${HOST}-objcopy”<br>export AR&#x3D;”${HOST}-ar”<br>export RANLIB&#x3D;”${HOST}-ranlib”<br>export LD&#x3D;”${HOST}-ld”<br>export OBJDUMP&#x3D;”${HOST}-objdump”<br>export CC&#x3D;”${HOST}-gcc”<br>export CXX&#x3D;”${HOST}-g++”<br>export NM&#x3D;”${HOST}-nm”<br>export AS&#x3D;”${HOST}-as”<br>export LD&#x3D;”$CXX”<br>export LINK&#x3D;”$CXX”<br>export GYP_DEFINES&#x3D;”armv7&#x3D;0”</p>
+<h3 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h3><p>node-gyp –arch arm configure build</p>
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><p>root@imx6ul7d:~# node hello.js<br>world</p>
+<h3 id="TIP-0"><a href="#TIP-0" class="headerlink" title="TIP 0"></a>TIP 0</h3><p>{<br>  “targets”: [<br>    {<br>      “target_name”: “addon”,<br>      “sources”: [ “test_api.cc” ],<br>  “include_dirs” : [“sdk&#x2F;inc”],<br>  “link_settings”: {“libraries”: [ “-L&#x2F;mnt&#x2F;hgfs&#x2F;tmp0511&#x2F;sdk&#x2F;lib”] },<br>  “libraries”: [ “-lpos”, “-lpthread”, “-lrt”, “-lpng”, “-liconv”, “-lfreetype”, “-lz” ],<br>    }<br>  ]<br>}</p>
+<h3 id="TIP-1"><a href="#TIP-1" class="headerlink" title="TIP 1"></a>TIP 1</h3><p>using v8::FunctionCallbackInfo;<br>using v8::Isolate;<br>using v8::Local;<br>using v8::Object;<br>using v8::String;<br>using v8::Value;<br>using v8::Number;<br>using v8::Exception;</p>
+<p>void js_Exchange(const FunctionCallbackInfo&amp; args) {<br>  Isolate* isolate &#x3D; args.GetIsolate();</p>
+<p>  int slot &#x3D; args[0]-&gt;NumberValue();</p>
+<p>  String::Utf8Value param1(args[1]-&gt;ToString());<br>  char *szApdu &#x3D; *param1;  </p>
+<p>  uint8_t apdu[300] &#x3D; “\0”;<br>  MyAHex((uint8_t *)szApdu, apdu, strlen(szApdu));</p>
+<p>  uint8_t rpdu[300] &#x3D; “\0”;<br>  uint32_t rpdu_len &#x3D; 0;<br>  char szResult[300] &#x3D; “\0”;</p>
+<p>  int ret &#x3D; Exchange(slot, apdu, strlen(szApdu) &#x2F; 2, rpdu, &amp;rpdu_len);<br>  if(0 &#x3D;&#x3D; ret) {<br>    MyHexA(rpdu, (uint8_t *)szResult, rpdu_len);<br>    args.GetReturnValue().Set(String::NewFromUtf8(isolate, szResult));<br>  } else {<br>    args.GetReturnValue().Set(String::NewFromUtf8(isolate, “”));<br>  }<br>}</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/10/node-js-c-addons/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/10/node-js-c-addons/" class="post-title-link" itemprop="url">Node.js C++ Addons</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-10 13:33:36" itemprop="dateCreated datePublished" datetime="2018-05-10T13:33:36+08:00">2018-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Install-node-gyp"><a href="#Install-node-gyp" class="headerlink" title="Install node-gyp"></a>Install node-gyp</h3><p>npm install -g node-gyp</p>
+<h3 id="Prepare-SourceCode"><a href="#Prepare-SourceCode" class="headerlink" title="Prepare SourceCode"></a>Prepare SourceCode</h3><p>[root@localhost test_nodejs]# ls<br>binding.gyp  hello.cc  hello.js</p>
+<h4 id="hello-cc"><a href="#hello-cc" class="headerlink" title="hello.cc"></a>hello.cc</h4><p>#include namespace demo {</p>
+<p>using v8::FunctionCallbackInfo;<br>using v8::Isolate;<br>using v8::Local;<br>using v8::Object;<br>using v8::String;<br>using v8::Value;</p>
+<p>void Method(const FunctionCallbackInfo&amp; args) {<br>  Isolate* isolate &#x3D; args.GetIsolate();<br>  args.GetReturnValue().Set(String::NewFromUtf8(isolate, “world”));<br>}</p>
+<p>void init(Local exports) {<br>  NODE_SET_METHOD(exports, “hello”, Method);<br>}</p>
+<p>NODE_MODULE(NODE_GYP_MODULE_NAME, init)</p>
+<p>}  &#x2F;&#x2F; namespace demo</p>
+<h4 id="hello-js"><a href="#hello-js" class="headerlink" title="hello.js"></a>hello.js</h4><p>&#x2F;&#x2F; hello.js<br>const addon &#x3D; require(‘.&#x2F;build&#x2F;Release&#x2F;addon’);</p>
+<p>console.log(addon.hello());<br>&#x2F;&#x2F; Prints: ‘world’</p>
+<h4 id="binding-gyp"><a href="#binding-gyp" class="headerlink" title="binding.gyp"></a>binding.gyp</h4><p>{<br>  “targets”: [<br>    {<br>      “target_name”: “addon”,<br>      “sources”: [ “hello.cc” ]<br>    }<br>  ]<br>}</p>
+<h3 id="Compile-amp-Test"><a href="#Compile-amp-Test" class="headerlink" title="Compile &amp; Test"></a>Compile &amp; Test</h3><p>[root@localhost test_nodejs]# node-gyp configure<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#x6e;&#111;&#100;&#101;&#45;&#x67;&#121;&#112;&#x40;&#51;&#46;&#54;&#46;&#x32;">&#x6e;&#111;&#100;&#101;&#45;&#x67;&#121;&#112;&#x40;&#51;&#46;&#54;&#46;&#x32;</a><br>gyp info using <a href="mailto:&#x6e;&#x6f;&#100;&#x65;&#x40;&#56;&#x2e;&#49;&#x31;&#x2e;&#49;">&#x6e;&#x6f;&#100;&#x65;&#x40;&#56;&#x2e;&#49;&#x31;&#x2e;&#49;</a>  linux  x64<br>gyp info spawn &#x2F;usr&#x2F;bin&#x2F;python2<br>gyp info spawn args [ ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;gyp&#x2F;gyp_main.py’,<br>gyp info spawn args   ‘binding.gyp’,<br>gyp info spawn args   ‘-f’,<br>gyp info spawn args   ‘make’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build&#x2F;config.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp&#x2F;addon.gypi’,<br>gyp info spawn args   ‘-I’,<br>gyp info spawn args   ‘&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;include&#x2F;node&#x2F;common.gypi’,<br>gyp info spawn args   ‘-Dlibrary&#x3D;shared_library’,<br>gyp info spawn args   ‘-Dvisibility&#x3D;default’,<br>gyp info spawn args   ‘-Dnode_root_dir&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1’,<br>gyp info spawn args   ‘-Dnode_gyp_dir&#x3D;&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64&#x2F;lib&#x2F;node_modules&#x2F;node-gyp’,<br>gyp info spawn args   ‘-Dnode_lib_file&#x3D;&#x2F;root&#x2F;.node-gyp&#x2F;8.11.1&#x2F;&lt;(target_arch)&#x2F;node.lib’,<br>gyp info spawn args   ‘-Dmodule_root_dir&#x3D;&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs’,<br>gyp info spawn args   ‘-Dnode_engine&#x3D;v8’,<br>gyp info spawn args   ‘–depth&#x3D;.’,<br>gyp info spawn args   ‘–no-parallel’,<br>gyp info spawn args   ‘–generator-output’,<br>gyp info spawn args   ‘build’,<br>gyp info spawn args   ‘-Goutput_dir&#x3D;.’ ]<br>gyp info ok<br>[root@localhost test_nodejs]#<br>[root@localhost test_nodejs]# ls<br>binding.gyp  build  hello.cc  hello.js<br>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile</p>
+<p>[root@localhost test_nodejs]# node-gyp build<br>gyp info it worked if it ends with ok<br>gyp info using <a href="mailto:&#110;&#x6f;&#100;&#101;&#45;&#103;&#121;&#x70;&#x40;&#51;&#x2e;&#x36;&#46;&#x32;">&#110;&#x6f;&#100;&#101;&#45;&#103;&#121;&#x70;&#x40;&#51;&#x2e;&#x36;&#46;&#x32;</a><br>gyp info using <a href="mailto:&#x6e;&#x6f;&#100;&#x65;&#x40;&#56;&#46;&#x31;&#49;&#x2e;&#49;">&#x6e;&#x6f;&#100;&#x65;&#x40;&#56;&#46;&#x31;&#49;&#x2e;&#49;</a>  linux  x64<br>gyp info spawn make<br>gyp info spawn args [ ‘BUILDTYPE&#x3D;Release’, ‘-C’, ‘build’ ]<br>make: Entering directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>  CXX(target) Release&#x2F;obj.target&#x2F;addon&#x2F;hello.o<br>  SOLINK_MODULE(target) Release&#x2F;obj.target&#x2F;addon.node<br>  COPY Release&#x2F;addon.node<br>make: Leaving directory `&#x2F;mnt&#x2F;hgfs&#x2F;linux_tmp&#x2F;test_nodejs&#x2F;build’<br>gyp info ok </p>
+<p>[root@localhost test_nodejs]# ls build&#x2F;<br>addon.target.mk  binding.Makefile  config.gypi  Makefile  Release<br>[root@localhost test_nodejs]# ls build&#x2F;Release&#x2F;<br>addon.node  obj.target</p>
+<p>[root@localhost test_nodejs]# node hello.js<br>world</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/10/how-to-install-node-js-on-centos-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/10/how-to-install-node-js-on-centos-7/" class="post-title-link" itemprop="url">How to Install Node.js On CentOS 7</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-10 13:32:39" itemprop="dateCreated datePublished" datetime="2018-05-10T13:32:39+08:00">2018-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/" itemprop="url" rel="index"><span itemprop="name">multiple-programming-languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/multiple-programming-languages/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Unpack-node-xxx-tar-xxx"><a href="#Unpack-node-xxx-tar-xxx" class="headerlink" title="Unpack node.xxx.tar.xxx"></a>Unpack node.xxx.tar.xxx</h3><p>cp node-v8.11.1-linux-x64.tar.gz &#x2F;usr&#x2F;local&#x2F;<br>cd &#x2F;usr&#x2F;local&#x2F;<br>tar zxvf node-v8.11.1-linux-x64.tar.gz</p>
+<h3 id="Add-Node-Path"><a href="#Add-Node-Path" class="headerlink" title="Add Node Path"></a>Add Node Path</h3><p>vim &#x2F;etc&#x2F;profile<br>export NODE_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;node-v8.11.1-linux-x64<br>export PATH&#x3D;$NODE_HOME&#x2F;bin:$PATH</p>
+<p>source &#x2F;etc&#x2F;profile</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/vs2017-arm-boost-x64-compile-test-source-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/03/vs2017-arm-boost-x64-compile-test-source-code/" class="post-title-link" itemprop="url">OpenCV3 On ARM</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-03 16:09:37" itemprop="dateCreated datePublished" datetime="2018-05-03T16:09:37+08:00">2018-05-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/ARM/" itemprop="url" rel="index"><span itemprop="name">ARM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Source-Code-Dir"><a href="#Source-Code-Dir" class="headerlink" title="Source Code Dir"></a>Source Code Dir</h3><p><img src="/img/ARM-OpenCV-Dir.png"></p>
+<h3 id="CMake-GUI-Configure"><a href="#CMake-GUI-Configure" class="headerlink" title="CMake-GUI Configure"></a>CMake-GUI Configure</h3><p><img src="/img/ARM-OpenCV-CMake-GUI-Config.png"></p>
+<h4 id="Configure-x2F-Generate"><a href="#Configure-x2F-Generate" class="headerlink" title="Configure&#x2F;Generate"></a>Configure&#x2F;Generate</h4><p>Unix Makefiles Specify options for cross-compiling <img src="/img/ARM-OpenCV-CMake-GUI-Configure.png"></p>
+<h4 id="Choose-ARM-LINUX"><a href="#Choose-ARM-LINUX" class="headerlink" title="Choose ARM - LINUX"></a>Choose ARM - LINUX</h4><p>Operating System : arm-linux C Compilers : C++ Compilers : Target Root : The Cross Compiler BIN Directory <img src="/img/ARM-OpenCV-CMake-GUI-Configure-2.png"></p>
+<h4 id="CMAKE-INSTALL-PREFIX"><a href="#CMAKE-INSTALL-PREFIX" class="headerlink" title="CMAKE_INSTALL_PREFIX"></a>CMAKE_INSTALL_PREFIX</h4><p><img src="/img/ARM-OpenCV-CMake-GUI-Configure-3.png"></p>
+<h3 id="make-amp-make-install"><a href="#make-amp-make-install" class="headerlink" title="make &amp; make install"></a>make &amp; make install</h3><p>make<br>make install</p>
+<h4 id="Maybe-Need-It"><a href="#Maybe-Need-It" class="headerlink" title="Maybe Need It !"></a>Maybe Need It !</h4><p><img src="/img/ARM-OpenCV-CMakeCache.png"> &lt;&gt;</p>
+<h3 id="The-END"><a href="#The-END" class="headerlink" title="The END"></a>The END</h3><p>tar jcvf opencv-arm.tar.bz2 opencv-arm&#x2F;</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/lucas-kanade-farneback/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/03/lucas-kanade-farneback/" class="post-title-link" itemprop="url">Lucas-Kanade & Farneback</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-03 15:05:54" itemprop="dateCreated datePublished" datetime="2018-05-03T15:05:54+08:00">2018-05-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -214,59 +607,93 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Tracking-Specific-Color"><a href="#Tracking-Specific-Color" class="headerlink" title="Tracking Specific Color"></a>Tracking Specific Color</h3><pre><code>    // Define the range of &quot;blue&quot; color in HSV colorspace
-    Scalar lowerLimit = Scalar(60,100,100);
-    Scalar upperLimit = Scalar(180,255,255);
-    
-    // Threshold the HSV image to get only blue color
-    inRange(hsvImage, lowerLimit, upperLimit, mask);
-    
-    // Compute bitwise-AND of input image and mask
-    bitwise\_and(frame, frame, outputImage, mask=mask);
-    
-    // Run median filter on the output to smoothen it
-    medianBlur(outputImage, outputImage, 5);
-</code></pre>
-<h3 id="Tracking-Object"><a href="#Tracking-Object" class="headerlink" title="Tracking Object"></a>Tracking Object</h3><pre><code>    if(trackingFlag)
+          <h3 id="LucasKanade-Tracker"><a href="#LucasKanade-Tracker" class="headerlink" title="LucasKanade Tracker"></a>LucasKanade Tracker</h3><pre><code>    // Check if there are points to track
+    if(!trackingPoints\[0\].empty())
     &#123;
-        // Check for all the values in &#39;hsvimage&#39; that are within the specified range
-        // and put the result in &#39;mask&#39;
-        inRange(hsvImage, Scalar(0, minSaturation, minValue), Scalar(180, 256, maxValue), mask);
+        // Status vector to indicate whether the flow for the corresponding features has been found
+        vector statusVector;
         
-        // Mix the specified channels
-        int channels\[\] = &#123;0, 0&#125;;
-        hueImage.create(hsvImage.size(), hsvImage.depth());
-        mixChannels(&amp;hsvImage, 1, &amp;hueImage, 1, channels, 1);
+        // Error vector to indicate the error for the corresponding feature
+        vector errorVector;
         
-        if(trackingFlag &lt; 0)
+        // Check if previous image is empty
+        if(prevGrayImage.empty())
         &#123;
-            // Create images based on selected regions of interest
-            Mat roi(hueImage, selectedRect), maskroi(mask, selectedRect);
-            
-            // Compute the histogram and normalize it
-            calcHist(&amp;roi, 1, 0, maskroi, hist, 1, &amp;histSize, &amp;histRanges);
-            normalize(hist, hist, 0, 255, CV\_MINMAX);
-            
-            trackingRect = selectedRect;
-            trackingFlag = 1;
+            curGrayImage.copyTo(prevGrayImage);
         &#125;
         
-        // Compute the histogram back projection
-        calcBackProject(&amp;hueImage, 1, 0, hist, backproj, &amp;histRanges);
-        backproj &amp;= mask;
-        RotatedRect rotatedTrackingRect = CamShift(backproj, trackingRect, TermCriteria(CV\_TERMCRIT\_EPS  CV\_TERMCRIT\_ITER, 10, 1));
+        // Calculate the optical flow using Lucas-Kanade algorithm
+        calcOpticalFlowPyrLK(prevGrayImage, curGrayImage, trackingPoints\[0\], trackingPoints\[1\], statusVector, errorVector, windowSize, 3, terminationCriteria, 0, 0.001);
+
+        int count = 0;
         
-        // Check if the area of trackingRect is too small
-        if(trackingRect.area() &lt;= 1)
+        // Minimum distance between any two tracking points
+        int minDist = 7;
+        
+        for(int i=0; i &lt; trackingPoints\[1\].size(); i++)
         &#123;
-            // Use an offset value to make sure the trackingRect has a minimum size
-            int cols = backproj.cols, rows = backproj.rows;
-            int offset = MIN(rows, cols) + 1;
-            trackingRect = Rect(trackingRect.x - offset, trackingRect.y - offset, trackingRect.x + offset, trackingRect.y + offset) &amp; Rect(0, 0, cols, rows);
+            if(pointTrackingFlag)
+            &#123;
+                // If the new point is within &#39;minDist&#39; distance from an existing point, it will not be tracked
+                if(norm(currentPoint - trackingPoints\[1\]\[i\]) &lt;= minDist)
+                &#123;
+                    pointTrackingFlag = false;
+                    continue;
+                &#125;
+            &#125;
+            
+            // Check if the status vector is good
+            if(!statusVector\[i\])
+                continue;
+            
+            trackingPoints\[1\]\[count++\] = trackingPoints\[1\]\[i\];
+
+            // Draw a filled circle for each of the tracking points
+            int radius = 8;
+            int thickness = 2;
+            int lineType = 8;
+            circle(image, trackingPoints\[1\]\[i\], radius, Scalar(0,255,0), thickness, lineType);
         &#125;
         
-        // Draw the ellipse on top of the image
-        ellipse(image, rotatedTrackingRect, Scalar(0,255,0), 3, CV\_AA);
+        trackingPoints\[1\].resize(count);
+    &#125;
+    
+    // Refining the location of the feature points
+    if(pointTrackingFlag &amp;&amp; trackingPoints\[1\].size() &lt; maxNumPoints)
+    &#123;
+        vector tempPoints;
+        tempPoints.push\_back(currentPoint);
+        
+        // Function to refine the location of the corners to subpixel accuracy.
+        // Here, &#39;pixel&#39; refers to the image patch of size &#39;windowSize&#39; and not the actual image pixel
+        cornerSubPix(curGrayImage, tempPoints, windowSize, cvSize(-1,-1), terminationCriteria);
+        
+        trackingPoints\[1\].push\_back(tempPoints\[0\]);
+        pointTrackingFlag = false;
+    &#125; 
+</code></pre>
+<h3 id="Farneback-Tracker"><a href="#Farneback-Tracker" class="headerlink" title="Farneback Tracker"></a>Farneback Tracker</h3><pre><code>    // Check if the image is valid
+    if(prevGray.data)
+    &#123;
+        // Initialize parameters for the optical flow algorithm
+        float pyrScale = 0.5;
+        int numLevels = 3;
+        int windowSize = 15;
+        int numIterations = 3;
+        int neighborhoodSize = 5;
+        float stdDeviation = 1.2;
+        
+        // Calculate optical flow map using Farneback algorithm
+        calcOpticalFlowFarneback(prevGray, curGray, flowImage, pyrScale, numLevels, windowSize, numIterations, neighborhoodSize, stdDeviation, OPTFLOW\_USE\_INITIAL\_FLOW);
+        
+        // Convert to 3-channel RGB
+        cvtColor(prevGray, flowImageGray, COLOR\_GRAY2BGR);
+        
+        // Draw the optical flow map
+        drawOpticalFlow(flowImage, flowImageGray);
+        
+        // Display the output image
+        imshow(windowName, flowImageGray);
     &#125;
 </code></pre>
 
@@ -288,7 +715,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/12/show-histogram-equalize-histogram-lomography-effect-cartoonize-effect/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/other-morphological-operators/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -302,7 +729,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/02/12/show-histogram-equalize-histogram-lomography-effect-cartoonize-effect/" class="post-title-link" itemprop="url">Show histogram & Equalize histogram & Lomography effect & Cartoonize effect</a>
+            <a href="/2018/05/03/other-morphological-operators/" class="post-title-link" itemprop="url">Other Morphological Operators</a>
         </h2>
 
         <div class="post-meta">
@@ -312,14 +739,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-02-12 20:59:50" itemprop="dateCreated datePublished" datetime="2018-02-12T20:59:50+08:00">2018-02-12</time>
+              <time title="Created: 2018-05-03 14:44:01" itemprop="dateCreated datePublished" datetime="2018-05-03T14:44:01+08:00">2018-05-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:42" itemprop="dateModified" datetime="2022-07-05T09:29:42+08:00">2022-07-05</time>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -346,765 +773,109 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="The-Original"><a href="#The-Original" class="headerlink" title="The Original"></a>The Original</h3><p><img src="/img/OpenCV-C4-00.png"></p>
-<h3 id="Show-histogram"><a href="#Show-histogram" class="headerlink" title="Show histogram"></a>Show histogram</h3><p>void showHistoCallback(int state, void* userData)<br>{<br>    &#x2F;&#x2F; Separate image in BRG<br>    vector bgr;<br>    split( img, bgr );</p>
-<pre><code>// Create the histogram for 256 bins
-// The number of possibles values
-int numbins= 256;
+          <h3 id="Opening"><a href="#Opening" class="headerlink" title="Opening"></a>Opening</h3><p>Mat performOpening(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage;<br>    int morphologyType;</p>
+<pre><code>if(morphologyElement == 0)
+    morphologyType = MORPH\_RECT;
 
-/// Set the ranges ( for B,G,R) )
-float range\[\] = &#123; 0, 256 &#125; ;
-const float\* histRange = &#123; range &#125;;
+else if(morphologyElement == 1)
+    morphologyType = MORPH\_CROSS;
 
-Mat b\_hist, g\_hist, r\_hist;
+else if(morphologyElement == 2)
+    morphologyType = MORPH\_ELLIPSE;
 
-calcHist( &amp;bgr\[0\], 1, 0, Mat(), b\_hist, 1, &amp;numbins, &amp;histRange );
-calcHist( &amp;bgr\[1\], 1, 0, Mat(), g\_hist, 1, &amp;numbins, &amp;histRange );
-calcHist( &amp;bgr\[2\], 1, 0, Mat(), r\_hist, 1, &amp;numbins, &amp;histRange );
+// Create the structuring element for erosion
+Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
 
-// Draw the histogram
-// We go to draw lines for each channel
-int width= 512;
-int height= 300;
-// Create image with gray base
-Mat histImage( height, width, CV\_8UC3, Scalar(20,20,20) );
+// Apply morphological opening to the image using the structuring element
+erode(inputImage, tempImage, element);
+dilate(tempImage, outputImage, element);
 
-// Normalize the histograms to height of image
-normalize(b\_hist, b\_hist, 0, height, NORM\_MINMAX );
-normalize(g\_hist, g\_hist, 0, height, NORM\_MINMAX );
-normalize(r\_hist, r\_hist, 0, height, NORM\_MINMAX );
-
-int binStep= cvRound((float)width/(float)numbins);
-for( int i=1; i&lt; numbins; i++)
-&#123;
-    line( histImage, 
-            Point( binStep\*(i-1), height-cvRound(b\_hist.at(i-1) ) ),
-            Point( binStep\*(i), height-cvRound(b\_hist.at(i) ) ),
-            Scalar(255,0,0)
-        );
-    line( histImage, 
-            Point( binStep\*(i-1), height-cvRound(g\_hist.at(i-1) ) ),
-            Point( binStep\*(i), height-cvRound(g\_hist.at(i) ) ),
-            Scalar(0,255,0)
-        );
-    line( histImage, 
-            Point( binStep\*(i-1), height-cvRound(r\_hist.at(i-1) ) ),
-            Point( binStep\*(i), height-cvRound(r\_hist.at(i) ) ),
-            Scalar(0,0,255)
-        );
-&#125;
-
-imshow(&quot;Histogram&quot;, histImage);
-</code></pre>
-<p>} </p>
-<p><img src="/img/OpenCV-C4-01.png"></p>
-<h3 id="Equalize-histogram"><a href="#Equalize-histogram" class="headerlink" title="Equalize histogram"></a>Equalize histogram</h3><p>void equalizeCallback(int state, void* userData)<br>{<br>    Mat result;<br>    &#x2F;&#x2F; Convert BGR image to YCbCr<br>    Mat ycrcb;<br>    cvtColor( img, ycrcb, COLOR_BGR2YCrCb);</p>
-<pre><code>// Split image into channels
-vector channels;
-split( ycrcb, channels );
-
-// Equalize the Y channel only
-equalizeHist( channels\[0\], channels\[0\] );
-
-// Merge the result channels
-merge( channels, ycrcb );
-
-// Convert color ycrcb to BGR
-cvtColor( ycrcb, result, COLOR\_YCrCb2BGR );
-
-// Show image
-imshow(&quot;Equalized&quot;, result);
-</code></pre>
-<p>} </p>
-<p><img src="/img/OpenCV-C4-02.png"></p>
-<h3 id="Lomography-effect"><a href="#Lomography-effect" class="headerlink" title="Lomography effect"></a>Lomography effect</h3><p>void lomoCallback(int state, void* userData)<br>{<br>    Mat result;</p>
-<pre><code>const double E = std::exp(1.0);
-// Create Lookup table for color curve effect
-Mat lut(1, 256, CV\_8UC1);
-for (int i=0; i&lt;256; i++)
-&#123;
-    float x= (float)i/256.0; 
-    lut.at(i)= cvRound( 256 \* (1/(1 + pow(E, -((x-0.5)/0.1)) )) );
-&#125;
-
-// Split the image channels and apply curve transform only to red channel
-vector bgr;
-split(img, bgr);
-LUT(bgr\[2\], lut, bgr\[2\]);
-// merge result
-merge(bgr, result);
-
-// Create image for halo dark
-Mat halo( img.rows, img.cols, CV\_32FC3, Scalar(0.3,0.3,0.3) );
-// Create circle 
-circle(halo, Point(img.cols/2, img.rows/2), img.cols/3, Scalar(1,1,1), -1); 
-blur(halo, halo, Size(img.cols/3, img.cols/3));
-
-// Convert the result to float to allow multiply by 1 factor
-Mat resultf;
-result.convertTo(resultf, CV\_32FC3);
-
-// Multiply our result with halo
-multiply(resultf, halo, resultf);
-
-// convert to 8 bits
-resultf.convertTo(result, CV\_8UC3);
-
-// show result
-imshow(&quot;Lomograpy&quot;, result);
-
-// Release mat memory
-halo.release();
-resultf.release();
-lut.release();
-bgr\[0\].release();
-bgr\[1\].release();
-bgr\[2\].release();
-</code></pre>
-<p>} </p>
-<p><img src="/img/OpenCV-C4-03.png"></p>
-<h3 id="Cartoonize-effect"><a href="#Cartoonize-effect" class="headerlink" title="Cartoonize effect"></a>Cartoonize effect</h3><p>void cartoonCallback(int state, void* userData)<br>{<br>    &#x2F;** EDGES **&#x2F;<br>    &#x2F;&#x2F; Apply median filter to remove possible noise<br>    Mat imgMedian;<br>    medianBlur(img, imgMedian, 7);</p>
-<pre><code>// Detect edges with canny
-Mat imgCanny;
-Canny(imgMedian, imgCanny, 50, 150);
-
-// Dilate the edges
-Mat kernel= getStructuringElement(MORPH\_RECT, Size(2,2));
-dilate(imgCanny, imgCanny, kernel);
-
-// Scale edges values to 1 and invert values
-imgCanny= imgCanny/255;
-imgCanny= 1-imgCanny;
-
-// Use float values to allow multiply between 0 and 1
-Mat imgCannyf;
-imgCanny.convertTo(imgCannyf, CV\_32FC3);
-
-// Blur the edgest to do smooth effect
-blur(imgCannyf, imgCannyf, Size(5,5));
-
-/\*\* COLOR \*\*/
-// Apply bilateral filter to homogenizes color
-Mat imgBF;
-bilateralFilter(img, imgBF, 9, 150.0, 150.0);
-
-// truncate colors
-Mat result= imgBF/25;
-result= result\*25;
-
-/\*\* MERGES COLOR + EDGES \*\*/
-// Create a 3 channles for edges
-Mat imgCanny3c;
-Mat cannyChannels\[\]=&#123; imgCannyf, imgCannyf, imgCannyf&#125;;
-merge(cannyChannels, 3, imgCanny3c);
-
-// Convert color result to float 
-Mat resultf;
-result.convertTo(resultf, CV\_32FC3);
-
-// Multiply color and edges matrices
-multiply(resultf, imgCanny3c, resultf);
-
-// convert to 8 bits color
-resultf.convertTo(result, CV\_8UC3);
-
-// Show image
-imshow(&quot;Result&quot;, result);
+// Return the output image
+return outputImage;
 </code></pre>
 <p>}</p>
-<p><img src="/img/OpenCV-C4-04.png"></p>
+<h3 id="Closing"><a href="#Closing" class="headerlink" title="Closing"></a>Closing</h3><p>Mat performClosing(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage;<br>    int morphologyType;</p>
+<pre><code>if(morphologyElement == 0)
+    morphologyType = MORPH\_RECT;
 
-      
-    </div>
+else if(morphologyElement == 1)
+    morphologyType = MORPH\_CROSS;
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+else if(morphologyElement == 2)
+    morphologyType = MORPH\_ELLIPSE;
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/12/opengl-vtk/">
+// Create the structuring element for erosion
+Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
+// Apply morphological opening to the image using the structuring element
+dilate(inputImage, tempImage, element);
+erode(tempImage, outputImage, element);
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/02/12/opengl-vtk/" class="post-title-link" itemprop="url">OpenGL & VTK</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-02-12 20:15:54" itemprop="dateCreated datePublished" datetime="2018-02-12T20:15:54+08:00">2018-02-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Refer to “OPENCV —&gt; OpenCV 3 on macOS High Sierra —&gt; 2.How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3”</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/12/slider-mouse-buttonqt-checkbox-qt-radiobox-qt-push-button/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/02/12/slider-mouse-buttonqt-checkbox-qt-radiobox-qt-push-button/" class="post-title-link" itemprop="url">Slider & Mouse & Button(QT_CHECKBOX, QT_RADIOBOX, QT_PUSH_BUTTON)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-02-12 14:11:13" itemprop="dateCreated datePublished" datetime="2018-02-12T14:11:13+08:00">2018-02-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Slider"><a href="#Slider" class="headerlink" title="Slider"></a>Slider</h3><p>createTrackbar(“Lena”, “Lena”, &amp;blurAmount, 30, onChange, &amp;lena);</p>
-<p>onChange(blurAmount, &amp;lena);</p>
-<p>static void onChange(int pos, void* userInput)<br>{<br>if(pos &lt;&#x3D; 0)<br>return;<br>&#x2F;&#x2F; Aux variable for result<br>Mat imgBlur;</p>
-<p>&#x2F;&#x2F; Get the pointer input image<br>Mat* img&#x3D; (Mat*)userInput;</p>
-<p>&#x2F;&#x2F; Apply a blur filter<br>blur(*img, imgBlur, Size(pos, pos));</p>
-<p>&#x2F;&#x2F; Show the result<br>imshow(“Lena”, imgBlur);<br>}</p>
-<h3 id="Mouse"><a href="#Mouse" class="headerlink" title="Mouse"></a>Mouse</h3><p>setMouseCallback(“Lena”, onMouse, &amp;lena);</p>
-<p>static void onMouse( int event, int x, int y, int, void* userInput )<br>{<br>if( event !&#x3D; EVENT_LBUTTONDOWN )<br>        return;</p>
-<p>&#x2F;&#x2F; Get the pointer input image<br>Mat* img&#x3D; (Mat*)userInput;</p>
-<p>&#x2F;&#x2F; Draw circle<br>circle(*img, Point(x, y), 10, Scalar(0,255,0), 3);</p>
-<p>&#x2F;&#x2F; Call on change to get blurred image<br>onChange(blurAmount, img);</p>
-<p>}</p>
-<h3 id="Button-QT-CHECKBOX-QT-RADIOBOX-QT-PUSH-BUTTON"><a href="#Button-QT-CHECKBOX-QT-RADIOBOX-QT-PUSH-BUTTON" class="headerlink" title="Button(QT_CHECKBOX, QT_RADIOBOX, QT_PUSH_BUTTON)"></a>Button(QT_CHECKBOX, QT_RADIOBOX, QT_PUSH_BUTTON)</h3><p>void grayCallback(int state, void* userData)<br>{<br>applyGray&#x3D; true;<br>applyFilters();<br>}<br>void bgrCallback(int state, void* userData)<br>{<br>applyGray&#x3D; false;<br>applyFilters();<br>}</p>
-<p>void blurCallback(int state, void* userData)<br>{<br>applyBlur&#x3D; (bool)state;<br>applyFilters();<br>}</p>
-<p>void sobelCallback(int state, void* userData)<br>{<br>applySobel&#x3D; !applySobel;<br>applyFilters();<br>}</p>
-<p>createButton(“Blur”, blurCallback, NULL, QT_CHECKBOX, 0);</p>
-<p>createButton(“Gray”,grayCallback,NULL,QT_RADIOBOX, 0);<br>createButton(“RGB”,bgrCallback,NULL,QT_RADIOBOX, 1);</p>
-<p>createButton(“Sobel”,sobelCallback,NULL,QT_PUSH_BUTTON, 0);</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/12/opencv-simple-gui-qt/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/02/12/opencv-simple-gui-qt/" class="post-title-link" itemprop="url">OpenCV Simple GUI / QT</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-02-12 13:52:39" itemprop="dateCreated datePublished" datetime="2018-02-12T13:52:39+08:00">2018-02-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Simple-Window"><a href="#Simple-Window" class="headerlink" title="Simple Window"></a>Simple Window</h3><p>namedWindow(“Photo”, WINDOW_AUTOSIZE);</p>
-<p>moveWindow(“Photo”, 520, 10);</p>
-<p>imshow(“Photo”, photo);</p>
-<p>resizeWindow(“Lena”, 512, 512);</p>
-<p>destroyWindow(“Photo”);</p>
-<p>destroyAllWindows();&#x2F;&#x2F;</p>
-<h3 id="Qt-Functions"><a href="#Qt-Functions" class="headerlink" title="Qt Functions"></a>Qt Functions</h3><p>displayOverlay(“Lena”, “Overlay 5secs”, 5000);</p>
-<p>displayStatusBar(“Lena”, “Status bar 5secs”, 5000);</p>
-<p>saveWindowParameters(“Lena”);</p>
-<p>loadWindowParameters(“Lena”);</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/12/opencv-data-storage/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/02/12/opencv-data-storage/" class="post-title-link" itemprop="url">OpenCV Data Storage</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-02-12 13:30:26" itemprop="dateCreated datePublished" datetime="2018-02-12T13:30:26+08:00">2018-02-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Write-OpenCV-Data"><a href="#Write-OpenCV-Data" class="headerlink" title="Write OpenCV Data"></a>Write OpenCV Data</h3><p>FileStorage fs(“test.yml”, FileStorage::WRITE);<br>Mat m1&#x3D; Mat::eye(2,3, CV_32F);<br>fs &lt;&lt; “m1” &lt;&lt; m1;<br>fs.release();</p>
-<h3 id="Read-OpenCV-Data"><a href="#Read-OpenCV-Data" class="headerlink" title="Read OpenCV Data"></a>Read OpenCV Data</h3><p>FileStorage fs2(“test.yml”, FileStorage::READ);<br>Mat r;<br>fs2[“m1”] &gt;&gt; r;<br>std::cout &lt;&lt; r &lt;&lt; std::endl;<br>fs2.release();</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/12/read-write-image-read-videofile-camera-show/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/02/12/read-write-image-read-videofile-camera-show/" class="post-title-link" itemprop="url">Read/Write Image and Read VideoFile/Camera and Show It</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-02-12 13:17:46" itemprop="dateCreated datePublished" datetime="2018-02-12T13:17:46+08:00">2018-02-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Read-Image"><a href="#Read-Image" class="headerlink" title="Read Image"></a>Read Image</h3><p>Mat color&#x3D; imread(“..&#x2F;lena.jpg”);<br>Mat gray&#x3D; imread(“..&#x2F;lena.jpg”, 0);</p>
-<h3 id="Write-Image"><a href="#Write-Image" class="headerlink" title="Write Image"></a>Write Image</h3><p>imwrite(“lenaGray.jpg”, gray);</p>
-<h3 id="Show-Image"><a href="#Show-Image" class="headerlink" title="Show Image"></a>Show Image</h3><p>imshow(“Lena Gray”, gray);</p>
-<h3 id="Read-VideoFile-x2F-Camera"><a href="#Read-VideoFile-x2F-Camera" class="headerlink" title="Read VideoFile&#x2F;Camera"></a>Read VideoFile&#x2F;Camera</h3><p>VideoCapture cap;<br>cap.open(videoFile);<br>cap.open(0);&#x2F;&#x2F;default camera</p>
-<p>if(!cap.isOpened())  &#x2F;&#x2F; check if succeeded<br>    return -1;</p>
-<p>cap.release();</p>
-<h3 id="Show-VideoFile-x2F-Camera"><a href="#Show-VideoFile-x2F-Camera" class="headerlink" title="Show VideoFile&#x2F;Camera"></a>Show VideoFile&#x2F;Camera</h3><p>namedWindow(“Video”,1);<br>for(;;)<br>{<br>    Mat frame;<br>    cap &gt;&gt; frame; &#x2F;&#x2F; get a new frame from camera<br>    imshow(“Video”, frame);<br>    if(waitKey(30) &gt;&#x3D; 0) break;<br>}</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/01/28/install-opencv3-with-vtk-with-opengl-macos-high-sierra-10-13-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/01/28/install-opencv3-with-vtk-with-opengl-macos-high-sierra-10-13-3/" class="post-title-link" itemprop="url">How to Install OpenCV3 WITH_VTK WITH_OPENGL on macOS High Sierra 10.13.3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-01-28 16:53:28" itemprop="dateCreated datePublished" datetime="2018-01-28T16:53:28+08:00">2018-01-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Install-VTK"><a href="#Install-VTK" class="headerlink" title="Install VTK"></a>Install VTK</h3><p>water@waters-MacBook-Pro:<del>&#x2F;Downloads&#x2F;VTK-8.1.0&#x2F;build$ cmake ..<br>water@waters-MacBook-Pro:</del>&#x2F;Downloads&#x2F;VTK-8.1.0&#x2F;build$ make<br>water@waters-MacBook-Pro:~&#x2F;Downloads&#x2F;VTK-8.1.0&#x2F;build$ sudo make install</p>
-<h3 id="Install-QT5"><a href="#Install-QT5" class="headerlink" title="Install QT5"></a>Install QT5</h3><p>water@waters-MacBook-Pro:<del>&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ brew install qt5<br>water@waters-MacBook-Pro:</del>&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ export “PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;opt&#x2F;qt&#x2F;bin:$PATH”</p>
-<h3 id="Install-OpenCV-amp-OpenCV-contrib"><a href="#Install-OpenCV-amp-OpenCV-contrib" class="headerlink" title="Install OpenCV &amp; OpenCV_contrib"></a>Install OpenCV &amp; OpenCV_contrib</h3><p>water@waters-MacBook-Pro:~&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ cmake -DCMAKE_BUILD_TYPE&#x3D;Release -DWITH_OPENGL&#x3D;ON -DWITH_OPENVX&#x3D;ON -DWITH_QT&#x3D;ON -DWITH_OPENCL&#x3D;ON -DOPENCV_EXTRA_MODULES_PATH&#x3D;&#x2F;Users&#x2F;water&#x2F;Documents&#x2F;GitHub&#x2F;opencv_contrib&#x2F;modules –DWITH_VTK&#x3D;ON -DVTK_DIR&#x3D;&#x2F;Users&#x2F;water&#x2F;Downloads&#x2F;VTK-8.1.0 ..</p>
-<p><img src="/img/OpenCV_CMake.png"></p>
-<p>water@waters-MacBook-Pro:<del>&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ make -j8<br>water@waters-MacBook-Pro:</del>&#x2F;Documents&#x2F;GitHub&#x2F;opencv&#x2F;build$ sudo make install</p>
-<h3 id="Test-VIZ"><a href="#Test-VIZ" class="headerlink" title="Test VIZ"></a>Test VIZ</h3><p>#include #include #include using namespace cv;<br>using namespace std;</p>
-<p>&#x2F;*<br> * @function main<br> *&#x2F;<br>int main()<br>{<br>    &#x2F;&#x2F;&#x2F; Create a window<br>    viz::Viz3d myWindow(“Coordinate Frame”);</p>
-<pre><code>/// Add coordinate axes
-myWindow.showWidget(&quot;Coordinate Widget&quot;, viz::WCoordinateSystem());
-
-/// Add line to represent (1,1,1) axis
-viz::WLine axis(Point3f(-1.0f,-1.0f,-1.0f), Point3f(1.0f,1.0f,1.0f));
-axis.setRenderingProperty(viz::LINE\_WIDTH, 4.0);
-myWindow.showWidget(&quot;Line Widget&quot;, axis);
-
-/// Construct a cube widget
-viz::WCube cube\_widget(Point3f(0.5,0.5,0.0), Point3f(0.0,0.0,-0.5), true, viz::Color::blue());
-cube\_widget.setRenderingProperty(viz::LINE\_WIDTH, 4.0);
-
-/// Display widget (update if already displayed)
-myWindow.showWidget(&quot;Cube Widget&quot;, cube\_widget);
-
-/// Rodrigues vector
-Mat rot\_vec = Mat::zeros(1,3,CV\_32F);
-float translation\_phase = 0.0, translation = 0.0;
-while(!myWindow.wasStopped())
-&#123;
-    /\* Rotation using rodrigues \*/
-    /// Rotate around (1,1,1)
-    rot\_vec.at(0,0) += CV\_PI \* 0.01f;
-    rot\_vec.at(0,1) += CV\_PI \* 0.01f;
-    rot\_vec.at(0,2) += CV\_PI \* 0.01f;
-
-    /// Shift on (1,1,1)
-    translation\_phase += CV\_PI \* 0.01f;
-    translation = sin(translation\_phase);
-
-    Mat rot\_mat;
-    Rodrigues(rot\_vec, rot\_mat);
-
-    /// Construct pose
-    Affine3f pose(rot\_mat, Vec3f(translation, translation, translation));
-
-    myWindow.setWidgetPose(&quot;Cube Widget&quot;, pose);
-
-    myWindow.spinOnce(1, true);
-&#125;
-
-return 0;
-</code></pre>
-<p>} </p>
-<p><img src="/img/OpenCV_Example_VIZ.gif"></p>
-<h3 id="Test-OpenGL"><a href="#Test-OpenGL" class="headerlink" title="Test OpenGL"></a>Test OpenGL</h3><p>#include #include #include using namespace std;</p>
-<p>&#x2F;&#x2F; OpenGL includes<br>#ifdef __APPLE__<br>#include #else<br>#include #endif</p>
-<p>&#x2F;&#x2F; OpenCV includes<br>#include “opencv2&#x2F;core.hpp”<br>#include “opencv2&#x2F;imgproc.hpp”<br>#include “opencv2&#x2F;highgui.hpp”<br>using namespace cv;</p>
-<p>Mat frame;<br>GLfloat angle&#x3D; 0.0;<br>GLuint texture;<br>VideoCapture camera;</p>
-<p>int loadTexture() {</p>
-<pre><code>if (frame.data==NULL) return -1;
-
-glBindTexture( GL\_TEXTURE\_2D, texture ); //bind the texture to it&#39;s array
-glTexParameteri(GL\_TEXTURE\_2D,GL\_TEXTURE\_MAG\_FILTER,GL\_LINEAR);
-glTexParameteri(GL\_TEXTURE\_2D,GL\_TEXTURE\_MIN\_FILTER,GL\_LINEAR);
-
-glPixelStorei(GL\_UNPACK\_ALIGNMENT, 1);
-
-glTexImage2D(GL\_TEXTURE\_2D, 0, GL\_RGB, frame.cols, frame.rows,0, GL\_BGR, GL\_UNSIGNED\_BYTE, frame.data);
-return 0;
+// Return the output image
+return outputImage;
 </code></pre>
 <p>}</p>
-<p>void on_opengl(void* param)<br>{<br>    glLoadIdentity();<br>    &#x2F;&#x2F; Load Texture<br>    glBindTexture( GL_TEXTURE_2D, texture );<br>    &#x2F;&#x2F; Rotate plane<br>    glRotatef( angle, 1.0f, 1.0f, 1.0f );<br>    &#x2F;&#x2F; Create the plate<br>    glBegin (GL_QUADS);<br>    glTexCoord2d(0.0,0.0); glVertex2d(-1.0,-1.0);<br>    glTexCoord2d(1.0,0.0); glVertex2d(+1.0,-1.0);<br>    glTexCoord2d(1.0,1.0); glVertex2d(+1.0,+1.0);<br>    glTexCoord2d(0.0,1.0); glVertex2d(-1.0,+1.0);<br>    glEnd();</p>
-<p>}</p>
-<p>int main( int argc, const char** argv )<br>{<br>    &#x2F;&#x2F; Open WebCam<br>    camera.open(0);<br>    if(!camera.isOpened())<br>        return -1;</p>
-<pre><code>// Create new windows
-namedWindow(&quot;OpenGL Camera&quot;, WINDOW\_OPENGL);
+<h3 id="Morphological-Gradient"><a href="#Morphological-Gradient" class="headerlink" title="Morphological Gradient"></a>Morphological Gradient</h3><p>Mat performMorphologicalGradient(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage, tempImage1, tempImage2;<br>    int morphologyType;</p>
+<pre><code>if(morphologyElement == 0)
+    morphologyType = MORPH\_RECT;
 
-// Enable texture
-glEnable( GL\_TEXTURE\_2D );
-glGenTextures(1, &amp;texture);
+else if(morphologyElement == 1)
+    morphologyType = MORPH\_CROSS;
 
-setOpenGlDrawCallback(&quot;OpenGL Camera&quot;, on\_opengl);
+else if(morphologyElement == 2)
+    morphologyType = MORPH\_ELLIPSE;
 
-while(waitKey(30)!=&#39;q&#39;)&#123;
-    camera &gt;&gt; frame;
-    // Create first texture
-    loadTexture();
-    updateWindow(&quot;OpenGL Camera&quot;);
-    angle =angle+4;
-&#125;
+// Create the structuring element for erosion
+Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
+
+// Apply morphological gradient to the image using the structuring element
+dilate(inputImage, tempImage1, element);
+erode(inputImage, tempImage2, element);
+
+// Return the output image
+return tempImage1 - tempImage2;
 </code></pre>
-<p>&#x2F;&#x2F; Destroy the windows<br>destroyWindow(“OpenGL Camera”);</p>
-<p>return 0;<br>} </p>
-<p><img src="/img/OpenCV_Example_OpenGL-2.gif"></p>
+<p>}</p>
+<h3 id="TopHat"><a href="#TopHat" class="headerlink" title="TopHat"></a>TopHat</h3><p>Mat performTopHat(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage;<br>    int morphologyType;</p>
+<pre><code>if(morphologyElement == 0)
+    morphologyType = MORPH\_RECT;
+
+else if(morphologyElement == 1)
+    morphologyType = MORPH\_CROSS;
+
+else if(morphologyElement == 2)
+    morphologyType = MORPH\_ELLIPSE;
+
+// Create the structuring element for erosion
+Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
+
+// Apply top hat operation to the image using the structuring element
+outputImage = inputImage - performOpening(inputImage, morphologyElement, morphologySize);
+
+// Return the output image
+return outputImage;
+</code></pre>
+<p>}</p>
+<h3 id="BlackHat"><a href="#BlackHat" class="headerlink" title="BlackHat"></a>BlackHat</h3><p>Mat performBlackHat(Mat inputImage, int morphologyElement, int morphologySize)<br>{<br>    Mat outputImage;<br>    int morphologyType;</p>
+<pre><code>if(morphologyElement == 0)
+    morphologyType = MORPH\_RECT;
+
+else if(morphologyElement == 1)
+    morphologyType = MORPH\_CROSS;
+
+else if(morphologyElement == 2)
+    morphologyType = MORPH\_ELLIPSE;
+
+// Create the structuring element for erosion
+Mat element = getStructuringElement(morphologyType, Size(2\*morphologySize + 1, 2\*morphologySize + 1), Point(morphologySize, morphologySize));
+
+// Apply black hat operation to the image using the structuring element
+outputImage = performClosing(inputImage, morphologyElement, morphologySize) - inputImage;
+
+// Return the output image
+return outputImage;
+</code></pre>
+<p>}</p>
 
       
     </div>
@@ -1124,7 +895,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/01/21/install-tesseract-languages/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/slimming-thickening-the-shapes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -1138,7 +909,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/01/21/install-tesseract-languages/" class="post-title-link" itemprop="url">How to Install Tesseract With All Languages</a>
+            <a href="/2018/05/03/slimming-thickening-the-shapes/" class="post-title-link" itemprop="url">Slimming/Thickening The Shapes</a>
         </h2>
 
         <div class="post-meta">
@@ -1148,14 +919,14 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-01-21 10:28:24" itemprop="dateCreated datePublished" datetime="2018-01-21T10:28:24+08:00">2018-01-21</time>
+              <time title="Created: 2018-05-03 14:33:01" itemprop="dateCreated datePublished" datetime="2018-05-03T14:33:01+08:00">2018-05-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1182,12 +953,46 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Install-tesseract"><a href="#Install-tesseract" class="headerlink" title="Install tesseract"></a>Install tesseract</h3><p>water@waters-MBP:~$ brew install tesseract –with-all-languages</p>
-<h3 id="Have-a-test"><a href="#Have-a-test" class="headerlink" title="Have a test"></a>Have a test</h3><p>water@waters-MBP:~&#x2F;Downloads$ tesseract tesseract-test-english.png out</p>
-<p><img src="/img/tesseract-test-english-result.png"></p>
-<h3 id="Install-chi-sim-traineddata"><a href="#Install-chi-sim-traineddata" class="headerlink" title="Install chi-sim.traineddata"></a>Install chi-sim.traineddata</h3><p>water@waters-MBP:~$ ls -al &#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;tesseract&#x2F;3.05.01&#x2F;share&#x2F;tessdata&#x2F;chi-sim.traineddata<br>-rw-r–r–  1 water  admin  52662579 Jan 20 22:30 &#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;tesseract&#x2F;3.05.01&#x2F;share&#x2F;tessdata&#x2F;chi-sim.traineddata</p>
-<h3 id="Have-a-test-1"><a href="#Have-a-test-1" class="headerlink" title="Have a test"></a>Have a test</h3><p>water@waters-MBP:~&#x2F;Downloads$ tesseract tesseract-test-chinese.png out -l chi-sim</p>
-<p><img src="/img/tesseract-test-chinese-result.png"></p>
+          <h3 id="Erosion"><a href="#Erosion" class="headerlink" title="Erosion"></a>Erosion</h3><p>Mat performErosion(Mat inputImage, int erosionElement, int erosionSize)<br>{<br>    Mat outputImage;<br>    int erosionType;</p>
+<pre><code>if(erosionElement == 0)
+    erosionType = MORPH\_RECT;
+
+else if(erosionElement == 1)
+    erosionType = MORPH\_CROSS;
+
+else if(erosionElement == 2)
+    erosionType = MORPH\_ELLIPSE;
+
+// Create the structuring element for erosion
+Mat element = getStructuringElement(erosionType, Size(2\*erosionSize + 1, 2\*erosionSize + 1), Point(erosionSize, erosionSize));
+
+// Erode the image using the structuring element
+erode(inputImage, outputImage, element);
+
+// Return the output image
+return outputImage;
+</code></pre>
+<p>}</p>
+<h3 id="Dilation"><a href="#Dilation" class="headerlink" title="Dilation"></a>Dilation</h3><p>Mat performDilation(Mat inputImage, int dilationElement, int dilationSize)<br>{<br>    Mat outputImage;<br>    int dilationType;</p>
+<pre><code>if(dilationElement == 0)
+    dilationType = MORPH\_RECT;
+
+else if(dilationElement == 1)
+    dilationType = MORPH\_CROSS;
+
+else if(dilationElement == 2)
+    dilationType = MORPH\_ELLIPSE;
+
+// Create the structuring element for dilation
+Mat element = getStructuringElement(dilationType, Size(2\*dilationSize + 1, 2\*dilationSize + 1), Point(dilationSize, dilationSize));
+
+// Dilate the image using the structuring element
+dilate(inputImage, outputImage, element);
+
+// Return the output image
+return outputImage;
+</code></pre>
+<p>}</p>
 
       
     </div>
@@ -1207,7 +1012,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/01/12/cross-compiler-toolchain-arm-linux-gcc-32bit-centos-7-64-bit/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/background-subtraction-vs-frame-differencing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -1221,7 +1026,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/01/12/cross-compiler-toolchain-arm-linux-gcc-32bit-centos-7-64-bit/" class="post-title-link" itemprop="url">Cross Compiler Toolchain (arm-linux-gcc 32bit & CentOS 7 64 Bit)</a>
+            <a href="/2018/05/03/background-subtraction-vs-frame-differencing/" class="post-title-link" itemprop="url">Background Subtraction VS Frame Differencing</a>
         </h2>
 
         <div class="post-meta">
@@ -1231,7 +1036,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-01-12 10:21:13" itemprop="dateCreated datePublished" datetime="2018-01-12T10:21:13+08:00">2018-01-12</time>
+              <time title="Created: 2018-05-03 14:28:38" itemprop="dateCreated datePublished" datetime="2018-05-03T14:28:38+08:00">2018-05-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1246,19 +1051,11 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
+                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
                 </span>
             </span>
 
@@ -1273,8 +1070,283 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Install-GLIBC-amp-ZLIB"><a href="#Install-GLIBC-amp-ZLIB" class="headerlink" title="Install GLIBC &amp; ZLIB"></a>Install GLIBC &amp; ZLIB</h3><p>yum install glibc.i686 zlib.i686 -y</p>
-<h3 id="Install-GLIBC-amp-ZLIB-1"><a href="#Install-GLIBC-amp-ZLIB-1" class="headerlink" title="Install GLIBC &amp; ZLIB"></a>Install GLIBC &amp; ZLIB</h3><p>tar jxvf arm-linux-fsl-4.6.2-20170721.tar.bz2 -C &#x2F;</p>
+          <h3 id="Background-Subtraction"><a href="#Background-Subtraction" class="headerlink" title="Background Subtraction"></a>Background Subtraction</h3><pre><code>// Create MOG Background Subtractor object
+pMOG= cv::bgsegm::createBackgroundSubtractorMOG();//new BackgroundSubtractorMOG();
+
+// Create MOG2 Background Subtractor object
+pMOG2 = createBackgroundSubtractorMOG2(20, 16, true);//new BackgroundSubtractorMOG2();
+
+    // Capture the current frame
+    cap &gt;&gt; frame;
+    
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+    
+    // Update the MOG background model based on the current frame
+    pMOG-&gt;apply(frame, fgMaskMOG);
+    
+    // Update the MOG2 background model based on the current frame
+    pMOG2-&gt;apply(frame, fgMaskMOG2);
+    
+    // Show the current frame
+    //imshow(&quot;Frame&quot;, frame);
+    
+    // Show the MOG foreground mask
+    //imshow(&quot;FG Mask MOG&quot;, fgMaskMOG);
+
+    // Show the MOG2 foreground mask
+    imshow(&quot;FG Mask MOG 2&quot;, fgMaskMOG2);
+</code></pre>
+<h3 id="Frame-Differencing"><a href="#Frame-Differencing" class="headerlink" title="Frame Differencing"></a>Frame Differencing</h3><p>Mat frameDiff(Mat prevFrame, Mat curFrame, Mat nextFrame)<br>{<br>    Mat diffFrames1, diffFrames2, output;</p>
+<pre><code>// Compute absolute difference between current frame and the next frame
+absdiff(nextFrame, curFrame, diffFrames1);
+
+// Compute absolute difference between current frame and the previous frame
+absdiff(curFrame, prevFrame, diffFrames2);
+
+// Bitwise &quot;AND&quot; operation between the above two diff images
+bitwise\_and(diffFrames1, diffFrames2, output);
+
+return output;
+</code></pre>
+<p>}</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/tracking-your-ears/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/03/tracking-your-ears/" class="post-title-link" itemprop="url">Tracking Your Ears</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-03 14:16:59" itemprop="dateCreated datePublished" datetime="2018-05-03T14:16:59+08:00">2018-05-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Tracking-Your-Ears-Two-Ears-o-x2F"><a href="#Tracking-Your-Ears-Two-Ears-o-x2F" class="headerlink" title="Tracking Your Ears (Two Ears, \(^o^)&#x2F;~)"></a>Tracking Your Ears (Two Ears, \(^o^)&#x2F;~)</h3><pre><code>    // Capture the current frame
+    cap &gt;&gt; frame;
+    
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+    
+    // Convert to grayscale
+    cvtColor(frame, frameGray, CV\_BGR2GRAY);
+    
+    // Equalize the histogram
+    equalizeHist(frameGray, frameGray);
+    
+    // Detect left ear
+    leftEarCascade.detectMultiScale(frameGray, leftEars, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
+    
+    // Detect right ear
+    rightEarCascade.detectMultiScale(frameGray, rightEars, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
+    
+    // Draw green rectangle around the left ear
+    for(int i = 0; i &lt; leftEars.size(); i++)
+    &#123;
+        Rect leftEarRect(leftEars\[i\].x, leftEars\[i\].y, leftEars\[i\].width, leftEars\[i\].height);
+        rectangle(frame, leftEarRect, Scalar(0,255,0), 4);
+    &#125;
+    
+    // Draw green rectangle around the right ear
+    for(int i = 0; i &lt; rightEars.size(); i++)
+    &#123;
+        Rect rightEarRect(rightEars\[i\].x, rightEars\[i\].y, rightEars\[i\].width, rightEars\[i\].height);
+        rectangle(frame, rightEarRect, Scalar(0,255,0), 4);
+    &#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/03/overlaying-a-facemask/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/03/overlaying-a-facemask/" class="post-title-link" itemprop="url">Overlaying A Facemask</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-03 14:10:08" itemprop="dateCreated datePublished" datetime="2018-05-03T14:10:08+08:00">2018-05-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/" itemprop="url" rel="index"><span itemprop="name">computer-vision</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/computer-vision/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Detect-Faces"><a href="#Detect-Faces" class="headerlink" title="Detect Faces"></a>Detect Faces</h3><pre><code>    // Capture the current frame
+    cap &gt;&gt; frame;
+
+    // Resize the frame
+    resize(frame, frame, Size(), scalingFactor, scalingFactor, INTER\_AREA);
+
+    // Convert to grayscale
+    cvtColor(frame, frameGray, CV\_BGR2GRAY);
+
+    // Equalize the histogram
+    equalizeHist(frameGray, frameGray);
+
+    // Detect faces
+    faceCascade.detectMultiScale(frameGray, faces, 1.1, 2, 0CV\_HAAR\_SCALE\_IMAGE, Size(30, 30) );
+</code></pre>
+<h3 id="Add-Mask-Image"><a href="#Add-Mask-Image" class="headerlink" title="Add Mask Image"></a>Add Mask Image</h3><pre><code>    // Draw green rectangle around the face
+    for(int i = 0; i &lt; faces.size(); i++)
+    &#123;
+        //Rect faceRect(faces\[i\].x, faces\[i\].y, faces\[i\].width, faces\[i\].height);
+
+        // Custom parameters to make the mask fit your face. You may have to play around with them to make sure it works.
+        int x = faces\[i\].x - int(0.1\*faces\[i\].width);
+        int y = faces\[i\].y - int(0.1\*faces\[i\].height); // 0.0\*faces\[i\].height
+        int w = int(1.1 \* faces\[i\].width);
+        int h = int(1.3 \* faces\[i\].height);
+
+        // Extract region of interest (ROI) covering your face
+        frameROI = frame(Rect(x,y,w,h));
+
+        // Resize the face mask image based on the dimensions of the above ROI
+        resize(faceMask, faceMaskSmall, Size(w,h));
+
+        // Convert the above image to grayscale
+        cvtColor(faceMaskSmall, grayMaskSmall, CV\_BGR2GRAY);
+
+        // Threshold the above image to isolate the pixels associated only with the face mask
+        threshold(grayMaskSmall, grayMaskSmallThresh, 230, 255, CV\_THRESH\_BINARY\_INV);
+
+        // Create mask by inverting the above image (because we don&#39;t want the background to affect the overlay)
+        bitwise\_not(grayMaskSmallThresh, grayMaskSmallThreshInv);
+
+        // Use bitwise &quot;AND&quot; operator to extract precise boundary of face mask
+        bitwise\_and(faceMaskSmall, faceMaskSmall, maskedFace, grayMaskSmallThresh);
+
+        // Use bitwise &quot;AND&quot; operator to overlay face mask
+        bitwise\_and(frameROI, frameROI, maskedFrame, grayMaskSmallThreshInv);
+
+        // Add the above masked images and place it in the original frame ROI to create the final image
+        add(maskedFace, maskedFrame, frame(Rect(x,y,w,h)));
+    &#125;
+</code></pre>
 
       
     </div>
@@ -1293,7 +1365,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1361,14 +1433,14 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -1403,7 +1475,7 @@ while(waitKey(30)!=&#39;q&#39;)&#123;
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

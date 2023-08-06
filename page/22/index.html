@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/04/controller-rabbitmq/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/08/pacemaker-cluster-stack/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2017/12/04/controller-rabbitmq/" class="post-title-link" itemprop="url">Controller --- RabbitMQ</a>
+            <a href="/2017/12/08/pacemaker-cluster-stack/" class="post-title-link" itemprop="url">Pacemaker Cluster Stack</a>
         </h2>
 
         <div class="post-meta">
@@ -180,7 +180,896 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2017-12-04 17:41:21" itemprop="dateCreated datePublished" datetime="2017-12-04T17:41:21+08:00">2017-12-04</time>
+              <time title="Created: 2017-12-08 11:33:28" itemprop="dateCreated datePublished" datetime="2017-12-08T11:33:28+08:00">2017-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/OpenStack-High-Availability/" itemprop="url" rel="index"><span itemprop="name">OpenStack High Availability</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Install-Packages-On-Controller-Nodes"><a href="#Install-Packages-On-Controller-Nodes" class="headerlink" title="Install Packages On Controller Nodes"></a>Install Packages On Controller Nodes</h3><p>[root@controller ~]# yum install corosync pacemaker pcs fence-agents resource-agents -y</p>
+<h3 id="Set-Up-the-Cluster"><a href="#Set-Up-the-Cluster" class="headerlink" title="Set-Up the Cluster"></a>Set-Up the Cluster</h3><p>[root@controller ~]# systemctl enable pcsd<br>[root@controller ~]# systemctl start pcsd</p>
+<p>[root@controller ~]# echo myhaclusterpwd  passwd –stdin hacluster</p>
+<p>[root@controller ~]# pcs cluster auth controller1 controller2 controller3  -u hacluster -p myhaclusterpwd –force</p>
+<p>[root@controller1 ~]# pcs cluster setup –force –name my-cluster controller1 controller2 controller3<br>Destroying cluster on nodes: controller1, controller2, controller3…<br>controller1: Stopping Cluster (pacemaker)…<br>controller2: Stopping Cluster (pacemaker)…<br>controller3: Stopping Cluster (pacemaker)…<br>controller3: Successfully destroyed cluster<br>controller1: Successfully destroyed cluster<br>controller2: Successfully destroyed cluster</p>
+<p>Sending ‘pacemaker_remote authkey’ to ‘controller1’, ‘controller2’, ‘controller3’<br>controller1: successful distribution of the file ‘pacemaker_remote authkey’<br>controller3: successful distribution of the file ‘pacemaker_remote authkey’<br>controller3: successful distribution of the file ‘pacemaker_remote authkey’<br>controller2: successful distribution of the file ‘pacemaker_remote authkey’<br>Sending cluster config files to the nodes…<br>controller1: Succeeded<br>controller2: Succeeded<br>controller3: Succeeded</p>
+<p>Synchronizing pcsd certificates on nodes controller1, controller2, controller3…<br>controller3: Success<br>controller2: Success<br>controller1: Success<br>Restarting pcsd on the nodes in order to reload the certificates…</p>
+<p>controller3: Success<br>controller2: Success<br>controller1: Success<br>[root@controller1 ~]# pcs cluster start –all<br>controller1: Starting Cluster…<br>controller2: Starting Cluster…<br>controller3: Starting Cluster…<br>[root@controller1 ~]# pcs cluster enable –all<br>controller1: Cluster Enabled<br>controller2: Cluster Enabled<br>controller3: Cluster Enabled<br>[root@controller1 ~]# pcs cluster status<br>Cluster Status:<br> Stack: unknown<br> Current DC: NONE<br> Last updated: Fri Dec 15 00:21:36 2017<br> Last change: Fri Dec 15 00:21:24 2017 by hacluster via crmd on controller1<br> 3 nodes configured<br> 0 resources configured<br>PCSD Status:<br>  controller3: Online<br>  controller2: Online<br>  controller1: Online</p>
+<h3 id="Start-Corosync-On-Controllers"><a href="#Start-Corosync-On-Controllers" class="headerlink" title="Start Corosync On Controllers"></a>Start Corosync On Controllers</h3><p>[root@controller ~]# systemctl start corosync</p>
+<p>[root@controller1 ~]# corosync-cfgtool -s<br>Printing ring status.<br>Local node ID 1<br>RING ID 0<br>        id      &#x3D; 192.168.220.21<br>        status  &#x3D; ring 0 active with no faults<br>[root@controller2 ~]# corosync-cfgtool -s<br>Printing ring status.<br>Local node ID 2<br>RING ID 0<br>        id      &#x3D; 192.168.220.22<br>        status  &#x3D; ring 0 active with no faults<br>[root@controller3 ~]# corosync-cfgtool -s<br>Printing ring status.<br>Local node ID 3<br>RING ID 0<br>        id      &#x3D; 192.168.220.23<br>        status  &#x3D; ring 0 active with no faults</p>
+<p>[root@controller ~]# corosync-cmapctl runtime.totem.pg.mrp.srp.members<br>runtime.totem.pg.mrp.srp.members.1.config_version (u64) &#x3D; 0<br>runtime.totem.pg.mrp.srp.members.1.ip (str) &#x3D; r(0) ip(192.168.220.21)<br>runtime.totem.pg.mrp.srp.members.1.join_count (u32) &#x3D; 1<br>runtime.totem.pg.mrp.srp.members.1.status (str) &#x3D; joined<br>runtime.totem.pg.mrp.srp.members.2.config_version (u64) &#x3D; 0<br>runtime.totem.pg.mrp.srp.members.2.ip (str) &#x3D; r(0) ip(192.168.220.22)<br>runtime.totem.pg.mrp.srp.members.2.join_count (u32) &#x3D; 1<br>runtime.totem.pg.mrp.srp.members.2.status (str) &#x3D; joined<br>runtime.totem.pg.mrp.srp.members.3.config_version (u64) &#x3D; 0<br>runtime.totem.pg.mrp.srp.members.3.ip (str) &#x3D; r(0) ip(192.168.220.23)<br>runtime.totem.pg.mrp.srp.members.3.join_count (u32) &#x3D; 1<br>runtime.totem.pg.mrp.srp.members.3.status (str) &#x3D; joined</p>
+<h3 id="Start-Pacemaker"><a href="#Start-Pacemaker" class="headerlink" title="Start Pacemaker"></a>Start Pacemaker</h3><p>[root@controller1 ~]# systemctl start pacemaker<br>[root@controller1 ~]# crm_mon -1<br>Stack: corosync<br>Current DC: controller1 (version 1.1.16-12.el7_4.5-94ff4df) - partition with quorum<br>Last updated: Fri Dec 15 00:34:25 2017<br>Last change: Fri Dec 15 00:21:45 2017 by hacluster via crmd on controller1</p>
+<p>3 nodes configured<br>0 resources configured</p>
+<p>Online: [ controller1 controller2 controller3 ]</p>
+<p>No active resources</p>
+<h3 id="Set-Basic-Cluster-Properties"><a href="#Set-Basic-Cluster-Properties" class="headerlink" title="Set Basic Cluster Properties"></a>Set Basic Cluster Properties</h3><p>[root@controller1 ~]# pcs property set pe-warn-series-max&#x3D;1000 \</p>
+<blockquote>
+<p>  pe-input-series-max&#x3D;1000 \<br>  pe-error-series-max&#x3D;1000 \<br>  cluster-recheck-interval&#x3D;5min<br>[root@controller1 ~]# pcs property set stonith-enabled&#x3D;false</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/08/rabbitmq-cluster-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/08/rabbitmq-cluster-setup/" class="post-title-link" itemprop="url">RabbitMQ Cluster Setup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-08 10:38:42" itemprop="dateCreated datePublished" datetime="2017-12-08T10:38:42+08:00">2017-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:41" itemprop="dateModified" datetime="2022-07-05T09:29:41+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/OpenStack-High-Availability/" itemprop="url" rel="index"><span itemprop="name">OpenStack High Availability</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Install-RabbitMQ"><a href="#Install-RabbitMQ" class="headerlink" title="Install RabbitMQ"></a>Install RabbitMQ</h3><p>[root@controller1 ~]# yum install erlang rabbitmq-server -y<br>[root@controller2 ~]# yum install erlang rabbitmq-server -y<br>[root@controller3 ~]# yum install erlang rabbitmq-server -y</p>
+<p>[root@controller1 ~]# systemctl enable rabbitmq-server.service<br>Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;rabbitmq-server.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;rabbitmq-server.service.<br>[root@controller2 ~]# systemctl enable rabbitmq-server.service<br>Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;rabbitmq-server.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;rabbitmq-server.service.<br>[root@controller3 ~]# systemctl enable rabbitmq-server.service<br>Created symlink from &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;rabbitmq-server.service to &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;rabbitmq-server.service.</p>
+<p>[root@controller1 ~]# systemctl start rabbitmq-server.service</p>
+<p>[root@controller1 ~]# rabbitmq-plugins enable rabbitmq_management<br>The following plugins have been enabled:<br>  mochiweb<br>  webmachine<br>  rabbitmq_web_dispatch<br>  amqp_client<br>  rabbitmq_management_agent<br>  rabbitmq_management</p>
+<p>Applying plugin configuration to rabbit@controller1… started 6 plugins.<br>[root@controller2 ~]# rabbitmq-plugins enable rabbitmq_management<br>The following plugins have been enabled:<br>  mochiweb<br>  webmachine<br>  rabbitmq_web_dispatch<br>  amqp_client<br>  rabbitmq_management_agent<br>  rabbitmq_management</p>
+<p>Applying plugin configuration to rabbit@controller2… started 6 plugins.<br>[root@controller3 ~]# rabbitmq-plugins enable rabbitmq_management<br>The following plugins have been enabled:<br>  mochiweb<br>  webmachine<br>  rabbitmq_web_dispatch<br>  amqp_client<br>  rabbitmq_management_agent<br>  rabbitmq_management</p>
+<p>Applying plugin configuration to rabbit@controller3… started 6 plugins.</p>
+<h3 id="Configure-RabbitMQ-for-HA-queues"><a href="#Configure-RabbitMQ-for-HA-queues" class="headerlink" title="Configure RabbitMQ for HA queues"></a>Configure RabbitMQ for HA queues</h3><p>[root@controller1 ~]# scp &#x2F;var&#x2F;lib&#x2F;rabbitmq&#x2F;.erlang.cookie root@controller2:&#x2F;var&#x2F;lib&#x2F;rabbitmq&#x2F;.erlang.cookie<br>.erlang.cookie                                                             100%   20    19.8KB&#x2F;s   00:00<br>[root@controller1 ~]# scp &#x2F;var&#x2F;lib&#x2F;rabbitmq&#x2F;.erlang.cookie root@controller3:&#x2F;var&#x2F;lib&#x2F;rabbitmq&#x2F;.erlang.cookie<br>.erlang.cookie                                                             100%   20    34.2KB&#x2F;s   00:00    </p>
+<h4 id="On-Each-Nodes"><a href="#On-Each-Nodes" class="headerlink" title="On Each Nodes"></a>On Each Nodes</h4><p># chown rabbitmq:rabbitmq &#x2F;var&#x2F;lib&#x2F;rabbitmq&#x2F;.erlang.cookie</p>
+<h1 id="chmod-400-x2F-var-x2F-lib-x2F-rabbitmq-x2F-erlang-cookie"><a href="#chmod-400-x2F-var-x2F-lib-x2F-rabbitmq-x2F-erlang-cookie" class="headerlink" title="chmod 400 &#x2F;var&#x2F;lib&#x2F;rabbitmq&#x2F;.erlang.cookie"></a>chmod 400 &#x2F;var&#x2F;lib&#x2F;rabbitmq&#x2F;.erlang.cookie</h1><h1 id="systemctl-enable-rabbitmq-server-service"><a href="#systemctl-enable-rabbitmq-server-service" class="headerlink" title="systemctl enable rabbitmq-server.service"></a>systemctl enable rabbitmq-server.service</h1><h1 id="systemctl-start-rabbitmq-server-service"><a href="#systemctl-start-rabbitmq-server-service" class="headerlink" title="systemctl start rabbitmq-server.service"></a>systemctl start rabbitmq-server.service</h1><p>[root@controller1 ~]# rabbitmqctl cluster_status<br>Cluster status of node rabbit@controller1 …<br>[{nodes,[{disc,[rabbit@controller1]}]},<br> {running_nodes,[rabbit@controller1]},<br> {cluster_name,&lt;&lt;”rabbit@controller1”&gt;&gt;},<br> {partitions,[]},<br> {alarms,[{rabbit@controller1,[]}]}]<br>[root@controller2 ~]# rabbitmqctl cluster_status<br>Cluster status of node rabbit@controller2 …<br>[{nodes,[{disc,[rabbit@controller2]}]},<br> {running_nodes,[rabbit@controller2]},<br> {cluster_name,&lt;&lt;”rabbit@controller2”&gt;&gt;},<br> {partitions,[]},<br> {alarms,[{rabbit@controller2,[]}]}]<br>[root@controller3 ~]# rabbitmqctl cluster_status<br>Cluster status of node rabbit@controller3 …<br>[{nodes,[{disc,[rabbit@controller3]}]},<br> {running_nodes,[rabbit@controller3]},<br> {cluster_name,&lt;&lt;”rabbit@controller3”&gt;&gt;},<br> {partitions,[]},<br> {alarms,[{rabbit@controller3,[]}]}]</p>
+<h4 id="On-Other-Nodes"><a href="#On-Other-Nodes" class="headerlink" title="On Other Nodes"></a>On Other Nodes</h4><p>[root@controller2 ~]# rabbitmqctl stop_app<br>Stopping node rabbit@controller2 …<br>[root@controller3 ~]# rabbitmqctl stop_app<br>Stopping node rabbit@controller3 …</p>
+<p>[root@controller2 ~]# rabbitmqctl join_cluster –ram rabbit@controller1<br>Clustering node rabbit@controller2 with rabbit@controller1 …<br>[root@controller3 ~]# rabbitmqctl join_cluster –ram rabbit@controller1<br>Clustering node rabbit@controller3 with rabbit@controller1 …</p>
+<p>[root@controller2 ~]# rabbitmqctl start_app<br>Starting node rabbit@controller2 …<br>[root@controller3 ~]# rabbitmqctl start_app<br>Starting node rabbit@controller3 …</p>
+<h4 id="Set-the-HA-Mode-Policy"><a href="#Set-the-HA-Mode-Policy" class="headerlink" title="Set the HA-Mode Policy"></a>Set the HA-Mode Policy</h4><p>[root@controller1 ~]# rabbitmqctl cluster_status<br>Cluster status of node rabbit@controller1 …<br>[{nodes,[{disc,[rabbit@controller1]},<br>         {ram,[rabbit@controller3,rabbit@controller2]}]},<br> {running_nodes,[rabbit@controller3,rabbit@controller2,rabbit@controller1]},<br> {cluster_name,&lt;&lt;”rabbit@controller1”&gt;&gt;},<br> {partitions,[]},<br> {alarms,[{rabbit@controller3,[]},<br>          {rabbit@controller2,[]},<br>          {rabbit@controller1,[]}]}]<br>[root@controller2 ~]# rabbitmqctl cluster_status<br>Cluster status of node rabbit@controller2 …<br>[{nodes,[{disc,[rabbit@controller1]},<br>         {ram,[rabbit@controller3,rabbit@controller2]}]},<br> {running_nodes,[rabbit@controller3,rabbit@controller1,rabbit@controller2]},<br> {cluster_name,&lt;&lt;”rabbit@controller1”&gt;&gt;},<br> {partitions,[]},<br> {alarms,[{rabbit@controller3,[]},<br>          {rabbit@controller1,[]},<br>          {rabbit@controller2,[]}]}]<br>[root@controller3 ~]# rabbitmqctl set_policy ha-all ‘^(?!amq\.).*‘ ‘{“ha-mode”: “all”}’<br>Setting policy “ha-all” for pattern “^(?!amq\\.).*“ to “{\“ha-mode\“: \“all\“}” with priority “0” …<br>[root@controller3 ~]#<br>[root@controller3 ~]#<br>[root@controller3 ~]# rabbitmqctl cluster_status<br>Cluster status of node rabbit@controller3 …<br>[{nodes,[{disc,[rabbit@controller1]},<br>         {ram,[rabbit@controller3,rabbit@controller2]}]},<br> {running_nodes,[rabbit@controller2,rabbit@controller1,rabbit@controller3]},<br> {cluster_name,&lt;&lt;”rabbit@controller1”&gt;&gt;},<br> {partitions,[]},<br> {alarms,[{rabbit@controller2,[]},<br>          {rabbit@controller1,[]},<br>          {rabbit@controller3,[]}]}]</p>
+<p>[root@controller1 ~]# rabbitmqctl set_policy ha-all ‘^(?!amq\.).*‘ ‘{“ha-mode”: “all”}’<br>Setting policy “ha-all” for pattern “^(?!amq\\.).*“ to “{\“ha-mode\“: \“all\“}” with priority “0” …<br>[root@controller2 ~]# rabbitmqctl set_policy ha-all ‘^(?!amq\.).*‘ ‘{“ha-mode”: “all”}’<br>Setting policy “ha-all” for pattern “^(?!amq\\.).*“ to “{\“ha-mode\“: \“all\“}” with priority “0” …<br>[root@controller3 ~]# rabbitmqctl set_policy ha-all ‘^(?!amq\.).*‘ ‘{“ha-mode”: “all”}’<br>Setting policy “ha-all” for pattern “^(?!amq\\.).*“ to “{\“ha-mode\“: \“all\“}” with priority “0” …</p>
+<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p>img&#x2F;HA-RabbitMQ-V1.gif)</p>
+<h4 id="username-x2F-password"><a href="#username-x2F-password" class="headerlink" title="username&#x2F;password :"></a>username&#x2F;password :</h4><p>guest&#x2F;guest</p>
+<h3 id="Configure-OpenStack-services-to-use-RabbitMQ-HA-queues"><a href="#Configure-OpenStack-services-to-use-RabbitMQ-HA-queues" class="headerlink" title="Configure OpenStack services to use RabbitMQ HA queues"></a>Configure OpenStack services to use RabbitMQ HA queues</h3><p>transport_url &#x3D; rabbit:&#x2F;&#x2F;RABBIT_USER:RABBIT_PASS@rabbit1:5672,<br>RABBIT_USER:RABBIT_PASS@rabbit2:5672,RABBIT_USER:RABBIT_PASS@rabbit3:5672<br>rabbit_retry_interval&#x3D;1<br>rabbit_retry_backoff&#x3D;2<br>rabbit_max_retries&#x3D;0<br>rabbit_durable_queues&#x3D;true<br>rabbit_ha_queues&#x3D;true</p>
+<h3 id="For-the-Old-Set-Up"><a href="#For-the-Old-Set-Up" class="headerlink" title="For the Old Set-Up"></a>For the Old Set-Up</h3><p># rabbitmqctl stop_app</p>
+<h1 id="rabbitmqctl-reset"><a href="#rabbitmqctl-reset" class="headerlink" title="rabbitmqctl reset"></a>rabbitmqctl reset</h1><h1 id="rabbitmqctl-start-app"><a href="#rabbitmqctl-start-app" class="headerlink" title="rabbitmqctl start_app"></a>rabbitmqctl start_app</h1><h3 id="Create-RabbitMQ-Admin"><a href="#Create-RabbitMQ-Admin" class="headerlink" title="Create RabbitMQ Admin"></a>Create RabbitMQ Admin</h3><p>[root@controller1 ~]# rabbitmqctl  add_user admin admin<br>Creating user “admin” …<br>[root@controller1 ~]# rabbitmqctl  set_user_tags admin administrator<br>Setting tags for user “admin” to [administrator] …<br>[root@controller1 ~]# rabbitmqctl add_user openstack openstack<br>Creating user “openstack” …<br>[root@controller1 ~]# rabbitmqctl set_permissions openstack “.*“ “.*“ “.*“<br>Setting permissions for user “openstack” in vhost “&#x2F;“ …<br>[root@controller1 ~]# rabbitmqctl  set_user_tags openstack administrator<br>Setting tags for user “openstack” to [administrator] …<br>[root@controller1 ~]# systemctl restart rabbitmq-server.service</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/08/mariadb-galera-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/08/mariadb-galera-cluster/" class="post-title-link" itemprop="url">MariaDB Galera Cluster</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-08 10:38:30" itemprop="dateCreated datePublished" datetime="2017-12-08T10:38:30+08:00">2017-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/OpenStack-High-Availability/" itemprop="url" rel="index"><span itemprop="name">OpenStack High Availability</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Install-Database-On-Controller-Nodes"><a href="#Install-Database-On-Controller-Nodes" class="headerlink" title="Install Database On Controller Nodes"></a>Install Database On Controller Nodes</h3><p>[root@controller1 ~]# yum install memcached python-memcached -y<br>[root@controller1 ~]# yum install mariadb-galera-server mariadb-galera-common galera rsync -y</p>
+<h3 id="Database-configuration-controller1"><a href="#Database-configuration-controller1" class="headerlink" title="Database configuration(controller1)"></a>Database configuration(controller1)</h3><p>[root@controller1 ~]# cat &#x2F;etc&#x2F;my.cnf<br>[mysqld]<br>datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>user&#x3D;mysql<br>binlog_format&#x3D;ROW<br>bind-address&#x3D;192.168.220.21 # The management IP address of the controller node</p>
+<h1 id="InnoDB-Configuration"><a href="#InnoDB-Configuration" class="headerlink" title="InnoDB Configuration"></a>InnoDB Configuration</h1><p>default_storage_engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>innodb_flush_log_at_trx_commit&#x3D;0<br>innodb_buffer_pool_size&#x3D;122M</p>
+<p>!includedir &#x2F;etc&#x2F;my.cnf.d&#x2F;</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf  grep ^[^#].*<br>[mysqld]<br>binlog_format&#x3D;ROW<br>default-storage-engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>bind-address&#x3D;0.0.0.0<br>wsrep_on&#x3D;1<br>wsrep_provider&#x3D;&#x2F;usr&#x2F;lib64&#x2F;galera&#x2F;libgalera_smm.so<br>wsrep_cluster_name&#x3D;”my_wsrep_cluster”<br>wsrep_cluster_address&#x3D;”gcomm:&#x2F;&#x2F;controller1,controller2,controller3”<br>wsrep_node_name&#x3D;controller1<br>wsrep_node_address&#x3D;192.168.220.21<br>wsrep_slave_threads&#x3D;1<br>wsrep_certify_nonPK&#x3D;1<br>wsrep_max_ws_rows&#x3D;131072<br>wsrep_max_ws_size&#x3D;1073741824<br>wsrep_debug&#x3D;0<br>wsrep_convert_LOCK_to_trx&#x3D;0<br>wsrep_retry_autocommit&#x3D;1<br>wsrep_auto_increment_control&#x3D;1<br>wsrep_drupal_282555_workaround&#x3D;0<br>wsrep_causal_reads&#x3D;0<br>wsrep_notify_cmd&#x3D;<br>wsrep_sst_method&#x3D;rsync<br>wsrep_sst_auth&#x3D;root:</p>
+<h3 id="Database-configuration-controller2-controller3"><a href="#Database-configuration-controller2-controller3" class="headerlink" title="Database configuration(controller2,controller3)"></a>Database configuration(controller2,controller3)</h3><p>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;my.cnf controller2:&#x2F;etc&#x2F;<br>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf controller2:&#x2F;etc&#x2F;my.cnf.d&#x2F;<br>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;my.cnf controller3:&#x2F;etc&#x2F;<br>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf controller3:&#x2F;etc&#x2F;my.cnf.d&#x2F;</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;my.cnf<br>[mysqld]<br>datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>user&#x3D;mysql<br>binlog_format&#x3D;ROW<br>bind-address&#x3D;192.168.220.22 # The management IP address of the controller node</p>
+<h1 id="InnoDB-Configuration-1"><a href="#InnoDB-Configuration-1" class="headerlink" title="InnoDB Configuration"></a>InnoDB Configuration</h1><p>default_storage_engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>innodb_flush_log_at_trx_commit&#x3D;0<br>innodb_buffer_pool_size&#x3D;122M</p>
+<p>!includedir &#x2F;etc&#x2F;my.cnf.d&#x2F;</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf  grep ^[^#].*<br>[mysqld]<br>binlog_format&#x3D;ROW<br>default-storage-engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>bind-address&#x3D;0.0.0.0<br>wsrep_on&#x3D;1<br>wsrep_provider&#x3D;&#x2F;usr&#x2F;lib64&#x2F;galera&#x2F;libgalera_smm.so<br>wsrep_cluster_name&#x3D;”my_wsrep_cluster”<br>wsrep_cluster_address&#x3D;”gcomm:&#x2F;&#x2F;controller1,controller2,controller3”<br>wsrep_node_name&#x3D;controller2<br>wsrep_node_address&#x3D;192.168.220.22<br>wsrep_slave_threads&#x3D;1<br>wsrep_certify_nonPK&#x3D;1<br>wsrep_max_ws_rows&#x3D;131072<br>wsrep_max_ws_size&#x3D;1073741824<br>wsrep_debug&#x3D;0<br>wsrep_convert_LOCK_to_trx&#x3D;0<br>wsrep_retry_autocommit&#x3D;1<br>wsrep_auto_increment_control&#x3D;1<br>wsrep_drupal_282555_workaround&#x3D;0<br>wsrep_causal_reads&#x3D;0<br>wsrep_notify_cmd&#x3D;<br>wsrep_sst_method&#x3D;rsync<br>wsrep_sst_auth&#x3D;root:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;my.cnf<br>[mysqld]<br>datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>user&#x3D;mysql<br>binlog_format&#x3D;ROW<br>bind-address&#x3D;192.168.220.23 # The management IP address of the controller node</p>
+<h1 id="InnoDB-Configuration-2"><a href="#InnoDB-Configuration-2" class="headerlink" title="InnoDB Configuration"></a>InnoDB Configuration</h1><p>default_storage_engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>innodb_flush_log_at_trx_commit&#x3D;0<br>innodb_buffer_pool_size&#x3D;122M</p>
+<p>!includedir &#x2F;etc&#x2F;my.cnf.d&#x2F;</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;my.cnf.d&#x2F;galera.cnf  grep ^[^#].*<br>[mysqld]<br>binlog_format&#x3D;ROW<br>default-storage-engine&#x3D;innodb<br>innodb_autoinc_lock_mode&#x3D;2<br>bind-address&#x3D;0.0.0.0<br>wsrep_on&#x3D;1<br>wsrep_provider&#x3D;&#x2F;usr&#x2F;lib64&#x2F;galera&#x2F;libgalera_smm.so<br>wsrep_cluster_name&#x3D;”my_wsrep_cluster”<br>wsrep_cluster_address&#x3D;”gcomm:&#x2F;&#x2F;controller1,controller2,controller3”<br>wsrep_node_name&#x3D;controller3<br>wsrep_node_address&#x3D;192.168.220.23<br>wsrep_slave_threads&#x3D;1<br>wsrep_certify_nonPK&#x3D;1<br>wsrep_max_ws_rows&#x3D;131072<br>wsrep_max_ws_size&#x3D;1073741824<br>wsrep_debug&#x3D;0<br>wsrep_convert_LOCK_to_trx&#x3D;0<br>wsrep_retry_autocommit&#x3D;1<br>wsrep_auto_increment_control&#x3D;1<br>wsrep_drupal_282555_workaround&#x3D;0<br>wsrep_causal_reads&#x3D;0<br>wsrep_notify_cmd&#x3D;<br>wsrep_sst_method&#x3D;rsync<br>wsrep_sst_auth&#x3D;root:</p>
+<h3 id="Database-Management"><a href="#Database-Management" class="headerlink" title="Database Management"></a>Database Management</h3><h5 id="Initialize-the-Primary-Component-on-one-cluster-node"><a href="#Initialize-the-Primary-Component-on-one-cluster-node" class="headerlink" title="Initialize the Primary Component on one cluster node"></a>Initialize the Primary Component on one cluster node</h5><p>[root@controller1 ~]# &#x2F;usr&#x2F;libexec&#x2F;mysqld –wsrep-new-cluster –user&#x3D;root &amp;</p>
+<h5 id="Start-the-database-server-on-all-other-cluster-nodes"><a href="#Start-the-database-server-on-all-other-cluster-nodes" class="headerlink" title="Start the database server on all other cluster nodes"></a>Start the database server on all other cluster nodes</h5><p>[root@controller2 ~]# systemctl start mariadb<br>[root@controller3 ~]# systemctl start mariadb</p>
+<h5 id="Check-MaribDB-Cluster"><a href="#Check-MaribDB-Cluster" class="headerlink" title="Check MaribDB Cluster"></a>Check MaribDB Cluster</h5><h6 id="The-Key-Value"><a href="#The-Key-Value" class="headerlink" title="The Key Value :"></a>The Key Value :</h6><ul>
+<li>wsrep_connected ON</li>
+<li>wsrep_cluster_size 3</li>
+<li>wsrep_local_index 0 (controller1 : 0 controller2 : 1 controller3 : 2)</li>
+<li>wsrep_incoming_addresses 192.168.220.21:3306,192.168.220.22:3306,192.168.220.23:3306</li>
+</ul>
+<p>[root@controller1 ~]# mysql -uroot -proot -e “show status like ‘wsrep_%’”<br>+——————————+————————————————————-+<br> Variable_name                 Value<br>+——————————+————————————————————-+<br> wsrep_apply_oooe              0.000000<br> wsrep_apply_oool              0.000000<br> wsrep_apply_window            0.000000<br> wsrep_causal_reads            0<br> wsrep_cert_deps_distance      0.000000<br> wsrep_cert_index_size         0<br> wsrep_cert_interval           0.000000<br> wsrep_cluster_conf_id         3<br> wsrep_cluster_size            3<br> wsrep_cluster_state_uuid      37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_cluster_status          Primary<br> wsrep_commit_oooe             0.000000<br> wsrep_commit_oool             0.000000<br> wsrep_commit_window           0.000000<br> wsrep_connected               ON<br> wsrep_desync_count            0<br> wsrep_evs_delayed<br> wsrep_evs_evict_list<br> wsrep_evs_repl_latency        0&#x2F;0&#x2F;0&#x2F;0&#x2F;0<br> wsrep_evs_state               OPERATIONAL<br> wsrep_flow_control_paused     0.000000<br> wsrep_flow_control_paused_ns  0<br> wsrep_flow_control_recv       0<br> wsrep_flow_control_sent       0<br> wsrep_gcomm_uuid              37644373-e137-11e7-8fef-c76eb92175c6<br> wsrep_incoming_addresses      192.168.220.21:3306,192.168.220.22:3306,192.168.220.23:3306<br> wsrep_last_committed          0<br> wsrep_local_bf_aborts         0<br> wsrep_local_cached_downto     18446744073709551615<br> wsrep_local_cert_failures     0<br> wsrep_local_commits           0<br> wsrep_local_index             0<br> wsrep_local_recv_queue        0<br> wsrep_local_recv_queue_avg    0.100000<br> wsrep_local_recv_queue_max    2<br> wsrep_local_recv_queue_min    0<br> wsrep_local_replays           0<br> wsrep_local_send_queue        0<br> wsrep_local_send_queue_avg    0.000000<br> wsrep_local_send_queue_max    1<br> wsrep_local_send_queue_min    0<br> wsrep_local_state             4<br> wsrep_local_state_comment     Synced<br> wsrep_local_state_uuid        37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_protocol_version        7<br> wsrep_provider_name           Galera<br> wsrep_provider_vendor         Codership Oy wsrep_provider_version        3.16(r5c765eb)<br> wsrep_ready                   ON<br> wsrep_received                10<br> wsrep_received_bytes          794<br> wsrep_repl_data_bytes         0<br> wsrep_repl_keys               0<br> wsrep_repl_keys_bytes         0<br> wsrep_repl_other_bytes        0<br> wsrep_replicated              0<br> wsrep_replicated_bytes        0<br> wsrep_thread_count            2<br>+——————————+————————————————————-+<br>[root@controller2 ~]# mysql -uroot -proot -e “show status like ‘wsrep_%’”<br>+——————————+————————————————————-+<br> Variable_name                 Value<br>+——————————+————————————————————-+<br> wsrep_apply_oooe              0.000000<br> wsrep_apply_oool              0.000000<br> wsrep_apply_window            0.000000<br> wsrep_causal_reads            0<br> wsrep_cert_deps_distance      0.000000<br> wsrep_cert_index_size         0<br> wsrep_cert_interval           0.000000<br> wsrep_cluster_conf_id         3<br> wsrep_cluster_size            3<br> wsrep_cluster_state_uuid      37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_cluster_status          Primary<br> wsrep_commit_oooe             0.000000<br> wsrep_commit_oool             0.000000<br> wsrep_commit_window           0.000000<br> wsrep_connected               ON<br> wsrep_desync_count            0<br> wsrep_evs_delayed<br> wsrep_evs_evict_list<br> wsrep_evs_repl_latency        0.000204825&#x2F;0.00047307&#x2F;0.000741314&#x2F;0.000268244&#x2F;2<br> wsrep_evs_state               OPERATIONAL<br> wsrep_flow_control_paused     0.000000<br> wsrep_flow_control_paused_ns  0<br> wsrep_flow_control_recv       0<br> wsrep_flow_control_sent       0<br> wsrep_gcomm_uuid              781401a8-e137-11e7-bba3-9e3f83e88f32<br> wsrep_incoming_addresses      192.168.220.21:3306,192.168.220.22:3306,192.168.220.23:3306<br> wsrep_last_committed          0<br> wsrep_local_bf_aborts         0<br> wsrep_local_cached_downto     18446744073709551615<br> wsrep_local_cert_failures     0<br> wsrep_local_commits           0<br> wsrep_local_index             1<br> wsrep_local_recv_queue        0<br> wsrep_local_recv_queue_avg    0.000000<br> wsrep_local_recv_queue_max    1<br> wsrep_local_recv_queue_min    0<br> wsrep_local_replays           0<br> wsrep_local_send_queue        0<br> wsrep_local_send_queue_avg    0.000000<br> wsrep_local_send_queue_max    1<br> wsrep_local_send_queue_min    0<br> wsrep_local_state             4<br> wsrep_local_state_comment     Synced<br> wsrep_local_state_uuid        37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_protocol_version        7<br> wsrep_provider_name           Galera<br> wsrep_provider_vendor         Codership Oy wsrep_provider_version        3.16(r5c765eb)<br> wsrep_ready                   ON<br> wsrep_received                4<br> wsrep_received_bytes          529<br> wsrep_repl_data_bytes         0<br> wsrep_repl_keys               0<br> wsrep_repl_keys_bytes         0<br> wsrep_repl_other_bytes        0<br> wsrep_replicated              0<br> wsrep_replicated_bytes        0<br> wsrep_thread_count            2<br>+——————————+————————————————————-+<br>[root@controller3 ~]# mysql -uroot -proot -e “show status like ‘wsrep_%’”<br>+——————————+————————————————————-+<br> Variable_name                 Value<br>+——————————+————————————————————-+<br> wsrep_apply_oooe              0.000000<br> wsrep_apply_oool              0.000000<br> wsrep_apply_window            0.000000<br> wsrep_causal_reads            0<br> wsrep_cert_deps_distance      0.000000<br> wsrep_cert_index_size         0<br> wsrep_cert_interval           0.000000<br> wsrep_cluster_conf_id         3<br> wsrep_cluster_size            3<br> wsrep_cluster_state_uuid      37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_cluster_status          Primary<br> wsrep_commit_oooe             0.000000<br> wsrep_commit_oool             0.000000<br> wsrep_commit_window           0.000000<br> wsrep_connected               ON<br> wsrep_desync_count            0<br> wsrep_evs_delayed<br> wsrep_evs_evict_list<br> wsrep_evs_repl_latency        0.000224679&#x2F;0.000465885&#x2F;0.000643407&#x2F;0.000164076&#x2F;5<br> wsrep_evs_state               OPERATIONAL<br> wsrep_flow_control_paused     0.000000<br> wsrep_flow_control_paused_ns  0<br> wsrep_flow_control_recv       0<br> wsrep_flow_control_sent       0<br> wsrep_gcomm_uuid              7ce71d07-e137-11e7-b720-baa5cd647a15<br> wsrep_incoming_addresses      192.168.220.21:3306,192.168.220.22:3306,192.168.220.23:3306<br> wsrep_last_committed          0<br> wsrep_local_bf_aborts         0<br> wsrep_local_cached_downto     18446744073709551615<br> wsrep_local_cert_failures     0<br> wsrep_local_commits           0<br> wsrep_local_index             2<br> wsrep_local_recv_queue        0<br> wsrep_local_recv_queue_avg    0.000000<br> wsrep_local_recv_queue_max    1<br> wsrep_local_recv_queue_min    0<br> wsrep_local_replays           0<br> wsrep_local_send_queue        0<br> wsrep_local_send_queue_avg    0.333333<br> wsrep_local_send_queue_max    2<br> wsrep_local_send_queue_min    0<br> wsrep_local_state             4<br> wsrep_local_state_comment     Synced<br> wsrep_local_state_uuid        37649504-e137-11e7-815b-1ec404fbf23e<br> wsrep_protocol_version        7<br> wsrep_provider_name           Galera<br> wsrep_provider_vendor         Codership Oy wsrep_provider_version        3.16(r5c765eb)<br> wsrep_ready                   ON<br> wsrep_received                3<br> wsrep_received_bytes          311<br> wsrep_repl_data_bytes         0<br> wsrep_repl_keys               0<br> wsrep_repl_keys_bytes         0<br> wsrep_repl_other_bytes        0<br> wsrep_replicated              0<br> wsrep_replicated_bytes        0<br> wsrep_thread_count            2<br>+——————————+————————————————————-+ </p>
+<h5 id="Test-MaribDB-Cluster"><a href="#Test-MaribDB-Cluster" class="headerlink" title="Test MaribDB Cluster"></a>Test MaribDB Cluster</h5><p>[root@controller1 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller2 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller3 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller1 ~]# mysql -uroot -proot -e “create database galera_test”<br>[root@controller1 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> galera_test<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller2 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> galera_test<br> information_schema<br> mysql<br> performance_schema<br>+——————–+<br>[root@controller3 ~]# mysql -uroot -proot -e “show databases”<br>+——————–+<br> Database<br>+——————–+<br> galera_test<br> information_schema<br> mysql<br> performance_schema<br>+——————–+</p>
+<h3 id="Database-Management-1"><a href="#Database-Management-1" class="headerlink" title="Database Management"></a>Database Management</h3><p>echo ‘<br>MYSQL_USERNAME&#x3D;”clustercheck_user”<br>MYSQL_PASSWORD&#x3D;”my_clustercheck_password”<br>MYSQL_HOST&#x3D;”localhost”<br>MYSQL_PORT&#x3D;”3306”<br>‘ &gt; &#x2F;etc&#x2F;sysconfig&#x2F;clustercheck</p>
+<h3 id="Grant-the-clustercheck-user"><a href="#Grant-the-clustercheck-user" class="headerlink" title="Grant the clustercheck user"></a>Grant the clustercheck user</h3><p>[root@controller1 ~]# mysql -uroot -proot -e “GRANT PROCESS ON *.* TO ‘clustercheck_user‘@’localhost’ IDENTIFIED BY ‘my_clustercheck_password’;FLUSH PRIVILEGES;”<br>[root@controller1 ~]# mysql -uroot -proot -e “SELECT User, Host, Password FROM mysql.user;”<br>+——————-+———–+——————————————-+<br> User               Host       Password<br>+——————-+———–+——————————————-+<br> root               localhost  *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B<br> root               127.0.0.1  *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B<br> root               ::1        *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B<br> clustercheck_user  localhost  *B7ECF4F5C3B1DDB87695D91C5D27631AEC569993<br>+——————-+———–+——————————————-+</p>
+<h3 id="Create-a-configuration-file-for-the-HAProxy-monitor-service"><a href="#Create-a-configuration-file-for-the-HAProxy-monitor-service" class="headerlink" title="Create a configuration file for the HAProxy monitor service"></a>Create a configuration file for the HAProxy monitor service</h3><p>echo ‘<br>service galera-monitor<br>{<br>   port &#x3D; 9200<br>   disable &#x3D; no<br>   socket_type &#x3D; stream<br>   protocol &#x3D; tcp<br>   wait &#x3D; no<br>   user &#x3D; root<br>   group &#x3D; root<br>   groups &#x3D; yes<br>   server &#x3D; &#x2F;usr&#x2F;bin&#x2F;clustercheck<br>   type &#x3D; UNLISTED<br>   per_source &#x3D; UNLIMITED<br>   log_on_success &#x3D;<br>   log_on_failure &#x3D; HOST<br>   flags &#x3D; REUSE<br>}<br>‘ &gt; &#x2F;etc&#x2F;xinetd.d&#x2F;galera-monitor</p>
+<h3 id="Create-OpenStack-Users-amp-Databases"><a href="#Create-OpenStack-Users-amp-Databases" class="headerlink" title="Create OpenStack Users &amp; Databases"></a>Create OpenStack Users &amp; Databases</h3><p>[root@controller1 ~]# mysql -u root -proot -e “</p>
+<blockquote>
+<p>create database keystone;<br>grant all privileges on keystone.* to ‘keystone‘@’localhost’ identified by ‘keystone’;<br>grant all privileges on keystone.* to ‘keystone‘@’%’ identified by ‘keystone’;<br>create database glance;<br>grant all privileges on glance.* to ‘glance‘@’localhost’ identified by ‘glance’;<br>grant all privileges on glance.* to ‘glance‘@’%’ identified by ‘glance’;</p>
+<p>create database nova;<br>grant all privileges on nova.* to ‘nova‘@’localhost’ identified by ‘nova’;<br>grant all privileges on nova.* to ‘nova‘@’%’ identified by ‘nova’;<br>create database nova_api;<br>grant all privileges on nova_api.* to ‘nova‘@’localhost’ identified by ‘nova’;<br>grant all privileges on nova_api.* to ‘nova‘@’%’ identified by ‘nova’;<br>create database nova_cell0;<br>grant all privileges on nova_cell0.* to ‘nova‘@’localhost’ identified by ‘nova’;<br>grant all privileges on nova_cell0.* to ‘nova‘@’%’ identified by ‘nova’;</p>
+<p>create database neutron;<br>grant all privileges on neutron.* to ‘neutron‘@’localhost’ identified by ‘neutron’;<br>grant all privileges on neutron.* to ‘neutron‘@’%’ identified by ‘neutron’;</p>
+<p>flush privileges;<br>select user,host from mysql.user;<br>show databases;<br>“<br>“<br>+——————-+———–+<br> user               host<br>+——————-+———–+<br> glance             %<br> keystone           %<br> neutron            %<br> nova               %<br> root               127.0.0.1<br> root               ::1<br> clustercheck_user  localhost<br> glance             localhost<br> keystone           localhost<br> neutron            localhost<br> nova               localhost<br> root               localhost<br>+——————-+———–+<br>+——————–+<br> Database<br>+——————–+<br> galera_test<br> glance<br> information_schema<br> keystone<br> mysql<br> neutron<br> nova<br> nova_api<br> nova_cell0<br> performance_schema<br>+——————–+</p>
+</blockquote>
+<h3 id="Start-the-xinetd-daemon-for-clustercheck"><a href="#Start-the-xinetd-daemon-for-clustercheck" class="headerlink" title="Start the xinetd daemon for clustercheck"></a>Start the xinetd daemon for clustercheck</h3><p>[root@controller1 ~]# systemctl daemon-reload<br>[root@controller1 ~]# systemctl enable xinetd<br>[root@controller1 ~]# systemctl start xinetd</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/08/memcached-multiple-servers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/08/memcached-multiple-servers/" class="post-title-link" itemprop="url">Memcached on Multiple Servers</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-08 10:38:14" itemprop="dateCreated datePublished" datetime="2017-12-08T10:38:14+08:00">2017-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/OpenStack-High-Availability/" itemprop="url" rel="index"><span itemprop="name">OpenStack High Availability</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Install-the-packages"><a href="#Install-the-packages" class="headerlink" title="Install the packages"></a>Install the packages</h3><p># yum install memcached python-memcached</p>
+<h3 id="Edit-the-x2F-etc-x2F-sysconfig-x2F-memcached-file"><a href="#Edit-the-x2F-etc-x2F-sysconfig-x2F-memcached-file" class="headerlink" title="Edit the &#x2F;etc&#x2F;sysconfig&#x2F;memcached file"></a>Edit the &#x2F;etc&#x2F;sysconfig&#x2F;memcached file</h3><p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;memcached<br>PORT&#x3D;”11211”<br>USER&#x3D;”memcached”<br>MAXCONN&#x3D;”1024”<br>CACHESIZE&#x3D;”64”<br>OPTIONS&#x3D;”-l 127.0.0.1,::1,controller”<br>Memcached_servers &#x3D; controller1:11211,controller2:11211,controller3:11211</p>
+<h3 id="PCS-Create-Memcached"><a href="#PCS-Create-Memcached" class="headerlink" title="PCS Create Memcached"></a>PCS Create Memcached</h3><p># pcs resource delete memcached –force</p>
+<h1 id="pcs-resource-create-memcached-systemd-memcached-–clone-interleave-x3D-true"><a href="#pcs-resource-create-memcached-systemd-memcached-–clone-interleave-x3D-true" class="headerlink" title="pcs resource create memcached systemd:memcached –clone interleave&#x3D;true"></a>pcs resource create memcached systemd:memcached –clone interleave&#x3D;true</h1><h1 id="pcs-status"><a href="#pcs-status" class="headerlink" title="pcs status"></a>pcs status</h1>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/08/install-centos-configure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/08/install-centos-configure/" class="post-title-link" itemprop="url">Install CentOS & Configure</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-08 10:06:42" itemprop="dateCreated datePublished" datetime="2017-12-08T10:06:42+08:00">2017-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/OpenStack-High-Availability/" itemprop="url" rel="index"><span itemprop="name">OpenStack High Availability</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Firewall-Configure"><a href="#Firewall-Configure" class="headerlink" title="Firewall Configure"></a>Firewall Configure</h3><p>[root@localhost ~]# systemctl stop firewalld.service<br>[root@localhost ~]# systemctl disable firewalld.service<br>[root@localhost ~]# firewall-cmd –state</p>
+<h3 id="Disable-SELinux"><a href="#Disable-SELinux" class="headerlink" title="Disable SELinux"></a>Disable SELinux</h3><p>[root@localhost ~]# sed -i ‘&#x2F;^SELINUX&#x3D;.*&#x2F;c SELINUX&#x3D;disabled’ &#x2F;etc&#x2F;selinux&#x2F;config<br>[root@localhost ~]# sed -i ‘s&#x2F;^SELINUXTYPE&#x3D;.*&#x2F;SELINUXTYPE&#x3D;disabled&#x2F;g’ &#x2F;etc&#x2F;selinux&#x2F;config<br>[root@localhost ~]# grep –color&#x3D;auto ‘^SELINUX’ &#x2F;etc&#x2F;selinux&#x2F;config<br>[root@localhost ~]# setenforce 0</p>
+<h3 id="Synchronize-time"><a href="#Synchronize-time" class="headerlink" title="Synchronize time"></a>Synchronize time</h3><p>Refer to “CLOUD COMPUTING —&gt; OpenStack High Availability —&gt; 3.Create Local NTP”</p>
+<h3 id="Set-HostName"><a href="#Set-HostName" class="headerlink" title="Set HostName"></a>Set HostName</h3><p>[root@localhost ~]# hostnamectl set-hostname controller1<br>[root@localhost ~]# hostnamectl set-hostname controller2<br>[root@localhost ~]# hostnamectl set-hostname controller3<br>[root@localhost ~]# hostnamectl set-hostname compute01<br>[root@localhost ~]# hostnamectl set-hostname compute02</p>
+<h3 id="Network-Configure"><a href="#Network-Configure" class="headerlink" title="Network Configure"></a>Network Configure</h3><p>192.168.200.0Host-only 192.168.220.0NAT</p>
+<h4 id="Controller1"><a href="#Controller1" class="headerlink" title="Controller1"></a>Controller1</h4><p>[root@controller1 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 369 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–  1 root root 326 Dec 13 22:26 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>-rw-r–r–  1 root root 326 Dec 13 22:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;9eb00433-c8b9-4be2-af53-50cab2247226<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.11<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;cf7a62c9-e135-4488-b252-99717664941c<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.21<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens38<br>UUID&#x3D;b077534d-3154-43ca-a240-ac811f255f42<br>DEVICE&#x3D;ens38<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.11<br>NETMASK&#x3D;255.255.255.0</p>
+<p>Update the 4th network adapter:</p>
+<p>[root@controller1 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens39<br>UUID&#x3D;ea5e0f92-8f8c-457f-a693-f946c623d0e7<br>DEVICE&#x3D;ens39<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.21<br>NETMASK&#x3D;255.255.255.0</p>
+<h4 id="Controller2"><a href="#Controller2" class="headerlink" title="Controller2"></a>Controller2</h4><p>[root@controller2 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 369 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–  1 root root 326 Dec 13 22:26 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>-rw-r–r–  1 root root 326 Dec 13 22:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;14a0d64d-bca2-4b37-ac1d-460897567fff<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.12<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;c382316f-97d8-4e3f-a82b-b48cd6d0d025<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.22<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens38<br>UUID&#x3D;f727a6f1-0ae0-4c0d-aa54-fbaefb3570c7<br>DEVICE&#x3D;ens38<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.12<br>NETMASK&#x3D;255.255.255.0</p>
+<p>Update the 4th network adapter:</p>
+<p>[root@controller2 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens39<br>UUID&#x3D;b56c3af9-2844-47e3-9e30-ef078640b2f1<br>DEVICE&#x3D;ens39<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.22<br>NETMASK&#x3D;255.255.255.0</p>
+<h4 id="Controller3"><a href="#Controller3" class="headerlink" title="Controller3"></a>Controller3</h4><p>[root@controller3 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 369 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–  1 root root 326 Dec 13 22:26 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>-rw-r–r–  1 root root 326 Dec 13 22:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;5ca30d63-789d-4df4-9f98-29aa74945e1b<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.13<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;8cb6cd8b-304f-4148-96bb-326976276d17<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.23<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 3rd network adapter:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens38<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens38<br>UUID&#x3D;9d8e2ebb-ded2-4d51-8b77-072ccfc269c3<br>DEVICE&#x3D;ens38<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.13<br>NETMASK&#x3D;255.255.255.0</p>
+<p>Update the 4th network adapter:</p>
+<p>[root@controller3 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens39<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens39<br>UUID&#x3D;639fdbe3-b6f4-4f8d-b988-b9e01ef5041e<br>DEVICE&#x3D;ens39<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.23<br>NETMASK&#x3D;255.255.255.0</p>
+<h4 id="Compute01"><a href="#Compute01" class="headerlink" title="Compute01"></a>Compute01</h4><p>[root@compute01 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 326 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@compute01 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;fdab3eb4-d1c6-46e4-a09e-f3cff2c23514<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.51<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@compute01 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;0157d35c-ced3-4c0c-a519-48cb2a11e8db<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.51<br>NETMASK&#x3D;255.255.255.0</p>
+<h4 id="Compute02"><a href="#Compute02" class="headerlink" title="Compute02"></a>Compute02</h4><p>[root@compute02 ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–  1 root root 369 Dec 13 22:22 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>-rw-r–r–  1 root root 326 Dec 13 22:23 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>-rw-r–r–. 1 root root 254 May  3  2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
+<p>Update the 1st network adapter:</p>
+<p>[root@compute02 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens33<br>UUID&#x3D;e8cf9148-b8dd-4879-8851-f523bb0cefd0<br>DEVICE&#x3D;ens33<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.220.61<br>NETMAKE&#x3D;255.255.255.0<br>GATEWAY&#x3D;192.168.220.2<br>DNS1&#x3D;114.114.114.114</p>
+<p>Update the 2nd network adapter:</p>
+<p>[root@compute02 ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens37<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;ens37<br>UUID&#x3D;308add2b-09df-495f-b706-5afbdff0ff9e<br>DEVICE&#x3D;ens37<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;192.168.200.61<br>NETMAKE&#x3D;255.255.255.0</p>
+<h3 id="Update-HostName"><a href="#Update-HostName" class="headerlink" title="Update HostName"></a>Update HostName</h3><p>[root@controller1 ~]# cat &#x2F;etc&#x2F;hosts<br>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4<br>::1         localhost localhost.localdomain localhost6 localhost6.localdomain6<br>192.168.220.20 controller # virtual IP<br>192.168.220.21 controller1<br>192.168.220.22 controller2<br>192.168.220.23 controller3<br>192.168.220.51 compute01<br>192.168.220.61 compute02</p>
+<h3 id="Controller-SSH"><a href="#Controller-SSH" class="headerlink" title="Controller SSH"></a>Controller SSH</h3><p>[root@controller1 ~]# ssh-keygen -t rsa -P “” -f ~&#x2F;.ssh&#x2F;id_rsa<br>Generating public&#x2F;private rsa key pair.<br>Created directory ‘&#x2F;root&#x2F;.ssh’.<br>Your identification has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.<br>Your public key has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub.<br>The key fingerprint is:<br>SHA256:RJz627PplvqRVorpdiRPXLZ15aiQD&#x2F;YruvXT&#x2F;Cu1sSo root@controller1<br>The key s randomart image is:<br>+—[RSA 2048]—-+<br>       …<br>       .o       .<br>       ..  .   o.<br>      ..  &#x3D; o o o<br>       .So B.+ .<br>        oo++&#x3D;  o<br>        oB*. +. +<br>       .ooOEo.oo<br>       .&#x3D;O&#x3D;+ooooo<br>+—-[SHA256]—–+<br>[root@controller1 ~]# ssh-copy-id -i ~&#x2F;.ssh&#x2F;id_rsa.pub root@controller2<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: Source of key(s) to be installed: “&#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub”<br>The authenticity of host ‘controller2 (192.168.220.22)’ can’t be established.<br>ECDSA key fingerprint is SHA256:Q5vLVMvx0+FWYxqM263f4&#x2F;&#x2F;dH72IwEgT&#x2F;bWeOIlwTfY.<br>ECDSA key fingerprint is MD5:b5:6a:fb:3f:be:98:f7:d9:71:4e:d1:89:c4:7f:8f:00.<br>Are you sure you want to continue connecting (yes&#x2F;no)? yes<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: 1 key(s) remain to be installed – if you are prompted now it is to install the new keys<br>root@controller2’s password: </p>
+<p>Number of key(s) added: 1</p>
+<p>Now try logging into the machine, with:   “ssh ‘root@controller2’”<br>and check to make sure that only the key(s) you wanted were added.</p>
+<p>[root@controller1 ~]# ssh-copy-id -i ~&#x2F;.ssh&#x2F;id_rsa.pub root@controller3<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: Source of key(s) to be installed: “&#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub”<br>The authenticity of host ‘controller3 (192.168.220.23)’ can’t be established.<br>ECDSA key fingerprint is SHA256:Q5vLVMvx0+FWYxqM263f4&#x2F;&#x2F;dH72IwEgT&#x2F;bWeOIlwTfY.<br>ECDSA key fingerprint is MD5:b5:6a:fb:3f:be:98:f7:d9:71:4e:d1:89:c4:7f:8f:00.<br>Are you sure you want to continue connecting (yes&#x2F;no)? yes<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed<br>&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: 1 key(s) remain to be installed – if you are prompted now it is to install the new keys<br>root@controller3’s password: </p>
+<p>Number of key(s) added: 1</p>
+<p>Now try logging into the machine, with:   “ssh ‘root@controller3’”<br>and check to make sure that only the key(s) you wanted were added.</p>
+<p>[root@controller1 ~]# ssh controller2<br>Last login: Thu Dec 14 00:47:15 2017 from 192.168.220.1<br>[root@controller2 ~]# exit<br>logout<br>Connection to controller2 closed.<br>[root@controller1 ~]# ssh controller3<br>Last login: Thu Dec 14 00:47:16 2017 from 192.168.220.1<br>[root@controller3 ~]# exit<br>logout<br>Connection to controller3 closed.<br>[root@controller1 ~]# </p>
+<h3 id="Use-Local-Repository"><a href="#Use-Local-Repository" class="headerlink" title="Use Local Repository"></a>Use Local Repository</h3><p>Refer to “CLOUD COMPUTING —&gt; OpenStack High Availability —&gt; 2.Create Local Repository</p>
+<h4 id="Use-Ali-Mirror"><a href="#Use-Ali-Mirror" class="headerlink" title="Use Ali Mirror"></a>Use Ali Mirror</h4><p>[root@localrepo ~]# wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a><br>[root@localrepo ~]# cat &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Pike.repo </p>
+<p>[centos-openstack-pike]<br>name&#x3D;centos-openstack-pike<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/centos/$releasever/cloud/$basearch/openstack-pike/">https://mirrors.aliyun.com/centos/$releasever/cloud/$basearch/openstack-pike/</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+<p>[centos-qemu-ev]<br>name&#x3D;centos-qemu-ev<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/centos/$releasever/virt/$basearch/kvm-common/">https://mirrors.aliyun.com/centos/$releasever/virt/$basearch/kvm-common/</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+<h4 id="Sync-Repo"><a href="#Sync-Repo" class="headerlink" title="Sync Repo"></a>Sync Repo</h4><p>[root@localrepo myrepo]# reposync –repoid&#x3D;centos-openstack-pike<br>[root@localrepo myrepo]# reposync –repoid&#x3D;centos-qemu-ev<br>[root@localrepo myrepo]# ls -al<br>total 120<br>drwxr-xr-x. 7 root root    98 Dec 14 02:51 .<br>drwxr-xr-x. 3 root root    20 Dec 13 03:03 ..<br>drwxr-xr-x. 4 root root    38 Dec 14 02:30 base<br>drwxr-xr-x. 3 root root 90112 Dec 14 02:50 centos-openstack-pike<br>drwxr-xr-x. 2 root root  4096 Dec 14 02:51 centos-qemu-ev<br>drwxr-xr-x. 4 root root    38 Dec 14 02:31 extras<br>drwxr-xr-x. 4 root root    38 Dec 14 02:31 updates</p>
+<h4 id="Create-Repo"><a href="#Create-Repo" class="headerlink" title="Create Repo"></a>Create Repo</h4><p>[root@localrepo myrepo]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;centos-openstack-pike<br>Spawning worker 0 with 1091 pkgs<br>Spawning worker 1 with 1091 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete<br>[root@localrepo myrepo]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;centos-qemu-ev&#x2F;<br>Spawning worker 0 with 18 pkgs<br>Spawning worker 1 with 17 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete</p>
+<h4 id="Add-Ali-Mirror-On-Client-Node"><a href="#Add-Ali-Mirror-On-Client-Node" class="headerlink" title="Add Ali Mirror On Client Node"></a>Add Ali Mirror On Client Node</h4><p>[root@controller1 ~]# cat &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Pike.repo </p>
+<p>[centos-openstack-pike]<br>name&#x3D;centos-openstack-pike<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/centos-openstack-pike/">http://192.168.220.200/myrepo/centos-openstack-pike/</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+<p>[centos-qemu-ev]<br>name&#x3D;centos-qemu-ev<br>baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/centos-qemu-ev/">http://192.168.220.200/myrepo/centos-qemu-ev/</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+<p>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Pike.repo controller2:&#x2F;etc&#x2F;yum.repos.d&#x2F;<br>sending incremental file list<br>CentOS-Pike.repo<br>         247 100%    0.00kB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;0&#x2F;1)</p>
+<p>sent 195 bytes  received 31 bytes  452.00 bytes&#x2F;sec<br>total size is 247  speedup is 1.09<br>[root@controller1 ~]# rsync -avzP  -e ‘ssh -p 22’  &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Pike.repo controller3:&#x2F;etc&#x2F;yum.repos.d&#x2F;<br>sending incremental file list<br>CentOS-Pike.repo<br>         247 100%    0.00kB&#x2F;s    0:00:00 (xfer#1, to-check&#x3D;0&#x2F;1)</p>
+<p>sent 195 bytes  received 31 bytes  452.00 bytes&#x2F;sec<br>total size is 247  speedup is 1.09</p>
+<h3 id="Install-OpenStack-Environment-On-All-Nodes"><a href="#Install-OpenStack-Environment-On-All-Nodes" class="headerlink" title="Install OpenStack Environment On All Nodes"></a>Install OpenStack Environment On All Nodes</h3><p>[root@controller1 ~]# yum install centos-release-openstack-pike -y<br>[root@controller1 ~]# yum install python-openstackclient openstack-selinux python2-PyMySQL openstack-utils -y<br>[root@controller1 ~]# yum update -y</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/07/create-local-ntp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/07/create-local-ntp/" class="post-title-link" itemprop="url">Create Local NTP</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-07 08:02:35" itemprop="dateCreated datePublished" datetime="2017-12-07T08:02:35+08:00">2017-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/OpenStack-High-Availability/" itemprop="url" rel="index"><span itemprop="name">OpenStack High Availability</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Controller-node"><a href="#Controller-node" class="headerlink" title="Controller node"></a>Controller node</h2><h3 id="Install-Chrony"><a href="#Install-Chrony" class="headerlink" title="Install Chrony"></a>Install Chrony</h3><p>[root@localhost ~]# yum install chrony -y</p>
+<h3 id="Edit-the-x2F-etc-x2F-chrony-conf-file"><a href="#Edit-the-x2F-etc-x2F-chrony-conf-file" class="headerlink" title="Edit the &#x2F;etc&#x2F;chrony.conf file"></a>Edit the &#x2F;etc&#x2F;chrony.conf file</h3><p>[root@localntp ~]# diff &#x2F;etc&#x2F;chrony.conf &#x2F;etc&#x2F;chrony.conf_bak<br>3,7c3,6<br>&lt; #server 0.centos.pool.ntp.org iburst<br>&lt; #server 1.centos.pool.ntp.org iburst<br>&lt; #server 2.centos.pool.ntp.org iburst<br>&lt; #server 3.centos.pool.ntp.org iburst<br>&lt; server 192.168.220.201 iburst</p>
+<hr>
+<blockquote>
+<p>server 0.centos.pool.ntp.org iburst<br>server 1.centos.pool.ntp.org iburst<br>server 2.centos.pool.ntp.org iburst<br>server 3.centos.pool.ntp.org iburst<br>28d26<br>&lt; allow 192.168.220.0&#x2F;24</p>
+</blockquote>
+<h3 id="Start-the-NTP-service"><a href="#Start-the-NTP-service" class="headerlink" title="Start the NTP service"></a>Start the NTP service</h3><p>[root@localhost ~]# systemctl enable chronyd.service<br>[root@localhost ~]# systemctl start chronyd.service<br>[root@localhost ~]# systemctl restart chronyd.service</p>
+<h2 id="Other-nodes"><a href="#Other-nodes" class="headerlink" title="Other nodes"></a>Other nodes</h2><h3 id="Install-Chrony-1"><a href="#Install-Chrony-1" class="headerlink" title="Install Chrony"></a>Install Chrony</h3><p>[root@localhost ~]# yum install chrony -y</p>
+<h3 id="Edit-the-x2F-etc-x2F-chrony-conf-file-1"><a href="#Edit-the-x2F-etc-x2F-chrony-conf-file-1" class="headerlink" title="Edit the &#x2F;etc&#x2F;chrony.conf file"></a>Edit the &#x2F;etc&#x2F;chrony.conf file</h3><p>[root@localhost ~]# diff &#x2F;etc&#x2F;chrony.conf &#x2F;etc&#x2F;chrony.conf_bak<br>3,7c3,6<br>&lt; #server 0.centos.pool.ntp.org iburst<br>&lt; #server 1.centos.pool.ntp.org iburst<br>&lt; #server 2.centos.pool.ntp.org iburst<br>&lt; #server 3.centos.pool.ntp.org iburst<br>&lt; server 192.168.220.201 iburst</p>
+<hr>
+<blockquote>
+<p>server 0.centos.pool.ntp.org iburst<br>server 1.centos.pool.ntp.org iburst<br>server 2.centos.pool.ntp.org iburst<br>server 3.centos.pool.ntp.org iburst</p>
+</blockquote>
+<h3 id="Start-the-NTP-service-1"><a href="#Start-the-NTP-service-1" class="headerlink" title="Start the NTP service"></a>Start the NTP service</h3><p>[root@localhost ~]# systemctl enable chronyd.service<br>[root@localhost ~]# systemctl start chronyd.service<br>[root@localhost ~]# systemctl restart chronyd.service</p>
+<h2 id="Verify-operation"><a href="#Verify-operation" class="headerlink" title="Verify operation"></a>Verify operation</h2><h3 id="controller-node"><a href="#controller-node" class="headerlink" title="controller node"></a>controller node</h3><p>[root@localhost ~]# chronyc sources<br>210 Number of sources &#x3D; 1<br>MS Name&#x2F;IP address         Stratum Poll Reach LastRx Last sample<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>^? localhost.localdomain         0   8     0     -     +0ns[   +0ns] +&#x2F;-    0ns</p>
+<h3 id="other-nodes"><a href="#other-nodes" class="headerlink" title="other nodes"></a>other nodes</h3><p>[root@localhost ~]# chronyc sources<br>210 Number of sources &#x3D; 1<br>MS Name&#x2F;IP address         Stratum Poll Reach LastRx Last sample<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>^? 192.168.220.201               0   8     0     -     +0ns[   +0ns] +&#x2F;-    0ns</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/06/create-local-repository/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/06/create-local-repository/" class="post-title-link" itemprop="url">Create Local Repository</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-06 17:06:41" itemprop="dateCreated datePublished" datetime="2017-12-06T17:06:41+08:00">2017-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/" itemprop="url" rel="index"><span itemprop="name">operating-system</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/operating-system/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/OpenStack-High-Availability/" itemprop="url" rel="index"><span itemprop="name">OpenStack High Availability</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Configure-Firewall"><a href="#Configure-Firewall" class="headerlink" title="Configure Firewall"></a>Configure Firewall</h3><p>[root@localhost ~]# systemctl stop firewalld.service<br>[root@localhost ~]# systemctl disable firewalld.service</p>
+<h3 id="Install-Httpd-amp-Start-Service"><a href="#Install-Httpd-amp-Start-Service" class="headerlink" title="Install Httpd &amp; Start Service"></a>Install Httpd &amp; Start Service</h3><p>[root@localhost ~]# yum install httpd -y<br>[root@localhost ~]# systemctl enable httpd.service<br>[root@localhost ~]# systemctl restart httpd.service<br>[root@localhost ~]# systemctl status httpd.service</p>
+<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p><strong><a target="_blank" rel="noopener" href="http://192.168.220.200/">http://192.168.220.200</a></strong></p>
+<h3 id="Install-Reposync"><a href="#Install-Reposync" class="headerlink" title="Install Reposync"></a>Install Reposync</h3><p>[root@localhost ~]# yum install yum-utils -y</p>
+<h3 id="Create-Repo-Dir"><a href="#Create-Repo-Dir" class="headerlink" title="Create Repo Dir"></a>Create Repo Dir</h3><p>[root@localhost ~]# mkdir &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo<br>[root@localhost ~]# cd &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo</p>
+<h3 id="List-Repo"><a href="#List-Repo" class="headerlink" title="List Repo"></a>List Repo</h3><p>[root@localhost myrepo]# yum repolist<br>Loaded plugins: fastestmirror<br>Loading mirror speeds from cached hostfile<br> * base: mirrors.163.com<br> * extras: mirrors.163.com<br> * updates: mirrors.aliyun.com<br>repo id                                                 repo name                                                  status<br>base&#x2F;7&#x2F;x86_64                                           CentOS-7 - Base                                            9,591<br>extras&#x2F;7&#x2F;x86_64                                         CentOS-7 - Extras                                            284<br>updates&#x2F;7&#x2F;x86_64                                        CentOS-7 - Updates                                         1,490<br>repolist: 11,365</p>
+<h3 id="Sync-Repo"><a href="#Sync-Repo" class="headerlink" title="Sync Repo"></a>Sync Repo</h3><p>[root@localhost myrepo]# reposync –repoid&#x3D;base<br>[root@localhost myrepo]# reposync –repoid&#x3D;updates<br>[root@localhost myrepo]# reposync –repoid&#x3D;extras<br>[root@localhost myrepo]# pwd<br>&#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo<br>[root@localhost myrepo]# ls -al<br>total 0<br>drwxr-xr-x. 5 root root 47 Dec  6 20:18 .<br>drwxr-xr-x. 3 root root 20 Dec  6 03:12 ..<br>drwxr-xr-x. 3 root root 22 Dec  6 03:48 base<br>drwxr-xr-x. 3 root root 22 Dec  6 20:18 extras<br>drwxr-xr-x. 3 root root 22 Dec  6 20:06 updates</p>
+<h3 id="Install-Createrepo"><a href="#Install-Createrepo" class="headerlink" title="Install Createrepo"></a>Install Createrepo</h3><p>[root@localhost ~]# yum install createrepo -y</p>
+<h3 id="Create-Repo"><a href="#Create-Repo" class="headerlink" title="Create Repo"></a>Create Repo</h3><p>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;base<br>Spawning worker 0 with 9591 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete<br>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;updates<br>Spawning worker 0 with 1490 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete<br>[root@localhost ~]# createrepo &#x2F;var&#x2F;www&#x2F;html&#x2F;myrepo&#x2F;extras<br>Spawning worker 0 with 284 pkgs<br>Workers Finished<br>Saving Primary metadata<br>Saving file lists metadata<br>Saving other metadata<br>Generating sqlite DBs<br>Sqlite DBs complete</p>
+<h3 id="Now-Take-the-Browser-1"><a href="#Now-Take-the-Browser-1" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p>**img&#x2F;LocalRepo-V1.png)</p>
+<h3 id="Update-Client-Repo"><a href="#Update-Client-Repo" class="headerlink" title="Update Client Repo"></a>Update Client Repo</h3><p>[root@localhost ~]# diff &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo_bak<br>15c15<br>&lt; baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/base">http://192.168.220.200/myrepo/base</a></p>
+<hr>
+<blockquote>
+<p>mirrorlist&#x3D;<a target="_blank" rel="noopener" href="http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os&amp;infra=$infra">http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os&amp;infra=$infra</a><br>17c17<br>&lt; gpgcheck&#x3D;0</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>gpgcheck&#x3D;1<br>23c23<br>&lt; baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/updates">http://192.168.220.200/myrepo/updates</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>mirrorlist&#x3D;<a target="_blank" rel="noopener" href="http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates&amp;infra=$infra">http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates&amp;infra=$infra</a><br>25c25<br>&lt; gpgcheck&#x3D;0</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>gpgcheck&#x3D;1<br>31c31<br>&lt; baseurl&#x3D;<a target="_blank" rel="noopener" href="http://192.168.220.200/myrepo/extras">http://192.168.220.200/myrepo/extras</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>mirrorlist&#x3D;<a target="_blank" rel="noopener" href="http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras&amp;infra=$infra">http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras&amp;infra=$infra</a><br>33c33<br>&lt; gpgcheck&#x3D;0</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>gpgcheck&#x3D;1</p>
+</blockquote>
+<h3 id="Make-Client-Cache"><a href="#Make-Client-Cache" class="headerlink" title="Make Client Cache"></a>Make Client Cache</h3><p>[root@localhost ~]# yum clean all &amp;&amp; yum makecache</p>
+<h3 id="Client-Example"><a href="#Client-Example" class="headerlink" title="Client Example"></a>Client Example</h3><p>[root@localhost ~]# yum install vim<br>Loaded plugins: fastestmirror<br>Loading mirror speeds from cached hostfile<br>Resolving Dependencies<br>–&gt; Running transaction check<br>—&gt; Package vim-enhanced.x86_64 2:7.4.160-2.el7 will be installed<br>–&gt; Processing Dependency: vim-common &#x3D; 2:7.4.160-2.el7 for package: 2:vim-enhanced-7.4.160-2.el7.x86_64<br>–&gt; Processing Dependency: perl(:MODULE_COMPAT_5.16.3) for package: 2:vim-enhanced-7.4.160-2.el7.x86_64<br>–&gt; Processing Dependency: libperl.so()(64bit) for package: 2:vim-enhanced-7.4.160-2.el7.x86_64<br>–&gt; Processing Dependency: libgpm.so.2()(64bit) for package: 2:vim-enhanced-7.4.160-2.el7.x86_64<br>–&gt; Running transaction check<br>—&gt; Package gpm-libs.x86_64 0:1.20.7-5.el7 will be installed<br>—&gt; Package perl.x86_64 4:5.16.3-292.el7 will be installed<br>–&gt; Processing Dependency: perl(Socket) &gt;&#x3D; 1.3 for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Scalar::Util) &gt;&#x3D; 1.10 for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl-macros for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(threads::shared) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(threads) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(constant) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Time::Local) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Time::HiRes) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Storable) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Socket) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Scalar::Util) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Pod::Simple::XHTML) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Pod::Simple::Search) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Getopt::Long) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Filter::Util::Call) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Temp) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Spec::Unix) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Spec::Functions) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Spec) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(File::Path) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Exporter) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Cwd) for package: 4:perl-5.16.3-292.el7.x86_64<br>–&gt; Processing Dependency: perl(Carp) for package: 4:perl-5.16.3-292.el7.x86_64<br>—&gt; Package perl-libs.x86_64 4:5.16.3-292.el7 will be installed<br>—&gt; Package vim-common.x86_64 2:7.4.160-2.el7 will be installed<br>–&gt; Processing Dependency: vim-filesystem for package: 2:vim-common-7.4.160-2.el7.x86_64<br>–&gt; Running transaction check<br>—&gt; Package perl-Carp.noarch 0:1.26-244.el7 will be installed<br>—&gt; Package perl-Exporter.noarch 0:5.68-3.el7 will be installed<br>—&gt; Package perl-File-Path.noarch 0:2.09-2.el7 will be installed<br>—&gt; Package perl-File-Temp.noarch 0:0.23.01-3.el7 will be installed<br>—&gt; Package perl-Filter.x86_64 0:1.49-3.el7 will be installed<br>—&gt; Package perl-Getopt-Long.noarch 0:2.40-2.el7 will be installed<br>–&gt; Processing Dependency: perl(Pod::Usage) &gt;&#x3D; 1.14 for package: perl-Getopt-Long-2.40-2.el7.noarch<br>–&gt; Processing Dependency: perl(Text::ParseWords) for package: perl-Getopt-Long-2.40-2.el7.noarch<br>—&gt; Package perl-PathTools.x86_64 0:3.40-5.el7 will be installed<br>—&gt; Package perl-Pod-Simple.noarch 1:3.28-4.el7 will be installed<br>–&gt; Processing Dependency: perl(Pod::Escapes) &gt;&#x3D; 1.04 for package: 1:perl-Pod-Simple-3.28-4.el7.noarch<br>–&gt; Processing Dependency: perl(Encode) for package: 1:perl-Pod-Simple-3.28-4.el7.noarch<br>—&gt; Package perl-Scalar-List-Utils.x86_64 0:1.27-248.el7 will be installed<br>—&gt; Package perl-Socket.x86_64 0:2.010-4.el7 will be installed<br>—&gt; Package perl-Storable.x86_64 0:2.45-3.el7 will be installed<br>—&gt; Package perl-Time-HiRes.x86_64 4:1.9725-3.el7 will be installed<br>—&gt; Package perl-Time-Local.noarch 0:1.2300-2.el7 will be installed<br>—&gt; Package perl-constant.noarch 0:1.27-2.el7 will be installed<br>—&gt; Package perl-macros.x86_64 4:5.16.3-292.el7 will be installed<br>—&gt; Package perl-threads.x86_64 0:1.87-4.el7 will be installed<br>—&gt; Package perl-threads-shared.x86_64 0:1.43-6.el7 will be installed<br>—&gt; Package vim-filesystem.x86_64 2:7.4.160-2.el7 will be installed<br>–&gt; Running transaction check<br>—&gt; Package perl-Encode.x86_64 0:2.51-7.el7 will be installed<br>—&gt; Package perl-Pod-Escapes.noarch 1:1.04-292.el7 will be installed<br>—&gt; Package perl-Pod-Usage.noarch 0:1.63-3.el7 will be installed<br>–&gt; Processing Dependency: perl(Pod::Text) &gt;&#x3D; 3.15 for package: perl-Pod-Usage-1.63-3.el7.noarch<br>–&gt; Processing Dependency: perl-Pod-Perldoc for package: perl-Pod-Usage-1.63-3.el7.noarch<br>—&gt; Package perl-Text-ParseWords.noarch 0:3.29-4.el7 will be installed<br>–&gt; Running transaction check<br>—&gt; Package perl-Pod-Perldoc.noarch 0:3.20-4.el7 will be installed<br>–&gt; Processing Dependency: perl(parent) for package: perl-Pod-Perldoc-3.20-4.el7.noarch<br>–&gt; Processing Dependency: perl(HTTP::Tiny) for package: perl-Pod-Perldoc-3.20-4.el7.noarch<br>—&gt; Package perl-podlators.noarch 0:2.5.1-3.el7 will be installed<br>–&gt; Running transaction check<br>—&gt; Package perl-HTTP-Tiny.noarch 0:0.033-3.el7 will be installed<br>—&gt; Package perl-parent.noarch 1:0.225-244.el7 will be installed<br>–&gt; Finished Dependency Resolution</p>
+<p>Dependencies Resolved</p>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br> Package                               Arch                  Version                           Repository           Size<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>Installing:<br> vim-enhanced                          x86_64                2:7.4.160-2.el7                   base                1.0 M<br>Installing for dependencies:<br> gpm-libs                              x86_64                1.20.7-5.el7                      base                 32 k<br> perl                                  x86_64                4:5.16.3-292.el7                  base                8.0 M<br> perl-Carp                             noarch                1.26-244.el7                      base                 19 k<br> perl-Encode                           x86_64                2.51-7.el7                        base                1.5 M<br> perl-Exporter                         noarch                5.68-3.el7                        base                 28 k<br> perl-File-Path                        noarch                2.09-2.el7                        base                 26 k<br> perl-File-Temp                        noarch                0.23.01-3.el7                     base                 56 k<br> perl-Filter                           x86_64                1.49-3.el7                        base                 76 k<br> perl-Getopt-Long                      noarch                2.40-2.el7                        base                 56 k<br> perl-HTTP-Tiny                        noarch                0.033-3.el7                       base                 38 k<br> perl-PathTools                        x86_64                3.40-5.el7                        base                 82 k<br> perl-Pod-Escapes                      noarch                1:1.04-292.el7                    base                 51 k<br> perl-Pod-Perldoc                      noarch                3.20-4.el7                        base                 87 k<br> perl-Pod-Simple                       noarch                1:3.28-4.el7                      base                216 k<br> perl-Pod-Usage                        noarch                1.63-3.el7                        base                 27 k<br> perl-Scalar-List-Utils                x86_64                1.27-248.el7                      base                 36 k<br> perl-Socket                           x86_64                2.010-4.el7                       base                 49 k<br> perl-Storable                         x86_64                2.45-3.el7                        base                 77 k<br> perl-Text-ParseWords                  noarch                3.29-4.el7                        base                 14 k<br> perl-Time-HiRes                       x86_64                4:1.9725-3.el7                    base                 45 k<br> perl-Time-Local                       noarch                1.2300-2.el7                      base                 24 k<br> perl-constant                         noarch                1.27-2.el7                        base                 19 k<br> perl-libs                             x86_64                4:5.16.3-292.el7                  base                688 k<br> perl-macros                           x86_64                4:5.16.3-292.el7                  base                 43 k<br> perl-parent                           noarch                1:0.225-244.el7                   base                 12 k<br> perl-podlators                        noarch                2.5.1-3.el7                       base                112 k<br> perl-threads                          x86_64                1.87-4.el7                        base                 49 k<br> perl-threads-shared                   x86_64                1.43-6.el7                        base                 39 k<br> vim-common                            x86_64                2:7.4.160-2.el7                   base                5.9 M<br> vim-filesystem                        x86_64                2:7.4.160-2.el7                   base                9.8 k</p>
+<h1 id="Transaction-Summary"><a href="#Transaction-Summary" class="headerlink" title="Transaction Summary"></a>Transaction Summary</h1><p>Install  1 Package (+30 Dependent packages)</p>
+<p>Total download size: 18 M<br>Installed size: 60 M<br>Is this ok [y&#x2F;d&#x2F;N]: y<br>Downloading packages:<br>(1&#x2F;31): gpm-libs-1.20.7-5.el7.x86_64.rpm                                                            32 kB  00:00:00<br>(2&#x2F;31): perl-Carp-1.26-244.el7.noarch.rpm                                                           19 kB  00:00:00<br>(3&#x2F;31): perl-5.16.3-292.el7.x86_64.rpm                                                             8.0 MB  00:00:00<br>(4&#x2F;31): perl-Encode-2.51-7.el7.x86_64.rpm                                                          1.5 MB  00:00:00<br>(5&#x2F;31): perl-Exporter-5.68-3.el7.noarch.rpm                                                         28 kB  00:00:00<br>(6&#x2F;31): perl-File-Path-2.09-2.el7.noarch.rpm                                                        26 kB  00:00:00<br>(7&#x2F;31): perl-Filter-1.49-3.el7.x86_64.rpm                                                           76 kB  00:00:00<br>(8&#x2F;31): perl-Getopt-Long-2.40-2.el7.noarch.rpm                                                      56 kB  00:00:00<br>(9&#x2F;31): perl-File-Temp-0.23.01-3.el7.noarch.rpm                                                     56 kB  00:00:00<br>(10&#x2F;31): perl-HTTP-Tiny-0.033-3.el7.noarch.rpm                                                      38 kB  00:00:00<br>(11&#x2F;31): perl-Pod-Escapes-1.04-292.el7.noarch.rpm                                                   51 kB  00:00:00<br>(12&#x2F;31): perl-PathTools-3.40-5.el7.x86_64.rpm                                                       82 kB  00:00:00<br>(13&#x2F;31): perl-Pod-Perldoc-3.20-4.el7.noarch.rpm                                                     87 kB  00:00:00<br>(14&#x2F;31): perl-Pod-Usage-1.63-3.el7.noarch.rpm                                                       27 kB  00:00:00<br>(15&#x2F;31): perl-Pod-Simple-3.28-4.el7.noarch.rpm                                                     216 kB  00:00:00<br>(16&#x2F;31): perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm                                             36 kB  00:00:00<br>(17&#x2F;31): perl-Socket-2.010-4.el7.x86_64.rpm                                                         49 kB  00:00:00<br>(18&#x2F;31): perl-Storable-2.45-3.el7.x86_64.rpm                                                        77 kB  00:00:00<br>(19&#x2F;31): perl-Text-ParseWords-3.29-4.el7.noarch.rpm                                                 14 kB  00:00:00<br>(20&#x2F;31): perl-Time-HiRes-1.9725-3.el7.x86_64.rpm                                                    45 kB  00:00:00<br>(21&#x2F;31): perl-Time-Local-1.2300-2.el7.noarch.rpm                                                    24 kB  00:00:00<br>(22&#x2F;31): perl-constant-1.27-2.el7.noarch.rpm                                                        19 kB  00:00:00<br>(23&#x2F;31): perl-macros-5.16.3-292.el7.x86_64.rpm                                                      43 kB  00:00:00<br>(24&#x2F;31): perl-libs-5.16.3-292.el7.x86_64.rpm                                                       688 kB  00:00:00<br>(25&#x2F;31): perl-parent-0.225-244.el7.noarch.rpm                                                       12 kB  00:00:00<br>(26&#x2F;31): perl-threads-1.87-4.el7.x86_64.rpm                                                         49 kB  00:00:00<br>(27&#x2F;31): perl-threads-shared-1.43-6.el7.x86_64.rpm                                                  39 kB  00:00:00<br>(28&#x2F;31): perl-podlators-2.5.1-3.el7.noarch.rpm                                                     112 kB  00:00:00<br>(29&#x2F;31): vim-common-7.4.160-2.el7.x86_64.rpm                                                       5.9 MB  00:00:00<br>(30&#x2F;31): vim-filesystem-7.4.160-2.el7.x86_64.rpm                                                   9.8 kB  00:00:00<br>(31&#x2F;31): vim-enhanced-7.4.160-2.el7.x86_64.rpm                                                     1.0 MB  00:00:00     </p>
+<hr>
+<p>Total                                                                                     41 MB&#x2F;s   18 MB  00:00:00<br>Running transaction check<br>Running transaction test<br>Transaction test succeeded<br>Running transaction<br>  Installing : 1:perl-parent-0.225-244.el7.noarch                                                                   1&#x2F;31<br>  Installing : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                    2&#x2F;31<br>  Installing : perl-podlators-2.5.1-3.el7.noarch                                                                    3&#x2F;31<br>  Installing : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                   4&#x2F;31<br>  Installing : 1:perl-Pod-Escapes-1.04-292.el7.noarch                                                               5&#x2F;31<br>  Installing : perl-Text-ParseWords-3.29-4.el7.noarch                                                               6&#x2F;31<br>  Installing : perl-Encode-2.51-7.el7.x86_64                                                                        7&#x2F;31<br>  Installing : perl-Pod-Usage-1.63-3.el7.noarch                                                                     8&#x2F;31<br>  Installing : 4:perl-macros-5.16.3-292.el7.x86_64                                                                  9&#x2F;31<br>  Installing : 4:perl-libs-5.16.3-292.el7.x86_64                                                                   10&#x2F;31<br>  Installing : perl-Storable-2.45-3.el7.x86_64                                                                     11&#x2F;31<br>  Installing : perl-Exporter-5.68-3.el7.noarch                                                                     12&#x2F;31<br>  Installing : perl-constant-1.27-2.el7.noarch                                                                     13&#x2F;31<br>  Installing : perl-Time-Local-1.2300-2.el7.noarch                                                                 14&#x2F;31<br>  Installing : perl-Socket-2.010-4.el7.x86_64                                                                      15&#x2F;31<br>  Installing : perl-Carp-1.26-244.el7.noarch                                                                       16&#x2F;31<br>  Installing : perl-PathTools-3.40-5.el7.x86_64                                                                    17&#x2F;31<br>  Installing : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                          18&#x2F;31<br>  Installing : perl-File-Temp-0.23.01-3.el7.noarch                                                                 19&#x2F;31<br>  Installing : perl-File-Path-2.09-2.el7.noarch                                                                    20&#x2F;31<br>  Installing : perl-threads-shared-1.43-6.el7.x86_64                                                               21&#x2F;31<br>  Installing : perl-threads-1.87-4.el7.x86_64                                                                      22&#x2F;31<br>  Installing : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                               23&#x2F;31<br>  Installing : perl-Filter-1.49-3.el7.x86_64                                                                       24&#x2F;31<br>  Installing : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                 25&#x2F;31<br>  Installing : perl-Getopt-Long-2.40-2.el7.noarch                                                                  26&#x2F;31<br>  Installing : 4:perl-5.16.3-292.el7.x86_64                                                                        27&#x2F;31<br>  Installing : gpm-libs-1.20.7-5.el7.x86_64                                                                        28&#x2F;31<br>  Installing : 2:vim-filesystem-7.4.160-2.el7.x86_64                                                               29&#x2F;31<br>  Installing : 2:vim-common-7.4.160-2.el7.x86_64                                                                   30&#x2F;31<br>  Installing : 2:vim-enhanced-7.4.160-2.el7.x86_64                                                                 31&#x2F;31<br>  Verifying  : perl-HTTP-Tiny-0.033-3.el7.noarch                                                                    1&#x2F;31<br>  Verifying  : perl-threads-shared-1.43-6.el7.x86_64                                                                2&#x2F;31<br>  Verifying  : perl-Storable-2.45-3.el7.x86_64                                                                      3&#x2F;31<br>  Verifying  : 2:vim-filesystem-7.4.160-2.el7.x86_64                                                                4&#x2F;31<br>  Verifying  : perl-Exporter-5.68-3.el7.noarch                                                                      5&#x2F;31<br>  Verifying  : perl-constant-1.27-2.el7.noarch                                                                      6&#x2F;31<br>  Verifying  : perl-PathTools-3.40-5.el7.x86_64                                                                     7&#x2F;31<br>  Verifying  : 4:perl-macros-5.16.3-292.el7.x86_64                                                                  8&#x2F;31<br>  Verifying  : 1:perl-parent-0.225-244.el7.noarch                                                                   9&#x2F;31<br>  Verifying  : 4:perl-5.16.3-292.el7.x86_64                                                                        10&#x2F;31<br>  Verifying  : perl-File-Temp-0.23.01-3.el7.noarch                                                                 11&#x2F;31<br>  Verifying  : 1:perl-Pod-Simple-3.28-4.el7.noarch                                                                 12&#x2F;31<br>  Verifying  : perl-Time-Local-1.2300-2.el7.noarch                                                                 13&#x2F;31<br>  Verifying  : gpm-libs-1.20.7-5.el7.x86_64                                                                        14&#x2F;31<br>  Verifying  : 4:perl-libs-5.16.3-292.el7.x86_64                                                                   15&#x2F;31<br>  Verifying  : perl-Pod-Perldoc-3.20-4.el7.noarch                                                                  16&#x2F;31<br>  Verifying  : perl-Socket-2.010-4.el7.x86_64                                                                      17&#x2F;31<br>  Verifying  : perl-Carp-1.26-244.el7.noarch                                                                       18&#x2F;31<br>  Verifying  : 2:vim-common-7.4.160-2.el7.x86_64                                                                   19&#x2F;31<br>  Verifying  : perl-Scalar-List-Utils-1.27-248.el7.x86_64                                                          20&#x2F;31<br>  Verifying  : 1:perl-Pod-Escapes-1.04-292.el7.noarch                                                              21&#x2F;31<br>  Verifying  : perl-Pod-Usage-1.63-3.el7.noarch                                                                    22&#x2F;31<br>  Verifying  : perl-Encode-2.51-7.el7.x86_64                                                                       23&#x2F;31<br>  Verifying  : perl-podlators-2.5.1-3.el7.noarch                                                                   24&#x2F;31<br>  Verifying  : perl-Getopt-Long-2.40-2.el7.noarch                                                                  25&#x2F;31<br>  Verifying  : 2:vim-enhanced-7.4.160-2.el7.x86_64                                                                 26&#x2F;31<br>  Verifying  : perl-File-Path-2.09-2.el7.noarch                                                                    27&#x2F;31<br>  Verifying  : perl-threads-1.87-4.el7.x86_64                                                                      28&#x2F;31<br>  Verifying  : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                                                               29&#x2F;31<br>  Verifying  : perl-Filter-1.49-3.el7.x86_64                                                                       30&#x2F;31<br>  Verifying  : perl-Text-ParseWords-3.29-4.el7.noarch                                                              31&#x2F;31 </p>
+<p>Installed:<br>  vim-enhanced.x86_64 2:7.4.160-2.el7                                                                                    </p>
+<p>Dependency Installed:<br>  gpm-libs.x86_64 0:1.20.7-5.el7                            perl.x86_64 4:5.16.3-292.el7<br>  perl-Carp.noarch 0:1.26-244.el7                           perl-Encode.x86_64 0:2.51-7.el7<br>  perl-Exporter.noarch 0:5.68-3.el7                         perl-File-Path.noarch 0:2.09-2.el7<br>  perl-File-Temp.noarch 0:0.23.01-3.el7                     perl-Filter.x86_64 0:1.49-3.el7<br>  perl-Getopt-Long.noarch 0:2.40-2.el7                      perl-HTTP-Tiny.noarch 0:0.033-3.el7<br>  perl-PathTools.x86_64 0:3.40-5.el7                        perl-Pod-Escapes.noarch 1:1.04-292.el7<br>  perl-Pod-Perldoc.noarch 0:3.20-4.el7                      perl-Pod-Simple.noarch 1:3.28-4.el7<br>  perl-Pod-Usage.noarch 0:1.63-3.el7                        perl-Scalar-List-Utils.x86_64 0:1.27-248.el7<br>  perl-Socket.x86_64 0:2.010-4.el7                          perl-Storable.x86_64 0:2.45-3.el7<br>  perl-Text-ParseWords.noarch 0:3.29-4.el7                  perl-Time-HiRes.x86_64 4:1.9725-3.el7<br>  perl-Time-Local.noarch 0:1.2300-2.el7                     perl-constant.noarch 0:1.27-2.el7<br>  perl-libs.x86_64 4:5.16.3-292.el7                         perl-macros.x86_64 4:5.16.3-292.el7<br>  perl-parent.noarch 1:0.225-244.el7                        perl-podlators.noarch 0:2.5.1-3.el7<br>  perl-threads.x86_64 0:1.87-4.el7                          perl-threads-shared.x86_64 0:1.43-6.el7<br>  vim-common.x86_64 2:7.4.160-2.el7                         vim-filesystem.x86_64 2:7.4.160-2.el7                        </p>
+<p>Complete!</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/06/ha-prepare/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/06/ha-prepare/" class="post-title-link" itemprop="url">HA Prepare</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-06 14:04:33" itemprop="dateCreated datePublished" datetime="2017-12-06T14:04:33+08:00">2017-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-05 09:29:40" itemprop="dateModified" datetime="2022-07-05T09:29:40+08:00">2022-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud-computing/OpenStack-High-Availability/" itemprop="url" rel="index"><span itemprop="name">OpenStack High Availability</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Basic-Environment"><a href="#Basic-Environment" class="headerlink" title="Basic Environment"></a>Basic Environment</h3><p>Intel Core i7 processor</p>
+<p>32GB memory</p>
+<p>512GB SSD + 2TB storage</p>
+<h4 id="For-example："><a href="#For-example：" class="headerlink" title="For example："></a>For example：</h4><p>Dell OptiPlex 7050 Intel® Core i7 7700 32GB (2x16GB) DDR4-2400 512GB Solid State Drive SATA hard drive 2TB SATA hard drive (7200RPM)</p>
+<h3 id="VMware-For-OpenStack-Requirement"><a href="#VMware-For-OpenStack-Requirement" class="headerlink" title="VMware For OpenStack Requirement"></a>VMware For OpenStack Requirement</h3><p><img src="/img/VMware-Virtual-NetWork.png"></p>
+<h4 id="3-Controller"><a href="#3-Controller" class="headerlink" title="3 * Controller"></a>3 * Controller</h4><p>1 CPU (2 Core) 4GB RAM 100 GB Storage 4 NIC(NAT + NAT + HostOnly + HostOnly) Virtualize Intel VT-x&#x2F;EPT or AMD-V&#x2F;RVI <img src="/img/VMware-Controller.png"></p>
+<h4 id="2-Compute"><a href="#2-Compute" class="headerlink" title="2 * Compute"></a>2 * Compute</h4><p>1 CPU (2 Core) 4GB RAM 100 GB Storage 2 NIC(NAT + HostOnly) Virtualize Intel VT-x&#x2F;EPT or AMD-V&#x2F;RVI <img src="/img/VMware-Compute-1.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/05/controller-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Water">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Water's Home">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/05/controller-network/" class="post-title-link" itemprop="url">Controller --- Network</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-05 14:54:39" itemprop="dateCreated datePublished" datetime="2017-12-05T14:54:39+08:00">2017-12-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -218,16 +1107,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Install-RabbitMQ"><a href="#Install-RabbitMQ" class="headerlink" title="Install RabbitMQ"></a>Install RabbitMQ</h3><p>[root@controller ~]# yum install erlang -y<br>[root@controller ~]# yum install rabbitmq-server -y</p>
-<h3 id="Start-RabbitMQ-Service"><a href="#Start-RabbitMQ-Service" class="headerlink" title="Start RabbitMQ Service"></a>Start RabbitMQ Service</h3><p>[root@controller ~]# systemctl enable rabbitmq-server.service<br>[root@controller ~]# systemctl restart rabbitmq-server.service<br>[root@controller ~]# systemctl status rabbitmq-server.service</p>
-<h3 id="List-RabbitMQ-Service"><a href="#List-RabbitMQ-Service" class="headerlink" title="List RabbitMQ Service"></a>List RabbitMQ Service</h3><p>[root@controller ~]# systemctl list-unit-files grep rabbitmq-server.service<br><strong>rabbitmq-server.service enable</strong></p>
-<h3 id="Configure-RabbitMQ"><a href="#Configure-RabbitMQ" class="headerlink" title="Configure RabbitMQ"></a>Configure RabbitMQ</h3><p>[root@controller ~]# rabbitmqctl add_user openstack password<br>[root@controller ~]# rabbitmqctl set_permissions openstack “.*“ “.*“ “.*“<br>[root@controller ~]# rabbitmqctl set_user_tags openstack administrator<br>[root@controller ~]# rabbitmqctl list_users</p>
-<h3 id="Check-The-Status"><a href="#Check-The-Status" class="headerlink" title="Check The Status"></a>Check The Status</h3><p>[root@controller ~]# netstat -ntlp grep 5672<br>tcp 0 0 0.0.0.0:<strong>15672</strong> 0.0.0.0:* LISTEN 1025&#x2F;beam<br>tcp 0 0 0.0.0.0:25672 0.0.0.0:* LISTEN 1025&#x2F;beam<br>tcp6 0 0 :::5672 :::* LISTEN 1025&#x2F;beam</p>
-<h3 id="List-Plugin"><a href="#List-Plugin" class="headerlink" title="List Plugin"></a>List Plugin</h3><p>[root@controller ~]# &#x2F;usr&#x2F;lib&#x2F;rabbitmq&#x2F;bin&#x2F;rabbitmq-plugins list<br>[E] amqp_client 3.3.5<br>[ ] cowboy 0.5.0-rmq3.3.5-git4b93c2d<br>[ ] eldap 3.3.5-gite309de4<br>[E] mochiweb 2.7.0-rmq3.3.5-git680dba8<br>[ ] rabbitmq_amqp1_0 3.3.5<br>[ ] rabbitmq_auth_backend_ldap 3.3.5<br>[ ] rabbitmq_auth_mechanism_ssl 3.3.5<br>[ ] rabbitmq_consistent_hash_exchange 3.3.5<br>[ ] rabbitmq_federation 3.3.5<br>[ ] rabbitmq_federation_management 3.3.5<br>[E] rabbitmq_management 3.3.5<br>[E] rabbitmq_management_agent 3.3.5<br>[ ] rabbitmq_management_visualiser 3.3.5<br>[ ] rabbitmq_mqtt 3.3.5<br>[ ] rabbitmq_shovel 3.3.5<br>[ ] rabbitmq_shovel_management 3.3.5<br>[ ] rabbitmq_stomp 3.3.5<br>[ ] rabbitmq_test 3.3.5<br>[ ] rabbitmq_tracing 3.3.5<br>[E] rabbitmq_web_dispatch 3.3.5<br>[ ] rabbitmq_web_stomp 3.3.5<br>[ ] rabbitmq_web_stomp_examples 3.3.5<br>[ ] sockjs 0.3.4-rmq3.3.5-git3132eb9<br>[E] webmachine 1.10.3-rmq3.3.5-gite9359c7</p>
-<h3 id="Enable-Plugin"><a href="#Enable-Plugin" class="headerlink" title="Enable Plugin"></a>Enable Plugin</h3><p>[root@controller ~]# &#x2F;usr&#x2F;lib&#x2F;rabbitmq&#x2F;bin&#x2F;rabbitmq-plugins enable rabbitmq_management mochiweb webmachine rabbitmq_web_dispatch amqp_client rabbitmq_management_agent</p>
-<h3 id="Restart-RabbitMQ-Service"><a href="#Restart-RabbitMQ-Service" class="headerlink" title="Restart RabbitMQ Service"></a>Restart RabbitMQ Service</h3><p>[root@controller ~]# systemctl restart rabbitmq-server</p>
-<h3 id="Now-Take-the-Browser"><a href="#Now-Take-the-Browser" class="headerlink" title="Now, Take the Browser"></a>Now, Take the Browser</h3><p>img&#x2F;rabbitMQ_login.png) </p>
-<h4 id="username-x2F-password"><a href="#username-x2F-password" class="headerlink" title="username&#x2F;password :"></a>username&#x2F;password :</h4><p>guest&#x2F;guest openstack&#x2F;password <img src="/img/rabbitMQ_overview.png"></p>
+          <h3 id="Create-Provider"><a href="#Create-Provider" class="headerlink" title="Create Provider"></a>Create Provider</h3><p>[root@controller ~]# openstack network create provider –share –external –provider-network-type flat –provider-physical-network provide</p>
+<p><img src="/img/Network-V1.png"></p>
+<h3 id="Create-Provider-Sub-Net"><a href="#Create-Provider-Sub-Net" class="headerlink" title="Create Provider Sub-Net"></a>Create Provider Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network provider –allocation-pool start&#x3D;9.1.1.50,end&#x3D;9.1.1.90 –dns-nameserver 8.8.8.8 –gateway 9.1.1.1 –subnet-range 9.1.1.0&#x2F;24 provider-sub</p>
+<p><img src="/img/Network-V2.png"></p>
+<h3 id="Create-Private-Network"><a href="#Create-Private-Network" class="headerlink" title="Create Private Network"></a>Create Private Network</h3><p>[root@controller ~]# openstack network create private –provider-network-type vxlan –share –interna</p>
+<p><img src="/img/Network-Private.png"></p>
+<h3 id="Create-Private-Sub-Net"><a href="#Create-Private-Sub-Net" class="headerlink" title="Create Private Sub-Net"></a>Create Private Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private –gateway 192.168.1.1 –subnet-range 192.168.1.0&#x2F;24 private-subnet</p>
+<p><img src="/img/Network-PrivateSubNet.png"></p>
+<h3 id="Create-Private-Office-Network"><a href="#Create-Private-Office-Network" class="headerlink" title="Create Private-Office Network"></a>Create Private-Office Network</h3><p>[root@controller ~]# openstack network create private-office –provider-network-type vxlan –share –internal</p>
+<p><img src="/img/Network-PrivateOffice.png"></p>
+<h3 id="Create-Private-Office-Sub-Net"><a href="#Create-Private-Office-Sub-Net" class="headerlink" title="Create Private-Office Sub-Net"></a>Create Private-Office Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-office –gateway 192.168.2.1 –subnet-range 192.168.2.0&#x2F;24 office-net</p>
+<p><img src="/img/Network-OfficeNet.png"></p>
+<h3 id="Create-Private-Sale-Network"><a href="#Create-Private-Sale-Network" class="headerlink" title="Create Private-Sale Network"></a>Create Private-Sale Network</h3><p>[root@controller ~]# openstack network create private-sale –provider-network-type vxlan –share –internal</p>
+<p><img src="/img/Network-PrivateSale.png"></p>
+<h3 id="Create-Private-Sale-Sub-Net"><a href="#Create-Private-Sale-Sub-Net" class="headerlink" title="Create Private-Sale Sub-Net"></a>Create Private-Sale Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-sale –gateway 192.168.3.1 –subnet-range 192.168.3.0&#x2F;24 sale-net</p>
+<p><img src="/img/Network-SaleNet.png"></p>
+<h3 id="Create-Private-Technology-Network"><a href="#Create-Private-Technology-Network" class="headerlink" title="Create Private-Technology Network"></a>Create Private-Technology Network</h3><p>[root@controller ~]# openstack network create private-technology –provider-network-type vxlan –share –internal</p>
+<p><img src="/img/Network-PrivateTechnology.png"></p>
+<h3 id="Create-Private-Technology-Sub-Net"><a href="#Create-Private-Technology-Sub-Net" class="headerlink" title="Create Private-Technology Sub-Net"></a>Create Private-Technology Sub-Net</h3><p>[root@controller ~]# openstack subnet create –network private-technology –gateway 192.168.4.1 –subnet-range 192.168.4.0&#x2F;24 technology-net</p>
+<p><img src="/img/Network-TechnologyNet.png"></p>
+<h3 id="List-Network"><a href="#List-Network" class="headerlink" title="List Network"></a>List Network</h3><p>[root@controller ~]# openstack network list</p>
+<p><img src="/img/Dashboard-CreateRouter.png"></p>
+<h3 id="Create-Provider-Router"><a href="#Create-Provider-Router" class="headerlink" title="Create Provider Router"></a>Create Provider Router</h3><p>[root@controller ~]# openstack router create route</p>
+<p><img src="/img/Dashboard-CreateRouter2.png"></p>
+<h3 id="Set-External-Gateway"><a href="#Set-External-Gateway" class="headerlink" title="Set External-Gateway"></a>Set External-Gateway</h3><p>[root@controller ~]# openstack router set –external-gateway provider router</p>
+<p><img src="/img/Dashboard-RouterAddInterface.png"></p>
+<h3 id="Add-Route-Interface"><a href="#Add-Route-Interface" class="headerlink" title="Add Route Interface"></a>Add Route Interface</h3><p>[root@controller ~]# openstack router add subnet router private-subnet</p>
+<p><img src="/img/Network-Topology.png"></p>
+<h3 id="List-Network-Agent"><a href="#List-Network-Agent" class="headerlink" title="List Network Agent"></a>List Network Agent</h3><p>[root@controller ~]# openstack network agent list</p>
+<p><img src="/img/Network-AgentList.png"></p>
 
       
     </div>
@@ -247,7 +1156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/04/controller-mariadb/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/05/controller-flavor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -261,7 +1170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2017/12/04/controller-mariadb/" class="post-title-link" itemprop="url">Controller --- MariaDB</a>
+            <a href="/2017/12/05/controller-flavor/" class="post-title-link" itemprop="url">Controller --- Flavor</a>
         </h2>
 
         <div class="post-meta">
@@ -271,14 +1180,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2017-12-04 17:34:05" itemprop="dateCreated datePublished" datetime="2017-12-04T17:34:05+08:00">2017-12-04</time>
+              <time title="Created: 2017-12-05 14:09:09" itemprop="dateCreated datePublished" datetime="2017-12-05T14:09:09+08:00">2017-12-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
+                <time title="Modified: 2022-07-05 09:29:39" itemprop="dateModified" datetime="2022-07-05T09:29:39+08:00">2022-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -309,398 +1218,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Install-MariaDB"><a href="#Install-MariaDB" class="headerlink" title="Install MariaDB"></a>Install MariaDB</h3><p>[root@controller ~]# yum install mariadb mariadb-server -y</p>
-<h3 id="Configure-MariaDB-For-OpenStack"><a href="#Configure-MariaDB-For-OpenStack" class="headerlink" title="Configure MariaDB For OpenStack"></a>Configure MariaDB For OpenStack</h3><p>[root@controller ~]# cat &#x2F;etc&#x2F;my.cnf.d&#x2F;mariadb-openstack.cnf<br>[mysqld]<br>default-storage-engine &#x3D; innodb<br>innodb_file_per_table<br>collation-server &#x3D; utf8_general_ci<br>init-connect &#x3D; ‘SET NAMES utf8’<br>character-set-server &#x3D; utf8<br>bind-address &#x3D; 10.1.1.61</p>
-<h3 id="Start-MariaDB-Service"><a href="#Start-MariaDB-Service" class="headerlink" title="Start MariaDB Service"></a>Start MariaDB Service</h3><p>[root@controller ~]# systemctl enable mariadb.service<br>[root@controller ~]# systemctl restart mariadb.service<br>[root@controller ~]# systemctl status mariadb.service</p>
-<h3 id="List-MariaDB-Service"><a href="#List-MariaDB-Service" class="headerlink" title="List MariaDB Service"></a>List MariaDB Service</h3><p>[root@controller ~]# systemctl list-unit-files grep mariadb.service<br><strong>mariadb.service enabled</strong></p>
-<h3 id="MariaDB-Installation"><a href="#MariaDB-Installation" class="headerlink" title="MariaDB Installation"></a>MariaDB Installation</h3><p>[root@controller ~]# mysql_secure_installation</p>
-<p>[root@controller ~]# mysql -u root -p</p>
-<h3 id="Create-Database-For-OpenStack"><a href="#Create-Database-For-OpenStack" class="headerlink" title="Create Database For OpenStack"></a>Create Database For OpenStack</h3><p>CREATE DATABASE keystone;<br>GRANT ALL PRIVILEGES ON keystone.* TO ‘keystone‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON keystone.* TO ‘keystone‘@’%’ IDENTIFIED BY ‘password’;</p>
-<p>CREATE DATABASE glance;<br>GRANT ALL PRIVILEGES ON glance.* TO ‘glance‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON glance.* TO ‘glance‘@’%’ IDENTIFIED BY ‘password’;</p>
-<p>CREATE DATABASE nova;<br>CREATE DATABASE nova_api;<br>CREATE DATABASE nova_cell0;</p>
-<p>GRANT ALL PRIVILEGES ON nova.* TO ‘nova‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova.* TO ‘nova‘@’%’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova_api.* TO ‘nova‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova_api.* TO ‘nova‘@’%’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova_cell0.* TO ‘nova‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON nova_cell0.* TO ‘nova‘@’%’ IDENTIFIED BY ‘password’;<br>FLUSH PRIVILEGES;</p>
-<p>CREATE DATABASE neutron;<br>GRANT ALL PRIVILEGES ON neutron.* TO ‘neutron‘@’localhost’ IDENTIFIED BY ‘password’;<br>GRANT ALL PRIVILEGES ON neutron.* TO ‘neutron‘@’%’ IDENTIFIED BY ‘password’;</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/04/centos-7-4-install-configure/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/04/centos-7-4-install-configure/" class="post-title-link" itemprop="url">CentOS 7.4 Install & Configure</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-12-04 16:46:36" itemprop="dateCreated datePublished" datetime="2017-12-04T16:46:36+08:00">2017-12-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:56:48" itemprop="dateModified" datetime="2022-07-05T09:56:48+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cloud-computing/OpenStack-Pike-Installation/" itemprop="url" rel="index"><span itemprop="name">OpenStack Pike Installation</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="CentOS-7-4-Minimum-Install"><a href="#CentOS-7-4-Minimum-Install" class="headerlink" title="CentOS 7.4 Minimum Install"></a>CentOS 7.4 Minimum Install</h3><p><img src="/img/QQ_20171204170802.png"></p>
-<h3 id="Firewalls-Configure"><a href="#Firewalls-Configure" class="headerlink" title="Firewalls Configure"></a>Firewalls Configure</h3><p>[root@controller ~]# systemctl stop firewalld.service<br>[root@controller ~]# systemctl disable firewalld.service<br>Removed symlink &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;firewalld.service.<br>Removed symlink &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;dbus-org.fedoraproject.FirewallD1.service.</p>
-<h3 id="Install-Tools"><a href="#Install-Tools" class="headerlink" title="Install Tools"></a>Install Tools</h3><p>[root@controller ~]# yum install net-tools wget vim ntpdate bash-completion -y</p>
-<h3 id="Network-Configure"><a href="#Network-Configure" class="headerlink" title="Network Configure"></a>Network Configure</h3><p>external：9.1.1.0&#x2F;24 admin manage：10.1.1.0&#x2F;24 tunnel：10.2.2.0&#x2F;24 internet：10.0.2.0&#x2F;24</p>
-<h4 id="Controller："><a href="#Controller：" class="headerlink" title="Controller："></a>Controller：</h4><p>List all the network adapter:</p>
-<p>[root@controller ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–. 1 root root 284 Oct 16 02:13 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>-rw-r–r– 1 root root 347 Oct 26 22:42 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s3<br>-rw-r–r– 1 root root 365 Oct 19 03:27 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>-rw-r–r– 1 root root 365 Oct 19 03:28 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>-rw-r–r–. 1 root root 254 May 3 2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
-<p>Update the 1st network adapter:</p>
-<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s3<br>HWADDR&#x3D;08:00:27:6a:0e:c6<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s3<br>UUID&#x3D;213e8c02-7e99-4380-a080-a845923d5088<br>DEVICE&#x3D;enp0s3<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;9.1.1.61<br>NETMASK&#x3D;255.255.255.0</p>
-<p>Update the 2nd network adapter:</p>
-<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>HWADDR&#x3D;08:00:27:01:4e:3a<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;edaf67ed-cc12-41a3-97aa-b71a497d7ac0<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.1.1.61<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.1.1.1</p>
-<p>Update the 3rd network adapter:</p>
-<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>HWADDR&#x3D;08:00:27:66:23:8c<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s9<br>UUID&#x3D;7f5ab86f-efb6-4a93-b09a-af2fe80ea347<br>DEVICE&#x3D;enp0s9<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.2.2.61<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.2.2.1</p>
-<p>Update the 4th network adapter:</p>
-<p>[root@controller ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;dhcp<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s10<br>UUID&#x3D;ad48bc1f-4e7b-4643-b35a-f6cd457a75a0<br>DEVICE&#x3D;enp0s10<br>ONBOOT&#x3D;yes</p>
-<h4 id="Compute："><a href="#Compute：" class="headerlink" title="Compute："></a>Compute：</h4><p>List all the network adapter:</p>
-<p>[root@compute ~]# ls -al &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*<br>-rw-r–r–. 1 root root 284 Oct 16 02:13 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>-rw-r–r– 1 root root 365 Oct 18 12:35 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>-rw-r–r– 1 root root 365 Oct 18 12:36 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>-rw-r–r–. 1 root root 254 May 3 2017 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-lo</p>
-<p>Update the 1st network adapter:</p>
-<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s8<br>HWADDR&#x3D;08:00:27:b8:bd:60<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s8<br>UUID&#x3D;edaf67ed-cc12-41a3-97aa-b71a497d7ac0<br>DEVICE&#x3D;enp0s8<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.1.1.62<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.1.1.1</p>
-<p>Update the 2nd network adapter:</p>
-<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s9<br>HWADDR&#x3D;08:00:27:42:5a:df<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;static<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s9<br>UUID&#x3D;7f5ab86f-efb6-4a93-b09a-af2fe80ea347<br>DEVICE&#x3D;enp0s9<br>ONBOOT&#x3D;yes<br>IPADDR&#x3D;10.2.2.62<br>NETMASK&#x3D;255.255.255.0<br>GATEWAY&#x3D;10.2.2.1</p>
-<p>Update the 3rd network adapter:</p>
-<p>[root@compute ~]# cat &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-enp0s10<br>TYPE&#x3D;Ethernet<br>PROXY_METHOD&#x3D;none<br>BROWSER_ONLY&#x3D;no<br>BOOTPROTO&#x3D;dhcp<br>DEFROUTE&#x3D;yes<br>IPV4_FAILURE_FATAL&#x3D;no<br>IPV6INIT&#x3D;yes<br>IPV6_AUTOCONF&#x3D;yes<br>IPV6_DEFROUTE&#x3D;yes<br>IPV6_FAILURE_FATAL&#x3D;no<br>IPV6_ADDR_GEN_MODE&#x3D;stable-privacy<br>NAME&#x3D;enp0s10<br>UUID&#x3D;ad48bc1f-4e7b-4643-b35a-f6cd457a75a0<br>DEVICE&#x3D;enp0s10<br>ONBOOT&#x3D;yes</p>
-<h3 id="Update-hostname"><a href="#Update-hostname" class="headerlink" title="Update hostname"></a>Update hostname</h3><p>Controller:</p>
-<p>[root@controller ~]# hostnamectl set-hostname controller</p>
-<p>Compute:</p>
-<p>[root@compute ~]# hostnamectl set-hostname compute</p>
-<p>Controller &amp; Compute:</p>
-<p>[root@controller ~]# cat &#x2F;etc&#x2F;hosts<br>127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4<br>::1 localhost localhost.localdomain localhost6 localhost6.localdomain6<br>10.1.1.61 controller<br>10.1.1.62 compute</p>
-<h3 id="synchronize-system-time-important"><a href="#synchronize-system-time-important" class="headerlink" title="synchronize system time ( important)"></a>synchronize system time ( important)</h3><p>[root@controller ~]# yum install ntp -y<br>[root@controller ~]# systemctl enable ntpd &amp;&amp; systemctl restart ntpd<br>[root@controller ~]# ntpq -p<br>[root@controller ~]# date</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/01/prepare/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/01/prepare/" class="post-title-link" itemprop="url">Prepare</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-12-01 10:49:19" itemprop="dateCreated datePublished" datetime="2017-12-01T10:49:19+08:00">2017-12-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 09:29:41" itemprop="dateModified" datetime="2022-07-05T09:29:41+08:00">2022-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cloud-computing/OpenStack-Pike-Installation/" itemprop="url" rel="index"><span itemprop="name">OpenStack Pike Installation</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p> Intel Core i7 processor</p>
-<p>16GB memory</p>
-<p>512GB storage</p>
-<h4 id="For-example："><a href="#For-example：" class="headerlink" title="For example："></a>For example：</h4><p> 15-inch MacBook Pro 2017:</p>
-<p>Touch Bar and Touch ID</p>
-<p>2.9GHz Processor </p>
-<p>512GB Storage</p>
-<p>2.9GHz quad-core 7th-generation Intel Core i7 processor</p>
-<p>Turbo Boost up to 3.9GHz</p>
-<p>16GB 2133MHz LPDDR3 memory</p>
-<p>512GB SSD storage1</p>
-<p>Radeon Pro 560 with 4GB memory</p>
-<p>Four Thunderbolt 3 ports</p>
-<p>Touch Bar and Touch ID</p>
-<h3 id="Virtual-Box-for-OpenStack-Requirement"><a href="#Virtual-Box-for-OpenStack-Requirement" class="headerlink" title="Virtual Box for OpenStack Requirement"></a>Virtual Box for OpenStack Requirement</h3><p><img src="/img/VirtualBox-NetworkNAT.png"></p>
-<h4 id="1-Controller"><a href="#1-Controller" class="headerlink" title="1 * Controller:"></a>1 * Controller:</h4><p>Memory : 8G</p>
-<p>Storage : 256G</p>
-<p>Network : 4 (extenel, admin, tunnel, net)</p>
-<p> <img src="/img/VirtualBox-Controller-Overview-1.png"></p>
-<p><img src="/img/VirtualBox-Controller-NetworkAdaptec1-1.png"></p>
-<p><img src="/img/VirtualBox-Controller-NetworkAdaptec2-1.png"></p>
-<p><img src="/img/VirtualBox-Controller-NetworkAdaptec3-1.png"></p>
-<p><img src="/img/VirtualBox-Controller-NetworkAdaptec4-1.png"></p>
-<h4 id="1-Compute"><a href="#1-Compute" class="headerlink" title="1 * Compute:"></a>1 * Compute:</h4><p>Memory : 4G</p>
-<p>Storage : 256G</p>
-<p>Network : 3 (admin, tunnel, net)</p>
-<p>    <img src="/img/VirtualBox-Compute-Overview.png"></p>
-<p><img src="/img/VirtualBox-Compute-NetworkAdaptec2.png"></p>
-<p><img src="/img/VirtualBox-Compute-NetworkAdaptec4.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/11/29/rdo-all-in-one/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/11/29/rdo-all-in-one/" class="post-title-link" itemprop="url">RDO ( All-In-One )</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-11-29 17:18:41" itemprop="dateCreated datePublished" datetime="2017-11-29T17:18:41+08:00">2017-11-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Cloud-Computing/" itemprop="url" rel="index"><span itemprop="name">Cloud Computing</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cloud-computing/" itemprop="url" rel="index"><span itemprop="name">cloud-computing</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cloud-computing/OpenStack-All-In-One/" itemprop="url" rel="index"><span itemprop="name">OpenStack All In One</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Summary-for-the-impatient"><a href="#Summary-for-the-impatient" class="headerlink" title="Summary for the impatient"></a>Summary for the impatient</h3><p>[root@localhost ~]# yum install -y centos-release-openstack-pike<br>[root@localhost ~]# yum update -y<br>[root@localhost ~]# yum install -y openstack-packstack<br>[root@localhost ~]# packstack –allinone</p>
-<h3 id="The-Log"><a href="#The-Log" class="headerlink" title="The Log"></a>The Log</h3><p>Welcome to the Packstack setup utility</p>
-<p>The installation log file is available at: &#x2F;var&#x2F;tmp&#x2F;packstack&#x2F;20171018-213803-Gj17Wj&#x2F;openstack-setup.log<br>Packstack changed given value to required value &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub</p>
-<h3 id="Installing"><a href="#Installing" class="headerlink" title="Installing:"></a>Installing:</h3><p>Clean Up [ DONE ]<br>Discovering ip protocol version [ DONE ]<br>Setting up ssh keys [ DONE ]<br>Preparing servers [ DONE ]<br>Pre installing Puppet and discovering hosts’ details [ DONE ]<br>Preparing pre-install entries [ DONE ]<br>Setting up CACERT [ DONE ]<br>Preparing AMQP entries [ DONE ]<br>Preparing MariaDB entries [ DONE ]<br>Fixing Keystone LDAP config parameters to be undef if empty[ DONE ]<br>Preparing Keystone entries [ DONE ]<br>Preparing Glance entries [ DONE ]<br>Checking if the Cinder server has a cinder-volumes vg[ DONE ]<br>Preparing Cinder entries [ DONE ]<br>Preparing Nova API entries [ DONE ]<br>Creating ssh keys for Nova migration [ DONE ]<br>Gathering ssh host keys for Nova migration [ DONE ]<br>Preparing Nova Compute entries [ DONE ]<br>Preparing Nova Scheduler entries [ DONE ]<br>Preparing Nova VNC Proxy entries [ DONE ]<br>Preparing OpenStack Network-related Nova entries [ DONE ]<br>Preparing Nova Common entries [ DONE ]<br>Preparing Neutron LBaaS Agent entries [ DONE ]<br>Preparing Neutron API entries [ DONE ]<br>Preparing Neutron L3 entries [ DONE ]<br>Preparing Neutron L2 Agent entries [ DONE ]<br>Preparing Neutron DHCP Agent entries [ DONE ]<br>Preparing Neutron Metering Agent entries [ DONE ]<br>Checking if NetworkManager is enabled and running [ DONE ]<br>Preparing OpenStack Client entries [ DONE ]<br>Preparing Horizon entries [ DONE ]<br>Preparing Swift builder entries [ DONE ]<br>Preparing Swift proxy entries [ DONE ]<br>Preparing Swift storage entries [ DONE ]<br>Preparing Gnocchi entries [ DONE ]<br>Preparing MongoDB entries [ DONE ]<br>Preparing Redis entries [ DONE ]<br>Preparing Ceilometer entries [ DONE ]<br>Preparing Aodh entries [ DONE ]<br>Preparing Puppet manifests [ DONE ]<br>Copying Puppet modules and manifests [ DONE ]<br>Applying 192.168.78.134_controller.pp<br>192.168.78.134_controller.pp: [ DONE ]<br>Applying 192.168.78.134_network.pp<br>192.168.78.134_network.pp: [ DONE ]<br>Applying 192.168.78.134_compute.pp<br>192.168.78.134_compute.pp: [ DONE ]<br>Applying Puppet manifests [ DONE ]<br>Finalizing [ DONE ]</p>
-<p><strong>**** Installation completed successfully ******</strong></p>
-<p>Additional information:<br>* A new answerfile was created in: &#x2F;root&#x2F;packstack-answers-20171018-213808.txt<br>* Time synchronization installation was skipped. Please note that unsynchronized time on server instances might be problem for some OpenStack components.<br>* Warning: NetworkManager is active on 192.168.78.134. OpenStack networking currently does not work on systems that have the Network Manager service enabled.<br>* File &#x2F;root&#x2F;keystonerc_admin has been created on OpenStack client host 192.168.78.134. To use the command line tools you need to source the file.<br>* To access the OpenStack Dashboard browse to <strong><a target="_blank" rel="noopener" href="http://192.168.78.134/dashboard">http://192.168.78.134/dashboard</a></strong> .<br>Please, find your login credentials stored in the keystonerc_admin in your home directory.<br>* Because of the kernel update the host 192.168.78.134 requires reboot.<br>* The installation log file is available at: &#x2F;var&#x2F;tmp&#x2F;packstack&#x2F;20171018-213803-Gj17Wj&#x2F;openstack-setup.log<br>* The generated manifests are available at: &#x2F;var&#x2F;tmp&#x2F;packstack&#x2F;20171018-213803-Gj17Wj&#x2F;manifests<br>You have new mail in &#x2F;var&#x2F;spool&#x2F;mail&#x2F;root</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/11/28/hello-world-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Water">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Water's Home">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/11/28/hello-world-2/" class="post-title-link" itemprop="url">Hello world!</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-11-28 11:05:28" itemprop="dateCreated datePublished" datetime="2017-11-28T11:05:28+08:00">2017-11-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-04 15:26:09" itemprop="dateModified" datetime="2022-07-04T15:26:09+08:00">2022-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+          <h3 id="Create-Flavor"><a href="#Create-Flavor" class="headerlink" title="Create Flavor"></a>Create Flavor</h3><p>[root@compute ~]# openstack flavor create m1.tiny –id 1 –ram 512 –disk 1 –vcpus 1<br>[root@compute ~]# openstack flavor create m1.small –id 2 –ram 2048 –disk 20 –vcpus 1</p>
+<h3 id="List-Flavor"><a href="#List-Flavor" class="headerlink" title="List Flavor"></a>List Flavor</h3><p>[root@compute ~]# openstack flavor list</p>
+<p><img src="/img/Flavor-V1.png"></p>
 
       
     </div>
@@ -719,7 +1239,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/21/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span>
+    <a class="extend prev" rel="prev" href="/page/21/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/23/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -787,14 +1307,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -829,7 +1349,7 @@
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
